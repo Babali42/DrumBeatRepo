@@ -87,14 +87,19 @@ $gap: 4px;
   overflow-x: auto;
 }
 
-.tracks-name {
+.tracks-name-container {
   margin-top: 10px;
   grid-column-start: 1;
   grid-row-start: 2;
 
-  .track-name {
-    white-space: nowrap;
-    height: calc($step-size + $gap);
+  .tracks-name {
+    display: flex;
+    gap: 10px;
+
+    .track-name {
+      white-space: nowrap;
+      height: calc($step-size + $gap);
+    }
   }
 }
 
@@ -140,4 +145,10 @@ $gap: 4px;
     font-size: 20px;
     border: none;
   }
+}
+
+.svg-icon {
+  stroke: var(--textColor);
+  height: 30px;
+  width: 30px;
 }
