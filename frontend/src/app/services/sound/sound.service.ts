@@ -135,4 +135,12 @@ export class SoundService {
       return;
     this.playSound(this.loopBuffer);
   }
+
+  playTrack(trackName: string) {
+    const source = this.context.createBufferSource();
+    const fileName = this.tracks.find(x => x.name == trackName)?.fileName;
+    source.buffer = this.samples.find(x => x.fileName === fileName)!.sample!;
+    source.connect(this.context.destination);
+    source.start();
+  }
 }
