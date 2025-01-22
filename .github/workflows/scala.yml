@@ -32,6 +32,11 @@ jobs:
         distribution: 'temurin'
         cache: 'sbt'
 
+    - name: Setup sbt
+      uses: olafurpg/setup-scala@v14
+      with:
+        java-version: adopt@1.11
+
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.11.0
       with:

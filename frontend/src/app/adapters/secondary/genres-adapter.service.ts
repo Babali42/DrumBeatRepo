@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import IManageGenres from "../../domain/ports/secondary/i-manage-genres";
 import {Genre} from "../../domain/genre";
 import {Effect} from 'effect';
