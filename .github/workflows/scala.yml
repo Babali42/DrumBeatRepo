@@ -32,6 +32,11 @@ jobs:
         distribution: 'temurin'
         cache: 'sbt'
 
+    - name: Install SBT
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y sbt
+
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.11.0
       with:
