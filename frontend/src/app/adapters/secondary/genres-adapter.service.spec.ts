@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {TestBed} from '@angular/core/testing';
 import {of, throwError} from 'rxjs';
 import {GenresAdapterService} from "./genres-adapter.service";

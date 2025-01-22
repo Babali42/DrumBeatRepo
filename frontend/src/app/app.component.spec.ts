@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 import {IManageGenresToken} from "./domain/ports/secondary/i-manage-genres";
 import {GenresAdapterService} from "./adapters/secondary/genres-adapter.service";
 import {BrowserModule} from "@angular/platform-browser";
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {routes} from "./app.module";
@@ -14,10 +14,10 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent], // Declare the component
-      imports: [BrowserModule, HttpClientModule, LoadingBarModule, RouterTestingModule.withRoutes(routes)],
-      providers: [{ provide: IManageGenresToken, useClass: GenresAdapterService }],
-    }).compileComponents();
+    declarations: [AppComponent],
+    imports: [BrowserModule, LoadingBarModule, RouterTestingModule.withRoutes(routes)],
+    providers: [{ provide: IManageGenresToken, useClass: GenresAdapterService }, provideHttpClient(withInterceptorsFromDi())]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
