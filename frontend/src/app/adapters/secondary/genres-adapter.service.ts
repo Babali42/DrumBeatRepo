@@ -18,7 +18,7 @@ export class GenresAdapterService implements IManageGenres {
     const effect = Effect.tryPromise({
       try: async () => {
         const beats = await lastValueFrom(this.http.get<Beat[]>(this.beatsUrl));
-        const genres = this.groupBy(beats, (beat) => beat.genre!);
+        const genres = this.groupBy(beats, (beat) => beat.genre);
         return Object.keys(genres).map((genre) => ({
           label: genre,
           beats: genres[genre],
