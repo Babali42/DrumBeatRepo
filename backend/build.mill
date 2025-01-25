@@ -1,0 +1,42 @@
+import mill._, scalalib._
+
+// Define the module for your project
+object drumBeatRepoBackend extends ScalaModule {
+  // Project name
+  override def moduleDeps = Seq.empty // No submodules
+  def scalaVersion = "2.13.15"
+  def organization = Some("babali")
+  def version = "1.0-SNAPSHOT"
+
+  // Environment-specific settings
+  def currentEnv: String = sys.env.getOrElse("ENV", "development")
+  def coverageEnabled = T { currentEnv == "development" }
+
+  def playVersion() = "2.8.20" // Replace this with the correct Play version you're using.
+
+  // Dependencies
+  def ivyDeps = T {
+    Seq(
+      ivy"com.typesafe.play::play-guice:${playVersion()}", // guice dependency
+      ivy"org.scalatestplus.play::scalatestplus-play:7.0.1".withConfiguration("test"),
+      ivy"org.mongodb.scala::mongo-scala-driver:4.10.1"
+    )
+  }
+
+    // Specify a main class to start the Play server
+    def mainClass = Some("play.core.server.ProdServerStart")
+
+
+  // Play Framework-specific plugin integration (via a Play helper library)
+
+  override def compileIvyDeps = T { super.compileIvyDeps() ++ Seq(
+    ivy"com.typesafe.play::play:${playVersion()}"
+  )}
+
+  def printClasspath = T {
+    println(T.ctx().dest / "classes") // Prints the classpath to check resources
+  }
+
+  // Test Framework setup
+  def testFrameworks = Seq("com.novocode.junit.JUnitFramework", "org.scalatest.tools.Framework")
+}

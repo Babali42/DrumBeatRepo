@@ -9,3 +9,4 @@ data
 /.settings
 /RUNNING_PID
 .env
+/out
