@@ -21,17 +21,23 @@ describe('GenreAdapterService', () => {
   });
 
   it('should return expected genres', (done: DoneFn) => {
-    const expectedGenres: Genre[] =
+    // Arrange
+    const dbGenres: Genre[] =
       [{label: "A", beats: []}, {label: "B", beats: []}];
+    httpClientSpy.get.and.returnValue(of(dbGenres));
 
-    httpClientSpy.get.and.returnValue(of(expectedGenres));
-
+    // Act
     service.getGenres().then(genres => {
+
+      // Assert
+      const expectedGenres: Genre[] =
+        [{label: "A", beats: []}, {label: "B", beats: []}];
       expect(genres).toEqual(expectedGenres);
       done()
     }).catch(() => {
     });
 
+    // Assert
     expect(httpClientSpy.get).toHaveBeenCalledOnceWith('api/genres');
   });
 
