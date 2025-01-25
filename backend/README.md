@@ -45,7 +45,13 @@ Run mongo db and the previous image
 
 ## Access the database
 
+
 Use the connection string ```mongodb://admin:pass@127.0.0.1:27017/admin```
+
+⚠️ Dont't forget to authenticate️
+```
+mongosh --username admin --password pass
+```
 
 ## Useful links
 
