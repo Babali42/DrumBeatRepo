@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {TestBed} from '@angular/core/testing';
 import {of, throwError} from 'rxjs';
 import {GenresAdapterService} from "./genres-adapter.service";
 import {Genre} from "../../domain/genre";
+import {Beat} from "../../domain/beat";
 
 describe('GenreAdapterService', () => {
   let service: GenresAdapterService;
@@ -22,23 +23,29 @@ describe('GenreAdapterService', () => {
 
   it('should return expected genres', (done: DoneFn) => {
     // Arrange
-    const dbGenres: Genre[] =
-      [{label: "A", beats: []}, {label: "B", beats: []}];
-    httpClientSpy.get.and.returnValue(of(dbGenres));
+    const dbBeats: Beat[] = [
+      {id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
+      {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat,
+      {id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat];
+    httpClientSpy.get.and.returnValue(of(dbBeats));
 
     // Act
     service.getGenres().then(genres => {
 
       // Assert
       const expectedGenres: Genre[] =
-        [{label: "A", beats: []}, {label: "B", beats: []}];
+        [{
+          label: "Techno", beats:
+            [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
+              {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
+        }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat]}];
       expect(genres).toEqual(expectedGenres);
       done()
     }).catch(() => {
     });
 
     // Assert
-    expect(httpClientSpy.get).toHaveBeenCalledOnceWith('api/genres');
+    expect(httpClientSpy.get).toHaveBeenCalledOnceWith('api/beats');
   });
 
   it('should return an error getting genres when the server returns a 404', (done: DoneFn) => {

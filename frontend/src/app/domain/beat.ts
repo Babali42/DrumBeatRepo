@@ -5,4 +5,5 @@ export interface Beat {
   label: string;
   bpm: number;
   tracks: Track[];
+  genre: string | undefined;
 }

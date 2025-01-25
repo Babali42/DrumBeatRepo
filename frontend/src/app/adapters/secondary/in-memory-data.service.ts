@@ -29,7 +29,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "XXXXXXXXXXXXXXXX".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const technoBeat: Beat = {
       id: "techno",
@@ -52,7 +52,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X   X   X   X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const rockBeat: Beat = {
       id: "rock-beat",
@@ -75,7 +75,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X       X       ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const rockBeatVariation: Beat = {
       id: "rock-beat-variation",
@@ -98,7 +98,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X       X       ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const psytranceBeat: Beat = {
       id: "psytrance",
@@ -131,7 +131,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: " XXX XXX XXX XXX".split('').map(step => step === 'X')
         }
       ]
-    }
+    } as Beat
 
     const offBeatTechnoClap: Beat = {
       id: "off-beat-techno-clap",
@@ -154,7 +154,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X   X   X   X   X   X   X   X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const jerseyClubBeat: Beat = {
       id: "jersey-club",
@@ -183,7 +183,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }
       ],
       //source: "https://youtu.be/qJtvgAYAuvs?si=ifBHVgsfUL32E2R0"
-    };
+    } as Beat;
 
     const halfTimeGroove: Beat = {
       id: "half-time-groove",
@@ -206,7 +206,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X               ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const garageTwoStep: Beat = {
       id: "garage",
@@ -229,7 +229,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X           X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const gabberBeat: Beat = {
       id: "gabber",
@@ -257,7 +257,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X   X   X   X   X   X   X   X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const ebmBeat: Beat = {
       id: "ebm",
@@ -293,7 +293,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X   X   X   X   X   X   X   X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const dubBeat: Beat = {
       id: "dub",
@@ -339,7 +339,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X                                         X                     ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const blastBeat: Beat = {
       id: "blast-beat",
@@ -362,7 +362,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X_X_X_X_X_X_X_X_".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const breakcoreBeat: Beat = {
       id: "breakcore",
@@ -391,7 +391,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }
       ],
       //source: "https://onlinesequencer.net/2502318"
-    };
+    } as Beat;
 
     const drumAndBassBeat: Beat = {
       id: "drum-n-bass",
@@ -414,7 +414,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X         X     ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const standardDancehallBeat: Beat = {
       id: "dancehall-standard",
@@ -437,7 +437,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X  X  X X  X  X ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const reggaetonBeat: Beat = {
       id: "dancehall-reggaeton",
@@ -460,7 +460,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X   X   X   X   ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const modernDancehallBeat: Beat = {
       id: "dancehall-modern",
@@ -483,7 +483,7 @@ export class InMemoryDataService implements InMemoryDbService {
           steps: "X         X     ".split('').map(step => step === 'X')
         }
       ]
-    };
+    } as Beat;
 
     const punkBeatQuarterNoteGroove: Beat = {
       id: "punk-beat-quarter-note-groove",
@@ -507,7 +507,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }
       ]
       //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
-    }
+    } as Beat
 
     const punkBeatQuarterNoteGrooveVariation: Beat = {
       id: "punk-beat-quarter-note-groove-variation",
@@ -531,7 +531,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }
       ]
       //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
-    }
+    } as Beat
 
     const punkBeatEightNoteFill: Beat = {
       id: "punk-beat-eight-note-fill",
@@ -555,7 +555,7 @@ export class InMemoryDataService implements InMemoryDbService {
         }
       ]
       //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
-    }
+    } as Beat
 
     const beats: Beat[] = [modernDancehallBeat, standardDancehallBeat, reggaetonBeat, drumAndBassBeat, breakcoreBeat, blastBeat, dubBeat, ebmBeat, metalBeat, technoBeat, rockBeat, rockBeatVariation, psytranceBeat, offBeatTechnoClap, jerseyClubBeat, halfTimeGroove, garageTwoStep, gabberBeat];
 
