@@ -15,6 +15,10 @@ This library leverages **Angular** and the **Web Audio API** to deliver a smooth
 - **FUTURE : Create your own beats in the UI**: You 'll play in the browser ...
 - **FUTURE : Store (and read) beats in the database**: ...and contribute to the beat database
 
+## Main schema
+
+![Architecture schema](drumbeatrepo-architecture.drawio.png)
+
 ## 👀 A lot of README
 
 - [Frontend README](frontend/README.md)
