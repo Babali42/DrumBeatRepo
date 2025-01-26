@@ -4,6 +4,6 @@ export interface Beat {
   id: string;
   label: string;
   bpm: number;
-  tracks: Track[];
   genre: string;
+  tracks: Track[];
 }

@@ -21,30 +21,24 @@ describe('GenreAdapterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return expected genres', (done: DoneFn) => {
+  it('should return expected genres', async () => {
     // Arrange
-    const dbBeats: Beat[] = [
+    const seed: Beat[] = [
       {id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
       {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat,
       {id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat];
-    httpClientSpy.get.and.returnValue(of(dbBeats));
+    httpClientSpy.get.and.returnValue(of(seed));
 
     // Act
-    service.getGenres().then(genres => {
-
-      // Assert
-      const expectedGenres: Genre[] =
-        [{
-          label: "Techno", beats:
-            [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
-              {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
-        }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat]}];
-      expect(genres).toEqual(expectedGenres);
-      done()
-    }).catch(() => {
-    });
+    var genres = await service.getGenres();
 
     // Assert
+    const expectedResult: Genre[] = [{
+      label: "Techno", beats:
+        [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
+          {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
+    }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat]}];
+    expect(genres).toEqual(expectedResult);
     expect(httpClientSpy.get).toHaveBeenCalledOnceWith('api/beats');
   });
 
