@@ -1,3 +1,3 @@
 package domain
 
-case class Beat(id: String, label: String, bpm: Int)
+case class Beat(id: String, label: String, bpm: Int, genre: String)

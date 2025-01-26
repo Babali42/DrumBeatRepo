@@ -5,6 +5,7 @@ const metalBeat = {
     id: "metal",
     label: "Metal",
     bpm: 180,
+    genre: "Techno",
     tracks: [
         {
             name: "Snare",
@@ -28,6 +29,7 @@ const technoBeat = {
     id: "techno",
     label: "4 on the floor",
     bpm: 128,
+    genre: "Techno",
     tracks: [
         {
             name: "Snare",
@@ -51,6 +53,7 @@ const rockBeat = {
     id: "rock-beat",
     label: "Rock",
     bpm: 145,
+    genre: "Metal",
     tracks: [
         {
             name: "Snare",
@@ -74,6 +77,7 @@ const rockBeatVariation = {
     id: "rock-beat-variation",
     label: "Rock variation",
     bpm: 145,
+    genre: "Metal",
     tracks: [
         {
             name: "Snare",
@@ -97,6 +101,7 @@ const psytranceBeat = {
     id: "psytrance",
     label: "Psytrance",
     bpm: 135,
+    genre: "Trance",
     tracks: [
         {
             name: "Closed hats",
@@ -130,6 +135,7 @@ const offBeatTechnoClap = {
     id: "off-beat-techno-clap",
     label: "OffBeat clap",
     bpm: 128,
+    genre: "Techno",
     tracks: [
         {
             name: "Clap",
@@ -153,6 +159,7 @@ const jerseyClubBeat = {
     id: "jersey-club",
     label: "Jersey club",
     bpm: 140,
+    genre: "Breakbeat",
     tracks: [
         {
             name: "Bed squeak (low)",
@@ -182,6 +189,7 @@ const halfTimeGroove = {
     id: "half-time-groove",
     label: "Half time groove",
     bpm: 145,
+    genre: "Metal",
     tracks: [
         {
             name: "Snare",
@@ -205,6 +213,7 @@ const garageTwoStep = {
     id: "garage",
     label: "Garage",
     bpm: 130,
+    genre: "Garage",
     tracks: [
         {
             name: "Snare",
@@ -228,6 +237,7 @@ const gabberBeat = {
     id: "gabber",
     label: "Gabber",
     bpm: 200,
+    genre: "Techno",
     tracks: [
         {
             name: "Crash Cymbal",
@@ -256,6 +266,7 @@ const ebmBeat = {
     id: "ebm",
     label: "EBM",
     bpm: 120,
+    genre: "Industrial",
     tracks: [
         {
             name: "Clap",
@@ -292,6 +303,7 @@ const dubBeat = {
     id: "dub",
     label: "Dub",
     bpm: 140,
+    genre: "Dub",
     tracks: [
         {
             name: "Kick",
@@ -338,6 +350,7 @@ const blastBeat = {
     id: "blast-beat",
     label: "Blast beat",
     bpm: 180,
+    genre: "Metal",
     tracks: [
         {
             name: "Snare",
@@ -361,6 +374,7 @@ const breakcoreBeat = {
     id: "breakcore",
     label: "Breakcore",
     bpm: 180,
+    genre: "Breakbeat",
     tracks: [
         {
             name: "Snare (accent)",
@@ -390,6 +404,7 @@ const drumAndBassBeat = {
     id: "drum-n-bass",
     label: "Drum & bass",
     bpm: 170,
+    genre: "Garage",
     tracks: [
         {
             name: "Snare",
@@ -413,6 +428,7 @@ const standardDancehallBeat = {
     id: "dancehall-standard",
     label: "Standard dancehall",
     bpm: 105,
+    genre: "Dancehall",
     tracks: [
         {
             name: "Hats",
@@ -436,6 +452,7 @@ const reggaetonBeat = {
     id: "dancehall-reggaeton",
     label: "Reggaeton",
     bpm: 105,
+    genre: "Dancehall",
     tracks: [
         {
             name: "Hats",
@@ -459,6 +476,7 @@ const modernDancehallBeat = {
     id: "dancehall-modern",
     label: "Modern dancehall",
     bpm: 105,
+    genre: "Dancehall",
     tracks: [
         {
             name: "Hats",
@@ -482,6 +500,7 @@ const punkBeatQuarterNoteGroove = {
     id: "punk-beat-quarter-note-groove",
     label: "Quarter note groove",
     bpm: 170,
+    genre: "Punk",
     tracks: [
         {
             name: "Hats",
@@ -506,6 +525,7 @@ const punkBeatQuarterNoteGrooveVariation = {
     id: "punk-beat-quarter-note-groove-variation",
     label: "Quarter note groove variation",
     bpm: 170,
+    genre: "Punk",
     tracks: [
         {
             name: "Hats",
@@ -530,6 +550,7 @@ const punkBeatEightNoteFill = {
     id: "punk-beat-eight-note-fill",
     label: "Eight note fill",
     bpm: 170,
+    genre: "Punk",
     tracks: [
         {
             name: "Hats",

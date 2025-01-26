@@ -10,7 +10,7 @@ class MongoBeatRepository(database: MongoDatabase, collectionName: String = "bea
   private lazy val collection: MongoCollection[Document] = database.getCollection(collectionName)
 
   private def documentToUser(doc: Document): Beat = {
-    Beat(doc.getOrElse("id", "").asString().getValue, doc.getOrElse("label", "").asString().getValue, doc.getOrElse("bpm", 0).asInt32().getValue)
+    Beat(doc.getOrElse("id", "").asString().getValue, doc.getOrElse("label", "").asString().getValue, doc.getOrElse("bpm", 0).asInt32().getValue, "")
   }
 
   override def getAllBeats: Future[Seq[Beat]] = {
