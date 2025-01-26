@@ -9,3 +9,5 @@ data
 /.settings
 /RUNNING_PID
 .env
+.bloop/
+project/
