@@ -1,1 +1,1 @@
-GET     /genres/                    primary.GenreController.getGenres()
+GET     /beats/                    primary.BeatController.getBeats()

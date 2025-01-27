@@ -7,19 +7,19 @@ import play.api.test._
 import play.api.test.Helpers._
 import secondary.repositoryFactory.{BeatRepositoryFactory, InMemoryBeatRepositoryFactory}
 
-class GenreControllerSpec extends PlaySpec {
-  "GenreController" should {
-    "get the JSON genres" in {
+class BeatControllerSpec extends PlaySpec {
+  "BeatController" should {
+    "get the JSON beats" in {
       val app = new GuiceApplicationBuilder()
         .overrides(bind(classOf[BeatRepositoryFactory]).to(classOf[InMemoryBeatRepositoryFactory]))
         .build()
 
-      val genreRequest = FakeRequest(GET, "/genres/")
-      val genresResult = route(app, genreRequest).get
+      val request = FakeRequest(GET, "/beats/")
+      val result = route(app, request).get
 
-      status(genresResult) mustBe OK
-      contentType(genresResult) mustBe Some("application/json")
-      contentAsString(genresResult) must include("Techno")
+      status(result) mustBe OK
+      contentType(result) mustBe Some("application/json")
+      contentAsString(result) must include("Techno")
     }
   }
 }
