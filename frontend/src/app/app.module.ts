@@ -9,7 +9,7 @@ import {GenresAdapterService} from "./adapters/secondary/genres-adapter.service"
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
-import {provideRouter, RouterOutlet, Routes} from "@angular/router";
+import {provideRouter, RouterOutlet, Routes, withHashLocation} from "@angular/router";
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
 import {FormsModule} from '@angular/forms';
 
@@ -34,7 +34,7 @@ import {environment} from "../environments/environment";
   providers: [
     {provide: IManageGenresToken, useClass: GenresAdapterService},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
-    provideRouter(routes),
+    //provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: IManageGenresToken, useClass: GenresAdapterService },
     //@ts-ignore
