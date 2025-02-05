@@ -6,7 +6,7 @@
   </div>
   <div class="sequencer-header">
       <div class="label">
-        <span class="small">Genre : </span>
+        <span class="small user-select-none">Genre : </span>
         <app-select-input [elements]="genresLabel"
                           [selectedElement]="selectedGenreLabel"
                           (selectChange)="genreChange($event)"
@@ -14,7 +14,7 @@
         </app-select-input>
       </div>
       <div class="label">
-        <span class="small">Beat : </span>
+        <span class="small user-select-none">Beat : </span>
         <app-select-input [elements]="beats"
                           [selectedElement]="selectedBeatLabel"
                           (selectChange)="beatChange($event)"
@@ -22,9 +22,9 @@
         </app-select-input>
       </div>
       <div class="flex label bpm-input-group">
-        <span class="small">Tempo : </span>
+        <span class="small user-select-none">Tempo : </span>
         <app-bpm-input [bpm]="beat.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
-        <span class="small"> bpm</span>
+        <span class="small user-select-none"> bpm</span>
       </div>
   </div>
   <div class="tracks-name-container">
@@ -32,7 +32,7 @@
         <svg class="svg-icon" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false" (click)="playTrack(track.name)">
           <g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134"><g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"> <path d="m6.5 8.5v4"></path> <path d="m8.5 6.5v9"></path> <path d="m10.5 9.5v2"></path> <path d="m12.5 7.5v6.814"></path> <path d="m14.5 4.5v12"></path> </g> </g><g> <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> <path d="m6.5 8.5v4"></path> <path d="m8.5 6.5v9"></path> <path d="m10.5 9.5v2"></path> <path d="m12.5 7.5v6.814"></path> <path d="m14.5 4.5v12"></path> </g> </g>
         </svg>
-      <h3 class="track-name">
+      <h3 class="track-name user-select-none">
         {{ track.name }}
       </h3>
     </div>
