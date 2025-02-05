@@ -26,6 +26,7 @@ export class SequencerComponent implements OnInit {
   beats: string[] = [];
   selectedBeatLabel: string = "";
   private genres: Genre[] = [];
+  isTransitioning = false;
 
   constructor(@Inject(IManageGenresToken)  private _genresManager: IManageGenres,
               public soundService: SoundService,
@@ -54,12 +55,17 @@ export class SequencerComponent implements OnInit {
   }
 
   toggleIsPlaying(): void {
-    this.soundService.playPause().then(
-      () => {
-      },
-      () => {
-      }
-    );
+    this.isTransitioning = true;
+    setTimeout(() => {
+      this.soundService.playPause().then(
+        () => {
+        },
+        () => {
+        }
+      );
+      this.isTransitioning = false;
+    }, 100);
+
   }
 
   @HostListener('document:keydown', ['$event'])
