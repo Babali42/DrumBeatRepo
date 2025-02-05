@@ -96,6 +96,12 @@ $gap: 4px;
     display: flex;
     gap: 10px;
 
+    .svg-icon {
+      stroke: var(--textColor);
+      height: 30px;
+      width: 30px;
+    }
+
     .track-name {
       white-space: nowrap;
       height: calc($step-size + $gap);
@@ -143,12 +149,29 @@ $gap: 4px;
     background-color: var(--backgroundColor);
     color: var(--textColor);
     font-size: 20px;
-    border: none;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--textColor) 30%, var(--backgroundColor));
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
   }
-}
 
-.svg-icon {
-  stroke: var(--textColor);
-  height: 30px;
-  width: 30px;
+  .play-pause-button:active {
+    transform: scale(0.9);
+  }
+
+  .play-pause-button:hover {
+    background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+    color: var(--backgroundColor);
+    border-radius: 5px;
+    border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+  }
+
+  .play-pause-button.entering {
+    transform: scale(0.5);
+  }
+
+  .play-pause-button.entered {
+    transform: scale(1);
+  }
 }

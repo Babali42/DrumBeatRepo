@@ -1,6 +1,9 @@
 <div id="main-container">
   <div class="play-button-container flex">
-    <button class="play-pause-button pointer" (click)="toggleIsPlaying()">
+    <button class="play-pause-button pointer"
+            [class.entering]="isTransitioning"
+            [class.entered]="!isTransitioning"
+            (click)="toggleIsPlaying()">
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
   </div>
