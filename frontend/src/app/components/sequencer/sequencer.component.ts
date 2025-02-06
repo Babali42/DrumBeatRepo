@@ -3,9 +3,9 @@ import {SoundService} from '../../services/sound/sound.service';
 import {Beat} from '../../domain/beat';
 import {NgFor} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
-import {Genre} from "../../domain/genre";
+import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
-import IManageGenres, {IManageGenresToken} from "../../domain/ports/secondary/i-manage-genres";
+import IManageBeats, {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
@@ -19,23 +19,23 @@ import {SelectInputComponent} from "../select-input/select-input.component";
 })
 export class SequencerComponent implements OnInit {
   beat = {} as Beat;
-  genre = {} as  Genre;
+  genre = {} as  BeatsGroupedByGenre;
   beatBehaviourSubject: Subject<Beat>;
   genresLabel: string[] = [];
   selectedGenreLabel: string = "";
   beats: string[] = [];
   selectedBeatLabel: string = "";
-  private genres: Genre[] = [];
+  private genres: BeatsGroupedByGenre[] = [];
   isTransitioning = false;
 
-  constructor(@Inject(IManageGenresToken)  private _genresManager: IManageGenres,
+  constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
               public soundService: SoundService,
               private route: ActivatedRoute) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }
 
   ngOnInit() {
-    this._genresManager.getGenres().then(genres => {
+    this._beatsManager.getBeatsGroupedByGenres().then(genres => {
       this.genres = genres;
       this.genresLabel = genres.map(x => x.label);
       this.route.queryParamMap.subscribe((params) => {
@@ -75,7 +75,7 @@ export class SequencerComponent implements OnInit {
     }
   }
 
-  selectGenre(genres : Genre[], genre: string | null, beat: string | null): void {
+  selectGenre(genres : BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
     if (!firstGenre) return;
 

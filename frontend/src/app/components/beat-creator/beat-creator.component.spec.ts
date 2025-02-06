@@ -8,8 +8,7 @@ describe('BeatCreatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BeatCreatorComponent],
-
+      imports: [BeatCreatorComponent]
     })
     .compileComponents();
 

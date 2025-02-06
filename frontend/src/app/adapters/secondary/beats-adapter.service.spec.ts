@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {TestBed} from '@angular/core/testing';
 import {of, throwError} from 'rxjs';
-import {GenresAdapterService} from "./genres-adapter.service";
-import {Genre} from "../../domain/genre";
+import {BeatsAdapterService} from "./beats-adapter.service";
+import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Beat} from "../../domain/beat";
 
 describe('GenreAdapterService', () => {
-  let service: GenresAdapterService;
+  let service: BeatsAdapterService;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
 
   beforeEach(() => {
@@ -14,14 +14,14 @@ describe('GenreAdapterService', () => {
     TestBed.configureTestingModule({
       providers: [{provide: HttpClient, useValue: httpClientSpy}]
     });
-    service = TestBed.inject(GenresAdapterService);
+    service = TestBed.inject(BeatsAdapterService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return expected genres', async () => {
+  it('should return expected beats grouped by genres', async () => {
     // Arrange
     const seed: Beat[] = [
       {id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
@@ -30,10 +30,10 @@ describe('GenreAdapterService', () => {
     httpClientSpy.get.and.returnValue(of(seed));
 
     // Act
-    var genres = await service.getGenres();
+    const genres = await service.getBeatsGroupedByGenres();
 
     // Assert
-    const expectedResult: Genre[] = [{
+    const expectedResult: BeatsGroupedByGenre[] = [{
       label: "Techno", beats:
         [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
           {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
@@ -43,7 +43,7 @@ describe('GenreAdapterService', () => {
   });
 
   it('should return an error getting genres when the server returns a 404', (done: DoneFn) => {
-
+    //Arrange
     const errorResponse = {
       body: {error: 'test 404 error'},
       status: 404, statusText: 'Not Found'
@@ -51,12 +51,14 @@ describe('GenreAdapterService', () => {
 
     httpClientSpy.get.and.returnValue(throwError(() => errorResponse));
 
-    service.getGenres()
+    //Act
+    service.getBeatsGroupedByGenres()
       .then(() => {
       })
       .catch((error) => {
+        //Assert
         expect(error.name).toEqual('(FiberFailure) Error');
-        expect(error.message).toContain('Can\'t get genres');
+        expect(error.message).toContain('Can\'t get beats grouped by genre');
         done();
       });
   });

@@ -1,6 +1,6 @@
 import {Beat} from "./beat";
 
-export interface Genre {
+export interface BeatsGroupedByGenre {
   label: string;
   beats: Beat[];
 }

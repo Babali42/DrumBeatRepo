@@ -20,14 +20,20 @@ describe('Router', () => {
   });
 
   it('should render the main page', fakeAsync (() => {
+    //Act
     router.navigate(['/']);
     tick();
+
+    //Assert
     expect(location.path()).toBe('/');
   }));
 
   it('should render the add beat page', fakeAsync (() => {
+    //Act
     router.navigate(['/add-beat']);
     tick();
+
+    //Assert
     expect(location.path()).toBe('/add-beat');
   }));
 });

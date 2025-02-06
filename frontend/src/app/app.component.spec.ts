@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {IManageGenresToken} from "./domain/ports/secondary/i-manage-genres";
-import {GenresAdapterService} from "./adapters/secondary/genres-adapter.service";
+import {IManageBeatsToken} from "./domain/ports/secondary/i-manage-beats";
+import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
 import {BrowserModule} from "@angular/platform-browser";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
     declarations: [AppComponent],
     imports: [BrowserModule, LoadingBarModule, RouterTestingModule.withRoutes(routes)],
-    providers: [{ provide: IManageGenresToken, useClass: GenresAdapterService }, provideHttpClient(withInterceptorsFromDi())]
+    providers: [{ provide: IManageBeatsToken, useClass: BeatsAdapterService }, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
