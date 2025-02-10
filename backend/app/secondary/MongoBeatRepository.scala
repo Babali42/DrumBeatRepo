@@ -1,6 +1,7 @@
 package secondary
 
 import domain.{Beat, BeatRepository}
+import org.mongodb.scala.ObservableFuture
 import org.mongodb.scala.bson.collection.immutable.Document
 import org.mongodb.scala.{MongoCollection, MongoDatabase}
 
