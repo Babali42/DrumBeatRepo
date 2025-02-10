@@ -5,6 +5,7 @@ import org.mongodb.scala.{MongoClient, MongoDatabase}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.mongodb.scala.ObservableFuture
 
 import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
