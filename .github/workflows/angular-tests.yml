@@ -1,4 +1,4 @@
-name: Run Tests
+name: Angular Tests
 
 on:
   pull_request:
