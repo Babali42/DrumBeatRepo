@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 val currentEnv: String = sys.env.getOrElse("ENV", "development")
 
 scalaVersion := "3.3.5"
-coverageEnabled := true
+coverageEnabled := sys.props.get("enable.coverage").contains("true")
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
