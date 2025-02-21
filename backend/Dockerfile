@@ -11,7 +11,7 @@ ENV ENV=$ENV
 COPY . .
 
 # Compile the application and create a distribution package
-RUN sbt -D enableCoverage=false clean compile stage
+RUN sbt -D clean compile stage
 
 # Use a lightweight JRE image for running the app
 FROM openjdk:11-jre-slim

@@ -53,4 +53,5 @@ jobs:
     - name: Run tests
       env:
         PLAY_HTTP_SECRET_KEY: ${{ secrets.PLAY_HTTP_SECRET_KEY }}
-      run: sbt -D enableCoverage=true clean coverage test coverageReport
+        enableCoverage: true
+      run: sbt clean coverage test coverageReport
