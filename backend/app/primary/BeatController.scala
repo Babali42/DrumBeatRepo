@@ -1,6 +1,6 @@
 package primary
 
-import domain.Beat
+import domain.{Beat, Track}
 import play.api.libs.json._
 import play.api.mvc._
 import secondary.repositoryFactory.BeatRepositoryFactory
@@ -15,6 +15,7 @@ import scala.concurrent.ExecutionContext
     val repository = factory.createMongoRepository(connectionString, "drum-beat-database")
 
     repository.getAllBeats.map { documents =>
+      implicit val trackFormat: Format[Track] = Json.format[Track]
       implicit val beatWrites: OWrites[Beat] = Json.writes[Beat]
       val beats = documents.map(x => Json.toJson(x))
       Ok(Json.toJson(beats))
