@@ -26,6 +26,7 @@ services:
     depends_on:
       mongo-db-service:
         condition: service_healthy
+    restart: always
 
 volumes:
   mongo-data:
