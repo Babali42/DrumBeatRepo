@@ -101,7 +101,7 @@
               "buildTarget": "DrumBeatRepo:build:development"
             },
             "development-no-in-memory": {
-              "buildTarget": "DrumBeatRepo:build:development"
+              "buildTarget": "DrumBeatRepo:build:development-no-in-memory"
             }
           },
           "defaultConfiguration": "development"
