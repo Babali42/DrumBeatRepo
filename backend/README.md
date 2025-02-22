@@ -34,7 +34,7 @@ Build app image
 ```docker build -t drum-beat-repo-app-image .```
 
 Run mongo db and the previous image
-```docker-compose up -d```
+```docker compose up -d```
 
 ## 🛠️ Debug the backend
 ### Run DrumBeatRepo alone (don't forget to stop the corresponding docker container)
