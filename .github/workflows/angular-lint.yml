@@ -12,10 +12,10 @@ name: Angular Lint
 on:
   push:
     branches: [ "main" ]
-    paths: [ '../frontend', '.github/' ]
+    paths: [ 'frontend/**', '.github/**' ]
   pull_request:
     branches: [ "main" ]
-    paths: [ 'frontend/', '.github/' ]
+    paths: [ 'frontend/**', '.github/**' ]
 
 jobs:
   eslint:
