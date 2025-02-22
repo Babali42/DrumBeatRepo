@@ -1,12 +1,12 @@
 name: Angular Tests
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+    paths: [ 'frontend/', '.github/' ]
+  pull_request:
+    branches: [ "main" ]
+    paths: [ 'frontend/', '.github/' ]
 
 jobs:
   test:
