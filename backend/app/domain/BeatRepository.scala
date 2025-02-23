@@ -7,5 +7,5 @@ import scala.concurrent.Future
 
 @ImplementedBy(classOf[MongoBeatRepository])
 trait BeatRepository {
-  def getAllBeats: Future[Seq[Beat]]
+  def getAllBeats: Future[Option[Seq[Beat]]]
 }

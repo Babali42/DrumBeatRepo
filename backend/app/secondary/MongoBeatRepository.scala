@@ -12,26 +12,41 @@ import scala.concurrent.{ExecutionContext, Future}
 class MongoBeatRepository(database: MongoDatabase, collectionName: String = "beats") extends BeatRepository {
   private lazy val collection: MongoCollection[Document] = database.getCollection(collectionName)
 
-  private def documentToUser(doc: Document): Beat = {
-    Beat(doc.getOrElse("id", "").asString().getValue,
-      doc.getOrElse("label", "").asString().getValue,
-      doc.getOrElse("bpm", 0).asInt32().getValue,
-      doc.getOrElse("genre", "").asString().getValue,
-      doc.get("tracks")
-        .map(_.asArray().getValues.asScala.toSeq.map(bsonValueToTrack))
-        .getOrElse(Seq.empty))
+  override def getAllBeats: Future[Option[Seq[Beat]]] = {
+    collection.find().toFuture().map(documents => documents.map(documentToUser).foldLeft(Some(Seq()))(addOrResign))(ExecutionContext.global)
   }
 
-  def bsonValueToTrack(bson: BsonValue): Track = {
-    val doc = bson.asDocument()
-    Track(
-      doc.getString("name").getValue,
-      doc.getString("fileName").getValue,
-      doc.getString("steps").getValue
+  private def documentToUser(doc: Document): Option[Beat] = {
+    for {
+      id     <- doc.get("id").map(_.asString().getValue)
+      label  <- doc.get("label").map(_.asString().getValue)
+      bpm    <- doc.get("bpm").map(_.asInt32().getValue)
+      genre  <- doc.get("genre").map(_.asString().getValue)
+    } yield Beat(
+      id,
+      label,
+      bpm,
+      genre,
+      doc.get("tracks")
+        .map(_.asArray().getValues.asScala.toSeq.flatMap(bsonValueToTrack))
+        .getOrElse(Seq.empty)
     )
   }
 
-  override def getAllBeats: Future[Seq[Beat]] = {
-    collection.find().toFuture().map(documents => documents.map(documentToUser))(ExecutionContext.global)
+  private def bsonValueToTrack(bson: BsonValue): Option[Track] = {
+    val doc = bson.asDocument()
+
+    for {
+      name     <- Option(doc.get("name")).map(_.asString().getValue)
+      fileName <- Option(doc.get("fileName")).map(_.asString().getValue)
+      steps    <- Option(doc.get("steps")).map(_.asString().getValue)
+    } yield Track(name, fileName, steps)
+  }
+
+  private def addOrResign(parsedBeats : Option[Seq[Beat]], newParsedBeat: Option[Beat]) = {
+    for {
+      beats   <- parsedBeats
+      parsedBeat   <- newParsedBeat
+    } yield beats.appended(parsedBeat)
   }
 }

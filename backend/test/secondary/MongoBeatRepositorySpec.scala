@@ -31,7 +31,8 @@ class MongoBeatRepositorySpec extends AsyncFlatSpec with Matchers with BeforeAnd
 
   "Mongo beat repository" should "return all beats" in {
     val repository = new MongoBeatRepository(testDatabase, tableName)
-    repository.getAllBeats.map { beats =>
+    repository.getAllBeats.map { a =>
+      val beats = a.get
       //Beat collection asserts
       beats.size shouldBe 2
 
