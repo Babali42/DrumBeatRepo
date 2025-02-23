@@ -39,7 +39,7 @@ describe('GenreAdapterService', () => {
           {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
     }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat]}];
     expect(genres).toEqual(expectedResult);
-    expect(httpClientSpy.get).toHaveBeenCalledOnceWith('api/beats');
+    expect(httpClientSpy.get).toHaveBeenCalledOnceWith('beats/');
   });
 
   it('should return an error getting genres when the server returns a 404', (done: DoneFn) => {
