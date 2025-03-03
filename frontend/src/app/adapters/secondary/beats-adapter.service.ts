@@ -1,17 +1,20 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Effect} from 'effect';
 import {lastValueFrom} from "rxjs";
 import {Beat} from "../../domain/beat";
+import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
 
 @Injectable({providedIn: 'root'})
 export class BeatsAdapterService implements IManageBeats {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  private http : HttpClient = Inject(HttpClientInMemoryWebApiModule);
 
   private beatsUrl = 'api/beats';
 
-  constructor(private http: HttpClient) {
+  constructor() {
   }
 
   getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {

@@ -19,6 +19,7 @@ export const routes: Routes = [
 ];
 import {IManageBeatsToken} from "./domain/ports/secondary/i-manage-beats";
 import {environment} from "../environments/environment";
+import {InMemoryBeatGateway} from "./adapters/secondary/in-memory-beat-gateway";
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,15 +33,13 @@ import {environment} from "../environments/environment";
     RouterOutlet
   ],
   providers: [
-    {provide: IManageBeatsToken, useClass: BeatsAdapterService},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: IManageBeatsToken, useClass: BeatsAdapterService },
-    //@ts-ignore
-    environment.httpClientInMemory ? HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false
-    }).providers : []
+
+    //solution après
+    //{provide: IManageBeatsToken, useClass: BeatsAdapterService },
+    {provide: IManageBeatsToken, useFactory : () => new InMemoryBeatGateway()}
   ]
 })
 
