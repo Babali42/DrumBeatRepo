@@ -1,5 +1,5 @@
-export interface Track {
-  name: string;
-  fileName: string;
-  steps: boolean[];
+export type Track = {
+  readonly name: string;
+  readonly fileName: string;
+  readonly steps: boolean[];
 }

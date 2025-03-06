@@ -1,9 +1,9 @@
 import { Track } from "./track";
 
-export interface Beat {
-  id: string;
-  label: string;
-  bpm: number;
-  genre: string;
-  tracks: Track[];
+export type Beat = {
+  readonly id: string;
+  readonly label: string;
+  readonly bpm: number;
+  readonly genre: string;
+  readonly tracks: ReadonlyArray<Track>;
 }

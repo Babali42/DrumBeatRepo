@@ -19,8 +19,8 @@ import {SelectInputComponent} from "../select-input/select-input.component";
 })
 export class SequencerComponent implements OnInit {
   beat = {} as Beat;
-  genre = {} as  BeatsGroupedByGenre;
-  beatBehaviourSubject: Subject<Beat>;
+  genre = {} as BeatsGroupedByGenre;
+  private readonly beatBehaviourSubject: Subject<Beat>;
   genresLabel: string[] = [];
   selectedGenreLabel: string = "";
   beats: string[] = [];

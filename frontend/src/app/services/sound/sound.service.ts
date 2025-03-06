@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Sample} from '../../domain/sample';
+import {Sample} from './sample';
 import {Track} from '../../domain/track';
 import {AudioFilesService} from "../files/audio-files.service";
 import {SoundGeneratorService} from "./sound-generator.service";
@@ -9,17 +9,21 @@ import {LoadingBarService} from '@ngx-loading-bar/core';
   providedIn: 'root'
 })
 export class SoundService {
-  static maxBpm = 1300;
-  static minBpm = 30;
+  private readonly audioFilesService = new AudioFilesService();
+  private readonly context: AudioContext;
+
+  static readonly maxBpm = 1300;
+  static readonly minBpm = 30;
+
   bpm: number = 120;
   isPlaying: boolean = false;
   index: number = 0;
-  private samples: Sample[] = [];
-  private context: AudioContext;
-  private tracks: Track[] = [];
-  private playbackSource: AudioBufferSourceNode;
+
+  private samples: Array<Sample> = [];
+  private tracks: Array<Track> = [];
+
   private stepNumber: number = 16;
-  private audioFilesService = new AudioFilesService();
+  private playbackSource: AudioBufferSourceNode;
   private loopBuffer: AudioBuffer | null = null;
 
   constructor(
@@ -98,8 +102,8 @@ export class SoundService {
     this.bpm = bpm;
   }
 
-  setTracks(tracks: Track[]) {
-    this.tracks = tracks;
+  setTracks(tracks: readonly Track[]) {
+    this.tracks = [...tracks];
     const trackNames = tracks.map(x => x.fileName);
     this.loadTracks(trackNames);
   }
