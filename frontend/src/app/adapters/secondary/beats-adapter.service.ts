@@ -9,9 +9,10 @@ import {Beat} from "../../domain/beat";
 @Injectable({providedIn: 'root'})
 export class BeatsAdapterService implements IManageBeats {
 
-  private beatsUrl = 'api/beats';
+  private beatsUrl = 'beats/';
 
   constructor(private http: HttpClient) {
+
   }
 
   getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {

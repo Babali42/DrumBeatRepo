@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService} from "./adapters/secondary/in-memory-data.service";
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
 import {LoadingBarModule} from '@ngx-loading-bar/core';
@@ -18,7 +16,7 @@ export const routes: Routes = [
   {path: 'add-beat', component: BeatCreatorComponent}
 ];
 import {IManageBeatsToken} from "./domain/ports/secondary/i-manage-beats";
-import {environment} from "../environments/environment";
+import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,21 +24,14 @@ import {environment} from "../environments/environment";
   imports: [BrowserModule,
     LoadingBarModule,
     FormsModule,
-    environment.httpClientInMemory ? HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ) : [],
     RouterOutlet
   ],
   providers: [
     {provide: IManageBeatsToken, useClass: BeatsAdapterService},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withInterceptorsFromDi()),
-    { provide: IManageBeatsToken, useClass: BeatsAdapterService },
-    //@ts-ignore
-    environment.httpClientInMemory ? HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false
-    }).providers : []
+    provideHttpClient(withInterceptorsFromDi())
   ]
 })
 
