@@ -151,9 +151,6 @@ THE SOFTWARE.
 @ngx-loading-bar/core
 MIT
 
-angular-in-memory-web-api
-MIT
-
 effect
 MIT
 MIT License
