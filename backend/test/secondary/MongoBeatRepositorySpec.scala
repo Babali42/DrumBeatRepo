@@ -10,7 +10,7 @@ import org.mongodb.scala.bson.BsonArray
 import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
 
-class MongoBeatRepositorySpec extends AsyncFlatSpec with Matchers with BeforeAndAfterEach  {
+class MongoBeatRepositorySpec extends AsyncFlatSpec with Matchers with BeforeAndAfterEach {
   val mongoClient = MongoClient("mongodb://admin:pass@localhost:27017")
   val testDatabase: MongoDatabase = mongoClient.getDatabase("drum-beat-database")
   val tableName = "beats-for-in-memory-test"
