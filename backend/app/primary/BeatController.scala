@@ -1,6 +1,5 @@
 package primary
 
-import domain.{Beat, Track}
 import play.api.libs.json._
 import play.api.mvc._
 import secondary.repositoryFactory.BeatRepositoryFactory
@@ -17,7 +16,7 @@ import scala.concurrent.ExecutionContext
     repository.getAllBeats.map { documents =>
       implicit val trackFormat: Format[Track] = Json.format[Track]
       implicit val beatWrites: OWrites[Beat] = Json.writes[Beat]
-      val beats = documents.map(x => Json.toJson(x))
+      val beats = documents.map(x => Json.toJson(x.map(y => y.as[primary.Beat])))
       Ok(Json.toJson(beats))
     }.recover { case ex: Throwable => InternalServerError(s"Error fetching beats: ${ex.getMessage}")
     }
