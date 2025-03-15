@@ -1,6 +1,6 @@
 package domain
 
-case class Track(name: String, fileName: String, steps: String) {
+case class Track(name: String, fileName: String, steps: Seq[Boolean]) {
   def as[T](implicit f: Track => T): T = f(this)
 }
 

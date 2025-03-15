@@ -8,8 +8,8 @@ class BeatSpec extends AsyncFlatSpec with Matchers {
   "Primary Beat" should "be created from domain one" in {
     val domainBeat = domain.Beat("0", "Gabber", 180, "Techno",
       Seq(
-        domain.Track("Kick", "kick.mp3", "X___X___X___X___"),
-        domain.Track("Snare", "snare.mp3", "___X_______X___")))
+        domain.Track("Kick", "kick.mp3", Seq(true, false, false, false)),
+        domain.Track("Snare", "snare.mp3", Seq(true, false, false, false))))
 
     val primaryBeat = domainBeat.as[primary.Beat]
     primaryBeat.id mustBe domainBeat.id

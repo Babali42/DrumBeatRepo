@@ -40,7 +40,7 @@ class MongoBeatRepository(database: MongoDatabase, collectionName: String = "bea
       name     <- Option(doc.get("name")).map(_.asString().getValue)
       fileName <- Option(doc.get("fileName")).map(_.asString().getValue)
       steps    <- Option(doc.get("steps")).map(_.asString().getValue)
-    } yield Track(name, fileName, steps)
+    } yield Track(name, fileName, steps.toCharArray().map(x => x == 'X'))
   }
 
   private def addOrResign(parsedBeats : Option[Seq[Beat]], newParsedBeat: Option[Beat]) = {

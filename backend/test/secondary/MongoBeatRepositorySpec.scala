@@ -47,7 +47,7 @@ class MongoBeatRepositorySpec extends AsyncFlatSpec with Matchers with BeforeAnd
       //Track fields asserts
       firstTrack.name shouldBe "Kick"
       firstTrack.fileName shouldBe "kick.mp3"
-      firstTrack.steps shouldBe "X___X___X___X___"
+      firstTrack.steps shouldBe Seq(true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false)
     }
   }
 }
