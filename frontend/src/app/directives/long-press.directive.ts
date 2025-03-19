@@ -26,7 +26,7 @@ export class LongPressDirective implements OnDestroy {
       'mousedown'
     ).pipe(
       filter((event) => event.button == 0), // Only allow left button (Primary button)
-      map((event) => true) // turn on threshold counter
+      map(() => true) // turn on threshold counter
     );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const touchstart = fromEvent(elementRef.nativeElement, 'touchstart').pipe(
