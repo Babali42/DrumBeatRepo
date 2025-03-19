@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SoundService} from "../../services/sound/sound.service";
+import {LongPressDirective} from "../../directives/long-press.directive";
 
 @Component({
   selector: 'app-bpm-input',
   standalone: true,
-  imports: [],
   templateUrl: './bpm-input.component.html',
+  imports: [
+    LongPressDirective
+  ],
   styleUrl: './bpm-input.component.scss'
 })
 export class BpmInputComponent {
