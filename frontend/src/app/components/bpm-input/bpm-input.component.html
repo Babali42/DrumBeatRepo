@@ -1,5 +1,5 @@
 <div class="number-control">
-  <div class="number-left cursor-pointer" (click)="decrementBpm()"></div>
+  <div longPress class="number-left cursor-pointer" (mouseLongPress)="decrementBpm()" (click)="decrementBpm()"></div>
   <input type="number" name="number" class="number-quantity" [value]="bpm" (change)="updateNumber($event)">
-  <div class="number-right cursor-pointer" (click)="incrementBpm()"></div>
+  <div longPress class="number-right cursor-pointer" (mouseLongPress)="incrementBpm()" (click)="incrementBpm()"></div>
 </div>
