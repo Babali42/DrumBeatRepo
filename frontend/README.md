@@ -7,6 +7,10 @@ This project is built with:
 - **Angular**: Modern, component-based front-end framework.
 - **Web Audio API**: Direct access to audio capabilities of the browser for smooth sound manipulation and playback.
 
+## Architecture
+
+Hexagonal a.k.a. Port/Adapter
+
 ## 📚 References
 
 <details>

@@ -8,6 +8,10 @@ This project is built with:
 - **Play**: A minimalistic back-end framework for the jvm languages, easy to test
 - **MongoDB**: A noSQL database to store beats and groovy rhythms :)
 
+## Architecture
+
+Hexagonal a.k.a. Port/Adapter
+
 ## 📚 References
 
 <details>

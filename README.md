@@ -18,10 +18,6 @@ Here is a preview of https://www.drumbeatrepo.com/#/ :
 - [ ] **Create your own beats**: Create sequence in the browser ...
 - [ ] **Store beats in the database**: ...and share it
 
-## Architecture : main schema
-
-![Architecture schema](drumbeatrepo-architecture.drawio.png)
-
 ## Linked readme
 
 - [Frontend README](frontend/README.md)
