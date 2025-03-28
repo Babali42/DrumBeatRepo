@@ -6,6 +6,10 @@
 Welcome to **Drum Beat Repository**, a project built to help musicians, producers, and developers work with drum patterns.
 This library leverages **Angular** and the **Web Audio API** to deliver a smooth, interactive drum sequencing experience right in your browser.
 
+Here is a preview of https://www.drumbeatrepo.com/#/ :
+
+![app.png](app.png)
+
 ## Features
 
 - [x] **Browse Beats**: Explore a variety of pre-organized drum patterns.
