@@ -4,10 +4,6 @@ import {beatsGroupedByGenre} from "./beats/beats-in-memory-data";
 
 export class InMemoryBeatGateway implements IManageBeats {
     getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {
-        return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(beatsGroupedByGenre);
-        });
-      });
+        return new Promise(() => beatsGroupedByGenre);
     }
 }

@@ -6,7 +6,7 @@ import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
 import IManageBeats, {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
-import {Subject} from "rxjs";
+import {Subject, timer} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 
@@ -56,7 +56,7 @@ export class SequencerComponent implements OnInit {
 
   toggleIsPlaying(): void {
     this.isTransitioning = true;
-    setTimeout(() => {
+    timer(100).subscribe(()=> {
       this.soundService.playPause().then(
         () => {
         },
@@ -64,8 +64,7 @@ export class SequencerComponent implements OnInit {
         }
       );
       this.isTransitioning = false;
-    }, 100);
-
+    });
   }
 
   @HostListener('document:keydown', ['$event'])
