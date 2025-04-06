@@ -13,6 +13,7 @@ export class SelectInputComponent {
   @Input() elements: string[] = [];
   @Input() selectedElement: string = "";
   @Input() placeHolder: string = "";
+  @Input() label: string = "";
   @Output() selectChange = new EventEmitter<string>();
 
   onSelectChange() {
