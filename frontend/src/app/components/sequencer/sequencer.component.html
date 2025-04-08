@@ -12,20 +12,17 @@
       <app-select-input [elements]="genresLabel"
                         [selectedElement]="selectedGenreLabel"
                         (selectChange)="genreChange($event)"
-                        placeHolder="Choose genre"
-                        label="Genre">
+                        placeHolder="Choose genre">
       </app-select-input>
     </div>
     <div class="label">
       <app-select-input [elements]="beats"
                         [selectedElement]="selectedBeatLabel"
                         (selectChange)="beatChange($event)"
-                        placeHolder="Choose {{selectedGenreLabel}} beat"
-                        label="Beat">
+                        placeHolder="Choose {{selectedGenreLabel}} beat">
       </app-select-input>
     </div>
     <div class="flex label bpm-input-group">
-      <span class="large user-select-none">Tempo : </span>
       <app-bpm-input [bpm]="beat.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
     </div>
