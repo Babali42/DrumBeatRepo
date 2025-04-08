@@ -1,6 +1,6 @@
 <div id="main-container">
   <div class="play-button-container flex">
-    <button class="play-pause-button cursor-pointer"
+    <button class="play-pause-button cursor-pointer app-button"
             [class.entering]="isTransitioning"
             [class.entered]="!isTransitioning"
             (click)="toggleIsPlaying()">
@@ -25,6 +25,7 @@
     <div class="flex label bpm-input-group">
       <app-bpm-input [bpm]="beat.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
+      <button class="app-button tap-tempo-button cursor-pointer ml-10" (click)="tapTempo()">Tap tempo</button>
     </div>
   </div>
   <div class="tracks-name-container">

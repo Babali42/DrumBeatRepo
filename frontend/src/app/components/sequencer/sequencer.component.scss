@@ -141,12 +141,8 @@ $gap: 4px;
     height: 64px;
     width: 64px;
     min-width: 64px;
-    background-color: var(--backgroundColor);
-    color: var(--textColor);
     font-size: 20px;
     border-radius: 8px;
-    border-style: solid;
-    border-width: 1px;
     border-color: color-mix(in srgb, var(--textColor) 30%, var(--backgroundColor));
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
   }
@@ -169,4 +165,15 @@ $gap: 4px;
   .play-pause-button.entered {
     transform: scale(1);
   }
+}
+
+.app-button {
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+  border: 1px var(--borderColor) solid;
+}
+
+.tap-tempo-button {
+  border-radius: 5px;
+  height: 24px;
 }
