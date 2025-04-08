@@ -1,5 +1,4 @@
-<label class="large" [for]="'select' + label">{{label}} : </label>
-<select [id]="'select' + label" [(ngModel)]="selectedElement" (change)="onSelectChange()" class="cursor-pointer large">
+<select [(ngModel)]="selectedElement" (change)="onSelectChange()" class="cursor-pointer large">
   <option value="" disabled selected>{{placeHolder}}</option>
   <option *ngFor="let element of elements" [value]="element">{{ element }}</option>
 </select>

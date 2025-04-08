@@ -572,12 +572,12 @@ const punkBeatEightNoteFill: Beat = {
 };
 
 export const beatsGroupedByGenre : BeatsGroupedByGenre[] = [
-  { label:"Metal", beats: [metalBeat, blastBeat, rockBeatVariation, halfTimeGroove, rockBeat]} as BeatsGroupedByGenre,
-  { label:"Techno", beats: [technoBeat, offBeatTechnoClap, gabberBeat, psytranceBeat ]} as BeatsGroupedByGenre,
+  { label:"Techno", beats: [psytranceBeat, technoBeat, offBeatTechnoClap, gabberBeat]} as BeatsGroupedByGenre,
   { label:"BreakBeat", beats: [breakcoreBeat, jerseyClubBeat]} as BeatsGroupedByGenre,
-  { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
   { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat, reggaetonBeat]},
   { label:"Garage", beats: [drumAndBassBeat, garageTwoStep]},
   { label:"Dub", beats: [dubBeat]},
-  { label:"Indus", beats: [ebmBeat]}
+  { label:"Indus", beats: [ebmBeat]},
+  { label:"Metal", beats: [metalBeat, blastBeat, rockBeatVariation, halfTimeGroove, rockBeat]} as BeatsGroupedByGenre,
+  { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
 ];

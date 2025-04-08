@@ -29,11 +29,6 @@
   height: 100%;
 }
 
-.header {
-  width: 240px;
-  font-size: 30px;
-}
-
 .column {
   flex-direction: column;
 }
@@ -43,27 +38,27 @@
 }
 
 .header-mobile {
-  font-size: 30px;
+  font-size: 32px;
   width: 100%;
   text-align: center;
 }
 
 #title-image {
-  width: 150px;
+  width: 128px;
   aspect-ratio: 1;
 }
 
 .title-image-mobile {
-  width: 300px;
+  width: 256px;
 }
 
 .portrait-to-landscape {
   justify-content: center;
   display: flex;
   flex-direction: row;
-  margin: 50px;
+  margin: 64px;
 
   .portrait-to-landscape-image {
-    width: 100px;
+    width: 64px;
   }
 }
