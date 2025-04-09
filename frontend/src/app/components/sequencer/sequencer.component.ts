@@ -9,13 +9,14 @@ import IManageBeats, {IManageBeatsToken} from "../../domain/ports/secondary/i-ma
 import {Subject, timer} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
+import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 
 @Component({
   selector: 'sequencer',
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
   standalone: true,
-  imports: [NgFor, BpmInputComponent, SelectInputComponent]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
 })
 export class SequencerComponent implements OnInit {
   beat = {} as Beat;
@@ -27,14 +28,6 @@ export class SequencerComponent implements OnInit {
   selectedBeatLabel: string = "";
   private genres: BeatsGroupedByGenre[] = [];
   isTransitioning = false;
-
-  private groundZero = 0;
-  private lastTap = 0;
-  private counter = 0;
-  private tapDiff = 0;
-  private avgbpm = 0;
-  private previousTap = 0;
-  private elapsed = 0;
 
   constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
               public soundService: SoundService,
@@ -128,31 +121,6 @@ export class SequencerComponent implements OnInit {
 
   playTrack(trackName: string) {
     this.soundService.playTrack(trackName);
-  }
-
-  tapTempo() {
-    if (this.lastTap === 0) {
-      this.groundZero = new Date().getTime();
-      this.counter = 0;
-    }
-
-    this.lastTap = new Date().getTime();
-    this.elapsed = new Date().getTime() - this.previousTap;
-
-    this.previousTap = this.lastTap;
-    this.tapDiff = this.lastTap - this.groundZero;
-    if (this.tapDiff !== 0) {
-      this.avgbpm = Math.round((60000 * this.counter) / this.tapDiff);
-    }
-
-    this.counter++;
-
-    this.changeBeatBpm(this.avgbpm);
-    this.beat = {...this.beat, bpm: this.avgbpm};
-
-    if (this.elapsed > 3000) {
-      this.lastTap = 0;
-    }
   }
 }
 

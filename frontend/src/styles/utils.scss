@@ -34,6 +34,12 @@
   font-size: medium;
 }
 
+.app-button {
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+  border: 1px var(--borderColor) solid;
+}
+
 $color1_light_blue: #70F1FA;
 $color2_light_green: #DBFA70;
 $color3_purple: #CC71FA;

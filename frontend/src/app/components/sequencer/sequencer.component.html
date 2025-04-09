@@ -23,9 +23,9 @@
       </app-select-input>
     </div>
     <div class="flex label bpm-input-group">
-      <app-bpm-input [bpm]="beat.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
+      <app-bpm-input [bpm]="soundService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
-      <button class="app-button tap-tempo-button cursor-pointer ml-10" (click)="tapTempo()">Tap tempo</button>
+      <tap-tempo></tap-tempo>
     </div>
   </div>
   <div class="tracks-name-container">
