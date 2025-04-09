@@ -4,6 +4,7 @@ import {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
+import {By} from "@angular/platform-browser";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -43,7 +44,7 @@ describe('SequencerComponent', () => {
     // eslint-disable-next-line
     const sequencerComponent: HTMLElement = fixture.nativeElement;
     const buttons = sequencerComponent.querySelectorAll('button');
-    const tapTempoButton = buttons[buttons.length - 1];
+    const tapTempoButton = buttons[1];
 
     expect(tapTempoButton).toBeTruthy();
 
@@ -63,4 +64,26 @@ describe('SequencerComponent', () => {
     const tempoResult = parseInt(tempoInput.value, 10);
     expect(tempoResult).toBe(200);
   }));
+
+  it("should display a step button", ()  => {
+    fixture.detectChanges();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
+    const numberOfActiveStepsBeforeClick = stepButtons.filter(btn =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+      btn.nativeElement.classList.contains('active')
+    ).length;
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    stepButtons[0].nativeElement.click()
+
+    fixture.detectChanges();
+
+    const numberOfActiveStepsAfterClick = fixture.debugElement.queryAll(By.css('button.step')).filter(btn =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+      btn.nativeElement.classList.contains('active')
+    ).length;
+
+    expect(numberOfActiveStepsBeforeClick).not.toEqual(numberOfActiveStepsAfterClick);
+  });
 })

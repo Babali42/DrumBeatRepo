@@ -10,6 +10,7 @@ import {Subject, timer} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
+import {Track} from "../../domain/track";
 
 @Component({
   selector: 'sequencer',
@@ -121,6 +122,19 @@ export class SequencerComponent implements OnInit {
 
   playTrack(trackName: string) {
     this.soundService.playTrack(trackName);
+  }
+
+  stepClick(track: Track, stepIndex: number, value: boolean) {
+    const isPlaying = this.soundService.isPlaying;
+    track.steps[stepIndex] = !value;
+    this.soundService.generateLoopBuffer().then(
+      () => {
+        if(isPlaying)
+          this.soundService.play();
+      },
+      () => {
+      }
+    );
   }
 }
 
