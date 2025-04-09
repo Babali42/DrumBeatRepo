@@ -12,11 +12,12 @@ Here is a preview of https://www.drumbeatrepo.com/#/ :
 
 ## Features
 
-- [x] **Browse Beats**: Explore a variety of pre-organized drum patterns.
-- [x] **Play and Listen**: Play back drum beats with precise audio timing using the Web Audio API.
+- [x] **Browse Beats**: Explore a variety of drum patterns.
+- [x] **Play and accelerate**: Play back drum beats and change tempo at your convenience.
 - [x] **Interactive Sequencer**: Visualize beats in the sequencer and follow the pattern as it plays.
 - [ ] **Create your own beats**: Create sequence in the browser ...
-- [ ] **Store beats in the database**: ...and share it
+- [ ] **Store pattern in the url**: ...and share it
+- [ ] **Export audio**: export to .wav or .mp3
 
 ## Linked readme
 
