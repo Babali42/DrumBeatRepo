@@ -61,11 +61,12 @@
       <div id="track" [class.sixteen-steps]="track.steps.length == StepLengths.sixteen"
            [class.thirty-two-steps]="track.steps.length == StepLengths.thirty_two"
            [class.sixty-four-steps]="track.steps.length == StepLengths.sixty_four">
-        <div *ngFor="let step of track.steps; let i = index" class="step"
+        <button *ngFor="let step of track.steps; let i = index" class="step"
              [class.active]="step"
              [class.current]="i === SoundService.index"
-             [class.highlight]="Math.floor(i / 4) % 2 === 0">
-        </div>
+             [class.highlight]="Math.floor(i / 4) % 2 === 0"
+              (click)="stepClick(track, i, step)">
+        </button>
       </div>
     </article>
   </section>
