@@ -24,14 +24,6 @@ export class TapTempoComponent {
   changeBeatBpm($event: number) {
     const isPlaying = this.soundService.isPlaying;
     this.soundService.setBpm($event);
-    this.soundService.generateLoopBuffer().then(
-      () => {
-        if(isPlaying)
-          this.soundService.play();
-      },
-      () => {
-      }
-    );
   }
 
   tapTempo() {

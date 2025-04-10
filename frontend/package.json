@@ -20,10 +20,12 @@
     "@angular/platform-browser-dynamic": "^18.2.13",
     "@angular/router": "^18.2.13",
     "@ngx-loading-bar/core": "^7.0.0",
+    "@types/waaclock": "^0.5.2",
     "angular-in-memory-web-api": "^0.18.0",
     "effect": "^3.10.14",
     "eslint": "^8.10.0",
     "rxjs": "~7.5.0",
+    "waaclock": "^0.5.5",
     "zone.js": "~0.14.7"
   },
   "devDependencies": {

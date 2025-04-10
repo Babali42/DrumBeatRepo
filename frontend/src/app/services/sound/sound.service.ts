@@ -1,150 +1,150 @@
-import {Injectable} from '@angular/core';
-import {Sample} from './sample';
-import {Track} from '../../domain/track';
+import {Injectable} from "@angular/core";
+import {Track} from "../../domain/track";
+import * as WAAClock from "waaclock";
 import {AudioFilesService} from "../files/audio-files.service";
-import {SoundGeneratorService} from "./sound-generator.service";
-import {LoadingBarService} from '@ngx-loading-bar/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService {
   private readonly audioFilesService = new AudioFilesService();
-  private readonly context: AudioContext;
-
   static readonly maxBpm = 1300;
   static readonly minBpm = 30;
-
-  bpm: number = 120;
-  isPlaying: boolean = false;
+  bpm: number = 450;
   index: number = 0;
+  signature = 8;
+  beatDur = 60/this.bpm;
+  barDur = this.signature * this.beatDur;
 
-  private samples: Array<Sample> = [];
-  private tracks: Array<Track> = [];
+  isPlaying = false;
+  private context: AudioContext;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  private clock: WAAClock;
+  private event: WAAClock.Event | undefined;
 
-  private stepNumber: number = 16;
-  private playbackSource: AudioBufferSourceNode;
-  private loopBuffer: AudioBuffer | null = null;
+  beats: Beats = {};
+  soundBank: SoundBank = {};
+  // @ts-ignore
+  private uiEvent: WAAClock.Event;
 
-  constructor(
-    private soundGeneratorService: SoundGeneratorService,
-    private loader: LoadingBarService
-  ) {
+  constructor() {
     this.context = new AudioContext();
-    this.playbackSource = new AudioBufferSourceNode(this.context);
   }
 
-  async playPause(): Promise<void> {
-    this.isPlaying = !this.isPlaying;
-    if (this.isPlaying) {
-      if (!this.loopBuffer) {
-        this.loopBuffer = await this.soundGeneratorService.getRenderedBuffer(
-          this.tracks,
-          this.samples,
-          this.bpm,
-          this.stepNumber
-        );
-      }
-      this.play();
-    } else {
-      this.pause();
-    }
+  play(){
+    this.clock = new WAAClock(this.context);
+    this.clock.start();
+
+    this.startBeat("psytrance/kick.wav", 0);
+    this.startBeat("psytrance/bass.wav", 1);
+    this.startBeat("psytrance/bass.wav", 2);
+    this.startBeat("psytrance/bass.wav", 3);
+    this.startBeat("psytrance/kick.wav", 4);
+    this.startBeat("psytrance/bass.wav", 5);
+    this.startBeat("psytrance/bass.wav", 6);
+    this.startBeat("psytrance/bass.wav", 7);
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    this.uiEvent = this.clock.callbackAtTime(this.uiNextBeat, this.nextBeatTime(0))
+      .repeat(this.beatDur)
+      .tolerance({late: 100})
   }
 
-  pause() {
-    this.playbackSource.stop(this.context.currentTime);
-    this.reset();
-  }
-
-  private playSound(loopBuffer: AudioBuffer) {
-    const source = this.context.createBufferSource();
-    source.buffer = loopBuffer;
-    source.connect(this.context.destination);
-    source.loop = true;
-    source.loopStart = source.buffer.duration / 2;
-    source.loopEnd = source.buffer.duration;
-    const startTime = this.context.currentTime;
-    source.start();
-
-    const updateDisplay = () => {
-      const currentTime = this.context.currentTime - startTime;
-      this.index = Math.trunc(((currentTime * 1000) / this.getMillisStepFromBpm()) % this.stepNumber);
-      if (this.isPlaying)
-        requestAnimationFrame(updateDisplay);
-    };
-
-    updateDisplay();
-
-    if (this.playbackSource.buffer) {
-      this.playbackSource.stop(this.context.currentTime);
-    }
-    this.playbackSource = source;
-  }
-
-  private getMillisStepFromBpm(): number {
-    const beat = 60000 / this.bpm;
-    let quarterBeat = beat / 4;
-    quarterBeat = Math.min(quarterBeat, 1000);
-    quarterBeat = Math.max(quarterBeat, 10);
-    return quarterBeat;
-  }
-
-  reset(): void {
-    this.isPlaying = false;
-    this.index = 0;
-  }
-
-  resetLoopBuffer(): void {
-    this.loopBuffer = null;
-  }
-
-  setBpm(bpm: number): void {
-    this.bpm = bpm;
+  pause(){
+    this.clock.stop();
   }
 
   setTracks(tracks: readonly Track[]) {
-    this.tracks = [...tracks];
     const trackNames = tracks.map(x => x.fileName);
     this.loadTracks(trackNames);
   }
 
   private loadTracks(trackNames: string[]) {
-    this.loader.start();
-    trackNames.forEach(x => this.samples.push({fileName: x}));
-    const loadPromises = this.samples.map(sample =>
-      this.audioFilesService.getAudioBuffer(sample.fileName).then(arrayBuffer => sample.sample = arrayBuffer)
+    const loadPromises = trackNames.map(sample =>
+      this.audioFilesService.getAudioBuffer(sample).then(arrayBuffer => {
+        const createNode = () => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const node = this.context.createBufferSource();
+          node.buffer = arrayBuffer
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          node.connect(this.context.destination)
+          return node
+        };
+        this.soundBank[sample] = { createNode: createNode }
+        console.log(this.soundBank[sample]);
+      })
     );
 
     Promise.all(loadPromises)
-      .then(() => this.loader.complete())
-      .catch(() => this.loader.complete());
+      .then(() => {})
+      .catch(() => {});
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  playPause() : Promise<void> {
 
-  setStepNumber(length: number) {
-    this.stepNumber = length;
+    if(this.isPlaying)
+      this.pause()
+    else
+      this.play();
+
+    this.isPlaying = !this.isPlaying;
+
+    return new Promise( () => {})
   }
 
-  async generateLoopBuffer(): Promise<void> {
-    this.loopBuffer = await this.soundGeneratorService.getRenderedBuffer(
-      this.tracks,
-      this.samples,
-      this.bpm,
-      this.stepNumber
-    );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setBpm(a : any) {
+
   }
 
-  play() : void {
-    if(!this.loopBuffer)
-      return;
-    this.playSound(this.loopBuffer);
+  setStepNumber(n: number) {
+    console.log(n);
   }
 
-  playTrack(trackName: string) {
-    const source = this.context.createBufferSource();
-    const fileName = this.tracks.find(x => x.name == trackName)?.fileName;
-    source.buffer = this.samples.find(x => x.fileName === fileName)!.sample!;
+  startBeat = (track: string, beatInd: number): void => {
+    console.log(track, beatInd);
+    console.log(this.soundBank)
+    const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
+      const bufferNode = this.soundBank[track].createNode();
+      bufferNode.start(event.deadline);
+    }, this.nextBeatTime(beatInd));
+    event.repeat(this.barDur);
+    event.tolerance({ late: 0.01 });
+
+    if (!this.beats[track]) this.beats[track] = {};
+    this.beats[track][beatInd] = event;
+  };
+
+  nextBeatTime = (beatInd: number): number => {
+    const currentTime = this.context.currentTime;
+    const currentBar = Math.floor(currentTime / this.barDur);
+    const currentBeat = Math.round(currentTime % this.barDur);
+    return currentBeat < beatInd
+      ? currentBar * this.barDur + beatInd * this.beatDur
+      : (currentBar + 1) * this.barDur + beatInd * this.beatDur;
+  };
+
+  uiNextBeat = function() {
+
+  }
+
+  playTrack(name: string) {
+    const source = this.soundBank[name].createNode();
     source.connect(this.context.destination);
     source.start();
   }
+}
+
+interface Beats {
+  [track: string]: {
+    [beatInd: number]: WAAClock.Event; // WAAClock event type (use correct type if you have WAAClock typings)
+  };
+}
+
+interface SoundBank {
+  [track: string]: {
+    createNode: () => AudioBufferSourceNode;
+  };
 }

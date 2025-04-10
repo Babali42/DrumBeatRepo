@@ -47,8 +47,6 @@ export class SequencerComponent implements OnInit {
     this.beatBehaviourSubject.subscribe(beat => {
       if (this.soundService.isPlaying)
         this.soundService.pause();
-      this.soundService.reset();
-      this.soundService.resetLoopBuffer();
       this.soundService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
       this.soundService.setStepNumber(beat.tracks[0].steps.length);
@@ -98,16 +96,7 @@ export class SequencerComponent implements OnInit {
   protected readonly Math = Math;
 
   changeBeatBpm($event: number) {
-    const isPlaying = this.soundService.isPlaying;
     this.soundService.setBpm($event);
-    this.soundService.generateLoopBuffer().then(
-      () => {
-        if(isPlaying)
-          this.soundService.play();
-      },
-      () => {
-      }
-    );
   }
 
   genreChange($event: string) {
@@ -117,10 +106,6 @@ export class SequencerComponent implements OnInit {
   beatChange($event: string) {
     const beatToSelect = this.genres.find(x => x.label === this.selectedGenreLabel)?.beats.find(x => x.label === $event);
     this.selectBeat(beatToSelect);
-  }
-
-  playTrack(trackName: string) {
-    this.soundService.playTrack(trackName);
   }
 }
 

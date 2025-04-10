@@ -31,7 +31,7 @@
   <div class="tracks-name-container">
     <div *ngFor="let track of beat.tracks" class="tracks-name">
       <svg class="svg-icon cursor-pointer" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false"
-           (mousedown)="playTrack(track.name)">
+           (mousedown)="soundService.playTrack(track.name)">
         <g stroke-width="0"></g>
         <g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134">
           <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
