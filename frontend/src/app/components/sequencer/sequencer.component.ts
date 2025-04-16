@@ -107,5 +107,7 @@ export class SequencerComponent implements OnInit {
     const beatToSelect = this.genres.find(x => x.label === this.selectedGenreLabel)?.beats.find(x => x.label === $event);
     this.selectBeat(beatToSelect);
   }
+
+  protected readonly SoundService = SoundService;
 }
 

@@ -63,7 +63,7 @@
            [class.sixty-four-steps]="track.steps.length == StepLengths.sixty_four">
         <div *ngFor="let step of track.steps; let i = index" class="step"
              [class.active]="step"
-             [class.current]="i === soundService.index"
+             [class.current]="i === SoundService.index"
              [class.highlight]="Math.floor(i / 4) % 2 === 0">
         </div>
       </div>
