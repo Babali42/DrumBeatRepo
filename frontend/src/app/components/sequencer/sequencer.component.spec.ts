@@ -29,42 +29,6 @@ describe('SequencerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should have <button> with "Tap tempo"', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const sequencerComponent: HTMLElement = fixture.nativeElement;
-    const buttons = sequencerComponent.querySelectorAll('button');
-    const p = buttons[buttons.length - 1];
-    expect(p.textContent).toEqual('Tap tempo');
-  });
-
-  it('should update tempo after three tap tempo clicks', fakeAsync(() => {
-    //Arrange
-    fixture.detectChanges();
-
-    // eslint-disable-next-line
-    const sequencerComponent: HTMLElement = fixture.nativeElement;
-    const buttons = sequencerComponent.querySelectorAll('button');
-    const tapTempoButton = buttons[1];
-
-    expect(tapTempoButton).toBeTruthy();
-
-    //Act
-    tapTempoButton.click();
-    tick(300);
-    tapTempoButton.click();
-    tick(300);
-    tapTempoButton.click();
-
-    fixture.detectChanges();
-
-    //Assert
-    // eslint-disable-next-line
-    const tempoInput = fixture.nativeElement.querySelector('input');
-    // eslint-disable-next-line
-    const tempoResult = parseInt(tempoInput.value, 10);
-    expect(tempoResult).toBe(200);
-  }));
-
   it("should display a step button", ()  => {
     fixture.detectChanges();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access

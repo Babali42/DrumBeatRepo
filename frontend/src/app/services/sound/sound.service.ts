@@ -107,7 +107,7 @@ export class SoundService {
     this.barDur = this.signature * this.stepDuration;
   }
 
-  startBeat = (track: string, stepIndex: number): void => {
+  startBeat(track: string, stepIndex: number): void {
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
       const bufferNode = this.soundBank[track].createNode();
       bufferNode.start(event.deadline);
@@ -117,6 +117,11 @@ export class SoundService {
     if (!this.beats[track]) this.beats[track] = {};
       this.beats[track][stepIndex] = event;
   };
+
+  stopBeat(track: string, beatInd: number) : void {
+    const event = this.beats[track][beatInd]
+    event.clear()
+  }
 
   nextStepTime = (stepIndex: number): number => {
     const currentTime = this.context.currentTime;

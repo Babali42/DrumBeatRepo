@@ -114,16 +114,13 @@ export class SequencerComponent implements OnInit {
   }
 
   stepClick(track: Track, stepIndex: number, value: boolean) {
-    const isPlaying = this.soundService.isPlaying;
     track.steps[stepIndex] = !value;
-    this.soundService.generateLoopBuffer().then(
-      () => {
-        if(isPlaying)
-          this.soundService.play();
-      },
-      () => {
-      }
-    );
+
+    if(!track.steps[stepIndex]){
+      this.soundService.stopBeat(track.fileName, stepIndex);
+    }else{
+      this.soundService.startBeat(track.fileName, stepIndex);
+    }
   }
   protected readonly SoundService = SoundService;
 }

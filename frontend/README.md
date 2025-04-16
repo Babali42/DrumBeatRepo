@@ -21,6 +21,7 @@ Hexagonal a.k.a. Port/Adapter
 - https://effect.website/
 - https://github.com/simonwhitaker/github-fork-ribbon-css
 - Host : https://pages.github.com/
+- Sequencer : https://sebpiq.github.io/WAAClock/demos/beatSequence.html
 </details>
 
 
