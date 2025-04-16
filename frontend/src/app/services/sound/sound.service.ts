@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, NgZone} from "@angular/core";
 import {Track} from "../../domain/track";
 import * as WAAClock from "waaclock";
 import {AudioFilesService} from "../files/audio-files.service";
@@ -20,21 +20,28 @@ export class SoundService {
   private clock: WAAClock;
 
   bpm: number = 128;
-  index: number = 0;
+  static index: number = 0;
   isPlaying = false;
 
-  private beatDur = this.getBeatDuration(this.bpm);
-  private signature = 4;
-  private barDur = this.signature * this.beatDur;
+  private stepDuration = this.getStepDuration(this.bpm);
+  private signature = 16;
+  private barDur = this.signature * this.stepDuration;
   private beats: Beats = {};
   private soundBank: SoundBank = {};
+  private uiNextStep = () => {
+    this.zone.run(() => {
+      const currentTime = this.context.currentTime;
+      const currentBar = Math.floor(currentTime / (this.stepDuration));
+      SoundService.index = (currentBar+ 1) % this.signature;
+    });
+  };
 
-  constructor() {
+  constructor(private zone: NgZone) {
     this.context = new AudioContext();
   }
 
   play() {
-    this.clock = new WAAClock(this.context);
+    this.clock = new WAAClock(this.context, {toleranceEarly: 0.1});
     this.clock.start();
 
     this.tracks.forEach((track) => {
@@ -43,10 +50,10 @@ export class SoundService {
           this.startBeat(track.fileName, index);
       })
     })
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    // this.uiEvent = this.clock.callbackAtTime(this.uiNextBeat, this.nextBeatTime(0))
-    //   .repeat(this.beatDur)
-    //   .tolerance({late: 100})
+
+    this.clock.callbackAtTime(this.uiNextStep, this.nextStepTime(0))
+      .repeat(this.stepDuration)
+      .tolerance({late: 100})
   }
 
   pause() {
@@ -91,33 +98,33 @@ export class SoundService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setBpm(a: number) {
     this.bpm = a;
-    this.beatDur = this.getBeatDuration(this.bpm);
-    this.barDur = this.signature * this.beatDur;
+    this.stepDuration = this.getStepDuration(this.bpm);
+    this.barDur = this.signature * this.stepDuration;
   }
 
   setStepNumber(n: number) {
     this.signature = n;
-    this.barDur = this.signature * this.beatDur;
+    this.barDur = this.signature * this.stepDuration;
   }
 
-  startBeat = (track: string, beatInd: number): void => {
+  startBeat = (track: string, stepIndex: number): void => {
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
       const bufferNode = this.soundBank[track].createNode();
       bufferNode.start(event.deadline);
-    }, this.nextBeatTime(beatInd));
+    }, this.nextStepTime(stepIndex));
     event.repeat(this.barDur);
 
     if (!this.beats[track]) this.beats[track] = {};
-    this.beats[track][beatInd] = event;
+      this.beats[track][stepIndex] = event;
   };
 
-  nextBeatTime = (beatInd: number): number => {
+  nextStepTime = (stepIndex: number): number => {
     const currentTime = this.context.currentTime;
     const currentBar = Math.floor(currentTime / this.barDur);
     const currentBeat = Math.round(currentTime % this.barDur);
-    return currentBeat < beatInd
-      ? currentBar * this.barDur + beatInd * this.beatDur
-      : (currentBar + 1) * this.barDur + beatInd * this.beatDur;
+    return currentBeat < stepIndex
+      ? currentBar * this.barDur + stepIndex * this.stepDuration
+      : (currentBar + 1) * this.barDur + stepIndex * this.stepDuration;
   };
 
   playTrack(name: string) {
@@ -126,8 +133,8 @@ export class SoundService {
     source.start();
   }
 
-  private getBeatDuration(bpm: number): number {
-    return 60 / (bpm * 4);
+  private getStepDuration(bpm: number): number {
+    return 60 / (bpm * ( this.signature / 4));
   }
 }
 
