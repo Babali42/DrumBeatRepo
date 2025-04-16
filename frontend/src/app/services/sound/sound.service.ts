@@ -38,6 +38,17 @@ export class SoundService {
 
   constructor(private zone: NgZone) {
     this.context = new AudioContext();
+    document.addEventListener('click', this.resumeAudioContext.bind(this), { once: true });
+  }
+
+  private resumeAudioContext() {
+    if (this.context.state === 'suspended') {
+      this.context.resume().then(() => {
+        console.log('AudioContext resumed');
+      }).catch(err => {
+        console.error('Failed to resume AudioContext', err);
+      });
+    }
   }
 
   play() {
