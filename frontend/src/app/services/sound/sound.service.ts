@@ -86,7 +86,6 @@ export class SoundService {
           return node;
         };
         this.soundBank[sample] = {createNode: createNode}
-        console.log(this.soundBank[sample]);
       })
     );
 
