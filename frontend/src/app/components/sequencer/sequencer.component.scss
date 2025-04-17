@@ -157,12 +157,4 @@ $gap: 4px;
     border-radius: 10px;
     border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
   }
-
-  .play-pause-button.entering {
-    transform: scale(0.5);
-  }
-
-  .play-pause-button.entered {
-    transform: scale(1);
-  }
 }

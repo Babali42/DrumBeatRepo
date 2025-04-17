@@ -6,10 +6,9 @@ import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
 import IManageBeats, {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
-import {Subject, timer} from "rxjs";
+import {Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
-import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 import {Track} from "../../domain/track";
 
 @Component({
@@ -17,18 +16,20 @@ import {Track} from "../../domain/track";
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
   standalone: true,
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent]
 })
 export class SequencerComponent implements OnInit {
+  private readonly beatBehaviourSubject: Subject<Beat>;
+  private genres: BeatsGroupedByGenre[] = [];
+  protected readonly StepLengths = StepLengths;
+  protected readonly Math = Math;
+
   beat = {} as Beat;
   genre = {} as BeatsGroupedByGenre;
-  private readonly beatBehaviourSubject: Subject<Beat>;
   genresLabel: string[] = [];
   selectedGenreLabel: string = "";
   beats: string[] = [];
   selectedBeatLabel: string = "";
-  private genres: BeatsGroupedByGenre[] = [];
-  isTransitioning = false;
 
   constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
               public soundService: SoundService,
@@ -55,16 +56,7 @@ export class SequencerComponent implements OnInit {
   }
 
   toggleIsPlaying(): void {
-    this.isTransitioning = true;
-    timer(100).subscribe(()=> {
-      this.soundService.playPause().then(
-        () => {
-        },
-        () => {
-        }
-      );
-      this.isTransitioning = false;
-    });
+    this.soundService.playPause();
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -93,13 +85,6 @@ export class SequencerComponent implements OnInit {
     this.selectedBeatLabel = this.beat.label;
   }
 
-  protected readonly StepLengths = StepLengths;
-  protected readonly Math = Math;
-
-  changeBeatBpm($event: number) {
-    this.soundService.setBpm($event);
-  }
-
   genreChange($event: string) {
     this.selectGenre(this.genres, $event, null);
   }
@@ -109,19 +94,13 @@ export class SequencerComponent implements OnInit {
     this.selectBeat(beatToSelect);
   }
 
-  playTrack(trackName: string) {
-    this.soundService.playTrack(trackName);
-  }
-
   stepClick(track: Track, stepIndex: number, value: boolean) {
     track.steps[stepIndex] = !value;
 
-    if(!track.steps[stepIndex]){
+    if(!track.steps[stepIndex]) {
       this.soundService.stopBeat(track.fileName, stepIndex);
-    }else{
+    } else {
       this.soundService.startBeat(track.fileName, stepIndex);
     }
   }
-  protected readonly SoundService = SoundService;
 }
-
