@@ -27,7 +27,7 @@ export class SoundService {
   private signature = 16;
   private barDur = this.signature * this.stepDuration;
   private beats: Beats = {};
-  private soundBank: SoundBank = {};
+  private sampleBuilders: Map<string, () => AudioBufferSourceNode> = new Map();
   private uiNextStep = () => {
     this.zone.run(() => {
       const currentTime = this.context.currentTime;
@@ -85,7 +85,7 @@ export class SoundService {
           node.connect(this.context.destination);
           return node;
         };
-        this.soundBank[sample] = {createNode: createNode}
+        this.sampleBuilders.set(sample, createNode);
       })
     );
 
@@ -120,15 +120,15 @@ export class SoundService {
     this.barDur = this.signature * this.stepDuration;
   }
 
-  startBeat(track: string, stepIndex: number): void {
+  startBeat(trackName: string, stepIndex: number): void {
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
-      const bufferNode = this.soundBank[track].createNode();
+      const bufferNode = this.sampleBuilders.get(trackName)!();
       bufferNode.start(event.deadline);
     }, this.nextStepTime(stepIndex));
     event.repeat(this.barDur);
 
-    if (!this.beats[track]) this.beats[track] = {};
-      this.beats[track][stepIndex] = event;
+    if (!this.beats[trackName]) this.beats[trackName] = {};
+      this.beats[trackName][stepIndex] = event;
   };
 
   stopBeat(track: string, beatInd: number) : void {
@@ -145,8 +145,8 @@ export class SoundService {
       : (currentBar + 1) * this.barDur + stepIndex * this.stepDuration;
   };
 
-  playTrack(name: string) {
-    const source = this.soundBank[name].createNode();
+  playTrack(trackName: string) {
+    const source = this.sampleBuilders.get(trackName)!();
     source.connect(this.context.destination);
     source.start();
   }
@@ -159,11 +159,5 @@ export class SoundService {
 interface Beats {
   [track: string]: {
     [beatInd: number]: WAAClock.Event;
-  };
-}
-
-interface SoundBank {
-  [track: string]: {
-    createNode: () => AudioBufferSourceNode;
   };
 }
