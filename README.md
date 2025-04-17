@@ -15,7 +15,7 @@ Here is a preview of https://www.drumbeatrepo.com/#/ :
 - [x] **Browse Beats**: Explore a variety of drum patterns.
 - [x] **Play and accelerate**: Play back drum beats and change tempo at your convenience.
 - [x] **Interactive Sequencer**: Visualize beats in the sequencer and follow the pattern as it plays.
-- [ ] **Create your own beats**: Create sequence in the browser ...
+- [x] **Create your own beats**: Create sequence in the browser ...
 - [ ] **Store pattern in the url**: ...and share it
 - [ ] **Export audio**: export to .wav or .mp3
 
