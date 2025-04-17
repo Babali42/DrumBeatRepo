@@ -104,7 +104,8 @@ export class SoundService {
   }
 
   setBpm(a: number) {
-    const events = Object.values(this.beats).flatMap(track => Object.values(track));
+    const events = Object.values(this.beats)
+      .flatMap(track => [...track.events.values()]);
 
     if (this.clock) {
       this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
@@ -127,12 +128,12 @@ export class SoundService {
     }, this.nextStepTime(stepIndex));
     event.repeat(this.barDur);
 
-    if (!this.beats[trackName]) this.beats[trackName] = {};
-      this.beats[trackName][stepIndex] = event;
+    if (!this.beats[trackName]) this.beats[trackName] = { events : new Map<number, WAAClock.Event>()};
+      this.beats[trackName].events.set(stepIndex, event);
   };
 
   stopBeat(track: string, beatInd: number) : void {
-    const event = this.beats[track][beatInd]
+    const event = this.beats[track].events.get(beatInd)!;
     event.clear()
   }
 
@@ -158,6 +159,6 @@ export class SoundService {
 
 interface Beats {
   [track: string]: {
-    [beatInd: number]: WAAClock.Event;
+    events: Map<number, WAAClock.Event>;
   };
 }
