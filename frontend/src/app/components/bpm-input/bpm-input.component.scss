@@ -33,7 +33,9 @@
     width: 64px;
     height: 16px;
     -moz-appearance: textfield;
-    border: 1px solid var(--borderColor);
+    border: 0;
+    border-top: 1px solid var(--borderColor);
+    border-bottom: 1px solid var(--borderColor);
     background-color: var(--backgroundColor);
     color: var(--textColor);
   }
