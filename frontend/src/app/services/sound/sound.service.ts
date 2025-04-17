@@ -20,7 +20,7 @@ export class SoundService {
   private clock: WAAClock;
 
   bpm: number = 128;
-  static index: number = 0;
+  index: number = 0;
   isPlaying = false;
 
   private stepDuration = this.getStepDuration(this.bpm);
@@ -32,7 +32,7 @@ export class SoundService {
     this.zone.run(() => {
       const currentTime = this.context.currentTime;
       const currentBar = Math.floor(currentTime / (this.stepDuration));
-      SoundService.index = (currentBar+ 1) % this.signature;
+      this.index = (currentBar+ 1) % this.signature;
     });
   };
 
@@ -95,18 +95,15 @@ export class SoundService {
       .catch(() => {});
   }
 
-  playPause(): Promise<void> {
+  playPause() : void {
     if (this.isPlaying)
       this.pause()
     else
       this.play();
 
     this.isPlaying = !this.isPlaying;
-
-    return new Promise( () => {})
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setBpm(a: number) {
     this.bpm = a;
     this.stepDuration = this.getStepDuration(this.bpm);

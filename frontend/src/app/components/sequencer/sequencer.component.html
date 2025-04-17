@@ -1,8 +1,6 @@
 <div id="main-container">
   <div class="play-button-container flex">
     <button class="play-pause-button cursor-pointer app-button"
-            [class.entering]="isTransitioning"
-            [class.entered]="!isTransitioning"
             (click)="toggleIsPlaying()">
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
@@ -30,7 +28,7 @@
   <div class="tracks-name-container">
     <div *ngFor="let track of beat.tracks" class="tracks-name">
       <svg class="svg-icon cursor-pointer" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false"
-           (mousedown)="soundService.playTrack(track.name)">
+           (mousedown)="soundService.playTrack(track.fileName)">
         <g stroke-width="0"></g>
         <g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134">
           <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
@@ -61,11 +59,11 @@
       <div id="track" [class.sixteen-steps]="track.steps.length == StepLengths.sixteen"
            [class.thirty-two-steps]="track.steps.length == StepLengths.thirty_two"
            [class.sixty-four-steps]="track.steps.length == StepLengths.sixty_four">
-        <button *ngFor="let step of track.steps; let i = index" class="step"
+        <button *ngFor="let step of track.steps; let i = index" class="step cursor-pointer"
              [class.active]="step"
-             [class.current]="i === SoundService.index"
+             [class.current]="i === soundService.index"
              [class.highlight]="Math.floor(i / 4) % 2 === 0"
-              (click)="stepClick(track, i, step)">
+             (click)="stepClick(track, i, step)">
         </button>
       </div>
     </article>
