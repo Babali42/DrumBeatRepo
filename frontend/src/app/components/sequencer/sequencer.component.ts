@@ -10,13 +10,14 @@ import {Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
+import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 
 @Component({
   selector: 'sequencer',
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
   standalone: true,
-  imports: [NgFor, BpmInputComponent, SelectInputComponent]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
 })
 export class SequencerComponent implements OnInit {
   private readonly beatBehaviourSubject: Subject<Beat>;
