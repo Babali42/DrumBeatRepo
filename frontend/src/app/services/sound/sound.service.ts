@@ -105,6 +105,12 @@ export class SoundService {
   }
 
   setBpm(a: number) {
+    const events = Object.values(this.beats).flatMap(track => Object.values(track));
+
+    if (this.clock) {
+      this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
+    }
+
     this.bpm = a;
     this.stepDuration = this.getStepDuration(this.bpm);
     this.barDur = this.signature * this.stepDuration;

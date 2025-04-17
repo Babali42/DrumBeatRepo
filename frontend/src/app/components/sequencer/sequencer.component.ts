@@ -104,4 +104,8 @@ export class SequencerComponent implements OnInit {
       this.soundService.startBeat(track.fileName, stepIndex);
     }
   }
+
+  changeBeatBpm($event: number) {
+    this.soundService.setBpm($event);
+  }
 }
