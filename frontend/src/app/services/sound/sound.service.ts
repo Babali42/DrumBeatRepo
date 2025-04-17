@@ -11,9 +11,9 @@ export class SoundService {
   static readonly minBpm = 30;
 
   private readonly audioFilesService = new AudioFilesService();
+  private readonly context: AudioContext;
 
   private tracks: readonly Track[] = [];
-  private context: AudioContext;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error: Type definition for WAAClock might be missing or incorrect
@@ -26,8 +26,10 @@ export class SoundService {
   private stepDuration = this.getStepDuration(this.bpm);
   private signature = 16;
   private barDur = this.signature * this.stepDuration;
-  private beats: Beats = {};
-  private sampleBuilders: Map<string, () => AudioBufferSourceNode> = new Map();
+
+  private trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
+  private trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
+
   private uiNextStep = () => {
     this.zone.run(() => {
       const currentTime = this.context.currentTime;
@@ -78,14 +80,12 @@ export class SoundService {
     const loadPromises = trackNames.map(sample =>
       this.audioFilesService.getAudioBuffer(sample).then(arrayBuffer => {
         const createNode = () => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const node = this.context.createBufferSource();
           node.buffer = arrayBuffer;
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           node.connect(this.context.destination);
           return node;
         };
-        this.sampleBuilders.set(sample, createNode);
+        this.trackSampleBuilderMap.set(sample, createNode);
       })
     );
 
@@ -104,8 +104,7 @@ export class SoundService {
   }
 
   setBpm(a: number) {
-    const events = Object.values(this.beats)
-      .flatMap(track => [...track.events.values()]);
+    const events = Array.from(this.trackStepMap.values()).flatMap(x => Array.from(x.values()));
 
     if (this.clock) {
       this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
@@ -123,17 +122,17 @@ export class SoundService {
 
   startBeat(trackName: string, stepIndex: number): void {
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
-      const bufferNode = this.sampleBuilders.get(trackName)!();
+      const bufferNode = this.trackSampleBuilderMap.get(trackName)!();
       bufferNode.start(event.deadline);
     }, this.nextStepTime(stepIndex));
     event.repeat(this.barDur);
 
-    if (!this.beats[trackName]) this.beats[trackName] = { events : new Map<number, WAAClock.Event>()};
-      this.beats[trackName].events.set(stepIndex, event);
+    if (!this.trackStepMap.get(trackName)) this.trackStepMap.set(trackName, new Map());
+      this.trackStepMap.get(trackName)!.set(stepIndex, event);
   };
 
   stopBeat(track: string, beatInd: number) : void {
-    const event = this.beats[track].events.get(beatInd)!;
+    const event = this.trackStepMap.get(track)!.get(beatInd)!;
     event.clear()
   }
 
@@ -147,7 +146,7 @@ export class SoundService {
   };
 
   playTrack(trackName: string) {
-    const source = this.sampleBuilders.get(trackName)!();
+    const source = this.trackSampleBuilderMap.get(trackName)!();
     source.connect(this.context.destination);
     source.start();
   }
@@ -155,10 +154,4 @@ export class SoundService {
   private getStepDuration(bpm: number): number {
     return 60 / (bpm * ( this.signature / 4));
   }
-}
-
-interface Beats {
-  [track: string]: {
-    events: Map<number, WAAClock.Event>;
-  };
 }
