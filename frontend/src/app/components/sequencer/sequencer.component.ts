@@ -13,11 +13,10 @@ import {Track} from "../../domain/track";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 
 @Component({
-  selector: 'sequencer',
-  templateUrl: './sequencer.component.html',
-  styleUrls: ['./sequencer.component.scss'],
-  standalone: true,
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
+    selector: 'sequencer',
+    templateUrl: './sequencer.component.html',
+    styleUrls: ['./sequencer.component.scss'],
+    imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
 })
 export class SequencerComponent implements OnInit {
   private readonly beatBehaviourSubject: Subject<Beat>;
