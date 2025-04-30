@@ -4,9 +4,10 @@ import {ModeToggleService} from "./services/light-dark-mode/mode-toggle.service"
 import {Mode} from './services/light-dark-mode/mode-toggle.model';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   isMobileDisplay: boolean = true;
