@@ -5,6 +5,7 @@ import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Effect} from 'effect';
 import {lastValueFrom} from "rxjs";
 import {Beat} from "../../domain/beat";
+import {CompactBeat} from "./compact-beat";
 
 @Injectable({providedIn: 'root'})
 export class BeatsAdapterService implements IManageBeats {
@@ -18,7 +19,7 @@ export class BeatsAdapterService implements IManageBeats {
   getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {
     const effect = Effect.tryPromise({
       try: async () => {
-        const beats = await lastValueFrom(this.http.get<Beat[]>(this.beatsUrl));
+        const beats = await lastValueFrom(this.http.get<CompactBeat[]>(this.beatsUrl));
         const beatsGroupedByGenres = this.groupBy(beats, (beat) => beat.genre);
         return Object.keys(beatsGroupedByGenres).map((genre) => ({
           label: genre,
