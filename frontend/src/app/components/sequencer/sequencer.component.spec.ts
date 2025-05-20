@@ -2,19 +2,27 @@ import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
-import {provideRouter} from "@angular/router";
+import {ActivatedRoute, provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
+import {BehaviorSubject, of} from "rxjs";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
+  let mockUrl$ = new BehaviorSubject([{ path: 'original' }]);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            url: mockUrl$.asObservable()
+          }
+        },
         provideHttpClient(),
         provideRouter([])
       ]
@@ -85,5 +93,21 @@ describe('SequencerComponent', () => {
     ).length;
 
     expect(numberOfActiveStepsBeforeClick).not.toEqual(numberOfActiveStepsAfterClick);
+  });
+
+  it("should update uri after user change a beat", () => {
+    fixture.detectChanges();
+
+    let originalUrl = component.route.url;
+
+    // simulate beat change in component
+    mockUrl$.next([{ path: 'updated' }]);
+
+    fixture.detectChanges();
+
+    component.route.url.subscribe(url => {
+      console.log(url);
+      expect(url).not.toBe([]);
+    });
   });
 })

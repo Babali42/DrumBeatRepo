@@ -34,7 +34,7 @@ export class SequencerComponent implements OnInit {
 
   constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
               public soundService: SoundService,
-              private route: ActivatedRoute) {
+              public route: ActivatedRoute) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }
 
@@ -42,7 +42,9 @@ export class SequencerComponent implements OnInit {
     this._beatsManager.getBeatsGroupedByGenres().then(genres => {
       this.genres = genres;
       this.genresLabel = genres.map(x => x.label);
+      console.log("a");
       this.route.queryParamMap.subscribe((params) => {
+        console.log("b");
         this.selectGenre(genres, params.get('genre'), params.get('beat'));
       });
     }).catch(error => { console.log(error); });
