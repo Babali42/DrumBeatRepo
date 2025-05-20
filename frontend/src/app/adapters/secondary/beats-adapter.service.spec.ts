@@ -4,6 +4,7 @@ import {of, throwError} from 'rxjs';
 import {BeatsAdapterService} from "./beats-adapter.service";
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Beat} from "../../domain/beat";
+import {CompactBeat} from "./compact-beat";
 
 describe('GenreAdapterService', () => {
   let service: BeatsAdapterService;
@@ -35,9 +36,9 @@ describe('GenreAdapterService', () => {
     // Assert
     const expectedResult: BeatsGroupedByGenre[] = [{
       label: "Techno", beats:
-        [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as Beat,
-          {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as Beat]
-    }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as Beat]}];
+        [{id: "1", label: "4 on the floor", bpm: 128, genre: "Techno"} as CompactBeat,
+          {id: "2", label: "Gabber", bpm: 200, genre: "Techno"} as CompactBeat]
+    }, {label: "Trance", beats: [{id: "3", label: "Trance", bpm: 200, genre: "Trance"} as CompactBeat]}];
     expect(genres).toEqual(expectedResult);
     expect(httpClientSpy.get).toHaveBeenCalledOnceWith('beats/');
   });

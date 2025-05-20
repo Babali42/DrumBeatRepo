@@ -11,6 +11,7 @@ import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
+import {expandCompactBeat} from "../../adapters/secondary/compact-beat";
 
 @Component({
     selector: 'sequencer',
@@ -75,7 +76,8 @@ export class SequencerComponent implements OnInit {
     this.beats = firstGenre.beats.map(x => x.label);
 
     const beatToSelect = beat ? firstGenre.beats.find(x => x.id === beat) : firstGenre.beats[0];
-    this.selectBeat(beatToSelect);
+    const fullBeat = expandCompactBeat(beatToSelect!);
+    this.selectBeat(fullBeat);
   }
 
   selectBeat(beatToSelect: Beat | undefined): void {
@@ -91,7 +93,8 @@ export class SequencerComponent implements OnInit {
 
   beatChange($event: string) {
     const beatToSelect = this.genres.find(x => x.label === this.selectedGenreLabel)?.beats.find(x => x.label === $event);
-    this.selectBeat(beatToSelect);
+    const fullBeat = expandCompactBeat(beatToSelect!);
+    this.selectBeat(fullBeat);
   }
 
   stepClick(track: Track, stepIndex: number, value: boolean) {
