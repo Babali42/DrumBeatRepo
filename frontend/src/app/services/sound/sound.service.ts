@@ -132,7 +132,12 @@ export class SoundService {
   };
 
   stopBeat(track: string, beatInd: number) : void {
-    const event = this.trackStepMap.get(track)!.get(beatInd)!;
+    const map = this.trackStepMap.get(track);
+
+    if(!map)
+      return;
+
+    const event = map.get(beatInd)!;
     event.clear()
   }
 
