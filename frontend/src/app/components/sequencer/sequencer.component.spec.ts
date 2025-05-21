@@ -2,27 +2,19 @@ import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
-import {ActivatedRoute, provideRouter} from "@angular/router";
+import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
-import {BehaviorSubject, of} from "rxjs";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
-  let mockUrl$ = new BehaviorSubject([{ path: 'original' }]);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            url: mockUrl$.asObservable()
-          }
-        },
         provideHttpClient(),
         provideRouter([])
       ]
@@ -95,19 +87,19 @@ describe('SequencerComponent', () => {
     expect(numberOfActiveStepsBeforeClick).not.toEqual(numberOfActiveStepsAfterClick);
   });
 
-  it("should update uri after user change a beat", () => {
+  it("should update uri field after user change a beat", () => {
     fixture.detectChanges();
 
-    let originalUrl = component.route.url;
+    const originalBase64Beat = component.base64beat;
 
-    // simulate beat change in component
-    mockUrl$.next([{ path: 'updated' }]);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    stepButtons[0].nativeElement.click()
 
     fixture.detectChanges();
 
-    component.route.url.subscribe(url => {
-      console.log(url);
-      expect(url).not.toBe([]);
-    });
+    expect(component.base64beat).not.toEqual(originalBase64Beat);
   });
 })

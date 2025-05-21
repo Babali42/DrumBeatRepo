@@ -11,7 +11,8 @@ import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
-import {expandCompactBeat} from "../../adapters/secondary/compact-beat";
+import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
+import {CompactBeatMapper} from "../../adapters/secondary/compact-beat.mapper";
 
 @Component({
     selector: 'sequencer',
@@ -31,6 +32,7 @@ export class SequencerComponent implements OnInit {
   selectedGenreLabel: string = "";
   beats: string[] = [];
   selectedBeatLabel: string = "";
+  base64beat: string | undefined;
 
   constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
               public soundService: SoundService,
@@ -42,9 +44,7 @@ export class SequencerComponent implements OnInit {
     this._beatsManager.getBeatsGroupedByGenres().then(genres => {
       this.genres = genres;
       this.genresLabel = genres.map(x => x.label);
-      console.log("a");
       this.route.queryParamMap.subscribe((params) => {
-        console.log("b");
         this.selectGenre(genres, params.get('genre'), params.get('beat'));
       });
     }).catch(error => { console.log(error); });
@@ -78,7 +78,7 @@ export class SequencerComponent implements OnInit {
     this.beats = firstGenre.beats.map(x => x.label);
 
     const beatToSelect = beat ? firstGenre.beats.find(x => x.id === beat) : firstGenre.beats[0];
-    const fullBeat = expandCompactBeat(beatToSelect!);
+    const fullBeat = CompactBeatMapper.toBeat(beatToSelect!);
     this.selectBeat(fullBeat);
   }
 
@@ -87,6 +87,7 @@ export class SequencerComponent implements OnInit {
     this.beat = beatToSelect;
     this.beatBehaviourSubject.next(this.beat);
     this.selectedBeatLabel = this.beat.label;
+    this.base64beat = BeatUrlMapper.toBase64(CompactBeatMapper.toCompactBeat(this.beat));
   }
 
   genreChange($event: string) {
@@ -95,7 +96,7 @@ export class SequencerComponent implements OnInit {
 
   beatChange($event: string) {
     const beatToSelect = this.genres.find(x => x.label === this.selectedGenreLabel)?.beats.find(x => x.label === $event);
-    const fullBeat = expandCompactBeat(beatToSelect!);
+    const fullBeat = CompactBeatMapper.toBeat(beatToSelect!);
     this.selectBeat(fullBeat);
   }
 
@@ -107,6 +108,8 @@ export class SequencerComponent implements OnInit {
     } else {
       this.soundService.startBeat(track.fileName, stepIndex);
     }
+
+    this.base64beat = BeatUrlMapper.toBase64(CompactBeatMapper.toCompactBeat(this.beat));
   }
 
   changeBeatBpm($event: number) {
