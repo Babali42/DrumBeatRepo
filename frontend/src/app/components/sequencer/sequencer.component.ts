@@ -5,14 +5,15 @@ import {NgFor} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
-import IManageBeats, {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
-import {CompactBeatMapper} from "../../adapters/secondary/compact-beat.mapper";
+import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
+import {IManageBeatsToken} from "../../infrastucture/injection-tokens/i-manage-beat.token";
+import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 
 @Component({
     selector: 'sequencer',

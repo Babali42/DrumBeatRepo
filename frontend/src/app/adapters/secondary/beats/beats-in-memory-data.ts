@@ -1,5 +1,5 @@
 import {BeatsGroupedByGenre} from "../../../domain/beatsGroupedByGenre";
-import {CompactBeat} from "../compact-beat";
+import {CompactBeat} from "../../../domain/compact-beat";
 
 const metalBeat: CompactBeat = {
   id: "metal",

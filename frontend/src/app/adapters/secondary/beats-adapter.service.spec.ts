@@ -4,7 +4,7 @@ import {of, throwError} from 'rxjs';
 import {BeatsAdapterService} from "./beats-adapter.service";
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Beat} from "../../domain/beat";
-import {CompactBeat} from "./compact-beat";
+import {CompactBeat} from "../../domain/compact-beat";
 
 describe('GenreAdapterService', () => {
   let service: BeatsAdapterService;

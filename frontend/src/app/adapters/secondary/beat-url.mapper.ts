@@ -1,4 +1,4 @@
-import {CompactBeat} from "./compact-beat";
+import {CompactBeat} from "../../domain/compact-beat";
 
 export class BeatUrlMapper {
   static toBase64(user: CompactBeat): string {
