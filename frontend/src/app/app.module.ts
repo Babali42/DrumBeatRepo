@@ -9,12 +9,12 @@ import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
-import {IManageBeatsToken} from "./domain/ports/secondary/i-manage-beats";
 import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
 import {InMemoryBeatGateway} from "./adapters/secondary/in-memory-beat-gateway";
 import {FormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
+import {IManageBeatsToken} from "./infrastucture/injection-tokens/i-manage-beat.token";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},

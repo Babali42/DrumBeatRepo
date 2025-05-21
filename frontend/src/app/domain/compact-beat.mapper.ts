@@ -1,4 +1,4 @@
-import {Beat} from "../../domain/beat";
+import {Beat} from "./beat";
 import {CompactBeat} from "./compact-beat";
 
 export class CompactBeatMapper {

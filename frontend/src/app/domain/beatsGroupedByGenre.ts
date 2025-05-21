@@ -1,4 +1,4 @@
-import {CompactBeat} from "../adapters/secondary/compact-beat";
+import {CompactBeat} from "./compact-beat";
 
 export type BeatsGroupedByGenre = {
   readonly label: string;

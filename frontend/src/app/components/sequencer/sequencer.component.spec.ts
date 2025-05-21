@@ -1,10 +1,10 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
-import {IManageBeatsToken} from "../../domain/ports/secondary/i-manage-beats";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
+import {IManageBeatsToken} from "../../infrastucture/injection-tokens/i-manage-beat.token";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;

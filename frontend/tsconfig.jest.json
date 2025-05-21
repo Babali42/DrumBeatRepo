@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/app/architecture/**/spec.jest.ts"
+  ]
+}
