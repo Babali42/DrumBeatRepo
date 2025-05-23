@@ -6,7 +6,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
-import {SoundService} from "../../services/sound/sound.service";
+import {SoundService} from "../../adapters/secondary/sound/sound.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;

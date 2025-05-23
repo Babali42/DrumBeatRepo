@@ -15,8 +15,8 @@ import {FormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
-import {SoundService} from "./services/sound/sound.service";
 import {AUDIO_ENGINE} from "./infrastructure/injection-tokens/audio-engine.token";
+import {SoundService} from "./adapters/secondary/sound/sound.service";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},

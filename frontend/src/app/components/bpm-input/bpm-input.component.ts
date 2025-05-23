@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SoundService} from "../../services/sound/sound.service";
 import {LongPressDirective} from "../../directives/long-press.directive";
+import {SoundService} from "../../adapters/secondary/sound/sound.service";
 
 @Component({
     selector: 'app-bpm-input',
