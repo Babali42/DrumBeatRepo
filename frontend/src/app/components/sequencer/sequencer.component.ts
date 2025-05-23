@@ -1,5 +1,4 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
-import {SoundService} from '../../services/sound/sound.service';
 import {Beat} from '../../domain/beat';
 import {NgFor} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
@@ -14,6 +13,8 @@ import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
 import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
+import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
+import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 
 @Component({
     selector: 'sequencer',
@@ -36,7 +37,7 @@ export class SequencerComponent implements OnInit {
   base64beat: string | undefined;
 
   constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
-              public soundService: SoundService,
+              @Inject(AUDIO_ENGINE) public soundService: IAudioEngine,
               public route: ActivatedRoute) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }

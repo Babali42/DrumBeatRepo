@@ -15,6 +15,8 @@ import {FormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
+import {SoundService} from "./services/sound/sound.service";
+import {AUDIO_ENGINE} from "./infrastructure/injection-tokens/audio-engine.token";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
@@ -40,6 +42,7 @@ export const beatsProvider = {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
+    { provide: AUDIO_ENGINE, useClass: SoundService },
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
     beatsProvider,
