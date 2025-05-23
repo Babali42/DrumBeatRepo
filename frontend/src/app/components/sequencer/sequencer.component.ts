@@ -12,7 +12,7 @@ import {Track} from "../../domain/track";
 import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
 import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
-import {IManageBeatsToken} from "../../infrastucture/injection-tokens/i-manage-beat.token";
+import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 
 @Component({
