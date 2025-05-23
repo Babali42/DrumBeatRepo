@@ -4,7 +4,7 @@ import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gatew
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
-import {IManageBeatsToken} from "../../infrastucture/injection-tokens/i-manage-beat.token";
+import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;

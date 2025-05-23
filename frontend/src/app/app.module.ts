@@ -14,7 +14,7 @@ import {InMemoryBeatGateway} from "./adapters/secondary/in-memory-beat-gateway";
 import {FormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
-import {IManageBeatsToken} from "./infrastucture/injection-tokens/i-manage-beat.token";
+import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
