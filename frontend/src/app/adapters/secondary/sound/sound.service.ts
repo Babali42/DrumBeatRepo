@@ -1,12 +1,13 @@
 import {Injectable, NgZone} from "@angular/core";
-import {Track} from "../../domain/track";
 import * as WAAClock from "waaclock";
-import {AudioFilesService} from "../files/audio-files.service";
+import {AudioFilesService} from "./files/audio-files.service";
+import { Track } from "src/app/domain/track";
+import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SoundService {
+export class SoundService implements IAudioEngine {
   static readonly maxBpm = 1300;
   static readonly minBpm = 30;
 
