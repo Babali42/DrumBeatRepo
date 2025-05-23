@@ -5,6 +5,8 @@ import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
+import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
+import {SoundService} from "../../services/sound/sound.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -15,6 +17,7 @@ describe('SequencerComponent', () => {
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
+        {provide: AUDIO_ENGINE, useClass: SoundService},
         provideHttpClient(),
         provideRouter([])
       ]
