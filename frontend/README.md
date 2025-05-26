@@ -73,3 +73,8 @@ Lint and show only errors
 ````
 npx eslint --quiet
 ````
+
+
+## Test url for custom beat load
+
+http://localhost:4200/#/?beat=JTdCJTIyaWQlMjIlM0ElMjJjdXN0b20tYmVhdCUyMiUyQyUyMmxhYmVsJTIyJTNBJTIyQ3VzdG9tJTIyJTJDJTIyYnBtJTIyJTNBMTgwJTJDJTIyZ2VucmUlMjIlM0ElMjJjdXN0b21HZW5yZSUyMiUyQyUyMnRyYWNrcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJraWNrJTIyJTJDJTIyZmlsZU5hbWUlMjIlM0ElMjJzZGZzZiUyMiUyQyUyMnN0ZXBzJTIyJTNBJTIyJTIwJTJDWCUyQyUyMCUyQ1glMjIlN0QlNUQlN0Q%3D
