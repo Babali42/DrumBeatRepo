@@ -43,20 +43,27 @@ export class SequencerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._beatsManager.getBeatsGroupedByGenres().then(genres => {
-      this.genres = genres;
-      this.genresLabel = genres.map(x => x.label);
-      this.route.queryParamMap.subscribe((params) => {
-        this.selectGenre(genres, params.get('genre'), params.get('beat'));
-      });
-    }).catch(error => { console.log(error); });
-
     this.beatBehaviourSubject.subscribe(beat => {
       if (this.soundService.isPlaying)
         this.soundService.pause();
       this.soundService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
       this.soundService.setStepNumber(beat.tracks[0].steps.length);
+    });
+
+    this.route.queryParamMap.subscribe((params) => {
+      const encodedBeat = params.get('beat');
+      if (encodedBeat) {
+        const compactBeat = BeatUrlMapper.fromBase64(encodedBeat);
+        const beat = CompactBeatMapper.toBeat(compactBeat);
+        this.selectBeat(beat);
+      } else {
+        this._beatsManager.getBeatsGroupedByGenres().then(genres => {
+          this.genres = genres;
+          this.genresLabel = genres.map(x => x.label);
+          this.selectGenre(genres, null, null);
+        }).catch(error => { console.log(error); });
+      }
     });
   }
 
