@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
@@ -69,18 +69,25 @@ describe('Router', () => {
     app.isPortrait = false; // optional, just for clarity
   });
 
-  it('should render the main page', fakeAsync (() => {
+  it('should render default techno beat page', fakeAsync (() => {
+
+    //Arrange
     router.initialNavigation();
     tick();
 
-    flushMicrotasks();
+    //Act
     fixture.detectChanges();
 
-    // 3) Assert
+    //Assert
     const dbg = fixture.debugElement.query(By.directive(SequencerComponent));
     expect(dbg).withContext('SequencerComponent should be in the DOM').toBeTruthy();
 
     const seq = dbg!.componentInstance as SequencerComponent;
+
+    fixture.detectChanges();
+    tick(); // Give the subscription time to emit and assign values
+    fixture.detectChanges();
+
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
     expect(seq.beat.bpm).toBe(128);
   }));
