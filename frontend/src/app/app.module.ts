@@ -20,6 +20,8 @@ import {SoundService} from "./adapters/secondary/sound/sound.service";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
+
+  //todo : Garder cette route, ou tout ajouter à la route de base ?
   {path: 'add-beat', component: BeatCreatorComponent}
 ];
 
