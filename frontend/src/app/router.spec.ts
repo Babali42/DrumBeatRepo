@@ -70,7 +70,6 @@ describe('Router', () => {
   });
 
   it('should render default techno beat page', fakeAsync (() => {
-
     //Arrange
     router.initialNavigation();
     tick();
@@ -94,10 +93,24 @@ describe('Router', () => {
 
   it('should render the add beat page', fakeAsync (() => {
     //Act
-    router.navigate(['/add-beat']);
+    router.navigate(['/add-beat'],
+      { queryParams: { beat: 'JTdCJTIyaWQlMjIlM0ElMjJkdWIlMjIlMkMlMjJsYWJlbCUyMiUzQSUyMkR1YiUyMiUyQyUyMmJwbSUyMiUzQTE0MCUyQyUyMmdlbnJlJTIyJTNBJTIyRHViJTIyJTJDJTIydHJhY2tzJTIyJTNBJTVCJTdCJTIybmFtZSUyMiUzQSUyMktpY2slMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRmtpY2sud2F2JTIyJTJDJTIyc3RlcHMlMjIlM0ElMjJYX19fX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX19fX19fJTIyJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMlN1YiUyMEJhc3MlMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRnN1Yi53YXYlMjIlMkMlMjJzdGVwcyUyMiUzQSUyMlglMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBYJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwWCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMFglMjAlMjAlMjAlMjAlMjAlMjAlMjBYJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIyJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMlNrYW5rJTIyJTJDJTIyZmlsZU5hbWUlMjIlM0ElMjJkdWIlMkZza2Fuay53YXYlMjIlMkMlMjJzdGVwcyUyMiUzQSUyMl9fX19YX19fX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX18lMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyU25hcmUlMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRnNuYXJlLndhdiUyMiUyQyUyMnN0ZXBzJTIyJTNBJTIyJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwWCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMFglMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBYJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwWCUyMFglMjAlMjAlMjAlMjAlMjAlMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyQXJwZWdnaW8lMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRmFycGVnZ2lvX3NpLndhdiUyMiUyQyUyMnN0ZXBzJTIyJTNBJTIyX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX19fX19fWF9fX19fX19YX19fX19fX1hfX19fX19fWF9fXyUyMiU3RCUyQyU3QiUyMm5hbWUlMjIlM0ElMjJDbG9zZWQlMjBIYXQlMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRmNsb3NlZC1oYXQud2F2JTIyJTJDJTIyc3RlcHMlMjIlM0ElMjIlMjAlMjAlMjAlMjBYJTIwWCUyMCUyMCUyMCUyMCUyMFglMjAlMjAlMjAlMjAlMjAlMjAlMjBYWFglMjAlMjAlMjAlMjAlMjBYJTIwJTIwJTIwJTIwJTIwJTIwJTIwWCUyMFglMjAlMjAlMjAlMjAlMjBYWCUyMCUyMCUyMCUyMCUyMCUyMFglMjBYJTIwJTIwJTIwJTIwJTIwWCUyMFhYJTIyJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMkJhc3MlMjIlMkMlMjJmaWxlTmFtZSUyMiUzQSUyMmR1YiUyRmJhc3Mud2F2JTIyJTJDJTIyc3RlcHMlMjIlM0ElMjJYJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwWCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMiU3RCU1RCU3RA==' }});
     tick();
 
+    //Act
+    fixture.detectChanges();
+
     //Assert
-    expect(location.path()).toBe('/add-beat');
+    const dbg = fixture.debugElement.query(By.directive(SequencerComponent));
+    expect(dbg).withContext('SequencerComponent should be in the DOM').toBeTruthy();
+
+    const seq = dbg!.componentInstance as SequencerComponent;
+
+    fixture.detectChanges();
+    tick(); // Give the subscription time to emit and assign values
+    fixture.detectChanges();
+
+    expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
+    expect(seq.beat.bpm).toBe(128);
   }));
 });

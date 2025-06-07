@@ -5,7 +5,6 @@ describe("Beat url mapper tests", () => {
   it("Should map compact beat to url to compact beat", () => {
     const compactBeat = beatsGroupedByGenre[4].beats[0];
     const base64Beat = BeatUrlMapper.toBase64(compactBeat);
-
     const result = BeatUrlMapper.fromBase64(base64Beat);
 
     expect(result.label).toEqual(compactBeat.label);
