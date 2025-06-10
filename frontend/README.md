@@ -61,3 +61,15 @@ Watch test :
 ```bash
 npm run ng test --watch
 ```
+
+## Lint
+
+Lint and show errors and warning
+````
+npx eslint
+````
+
+Lint and show only errors
+````
+npx eslint --quiet
+````

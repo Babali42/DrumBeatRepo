@@ -1,9 +1,9 @@
 import {CompactTrack} from "./compact-track";
 
 export type CompactBeat = {
-  id: string;
-  label: string;
-  bpm: number;
-  genre: string;
-  tracks: CompactTrack[];
+  readonly id: string;
+  readonly label: string;
+  readonly bpm: number;
+  readonly genre: string;
+  readonly tracks: readonly CompactTrack[];
 }

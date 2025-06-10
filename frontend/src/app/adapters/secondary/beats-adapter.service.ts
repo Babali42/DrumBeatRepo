@@ -4,7 +4,6 @@ import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {Effect} from 'effect';
 import {lastValueFrom} from "rxjs";
-import {Beat} from "../../domain/beat";
 import {CompactBeat} from "../../domain/compact-beat";
 
 @Injectable({providedIn: 'root'})

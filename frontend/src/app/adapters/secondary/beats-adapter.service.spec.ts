@@ -56,7 +56,7 @@ describe('GenreAdapterService', () => {
     service.getBeatsGroupedByGenres()
       .then(() => {
       })
-      .catch((error) => {
+      .catch((error : Error) => {
         //Assert
         expect(error.name).toEqual('(FiberFailure) Error');
         expect(error.message).toContain('Can\'t get beats grouped by genre');
