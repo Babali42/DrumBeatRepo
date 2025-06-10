@@ -35,14 +35,13 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install eslint@8.57.0
+          npm install eslint@9.28.0
           npm install @microsoft/eslint-formatter-sarif@3.1.0
           npx eslint --version
           npm list @microsoft/eslint-formatter-sarif
 
       - name: Run ESLint
         run: npx eslint .
-          --config .eslintrc.js
           --ext .ts
           --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif || exit 0

@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:orientationchange', ['$event'])
-  onOrientationChange(event: Event): void {
+  onOrientationChange(): void {
     this.checkOrientation();
   }
 

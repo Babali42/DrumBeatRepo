@@ -36,9 +36,9 @@ export class SequencerComponent implements OnInit {
   selectedBeatLabel: string = "";
   base64beat: string | undefined;
 
-  constructor(@Inject(IManageBeatsToken)  private _beatsManager: IManageBeats,
-              @Inject(AUDIO_ENGINE) public soundService: IAudioEngine,
-              public route: ActivatedRoute) {
+  constructor(@Inject(IManageBeatsToken)  private readonly _beatsManager: IManageBeats,
+              @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+              public readonly route: ActivatedRoute) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }
 

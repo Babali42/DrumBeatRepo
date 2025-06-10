@@ -16,7 +16,6 @@ export class SoundService implements IAudioEngine {
 
   private tracks: readonly Track[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error: Type definition for WAAClock might be missing or incorrect
   private clock: WAAClock;
 
@@ -28,8 +27,8 @@ export class SoundService implements IAudioEngine {
   private signature = 16;
   private barDur = this.signature * this.stepDuration;
 
-  private trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
-  private trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
+  private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
+  private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
   private uiNextStep = () => {
     this.zone.run(() => {
