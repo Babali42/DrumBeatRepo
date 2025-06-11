@@ -24,15 +24,15 @@ import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 })
 export class SequencerComponent implements OnInit {
   private readonly beatBehaviourSubject: Subject<Beat>;
-  private genres: BeatsGroupedByGenre[] = [];
+  private genres: readonly BeatsGroupedByGenre[] = [];
   protected readonly StepLengths = StepLengths;
   protected readonly Math = Math;
 
   beat = {} as Beat;
   genre = {} as BeatsGroupedByGenre;
-  genresLabel: string[] = [];
+  genresLabel: readonly string[] = [];
   selectedGenreLabel: string = "";
-  beats: string[] = [];
+  beats: readonly string[] = [];
   selectedBeatLabel: string = "";
   base64beat: string | undefined;
 
@@ -71,7 +71,7 @@ export class SequencerComponent implements OnInit {
     }
   }
 
-  selectGenre(genres : BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
+  selectGenre(genres : readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
     if (!firstGenre) return;
 

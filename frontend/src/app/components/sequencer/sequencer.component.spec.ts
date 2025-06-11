@@ -70,7 +70,7 @@ describe('SequencerComponent', () => {
 
   it("should display a step button", () => {
     fixture.detectChanges();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+     
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
     const numberOfActiveStepsBeforeClick = stepButtons.filter(btn =>
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
@@ -95,7 +95,7 @@ describe('SequencerComponent', () => {
 
     const originalBase64Beat = component.base64beat;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+     
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access

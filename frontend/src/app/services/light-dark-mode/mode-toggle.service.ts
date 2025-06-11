@@ -21,7 +21,7 @@ export class ModeToggleService {
   /**
    * BehaviorSubject that detects the mode changes
    */
-  private modeChangedSubject = new BehaviorSubject(this.currentMode);
+  private readonly modeChangedSubject = new BehaviorSubject(this.currentMode);
 
   /**
    * Observable that emits the current mode when mode changes.
@@ -30,7 +30,7 @@ export class ModeToggleService {
   modeChanged$: Observable<Mode>;
 
   constructor(
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private readonly document: Document
   ) {
     this.modeChanged$ = this.modeChangedSubject.asObservable();
     this.init();

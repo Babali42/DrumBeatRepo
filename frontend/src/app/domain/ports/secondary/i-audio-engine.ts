@@ -3,9 +3,9 @@
 import { Track } from '../../track';
 
 export interface IAudioEngine {
-  index: number;
-  bpm: number;
-  isPlaying: boolean;
+  readonly index: number;
+  readonly bpm: number;
+  readonly isPlaying: boolean;
   readonly play: () => void;
   readonly pause: () => void;
   readonly playPause: () => void;

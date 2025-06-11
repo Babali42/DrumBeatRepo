@@ -9,7 +9,7 @@ import {NgForOf} from "@angular/common";
     styleUrl: './select-input.component.scss'
 })
 export class SelectInputComponent {
-  @Input() elements: string[] = [];
+  @Input() elements: readonly string[] = [];
   @Input() selectedElement: string = "";
   @Input() placeHolder: string = "";
   @Output() selectChange = new EventEmitter<string>();

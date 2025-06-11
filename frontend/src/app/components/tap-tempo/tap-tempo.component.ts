@@ -10,7 +10,7 @@ import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 })
 export class TapTempoComponent {
 
-  constructor(@Inject(AUDIO_ENGINE) public audioEngine: IAudioEngine) {
+  constructor(@Inject(AUDIO_ENGINE) public readonly audioEngine: IAudioEngine) {
 
   }
 

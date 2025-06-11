@@ -6,7 +6,7 @@ import {finalize} from 'rxjs/operators';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  constructor(private loader: LoadingBarService) {
+  constructor(private readonly loader: LoadingBarService) {
   }
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

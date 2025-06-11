@@ -13,13 +13,13 @@ import { filter, map, switchMap } from 'rxjs/operators';
   standalone: true
 })
 export class LongPressDirective implements OnDestroy {
-  private eventSubscribe: Subscription;
+  private readonly eventSubscribe: Subscription;
   threshold = 500;
 
   @Output()
   mouseLongPress = new EventEmitter();
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private readonly elementRef: ElementRef) {
     const mousedown = fromEvent<MouseEvent>(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       elementRef.nativeElement,

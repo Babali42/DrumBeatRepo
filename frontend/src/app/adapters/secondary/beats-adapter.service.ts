@@ -9,13 +9,13 @@ import {CompactBeat} from "../../domain/compact-beat";
 @Injectable({providedIn: 'root'})
 export class BeatsAdapterService implements IManageBeats {
 
-  private beatsUrl = 'beats/';
+  private readonly beatsUrl = 'beats/';
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
 
   }
 
-  getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {
+  getBeatsGroupedByGenres = (): Promise<readonly BeatsGroupedByGenre[]> => {
     const effect = Effect.tryPromise({
       try: async () => {
         const beats = await lastValueFrom(this.http.get<CompactBeat[]>(this.beatsUrl));
@@ -32,9 +32,10 @@ export class BeatsAdapterService implements IManageBeats {
     });
 
     return Effect.runPromise(effect);
-  }
+  };
 
-  private groupBy<T>(array: T[], keyGetter: (item: T) => string): Record<string, T[]> {
+
+  private groupBy<T>(array: readonly T[], keyGetter: (item: T) => string): Record<string, T[]> {
     return array.reduce((result, item) => {
       const key = keyGetter(item);
       if (!result[key]) {

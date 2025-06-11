@@ -1,5 +1,5 @@
 import {BeatsGroupedByGenre} from "../../beatsGroupedByGenre";
 
 export default interface IManageBeats {
-  getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]>
+  readonly getBeatsGroupedByGenres:() => Promise<readonly BeatsGroupedByGenre[]>
 }
