@@ -80,7 +80,7 @@ describe('Router', () => {
     const dbg = fixture.debugElement.query(By.directive(SequencerComponent));
     expect(dbg).withContext('SequencerComponent should be in the DOM').toBeTruthy();
 
-    const seq = dbg!.componentInstance as SequencerComponent;
+    const seq = dbg.componentInstance as SequencerComponent;
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
     expect(seq.beat.bpm).toBe(128);
   }));
