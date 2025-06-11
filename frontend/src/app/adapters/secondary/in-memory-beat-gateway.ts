@@ -4,7 +4,7 @@ import {beatsGroupedByGenre} from "./beats/beats-in-memory-data";
 import {firstValueFrom, of} from "rxjs";
 
 export class InMemoryBeatGateway implements IManageBeats {
-  getBeatsGroupedByGenres(): Promise<BeatsGroupedByGenre[]> {
+  getBeatsGroupedByGenres(): Promise<readonly BeatsGroupedByGenre[]> {
     return firstValueFrom(of(beatsGroupedByGenre));
   }
 }

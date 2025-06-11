@@ -565,7 +565,7 @@ const punkBeatEightNoteFill: CompactBeat = {
   //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
 };
 
-export const beatsGroupedByGenre : BeatsGroupedByGenre[] = [
+export const beatsGroupedByGenre : readonly BeatsGroupedByGenre[] = [
   { label:"Techno", beats: [psytranceBeat, technoBeat, offBeatTechnoClap, gabberBeat]} as BeatsGroupedByGenre,
   { label:"BreakBeat", beats: [breakcoreBeat, jerseyClubBeat]} as BeatsGroupedByGenre,
   { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat, reggaetonBeat]},

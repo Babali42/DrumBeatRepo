@@ -30,7 +30,7 @@ export class SoundService implements IAudioEngine {
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
-  private uiNextStep = () => {
+  private readonly uiNextStep = () => {
     this.zone.run(() => {
       const currentTime = this.context.currentTime;
       const currentBar = Math.floor(currentTime / (this.stepDuration));
@@ -38,7 +38,7 @@ export class SoundService implements IAudioEngine {
     });
   };
 
-  constructor(private zone: NgZone) {
+  constructor(private readonly zone: NgZone) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), { once: true });
   }

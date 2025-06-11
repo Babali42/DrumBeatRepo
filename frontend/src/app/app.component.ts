@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
   isLandscape: boolean = false;
   mode: Mode = Mode.LIGHT;
 
-  constructor(private responsive: BreakpointObserver,
-              private modeToggleService: ModeToggleService) {
+  constructor(private readonly responsive: BreakpointObserver,
+              private readonly modeToggleService: ModeToggleService) {
     this.modeToggleService.modeChanged$.subscribe(x => this.mode = x);
     this.checkOrientation();
   }
