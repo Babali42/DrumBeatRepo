@@ -1,7 +1,7 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
-import {provideRouter} from "@angular/router";
+import {provideRouter, Router, RouterOutlet} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
@@ -70,7 +70,7 @@ describe('SequencerComponent', () => {
 
   it("should display a step button", () => {
     fixture.detectChanges();
-     
+
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
     const numberOfActiveStepsBeforeClick = stepButtons.filter(btn =>
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
@@ -93,9 +93,6 @@ describe('SequencerComponent', () => {
   it("should update uri field after user change a beat", () => {
     fixture.detectChanges();
 
-    const originalBase64Beat = component.base64beat;
-
-     
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
@@ -103,6 +100,8 @@ describe('SequencerComponent', () => {
 
     fixture.detectChanges();
 
-    expect(component.base64beat).not.toEqual(originalBase64Beat);
+    var textarea = fixture.nativeElement.querySelector('textarea');
+
+    expect(textarea.value).toContain("?");
   });
 })

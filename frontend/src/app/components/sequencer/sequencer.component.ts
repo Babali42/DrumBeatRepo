@@ -1,9 +1,9 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
 import {Beat} from '../../domain/beat';
 import {NgFor} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
@@ -15,12 +15,13 @@ import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'sequencer',
     templateUrl: './sequencer.component.html',
     styleUrls: ['./sequencer.component.scss'],
-    imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule]
 })
 export class SequencerComponent implements OnInit {
   private readonly beatBehaviourSubject: Subject<Beat>;
@@ -35,10 +36,13 @@ export class SequencerComponent implements OnInit {
   beats: readonly string[] = [];
   selectedBeatLabel: string = "";
   base64beat: string | undefined;
+  customBeatUrl: string = "lol";
 
-  constructor(@Inject(IManageBeatsToken)  private readonly _beatsManager: IManageBeats,
+  @ViewChild('myTextarea') textarea!: ElementRef;
+
+  constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              public readonly route: ActivatedRoute) {
+              public readonly route: ActivatedRoute, private readonly router: Router,) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }
 
@@ -64,9 +68,13 @@ export class SequencerComponent implements OnInit {
           this.genres = genres;
           this.genresLabel = genres.map(x => x.label);
           this.selectGenre(genres, null, null);
-        }).catch(error => { console.log(error); });
+        }).catch(error => {
+          console.log(error);
+        });
       }
     });
+
+    this.customBeatUrl = this.getCustomBeatUrl(this.base64beat)
   }
 
   toggleIsPlaying(): void {
@@ -80,7 +88,7 @@ export class SequencerComponent implements OnInit {
     }
   }
 
-  selectGenre(genres : readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
+  selectGenre(genres: readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
     if (!firstGenre) return;
 
@@ -114,16 +122,29 @@ export class SequencerComponent implements OnInit {
   stepClick(track: Track, stepIndex: number, value: boolean) {
     track.steps[stepIndex] = !value;
 
-    if(!track.steps[stepIndex]) {
+    if (!track.steps[stepIndex]) {
       this.soundService.stopBeat(track.fileName, stepIndex);
     } else {
       this.soundService.startBeat(track.fileName, stepIndex);
     }
 
     this.base64beat = BeatUrlMapper.toBase64(CompactBeatMapper.toCompactBeat(this.beat));
+    this.customBeatUrl = this.getCustomBeatUrl(this.base64beat);
+    this.textarea.nativeElement.value = this.customBeatUrl;
   }
 
   changeBeatBpm($event: number) {
     this.soundService.setBpm($event);
   }
+
+  getCustomBeatUrl(base64beat: string | undefined): string {
+    const origin = window.location.origin;
+    const currentUrl = this.router.url; // path + query
+
+    const separator = currentUrl.includes('?') ? '&' : '?';
+    const beatParam = base64beat ? `${separator}beat=${base64beat}` : '';
+
+    return `${origin}${currentUrl}${beatParam}`;
+  }
+
 }
