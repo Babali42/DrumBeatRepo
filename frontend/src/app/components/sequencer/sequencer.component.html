@@ -53,8 +53,8 @@
       <div class="track-name user-select-none medium">
         {{ track.name }}
       </div>
-      <div>Custom url :</div>
     </div>
+    <div>Custom url :</div>
   </div>
   <section class="tracks-container">
     <article *ngFor="let track of beat.tracks">
@@ -69,6 +69,6 @@
         </button>
       </div>
     </article>
-    <textarea name="Text1" cols="40" rows="5" [value]="base64beat"></textarea>
+    <textarea name="Text1" cols="40" rows="5" [value]="customBeatUrl"></textarea>
   </section>
 </div>
