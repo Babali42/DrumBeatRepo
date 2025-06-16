@@ -5,7 +5,8 @@ import {Track} from "./track";
 describe('Compact beat mapper tests', () => {
   it("Should map compact beat to url to compact beat", () => {
     const beat = { id: "", genre: "", label: "", bpm: 150, tracks: [
-        { name: "", fileName: "", steps: [true, false, false, false]} as Track
+        { name: "", fileName: "", steps: [true, false, false, true]} as Track,
+        { name: "", fileName: "", steps: [true, false, false, true]} as Track,
       ]} as Beat;
 
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
@@ -17,5 +18,6 @@ describe('Compact beat mapper tests', () => {
     expect(result.tracks.length).toEqual(beat.tracks.length);
     expect(result.tracks[0].name).toEqual(beat.tracks[0].name);
     expect(result.tracks[0].steps[0]).toEqual(beat.tracks[0].steps[0]);
+    expect(result.tracks[0].steps[3]).toEqual(beat.tracks[0].steps[3]);
   })
 });

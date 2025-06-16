@@ -25,7 +25,7 @@ export class CompactBeatMapper {
       tracks: beat.tracks.map(track => ({
         name: track.name,
         fileName: track.fileName,
-        steps: track.steps.map(x => x? "X":" ").join()
+        steps: track.steps.map(x => x? "X":" ").join('')
       }))
     }
   }
