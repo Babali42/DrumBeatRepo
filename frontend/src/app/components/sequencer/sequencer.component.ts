@@ -44,6 +44,7 @@ export class SequencerComponent implements OnInit {
 
   ngOnInit() {
     this.beatBehaviourSubject.subscribe(beat => {
+      console.log("yeah", beat);
       if (this.soundService.isPlaying)
         this.soundService.pause();
       this.soundService.setBpm(beat.bpm);
@@ -54,6 +55,7 @@ export class SequencerComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       const encodedBeat = params.get('beat');
       if (encodedBeat) {
+        console.log(encodedBeat)
         const compactBeat = BeatUrlMapper.fromBase64(encodedBeat);
         const beat = CompactBeatMapper.toBeat(compactBeat);
         this.selectBeat(beat);
