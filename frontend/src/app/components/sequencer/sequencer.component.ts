@@ -3,7 +3,7 @@ import {Beat} from '../../domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject, shareReplay, Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
