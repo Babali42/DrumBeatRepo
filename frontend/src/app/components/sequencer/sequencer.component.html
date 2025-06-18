@@ -5,7 +5,7 @@
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
   </div>
-  <div class="sequencer-header">
+  <div class="sequencer-header" *ngIf="!isCustomBeatPage">
     <div class="label">
       <app-select-input [elements]="genresLabel"
                         [selectedElement]="selectedGenreLabel"
@@ -25,6 +25,9 @@
       <span class="large user-select-none"> bpm</span>
       <tap-tempo></tap-tempo>
     </div>
+  </div>
+  <div class="sequencer-header" *ngIf="isCustomBeatPage">
+    {{customBeatName}}
   </div>
   <div class="tracks-name-container">
     <div *ngFor="let track of beat.tracks" class="tracks-name">
@@ -54,7 +57,7 @@
         {{ track.name }}
       </div>
     </div>
-    <div>Custom url :</div>
+
   </div>
   <section class="tracks-container">
     <article *ngFor="let track of beat.tracks">
@@ -69,6 +72,9 @@
         </button>
       </div>
     </article>
-    <textarea name="Text1" cols="40" rows="5" [value]="customBeatUrl$ | async"></textarea>
   </section>
+</div>
+<div class="flex mt-40" *ngIf="!isCustomBeatPage">
+  <div>Custom url :</div>
+  <textarea class="ml-10 custom-url-text" cols="100" rows="10" [value]="customBeatUrl$ | async"></textarea>
 </div>

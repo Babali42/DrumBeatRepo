@@ -1,6 +1,6 @@
-import {Component, ElementRef, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {Beat} from '../../domain/beat';
-import {AsyncPipe, NgFor} from '@angular/common';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute, Router} from '@angular/router';
@@ -22,13 +22,16 @@ import {filter, map} from "rxjs/operators";
     selector: 'sequencer',
     templateUrl: './sequencer.component.html',
     styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe, NgIf]
 })
 export class SequencerComponent implements OnInit {
+
+  private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
-  private genres: readonly BeatsGroupedByGenre[] = [];
   protected readonly StepLengths = StepLengths;
   protected readonly Math = Math;
+
+  private genres: readonly BeatsGroupedByGenre[] = [];
 
   beat = {} as Beat;
   genre = {} as BeatsGroupedByGenre;
@@ -36,12 +39,12 @@ export class SequencerComponent implements OnInit {
   selectedGenreLabel: string = "";
   beats: readonly string[] = [];
   selectedBeatLabel: string = "";
-
-  @ViewChild('myTextarea') textarea!: ElementRef;
+  isCustomBeatPage: boolean = false;
+  customBeatName: string = "";
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              public readonly route: ActivatedRoute, private readonly router: Router,) {
+              public readonly route: ActivatedRoute) {
     this.beatBehaviourSubject = new Subject<Beat>();
   }
 
@@ -55,11 +58,14 @@ export class SequencerComponent implements OnInit {
     });
 
     this.route.queryParamMap.subscribe((params) => {
-      const encodedBeat = params.get('beat');
-      if (encodedBeat) {
-        const compactBeat = BeatUrlMapper.fromBase64(encodedBeat);
-        const beat = CompactBeatMapper.toBeat(compactBeat);
-        this.selectBeat(beat);
+      const customBeatEncoded = params.get('beat');
+      const customName = params.get('name');
+      const customBpm = params.get('bpm');
+      if (customBeatEncoded && customName && customBpm) {
+        const customBeat = CompactBeatMapper.toBeat(BeatUrlMapper.fromBase64(customBeatEncoded));
+        this.selectBeat(customBeat);
+        this.isCustomBeatPage = true;
+        this.customBeatName = `${customName} at ${customBpm} bpm`;
       } else {
         this._beatsManager.getBeatsGroupedByGenres().then(genres => {
           this.genres = genres;
@@ -70,9 +76,12 @@ export class SequencerComponent implements OnInit {
     });
   }
 
-  toggleIsPlaying(): void {
-    this.soundService.playPause();
-  }
+  toggleIsPlaying = () => this.soundService.playPause();
+
+  genreChange = ($event: string)=> this.selectGenre(this.genres, $event, null);
+
+  getCustomBeatUrl = (base64beat: string, selectedBeatLabel: string, bpm: string) : string =>
+    `${window.location.origin}/#/?name=Sort of ${selectedBeatLabel}&bpm=${bpm}&beat=${base64beat}`;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
@@ -100,10 +109,6 @@ export class SequencerComponent implements OnInit {
     this.beatBehaviourSubject.next(this.beat);
     this.selectedBeatLabel = this.beat.label;
     this.customBeatSubject.next(this.beat);
-  }
-
-  genreChange($event: string) {
-    this.selectGenre(this.genres, $event, null);
   }
 
   beatChange($event: string) {
@@ -138,17 +143,14 @@ export class SequencerComponent implements OnInit {
     this.customBeatSubject.next(this.beat);
   }
 
-  getCustomBeatUrl = (base64beat: string) : string =>
-    `${window.location.origin}/#/?beat=${base64beat}`;
 
-  private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
 
   readonly customBeatUrl$ = this.customBeatSubject.asObservable().pipe(
     filter((b): b is Beat => !!b),
     map((beat) => {
       const compact = CompactBeatMapper.toCompactBeat(beat);
       const base64 = BeatUrlMapper.toBase64(compact);
-      return this.getCustomBeatUrl(base64);
+      return this.getCustomBeatUrl(base64, this.selectedBeatLabel, this.beat.bpm.toString());
     }),
     shareReplay(1)
   );
