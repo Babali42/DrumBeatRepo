@@ -93,7 +93,7 @@ describe('Router', () => {
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
     const base64Beat = BeatUrlMapper.toBase64(compactBeat);
 
-    router.navigate([], { queryParams: { beat: base64Beat } });
+    router.navigate([], { queryParams: { beat: base64Beat, name: 'test', bpm: '230' } });
     tick();
 
     flushMicrotasks();

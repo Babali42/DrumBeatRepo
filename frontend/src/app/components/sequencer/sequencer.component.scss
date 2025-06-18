@@ -158,3 +158,8 @@ $gap: 4px;
     border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
   }
 }
+
+.custom-url-text{
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+}
