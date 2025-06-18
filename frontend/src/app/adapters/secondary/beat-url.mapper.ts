@@ -1,8 +1,8 @@
 import {CompactBeat} from "../../domain/compact-beat";
 
 export class BeatUrlMapper {
-  static toBase64(user: CompactBeat): string {
-    const json = JSON.stringify(user);
+  static toBase64(beat: CompactBeat): string {
+    const json = JSON.stringify(beat);
     return btoa(encodeURIComponent(json)); // URI-safe
   }
 

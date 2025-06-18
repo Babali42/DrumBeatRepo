@@ -1,7 +1,6 @@
 import {ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Location } from '@angular/common';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {By} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";

@@ -1,7 +1,7 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
-import {provideRouter, Router, RouterOutlet} from "@angular/router";
+import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
@@ -93,6 +93,11 @@ describe('SequencerComponent', () => {
   it("should update uri field after user change a beat", () => {
     fixture.detectChanges();
 
+    // eslint-disable-next-line
+    const textarea = fixture.nativeElement.querySelector('textarea');
+    // eslint-disable-next-line
+    const firstValue = textarea.value;
+
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
@@ -100,8 +105,11 @@ describe('SequencerComponent', () => {
 
     fixture.detectChanges();
 
-    var textarea = fixture.nativeElement.querySelector('textarea');
-
-    expect(textarea.value).toContain("?");
+    // eslint-disable-next-line
+    let querySelector = fixture.nativeElement.querySelector('textarea');
+    // eslint-disable-next-line
+    expect(querySelector.value).not.toEqual(firstValue);
+    // eslint-disable-next-line
+    expect(querySelector.value).toContain('#')
   });
 })
