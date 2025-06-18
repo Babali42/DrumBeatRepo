@@ -46,7 +46,6 @@ export class SoundService implements IAudioEngine {
   private resumeAudioContext() {
     if (this.context.state === 'suspended') {
       this.context.resume().then(() => {
-        console.log('AudioContext resumed');
       }).catch(err => {
         console.error('Failed to resume AudioContext', err);
       });
@@ -121,6 +120,9 @@ export class SoundService implements IAudioEngine {
   }
 
   startBeat(trackName: string, stepIndex: number): void {
+    if(!this.clock)
+      return;
+
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
       const bufferNode = this.trackSampleBuilderMap.get(trackName)!();
       bufferNode.start(event.deadline);

@@ -1,10 +1,10 @@
 import {Component, ElementRef, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
 import {Beat} from '../../domain/beat';
-import {NgFor} from '@angular/common';
+import {AsyncPipe, NgFor} from '@angular/common';
 import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject} from "rxjs";
+import {BehaviorSubject, shareReplay, Subject} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
@@ -16,12 +16,13 @@ import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
+import {filter, map} from "rxjs/operators";
 
 @Component({
     selector: 'sequencer',
     templateUrl: './sequencer.component.html',
     styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe]
 })
 export class SequencerComponent implements OnInit {
   private readonly beatBehaviourSubject: Subject<Beat>;
@@ -35,8 +36,6 @@ export class SequencerComponent implements OnInit {
   selectedGenreLabel: string = "";
   beats: readonly string[] = [];
   selectedBeatLabel: string = "";
-  base64beat: string | undefined;
-  customBeatUrl: string = "lol";
 
   @ViewChild('myTextarea') textarea!: ElementRef;
 
@@ -48,7 +47,6 @@ export class SequencerComponent implements OnInit {
 
   ngOnInit() {
     this.beatBehaviourSubject.subscribe(beat => {
-      console.log("yeah", beat);
       if (this.soundService.isPlaying)
         this.soundService.pause();
       this.soundService.setBpm(beat.bpm);
@@ -59,7 +57,6 @@ export class SequencerComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       const encodedBeat = params.get('beat');
       if (encodedBeat) {
-        console.log(encodedBeat)
         const compactBeat = BeatUrlMapper.fromBase64(encodedBeat);
         const beat = CompactBeatMapper.toBeat(compactBeat);
         this.selectBeat(beat);
@@ -68,13 +65,9 @@ export class SequencerComponent implements OnInit {
           this.genres = genres;
           this.genresLabel = genres.map(x => x.label);
           this.selectGenre(genres, null, null);
-        }).catch(error => {
-          console.log(error);
-        });
+        }).catch(() => { });
       }
     });
-
-    this.customBeatUrl = this.getCustomBeatUrl(this.base64beat)
   }
 
   toggleIsPlaying(): void {
@@ -106,7 +99,7 @@ export class SequencerComponent implements OnInit {
     this.beat = beatToSelect;
     this.beatBehaviourSubject.next(this.beat);
     this.selectedBeatLabel = this.beat.label;
-    this.base64beat = BeatUrlMapper.toBase64(CompactBeatMapper.toCompactBeat(this.beat));
+    this.customBeatSubject.next(this.beat);
   }
 
   genreChange($event: string) {
@@ -119,7 +112,7 @@ export class SequencerComponent implements OnInit {
     this.selectBeat(fullBeat);
   }
 
-  stepClick(track: Track, stepIndex: number, value: boolean) {
+  stepClick = (track: Track, stepIndex: number, value: boolean) : void => {
     track.steps[stepIndex] = !value;
 
     if (!track.steps[stepIndex]) {
@@ -128,23 +121,35 @@ export class SequencerComponent implements OnInit {
       this.soundService.startBeat(track.fileName, stepIndex);
     }
 
-    this.base64beat = BeatUrlMapper.toBase64(CompactBeatMapper.toCompactBeat(this.beat));
-    this.customBeatUrl = this.getCustomBeatUrl(this.base64beat);
-    this.textarea.nativeElement.value = this.customBeatUrl;
+    this.beat = {
+      ...this.beat,
+      tracks: this.beat.tracks
+    };
+
+    this.customBeatSubject.next(this.beat);
   }
 
   changeBeatBpm($event: number) {
     this.soundService.setBpm($event);
+    this.beat = this.beat = {
+      ...this.beat,
+      bpm: $event,
+    };
+    this.customBeatSubject.next(this.beat);
   }
 
-  getCustomBeatUrl(base64beat: string | undefined): string {
-    const origin = window.location.origin;
-    const currentUrl = this.router.url; // path + query
+  getCustomBeatUrl = (base64beat: string) : string =>
+    `${window.location.origin}/#/?beat=${base64beat}`;
 
-    const separator = currentUrl.includes('?') ? '&' : '?';
-    const beatParam = base64beat ? `${separator}beat=${base64beat}` : '';
+  private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
 
-    return `${origin}${currentUrl}${beatParam}`;
-  }
-
+  readonly customBeatUrl$ = this.customBeatSubject.asObservable().pipe(
+    filter((b): b is Beat => !!b),
+    map((beat) => {
+      const compact = CompactBeatMapper.toCompactBeat(beat);
+      const base64 = BeatUrlMapper.toBase64(compact);
+      return this.getCustomBeatUrl(base64);
+    }),
+    shareReplay(1)
+  );
 }
