@@ -6,7 +6,7 @@ version := "1.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 val currentEnv: String = sys.env.getOrElse("ENV", "development")
 
-scalaVersion := "3.3.5"
+scalaVersion := "3.3.6"
 coverageEnabled := sys.props.get("enableCoverage").contains("true")
 
 libraryDependencies += guice
