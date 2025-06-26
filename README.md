@@ -22,7 +22,6 @@ Here is a preview of https://www.drumbeatrepo.com/#/ :
 ## Linked readme
 
 - [Frontend README](frontend/README.md)
-- [Backend README](backend/README.md)
 
 ## How to Contribute
 
