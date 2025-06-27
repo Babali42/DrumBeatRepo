@@ -1,45 +1,49 @@
-# 🥁 Drum Beat Repository 🥁
+# 🥁 Drum Beat Repository  
+*A library of drum patterns for music lovers / Une bibliothèque rythmique pour les mélomanes 🎵*
 
-## Description
-### A rhythm library for playing drum beats in the browser !
+Welcome to **Drum Beat Repository**, a web-based project for musicians, producers, and developers to explore and create drum patterns. Built with **Angular** and the **Web Audio API**, this interactive tool delivers a smooth, in-browser drum sequencing experience.
 
-Welcome to **Drum Beat Repository**, a project built to help musicians, producers, and developers work with drum patterns.
-This library leverages **Angular** and the **Web Audio API** to deliver a smooth, interactive drum sequencing experience right in your browser.
+👉 **Try it now:** [www.drumbeatrepo.com](https://www.drumbeatrepo.com/#/)
 
-Here is a preview of https://www.drumbeatrepo.com/#/ :
+![App Screenshot](./app.png)
 
-![app.png](app.png)
+---
 
-## Features
+## 🚀 Features
 
-- [x] **Browse Beats**: Explore a variety of drum patterns.
-- [x] **Play and accelerate**: Play back drum beats and change tempo at your convenience.
-- [x] **Interactive Sequencer**: Visualize beats in the sequencer and follow the pattern as it plays.
-- [x] **Create your own beats**: Create sequence in the browser ...
-- [x] **Store pattern in the url**: ...and share it
-- [ ] **Export audio**: export to .wav or .mp3
+- 🎧 **Browse Beats** – Explore a variety of built-in drum patterns.  
+- ⏱️ **Play & Accelerate** – Listen and adjust the tempo in real-time.  
+- 🎛️ **Interactive Sequencer** – Visualize and follow patterns as they play.  
+- 🥁 **Create Your Own Beats** – Compose sequences right in your browser.  
+- 🔗 **Store in URL** – Share your creations instantly via custom URLs.  
+- 💾 **Export Audio** – Download beats as `.wav` or `.mp3` files.
 
-## Linked readme
+---
 
-- [Frontend README](frontend/README.md)
+## 📂 Project Structure
 
-## How to Contribute
+The main codebase and documentation are in the [`frontend`](./frontend) folder.
 
-Contributions are welcome !
+---
 
-See the [CONTRIBUTING](CONTRIBUTING.md)
+## 🤝 Contributing
 
-## Contributors
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-A big thanks to the project contributors!
-- [Kireo](https://github.com/khg051203)
-- [GiaHuy0031](https://github.com/GiaHuy0031)
+Huge thanks to our contributors:
+- **Kireo**  
+- **GiaHuy0031**  
+...and everyone who's shared feedback and ideas ❤️
 
-## Contact
+---
 
-For questions, suggestions, or just to say hi, you can reach me via [email](mailto:bab07ali@gmail.com) or create an issue in the repository.
+## 📨 Contact & Issues
 
-## License
+Have a suggestion or bug to report? [Open an issue](../../issues/new) here on GitHub.
 
-- The code in this repository is licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
-- All non-code content (such as ui concept and custom beat/rhythm) is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+---
+
+## 📄 License
+
+- **Code**: Licensed under the [GNU General Public License](./LICENSE).  
+- **Non-code content** (UI concepts, beats, etc.): Licensed under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
