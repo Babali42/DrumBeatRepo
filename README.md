@@ -15,8 +15,7 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians, producer
 - ⏱️ **Play & Accelerate** – Listen and adjust the tempo in real-time.  
 - 🎛️ **Interactive Sequencer** – Visualize and follow patterns as they play.  
 - 🥁 **Create Your Own Beats** – Compose sequences right in your browser.  
-- 🔗 **Store in URL** – Share your creations instantly via custom URLs.  
-- 💾 **Export Audio** – Download beats as `.wav` or `.mp3` files.
+- 🔗 **Store in URL** – Share your creations instantly via custom URLs.
 
 ---
 
