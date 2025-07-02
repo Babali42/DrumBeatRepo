@@ -7,18 +7,5 @@
   "prConcurrentLimit": 5,
 
   "dependencyDashboard": true,
-
-  "lockFileMaintenance": {
-    "enabled": false
-  },
-
-  "packageRules": [
-    {
-      "description": "DISABLE all lockfile-only updates",
-      "matchUpdateTypes": ["lockfile-only"],
-      "enabled": false
-    }
-  ],
-
-  "ignorePresets": ["helpers:disableLockFileMaintenance"]
+  "rangeStrategy": "widen"
 }
