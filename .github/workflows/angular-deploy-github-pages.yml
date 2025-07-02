@@ -25,10 +25,10 @@ jobs:
 
       - name: Copy CNAME file
         run: |
-          echo "www.drumbeatrepo.com" > dist/CNAME
+          echo "www.drumbeatrepo.com" > dist/browser/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GHPAGES }}
-          publish_dir: dist
+          publish_dir: dist/browser/
