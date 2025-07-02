@@ -2,5 +2,29 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "labels": ["dependencies"],
+
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+
+  "dependencyDashboard": true,
+
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+
+  "packageRules": [
+    {
+      "description": "Only update dependencies declared in package.json",
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "enabled": true
+    },
+    {
+      "description": "Disable all lockfile-only updates",
+      "matchUpdateTypes": ["lockfile-only"],
+      "enabled": false
+    }
   ]
 }
