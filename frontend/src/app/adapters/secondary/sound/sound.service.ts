@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from "@angular/core";
-import * as WAAClock from "waaclock";
+import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import { Track } from "src/app/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
