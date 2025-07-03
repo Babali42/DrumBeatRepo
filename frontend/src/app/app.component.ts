@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {ModeToggleService} from "./services/light-dark-mode/mode-toggle.service";
 import {Mode} from './services/light-dark-mode/mode-toggle.model';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
   mode: Mode = Mode.LIGHT;
 
   constructor(private readonly responsive: BreakpointObserver,
-              private readonly modeToggleService: ModeToggleService) {
+              private readonly modeToggleService: ModeToggleService,
+              private readonly router: Router) {
     this.modeToggleService.modeChanged$.subscribe(x => this.mode = x);
     this.checkOrientation();
   }
@@ -41,4 +43,13 @@ export class AppComponent implements OnInit {
   }
 
   protected readonly Mode = Mode;
+
+  async goToMainPage() {
+    await this.router.navigate([], {
+      queryParams: {},
+      queryParamsHandling: '',
+    }).then(() => {
+      window.location.reload();
+    }).catch();
+  }
 }

@@ -5,7 +5,8 @@
       src="./assets/images/title.svg"
       id="title-image"
       alt="Website Title"
-      class="top-left-corner"
+      class="top-left-corner cursor-pointer"
+      (click)="goToMainPage()"
     />
     <section class="flex content">
       <router-outlet></router-outlet>
