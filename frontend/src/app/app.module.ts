@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideRouter, RouterOutlet, Routes, withHashLocation} from "@angular/router";
+import {provideRouter, RouterModule, RouterOutlet, Routes, withHashLocation} from "@angular/router";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -22,6 +22,10 @@ export const routes: Routes = [
   {path: '', component: SequencerComponent},
   {path: 'add-beat', component: BeatCreatorComponent}
 ];
+
+RouterModule.forRoot(routes, {
+  onSameUrlNavigation: 'reload'
+})
 
 export const beatsProvider = {
   provide: IManageBeatsToken,
