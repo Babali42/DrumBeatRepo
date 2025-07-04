@@ -1,5 +1,3 @@
-// domain/ports/secondary/i-audio-engine.ts
-
 import { Track } from '../../track';
 
 export interface IAudioEngine {

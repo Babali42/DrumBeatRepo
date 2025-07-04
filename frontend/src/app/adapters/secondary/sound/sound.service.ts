@@ -1,16 +1,13 @@
 import {Injectable, NgZone} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
-import { Track } from "src/app/domain/track";
+import {Track} from "src/app/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService implements IAudioEngine {
-  static readonly maxBpm = 1300;
-  static readonly minBpm = 30;
-
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
 
@@ -34,13 +31,13 @@ export class SoundService implements IAudioEngine {
     this.zone.run(() => {
       const currentTime = this.context.currentTime;
       const currentBar = Math.floor(currentTime / (this.stepDuration));
-      this.index = (currentBar+ 1) % this.signature;
+      this.index = (currentBar + 1) % this.signature;
     });
   };
 
   constructor(private readonly zone: NgZone) {
     this.context = new AudioContext();
-    document.addEventListener('click', this.resumeAudioContext.bind(this), { once: true });
+    document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
 
   private resumeAudioContext() {
@@ -106,7 +103,7 @@ export class SoundService implements IAudioEngine {
     const events = Array.from(this.trackStepMap.values()).flatMap(x => Array.from(x.values()));
 
     if (this.clock) {
-      this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
+        this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
     }
 
     this.bpm = a;
@@ -135,12 +132,8 @@ export class SoundService implements IAudioEngine {
 
   stopBeat(track: string, beatInd: number) : void {
     const map = this.trackStepMap.get(track);
-
-    if(!map)
-      return;
-
-    const event = map.get(beatInd)!;
-    event.clear()
+    if(!map) return;
+    (map.get(beatInd)!).clear()
   }
 
   nextStepTime = (stepIndex: number): number => {

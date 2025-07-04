@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LongPressDirective} from "../../directives/long-press.directive";
-import {SoundService} from "../../adapters/secondary/sound/sound.service";
+import {SoundSettings} from "../../adapters/secondary/sound/sound.settings";
 
 @Component({
     selector: 'app-bpm-input',
@@ -11,9 +11,9 @@ import {SoundService} from "../../adapters/secondary/sound/sound.service";
     styleUrl: './bpm-input.component.scss'
 })
 export class BpmInputComponent {
-  maxBpm = SoundService.maxBpm;
-  minBpm = SoundService.minBpm;
-  @Input() bpm : number = SoundService.minBpm;
+  maxBpm = SoundSettings.maxBpm;
+  minBpm = SoundSettings.minBpm;
+  @Input() bpm : number = SoundSettings.minBpm;
   @Output() bpmChange = new EventEmitter<number>();
 
   incrementBpm() {
