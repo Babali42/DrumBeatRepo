@@ -51,8 +51,6 @@ export class SequencerComponent implements OnInit {
 
   ngOnInit() {
     this.beatBehaviourSubject.subscribe(beat => {
-      if (this.soundService.isPlaying)
-        this.soundService.pause();
       this.soundService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
       this.soundService.setStepNumber(beat.tracks[0].steps.length);

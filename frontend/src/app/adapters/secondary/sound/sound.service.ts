@@ -2,12 +2,12 @@ import {Injectable, NgZone} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
-import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
+import {IAudioEngine, IAudioEngineCommands, IAudioEngineQuery} from "../../../domain/ports/secondary/i-audio-engine";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SoundService implements IAudioEngine {
+export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioEngineQuery {
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
 
@@ -16,7 +16,7 @@ export class SoundService implements IAudioEngine {
   // @ts-expect-error: Type definition for WAAClock might be missing or incorrect
   private clock: WAAClock;
 
-  bpm: number = 128;
+  private bpm: number = 128;
   index: number = 0;
   isPlaying = false;
 
@@ -70,6 +70,9 @@ export class SoundService implements IAudioEngine {
   }
 
   setTracks(tracks: readonly Track[]) {
+    if (this.isPlaying)
+      this.pause();
+
     this.tracks = tracks;
     const trackNames = tracks.map(x => x.fileName);
 

@@ -1,11 +1,6 @@
 import { Track } from '../../track';
 
-export interface IAudioEngine {
-  readonly index: number;
-  readonly bpm: number;
-  readonly isPlaying: boolean;
-  readonly play: () => void;
-  readonly pause: () => void;
+export interface IAudioEngineCommands {
   readonly playPause: () => void;
 
   readonly setTracks : (tracks: readonly Track[]) => void;
@@ -16,4 +11,13 @@ export interface IAudioEngine {
   readonly stopBeat: (trackName: string, stepIndex: number) => void;
 
   readonly playTrack: (trackName: string) => void;
+}
+
+export interface IAudioEngineQuery {
+  readonly index: number;
+  readonly isPlaying: boolean;
+}
+
+export interface IAudioEngine extends IAudioEngineCommands, IAudioEngineQuery {
+
 }
