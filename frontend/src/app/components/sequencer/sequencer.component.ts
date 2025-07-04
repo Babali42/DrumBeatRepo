@@ -25,22 +25,23 @@ import {filter, map} from "rxjs/operators";
   imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe, NgIf]
 })
 export class SequencerComponent implements OnInit {
-
   private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
   protected readonly StepLengths = StepLengths;
   protected readonly Math = Math;
 
-  private genres: readonly BeatsGroupedByGenre[] = [];
-
   beat = {} as Beat;
   genre = {} as BeatsGroupedByGenre;
+
   genresLabel: readonly string[] = [];
-  selectedGenreLabel: string = "";
   beats: readonly string[] = [];
-  selectedBeatLabel: string = "";
+  private genres: readonly BeatsGroupedByGenre[] = [];
+
   isCustomBeatPage: boolean = false;
+
   customBeatName: string = "";
+  selectedGenreLabel: string = "";
+  selectedBeatLabel: string = "";
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -142,8 +143,6 @@ export class SequencerComponent implements OnInit {
     };
     this.customBeatSubject.next(this.beat);
   }
-
-
 
   readonly customBeatUrl$ = this.customBeatSubject.asObservable().pipe(
     filter((b): b is Beat => !!b),
