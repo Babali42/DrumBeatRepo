@@ -7,8 +7,8 @@ export interface IAudioEngineCommands {
   readonly setBpm: (bpm: number) => void;
   readonly setStepNumber: (n: number) => void;
 
-  readonly startBeat: (trackName: string, stepIndex: number) => void;
-  readonly stopBeat: (trackName: string, stepIndex: number) => void;
+  readonly enableStep: (trackName: string, stepIndex: number) => void;
+  readonly disableStep: (trackName: string, stepIndex: number) => void;
 
   readonly playTrack: (trackName: string) => void;
 }

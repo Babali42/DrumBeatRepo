@@ -56,7 +56,7 @@ export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioE
     this.tracks.forEach((track) => {
       track.steps.forEach((step, index) => {
         if (step)
-          this.startBeat(track.fileName, index);
+          this.enableStep(track.fileName, index);
       })
     })
 
@@ -119,7 +119,7 @@ export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioE
     this.barDur = this.signature * this.stepDuration;
   }
 
-  startBeat(trackName: string, stepIndex: number): void {
+  enableStep(trackName: string, stepIndex: number): void {
     if(!this.clock)
       return;
 
@@ -133,7 +133,7 @@ export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioE
       this.trackStepMap.get(trackName)!.set(stepIndex, event);
   };
 
-  stopBeat(track: string, beatInd: number) : void {
+  disableStep(track: string, beatInd: number) : void {
     const map = this.trackStepMap.get(track);
     if(!map) return;
     (map.get(beatInd)!).clear()

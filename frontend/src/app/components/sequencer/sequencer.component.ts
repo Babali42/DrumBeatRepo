@@ -120,9 +120,9 @@ export class SequencerComponent implements OnInit {
     track.steps[stepIndex] = !value;
 
     if (!track.steps[stepIndex]) {
-      this.soundService.stopBeat(track.fileName, stepIndex);
+      this.soundService.disableStep(track.fileName, stepIndex);
     } else {
-      this.soundService.startBeat(track.fileName, stepIndex);
+      this.soundService.enableStep(track.fileName, stepIndex);
     }
 
     this.beat = {
