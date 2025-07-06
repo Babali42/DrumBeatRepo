@@ -3,6 +3,7 @@ import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
 import {IAudioEngine, IAudioEngineCommands, IAudioEngineQuery} from "../../../domain/ports/secondary/i-audio-engine";
+import {Bpm} from "../../../domain/bpm";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class SoundService implements IAudioEngine {
   // @ts-expect-error: Type definition for WAAClock might be missing or incorrect
   private clock: WAAClock;
 
-  bpm: number = 128;
+  bpm: Bpm = new Bpm(128);
   index: number = 0;
   isPlaying = false;
 
@@ -102,11 +103,11 @@ export class SoundService implements IAudioEngine {
     this.isPlaying = !this.isPlaying;
   }
 
-  setBpm(a: number) {
+  setBpm(a: Bpm) {
     const events = Array.from(this.trackStepMap.values()).flatMap(x => Array.from(x.values()));
 
     if (this.clock) {
-        this.clock.timeStretch(this.context.currentTime, events, this.bpm / a);
+        this.clock.timeStretch(this.context.currentTime, events, this.bpm.value / a.value);
     }
 
     this.bpm = a;
@@ -154,7 +155,7 @@ export class SoundService implements IAudioEngine {
     source.start();
   }
 
-  private getStepDuration(bpm: number): number {
-    return 60 / (bpm * ( this.signature / 4));
+  private getStepDuration(bpm: Bpm): number {
+    return 60 / (bpm.value * (this.signature / 4));
   }
 }

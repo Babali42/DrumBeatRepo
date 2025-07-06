@@ -16,6 +16,7 @@ import {SoundService} from "./adapters/secondary/sound/sound.service";
 import {Beat} from "./domain/beat";
 import {CompactBeatMapper} from "./domain/compact-beat.mapper";
 import {BeatUrlMapper} from "./adapters/secondary/beat-url.mapper";
+import {Bpm} from "./domain/bpm";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -85,11 +86,11 @@ describe('Router', () => {
 
     const seq = dbg.componentInstance as SequencerComponent;
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
-    expect(seq.beat.bpm).toBe(128);
+    expect(seq.beat.bpm.value).toEqual(128);
   }));
 
   it('should render the add beat page', fakeAsync (() => {
-    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: 180, tracks: [{ steps: [false, true, false, true], name: "kick", fileName: "techno/kick.mp3" }] } as Beat;
+    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [{ steps: [false, true, false, true], name: "kick", fileName: "techno/kick.mp3" }] } as Beat;
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
     const base64Beat = BeatUrlMapper.toBase64(compactBeat);
 
@@ -108,6 +109,6 @@ describe('Router', () => {
 
     const seq = dbg.componentInstance as SequencerComponent;
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
-    expect(seq.beat.bpm).toBe(180);
+    expect(seq.beat.bpm.value).toEqual(128);
   }));
 });

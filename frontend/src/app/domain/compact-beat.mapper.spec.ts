@@ -1,10 +1,11 @@
 import {CompactBeatMapper} from "./compact-beat.mapper";
 import {Beat} from "./beat";
 import {Track} from "./track";
+import {Bpm} from "./bpm";
 
 describe('Compact beat mapper tests', () => {
   it("Should map compact beat to url to compact beat", () => {
-    const beat = { id: "", genre: "", label: "", bpm: 150, tracks: [
+    const beat = { id: "", genre: "", label: "", bpm: new Bpm(150), tracks: [
         { name: "", fileName: "", steps: [true, false, false, true]} as Track,
         { name: "", fileName: "", steps: [true, false, false, true]} as Track,
       ]} as Beat;

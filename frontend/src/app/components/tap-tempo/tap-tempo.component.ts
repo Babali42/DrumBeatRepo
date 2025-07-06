@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
+import {Bpm} from "../../domain/bpm";
 
 @Component({
   selector: 'tap-tempo',
@@ -18,12 +19,12 @@ export class TapTempoComponent {
   private lastTap = 0;
   private counter = 0;
   private tapDiff = 0;
-  private averageBpm = 0;
+  private averageBpm = 40;
   private previousTap = 0;
   private elapsed = 0;
 
   changeBeatBpm($event: number) {
-    this.audioEngine.setBpm($event);
+    this.audioEngine.setBpm(new Bpm($event));
   }
 
   tapTempo() {

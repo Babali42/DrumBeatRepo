@@ -17,6 +17,7 @@ import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.t
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
 import {filter, map} from "rxjs/operators";
+import {Bpm} from "../../domain/bpm";
 
 @Component({
     selector: 'sequencer',
@@ -134,10 +135,10 @@ export class SequencerComponent implements OnInit {
   }
 
   changeBeatBpm($event: number) {
-    this.soundService.setBpm($event);
+    this.soundService.setBpm(new Bpm($event));
     this.beat = this.beat = {
       ...this.beat,
-      bpm: $event,
+      bpm: new Bpm($event),
     };
     this.customBeatSubject.next(this.beat);
   }
