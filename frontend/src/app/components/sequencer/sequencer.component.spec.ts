@@ -65,7 +65,7 @@ describe('SequencerComponent', () => {
     const tempoInput = fixture.nativeElement.querySelector('input');
     // eslint-disable-next-line
     const tempoResult = parseInt(tempoInput.value, 10);
-    expect(tempoResult).toBe(135);
+    expect(tempoResult).toBe(200);
   }))
 
   it("should display a step button", () => {

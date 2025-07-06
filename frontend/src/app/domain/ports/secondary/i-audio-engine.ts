@@ -14,8 +14,9 @@ export interface IAudioEngineCommands {
 }
 
 export interface IAudioEngineQuery {
-  readonly index: number;
-  readonly isPlaying: boolean;
+  index: number;
+  isPlaying: boolean;
+  bpm: number;
 }
 
 export interface IAudioEngine extends IAudioEngineCommands, IAudioEngineQuery {

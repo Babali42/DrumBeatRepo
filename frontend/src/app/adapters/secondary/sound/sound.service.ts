@@ -7,7 +7,7 @@ import {IAudioEngine, IAudioEngineCommands, IAudioEngineQuery} from "../../../do
 @Injectable({
   providedIn: 'root'
 })
-export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioEngineQuery {
+export class SoundService implements IAudioEngine {
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
 
@@ -16,7 +16,7 @@ export class SoundService implements IAudioEngine, IAudioEngineCommands, IAudioE
   // @ts-expect-error: Type definition for WAAClock might be missing or incorrect
   private clock: WAAClock;
 
-  private bpm: number = 128;
+  bpm: number = 128;
   index: number = 0;
   isPlaying = false;
 
