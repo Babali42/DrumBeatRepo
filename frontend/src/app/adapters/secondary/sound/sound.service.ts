@@ -35,9 +35,9 @@ export class SoundService implements IAudioEngine {
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
-  readonly getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
-  readonly nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
-  readonly pause = () => this.clock.stop();
+  private readonly getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
+  private readonly nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
+  private readonly pause = () => this.clock.stop();
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
