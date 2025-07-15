@@ -27,17 +27,17 @@ export class SoundService implements IAudioEngine {
   isPlaying = false;
   private signature = 16;
 
-  private getStepDuration = (bpm: Bpm): number => 60 / (bpm.value * (this.signature / 4));
+  private readonly getStepDuration = (bpm: Bpm): number => 60 / (bpm.value * (this.signature / 4));
   private stepDuration = this.getStepDuration(this.bpm);
-  private getBarDur = () => this.signature * this.stepDuration;
+  private readonly getBarDur = () => this.signature * this.stepDuration;
   private barDur = this.getBarDur();
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
-  getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
-  nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
-  pause = () => this.clock.stop();
+  readonly getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
+  readonly nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
+  readonly pause = () => this.clock.stop();
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
@@ -59,7 +59,7 @@ export class SoundService implements IAudioEngine {
     this.clock.start();
 
     this.tracks.forEach((track) => {
-      track.steps.forEach((step, index) => {
+      track.steps.steps.forEach((step, index) => {
         if (step)
           this.enableStep(track.fileName, index);
       })

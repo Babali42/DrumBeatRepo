@@ -61,10 +61,10 @@
   </div>
   <section class="tracks-container">
     <article *ngFor="let track of beat.tracks">
-      <div id="track" [class.sixteen-steps]="track.steps.length == StepLengths.sixteen"
-           [class.thirty-two-steps]="track.steps.length == StepLengths.thirty_two"
-           [class.sixty-four-steps]="track.steps.length == StepLengths.sixty_four">
-        <button *ngFor="let step of track.steps; let i = index" class="step cursor-pointer"
+      <div id="track" [class.sixteen-steps]="track.signature == TrackSignature.sixteen"
+           [class.thirty-two-steps]="track.signature == TrackSignature.thirty_two"
+           [class.sixty-four-steps]="track.signature == TrackSignature.sixty_four">
+        <button *ngFor="let step of track.steps.steps; let i = index" class="step cursor-pointer"
              [class.active]="step"
              [class.current]="i === soundService.index"
              [class.highlight]="Math.floor(i / 4) % 2 === 0"

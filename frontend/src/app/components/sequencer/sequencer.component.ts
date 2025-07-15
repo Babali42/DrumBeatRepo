@@ -1,7 +1,6 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {Beat} from '../../domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {StepLengths} from './models/step-lengths';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject, shareReplay, Subject} from "rxjs";
@@ -18,6 +17,7 @@ import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
 import {filter, map} from "rxjs/operators";
 import {Bpm} from "../../domain/bpm";
+import {TrackSignature} from "../../domain/trackSignature";
 
 @Component({
     selector: 'sequencer',
@@ -28,7 +28,6 @@ import {Bpm} from "../../domain/bpm";
 export class SequencerComponent implements OnInit {
   private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
-  protected readonly StepLengths = StepLengths;
   protected readonly Math = Math;
 
   beat = {} as Beat;
@@ -54,7 +53,7 @@ export class SequencerComponent implements OnInit {
     this.beatBehaviourSubject.subscribe(beat => {
       this.soundService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
-      this.soundService.setStepNumber(beat.tracks[0].steps.length);
+      this.soundService.setStepNumber(beat.tracks[0].signature);
     });
 
     this.route.queryParamMap.subscribe((params) => {
@@ -118,9 +117,9 @@ export class SequencerComponent implements OnInit {
   }
 
   stepClick = (track: Track, stepIndex: number, value: boolean) : void => {
-    track.steps[stepIndex] = !value;
+    track.steps.setStepAtIndex(stepIndex, !value);
 
-    if (!track.steps[stepIndex]) {
+    if (!track.steps.getStepAtIndex(stepIndex)) {
       this.soundService.disableStep(track.fileName, stepIndex);
     } else {
       this.soundService.enableStep(track.fileName, stepIndex);
@@ -152,4 +151,6 @@ export class SequencerComponent implements OnInit {
     }),
     shareReplay(1)
   );
+
+  protected readonly TrackSignature = TrackSignature;
 }

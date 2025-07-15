@@ -1,6 +1,7 @@
 import {Beat} from "./beat";
 import {CompactBeat} from "./compact-beat";
 import {Bpm} from "./bpm";
+import {Track} from "./track";
 
 export class CompactBeatMapper {
   static toBeat(compact: CompactBeat): Beat {
@@ -9,11 +10,7 @@ export class CompactBeatMapper {
       label: compact.label,
       bpm: new Bpm(compact.bpm),
       genre: compact.genre,
-      tracks: compact.tracks.map(track => ({
-        name: track.name,
-        fileName: track.fileName,
-        steps: [...track.steps].map(char => char === 'X')
-      }))
+      tracks: compact.tracks.map(track => new Track(track.name, track.fileName, [...track.steps].map(char => char === 'X')))
     };
   }
 
@@ -26,7 +23,7 @@ export class CompactBeatMapper {
       tracks: beat.tracks.map(track => ({
         name: track.name,
         fileName: track.fileName,
-        steps: track.steps.map(x => x? "X":" ").join('')
+        steps: track.steps.steps.map(x => x? "X":" ").join('')
       }))
     }
   }

@@ -17,6 +17,7 @@ import {Beat} from "./domain/beat";
 import {CompactBeatMapper} from "./domain/compact-beat.mapper";
 import {BeatUrlMapper} from "./adapters/secondary/beat-url.mapper";
 import {Bpm} from "./domain/bpm";
+import {Track} from "./domain/track";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -90,7 +91,7 @@ describe('Router', () => {
   }));
 
   it('should render the add beat page', fakeAsync (() => {
-    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [{ steps: [false, true, false, true], name: "kick", fileName: "techno/kick.mp3" }] } as Beat;
+    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [new Track("", "", [false, true, false, true])]} as Beat;
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
     const base64Beat = BeatUrlMapper.toBase64(compactBeat);
 
