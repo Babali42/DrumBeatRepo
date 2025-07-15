@@ -25,6 +25,14 @@ The main codebase and documentation are in the [`frontend`](./frontend) folder.
 
 ---
 
+## Domain folder schema
+
+The whole sequencer is represented in the domain layer
+
+![Domain Schema](./domain.jpg)
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
