@@ -7,6 +7,9 @@ import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {SoundService} from "../../adapters/secondary/sound/sound.service";
+import {Bpm} from "../../domain/bpm";
+import {Beat} from "../../domain/beat";
+import {Track} from "../../domain/track";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -111,5 +114,22 @@ describe('SequencerComponent', () => {
     expect(querySelector.value).not.toEqual(firstValue);
     // eslint-disable-next-line
     expect(querySelector.value).toContain('#')
+  });
+
+  it("should generate custom url", () => {
+    const beat = {
+      bpm: new Bpm(200),
+      id: "test",
+      label: "Techno",
+      tracks: [
+        new Track("test", "test", [true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false])
+      ],
+    } as unknown as Beat;
+    component.selectBeat(beat);
+    component.customBeatUrl$.subscribe(beatUrl => {
+      expect(beatUrl).not.toContain(" ");
+      expect(beatUrl).toContain("200");
+      expect(beatUrl).toContain("Sort%20Of%20Techno");
+    });
   });
 })
