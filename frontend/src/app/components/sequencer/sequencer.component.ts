@@ -26,7 +26,7 @@ import {TrackSignature} from "../../domain/trackSignature";
   imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe, NgIf]
 })
 export class SequencerComponent implements OnInit {
-  private readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
+  readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
   protected readonly Math = Math;
 
@@ -80,7 +80,7 @@ export class SequencerComponent implements OnInit {
   genreChange = ($event: string)=> this.selectGenre(this.genres, $event, null);
 
   getCustomBeatUrl = (base64beat: string, selectedBeatLabel: string, bpm: string) : string =>
-    `${window.location.origin}/#/?name=Sort of ${selectedBeatLabel}&bpm=${bpm}&beat=${base64beat}`;
+    `${window.location.origin}/#/?name=Sort%20Of%20${selectedBeatLabel}&bpm=${bpm}&beat=${base64beat}`;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
@@ -147,7 +147,7 @@ export class SequencerComponent implements OnInit {
     map((beat) => {
       const compact = CompactBeatMapper.toCompactBeat(beat);
       const base64 = BeatUrlMapper.toBase64(compact);
-      return this.getCustomBeatUrl(base64, this.selectedBeatLabel, this.beat.bpm.toString());
+      return this.getCustomBeatUrl(base64, this.selectedBeatLabel, this.beat.bpm.value.toString());
     }),
     shareReplay(1)
   );
