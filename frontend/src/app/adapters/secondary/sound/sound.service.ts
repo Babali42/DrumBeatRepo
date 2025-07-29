@@ -19,8 +19,7 @@ export class SoundService implements IAudioEngine {
   private readonly context: AudioContext;
   private tracks: readonly Track[] = [];
 
-  // @ts-expect-error
-  private clock: WAAClock;
+  private clock: WAAClock | undefined;
 
   bpm: Bpm = new Bpm(128);
   index: number = 0;
@@ -37,7 +36,7 @@ export class SoundService implements IAudioEngine {
 
   private readonly getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
   private readonly nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
-  private readonly pause = () => this.clock.stop();
+  private readonly pause = () => this.clock!.stop();
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
