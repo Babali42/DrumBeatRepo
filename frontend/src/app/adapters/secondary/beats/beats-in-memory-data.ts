@@ -68,7 +68,7 @@ const rockBeat: CompactBeat = {
     {
       name: "Kick",
       fileName: "metal/kick.mp3",
-      steps: "X       X       "
+      steps: "X X       X     "
     }
   ]
 };
@@ -164,17 +164,12 @@ const jerseyClubBeat: CompactBeat = {
     {
       name: "Bed squeak (low)",
       fileName: "jersey-club/squeak_low.mp3",
-      steps: "X       X       "
+      steps: "X   X   X   X   "
     },
     {
       name: "Bed squeak (high)",
       fileName: "jersey-club/squeak_high.mp3",
-      steps: "    X       X   "
-    },
-    {
-      name: "Snare",
-      fileName: "jersey-club/snare.mp3",
-      steps: "X   X   X  X  X "
+      steps: "__X___X___X___X_"
     },
     {
       name: "Kick",
@@ -209,9 +204,9 @@ const halfTimeGroove: CompactBeat = {
   ]
 };
 
-const garageTwoStep: CompactBeat = {
+const twoStep: CompactBeat = {
   id: "garage",
-  label: "Garage",
+  label: "Two step",
   bpm: 130,
   genre: "Garage",
   tracks: [
@@ -567,11 +562,13 @@ const punkBeatEightNoteFill: CompactBeat = {
 
 export const beatsGroupedByGenre : readonly BeatsGroupedByGenre[] = [
   { label:"Techno", beats: [psytranceBeat, technoBeat, offBeatTechnoClap, gabberBeat]} as BeatsGroupedByGenre,
-  { label:"BreakBeat", beats: [breakcoreBeat, jerseyClubBeat]} as BeatsGroupedByGenre,
-  { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat, reggaetonBeat]},
-  { label:"Garage", beats: [drumAndBassBeat, garageTwoStep]},
+  { label:"BreakBeat", beats: [breakcoreBeat, drumAndBassBeat, twoStep]} as BeatsGroupedByGenre,
+  { label:"Club", beats: [jerseyClubBeat]} as BeatsGroupedByGenre,
+  { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat]},
+  { label:"Reggaeton", beats: [reggaetonBeat]},
   { label:"Dub", beats: [dubBeat]},
   { label:"Indus", beats: [ebmBeat]},
-  { label:"Metal", beats: [metalBeat, blastBeat, rockBeatVariation, halfTimeGroove, rockBeat]} as BeatsGroupedByGenre,
+  { label:"Metal", beats: [metalBeat, blastBeat]} as BeatsGroupedByGenre,
+  { label:"Rock", beats: [rockBeat, rockBeatVariation, halfTimeGroove]} as BeatsGroupedByGenre,
   { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
 ];
