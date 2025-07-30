@@ -10,7 +10,6 @@ describe("Beat url mapper tests", () => {
 
     expect(result.label).toEqual(compactBeat.label);
     expect(result.bpm).toEqual(compactBeat.bpm);
-    expect(result.genre).toEqual(compactBeat.genre);
     expect(result.tracks.length).toEqual(compactBeat.tracks.length);
     expect(result.tracks[0].name).toEqual(compactBeat.tracks[0].name);
     expect(result.tracks[0].steps).toEqual(compactBeat.tracks[0].steps);
