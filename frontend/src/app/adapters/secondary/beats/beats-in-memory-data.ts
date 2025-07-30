@@ -5,7 +5,6 @@ const metalBeat: CompactBeat = {
   id: "metal",
   label: "Metal",
   bpm: 180,
-  genre: "Metal",
   tracks: [
     {
       name: "Snare",
@@ -29,7 +28,6 @@ const technoBeat: CompactBeat = {
   id: "techno",
   label: "4 on the floor",
   bpm: 128,
-  genre: "Techno",
   tracks: [
     {
       name: "Snare",
@@ -53,7 +51,6 @@ const rockBeat: CompactBeat = {
   id: "rock-beat",
   label: "Rock",
   bpm: 145,
-  genre: "Metal",
   tracks: [
     {
       name: "Snare",
@@ -77,7 +74,6 @@ const rockBeatVariation: CompactBeat = {
   id: "rock-beat-variation",
   label: "Rock variation",
   bpm: 145,
-  genre: "Metal",
   tracks: [
     {
       name: "Snare",
@@ -101,7 +97,6 @@ const psytranceBeat: CompactBeat = {
   id: "psytrance",
   label: "Psytrance",
   bpm: 135,
-  genre: "Trance",
   tracks: [
     {
       name: "Closed hats",
@@ -135,7 +130,6 @@ const offBeatTechnoClap: CompactBeat = {
   id: "off-beat-techno-clap",
   label: "OffBeat clap",
   bpm: 128,
-  genre: "Techno",
   tracks: [
     {
       name: "Clap",
@@ -159,7 +153,6 @@ const jerseyClubBeat: CompactBeat = {
   id: "jersey-club",
   label: "Jersey club",
   bpm: 140,
-  genre: "Breakbeat",
   tracks: [
     {
       name: "Bed squeak (low)",
@@ -184,7 +177,6 @@ const halfTimeGroove: CompactBeat = {
   id: "half-time-groove",
   label: "Half time groove",
   bpm: 145,
-  genre: "Metal",
   tracks: [
     {
       name: "Snare",
@@ -208,7 +200,6 @@ const twoStep: CompactBeat = {
   id: "garage",
   label: "Two step",
   bpm: 130,
-  genre: "Garage",
   tracks: [
     {
       name: "Snare",
@@ -232,7 +223,6 @@ const gabberBeat: CompactBeat = {
   id: "gabber",
   label: "Gabber",
   bpm: 200,
-  genre: "Techno",
   tracks: [
     {
       name: "Crash Cymbal",
@@ -261,7 +251,6 @@ const ebmBeat: CompactBeat = {
   id: "ebm",
   label: "EBM",
   bpm: 120,
-  genre: "Industrial",
   tracks: [
     {
       name: "Clap",
@@ -295,7 +284,6 @@ const dubBeat: CompactBeat = {
   id: "dub",
   label: "Dub",
   bpm: 140,
-  genre: "Dub",
   tracks: [
     {
       name: "Kick",
@@ -339,7 +327,6 @@ const blastBeat: CompactBeat = {
   id: "blast-beat",
   label: "Blast beat",
   bpm: 180,
-  genre: "Metal",
   tracks: [
     {
       name: "Snare",
@@ -363,7 +350,6 @@ const breakcoreBeat: CompactBeat = {
   id: "breakcore",
   label: "Breakcore",
   bpm: 180,
-  genre: "Breakbeat",
   tracks: [
     {
       name: "Snare (accent)",
@@ -393,7 +379,6 @@ const drumAndBassBeat: CompactBeat = {
   id: "drum-n-bass",
   label: "Drum & bass",
   bpm: 170,
-  genre: "Garage",
   tracks: [
     {
       name: "Snare",
@@ -417,7 +402,6 @@ const standardDancehallBeat: CompactBeat = {
   id: "dancehall-standard",
   label: "Standard dancehall",
   bpm: 105,
-  genre: "Dancehall",
   tracks: [
     {
       name: "Hats",
@@ -441,7 +425,6 @@ const reggaetonBeat: CompactBeat = {
   id: "dancehall-reggaeton",
   label: "Reggaeton",
   bpm: 105,
-  genre: "Dancehall",
   tracks: [
     {
       name: "Hats",
@@ -465,7 +448,6 @@ const modernDancehallBeat: CompactBeat = {
   id: "dancehall-modern",
   label: "Modern dancehall",
   bpm: 105,
-  genre: "Dancehall",
   tracks: [
     {
       name: "Hats",
@@ -489,7 +471,6 @@ const punkBeatQuarterNoteGroove: CompactBeat = {
   id: "punk-beat-quarter-note-groove",
   label: "Quarter note groove",
   bpm: 170,
-  genre: "Punk",
   tracks: [
     {
       name: "Hats",
@@ -514,7 +495,6 @@ const punkBeatQuarterNoteGrooveVariation: CompactBeat = {
   id: "punk-beat-quarter-note-groove-variation",
   label: "Quarter note groove variation",
   bpm: 170,
-  genre: "Punk",
   tracks: [
     {
       name: "Hats",
@@ -539,7 +519,6 @@ const punkBeatEightNoteFill: CompactBeat = {
   id: "punk-beat-eight-note-fill",
   label: "Eight note fill",
   bpm: 170,
-  genre: "Punk",
   tracks: [
     {
       name: "Hats",
@@ -561,14 +540,16 @@ const punkBeatEightNoteFill: CompactBeat = {
 };
 
 export const beatsGroupedByGenre : readonly BeatsGroupedByGenre[] = [
-  { label:"Techno", beats: [psytranceBeat, technoBeat, offBeatTechnoClap, gabberBeat]} as BeatsGroupedByGenre,
+  { label:"Techno", beats: [technoBeat, offBeatTechnoClap]} as BeatsGroupedByGenre,
+  { label:"Rock", beats: [rockBeat, rockBeatVariation]} as BeatsGroupedByGenre,
+  { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
+  { label:"Metal", beats: [metalBeat, blastBeat, halfTimeGroove]} as BeatsGroupedByGenre,
   { label:"BreakBeat", beats: [breakcoreBeat, drumAndBassBeat, twoStep]} as BeatsGroupedByGenre,
-  { label:"Club", beats: [jerseyClubBeat]} as BeatsGroupedByGenre,
   { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat]},
+  { label:"Psytrance", beats: [psytranceBeat]} as BeatsGroupedByGenre,
+  { label:"Techno Hardcore", beats: [gabberBeat]} as BeatsGroupedByGenre,
   { label:"Reggaeton", beats: [reggaetonBeat]},
   { label:"Dub", beats: [dubBeat]},
   { label:"Indus", beats: [ebmBeat]},
-  { label:"Metal", beats: [metalBeat, blastBeat]} as BeatsGroupedByGenre,
-  { label:"Rock", beats: [rockBeat, rockBeatVariation, halfTimeGroove]} as BeatsGroupedByGenre,
-  { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
+  { label:"Club", beats: [jerseyClubBeat]} as BeatsGroupedByGenre,
 ];
