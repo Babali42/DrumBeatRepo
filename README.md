@@ -1,7 +1,7 @@
 # 🥁 Drum Beat Repository  
 *A library of drum patterns for music lovers / Une bibliothèque rythmique pour les mélomanes 🎵*
 
-Welcome to **Drum Beat Repository**, a web-based project for musicians, producers, and developers to explore and create drum patterns. Built with **Angular** and the **Web Audio API**, this interactive tool delivers a smooth, in-browser drum sequencing experience.
+Welcome to **Drum Beat Repository**, a web-based project for musicians and producers to explore and create drum patterns. Built with **Angular** and the **Web Audio API**, this interactive tool delivers a smooth, in-browser drum sequencing experience.
 
 👉 **Try it now:** [www.drumbeatrepo.com](https://www.drumbeatrepo.com/#/)
 
