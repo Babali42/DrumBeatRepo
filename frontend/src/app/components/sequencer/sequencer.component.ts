@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import {filter, map} from "rxjs/operators";
 import {Bpm} from "../../domain/bpm";
 import {TrackSignature} from "../../domain/trackSignature";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
     selector: 'sequencer',
@@ -38,6 +39,7 @@ export class SequencerComponent implements OnInit {
   private genres: readonly BeatsGroupedByGenre[] = [];
 
   isCustomBeatPage: boolean = false;
+  isMobileDisplay: boolean = true;
 
   customBeatName: string = "";
   selectedGenreLabel: string = "";
@@ -45,8 +47,14 @@ export class SequencerComponent implements OnInit {
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              public readonly route: ActivatedRoute) {
+              public readonly route: ActivatedRoute,
+              private readonly responsive: BreakpointObserver) {
     this.beatBehaviourSubject = new Subject<Beat>();
+    this.responsive.observe([
+      Breakpoints.Web,
+    ]).subscribe(result => {
+      this.isMobileDisplay = !result.matches;
+    });
   }
 
   ngOnInit() {
