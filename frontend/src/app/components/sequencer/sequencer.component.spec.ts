@@ -10,17 +10,23 @@ import {SoundService} from "../../adapters/secondary/sound/sound.service";
 import {Bpm} from "../../domain/bpm";
 import {Beat} from "../../domain/beat";
 import {Track} from "../../domain/track";
+import {BreakpointObserver} from "@angular/cdk/layout";
+import {MockBreakpointObserver} from "../../testing/mock-breakpoint-observer";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
+  let mockBreakpointObserver: MockBreakpointObserver;
 
   beforeEach(async () => {
+    mockBreakpointObserver = new MockBreakpointObserver();
+
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
         {provide: AUDIO_ENGINE, useClass: SoundService},
+        {provide: BreakpointObserver, useValue: mockBreakpointObserver},
         provideHttpClient(),
         provideRouter([])
       ]
@@ -94,6 +100,7 @@ describe('SequencerComponent', () => {
   });
 
   it("should update uri field after user change a beat", () => {
+    mockBreakpointObserver.setMatches(true);
     fixture.detectChanges();
 
     // eslint-disable-next-line

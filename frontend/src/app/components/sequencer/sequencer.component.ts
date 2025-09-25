@@ -39,7 +39,7 @@ export class SequencerComponent implements OnInit {
   private genres: readonly BeatsGroupedByGenre[] = [];
 
   isCustomBeatPage: boolean = false;
-  isMobileDisplay: boolean = true;
+  isMobileDisplay: boolean = false;
 
   customBeatName: string = "";
   selectedGenreLabel: string = "";
