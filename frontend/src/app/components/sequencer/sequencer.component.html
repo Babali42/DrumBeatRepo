@@ -74,7 +74,7 @@
     </article>
   </section>
 </div>
-<div class="flex mt-40" *ngIf="!isCustomBeatPage">
+<div class="flex mt-40" *ngIf="!isCustomBeatPage && !isMobileDisplay">
   <div>Custom url :</div>
   <textarea class="ml-10 custom-url-text" cols="100" rows="10" [value]="customBeatUrl$ | async"></textarea>
 </div>
