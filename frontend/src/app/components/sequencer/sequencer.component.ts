@@ -1,9 +1,9 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
 import {ActivatedRoute} from '@angular/router';
-import {BehaviorSubject, shareReplay, Subject} from "rxjs";
+import {BehaviorSubject, shareReplay, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
@@ -26,7 +26,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
     styleUrls: ['./sequencer.component.scss'],
   imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe, NgIf]
 })
-export class SequencerComponent implements OnInit {
+export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
   protected readonly Math = Math;
@@ -44,6 +44,7 @@ export class SequencerComponent implements OnInit {
   customBeatName: string = "";
   selectedGenreLabel: string = "";
   selectedBeatLabel: string = "";
+  private readonly destroy$ = new Subject<void>;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -52,7 +53,7 @@ export class SequencerComponent implements OnInit {
     this.beatBehaviourSubject = new Subject<Beat>();
     this.responsive.observe([
       Breakpoints.Web,
-    ]).subscribe(result => {
+    ]).pipe(takeUntil(this.destroy$)).subscribe(result => {
       this.isMobileDisplay = !result.matches;
     });
   }
@@ -81,6 +82,11 @@ export class SequencerComponent implements OnInit {
         }).catch(() => { });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   toggleIsPlaying = () => this.soundService.playPause();
