@@ -1,7 +1,7 @@
 <div id="main-container">
   <div class="play-button-container flex">
     <button class="play-pause-button cursor-pointer app-button"
-            (click)="toggleIsPlaying()">
+            (click)="this.soundService.playPause()">
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
   </div>

@@ -89,8 +89,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  toggleIsPlaying = () => this.soundService.playPause();
-
   genreChange = ($event: string)=> this.selectGenre(this.genres, $event, null);
 
   getCustomBeatUrl = (base64beat: string, selectedBeatLabel: string, bpm: string) : string =>
@@ -99,7 +97,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code == "Space") {
-      this.toggleIsPlaying();
+      this.soundService.playPause()
     }
   }
 
