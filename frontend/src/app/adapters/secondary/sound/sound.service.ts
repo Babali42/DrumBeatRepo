@@ -17,11 +17,12 @@ export class SoundService implements IAudioEngine {
 
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
+
   private tracks: readonly Track[] = [];
+  bpm: Bpm = new Bpm(128);
 
   private clock: WAAClock | undefined;
 
-  bpm: Bpm = new Bpm(128);
   index: number = 0;
   isPlaying = false;
   private signature = 16;
