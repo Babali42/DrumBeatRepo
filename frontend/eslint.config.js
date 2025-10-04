@@ -72,14 +72,6 @@ export default [
       'functional/prefer-tacit': 'off',
       'functional/no-conditional-statements': 'off', // Too strict for Angular
       'functional/no-expression-statements': 'off', // Angular needs side effects
-      'functional/functional-parameters': ['warn', {
-        'allowRestParameter': true,
-        'allowArgumentsKeyword': false,
-      }],
-      'functional/no-return-void': ['warn', {
-        'allowNull': true,
-        'allowUndefined': true,
-      }],
       'functional/prefer-property-signatures': 'warn',
       'functional/type-declaration-immutability': 'warn',
     },
