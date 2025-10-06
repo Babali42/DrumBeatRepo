@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch",
-    "test-ci": "ng test --no-watch --browsers=ChromeHeadless",
+    "test": "ng test --code-coverage --watch",
+    "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
     "test-jest": "npx jest"
   },
   "private": true,
