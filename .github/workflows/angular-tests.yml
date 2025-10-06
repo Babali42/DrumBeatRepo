@@ -31,5 +31,11 @@ jobs:
       - name: Run angular/karma tests
         run: npm run test-ci
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/ng17-lib-test/lcov.info
+
       - name: Run architecture tests
         run: npm run test-jest
