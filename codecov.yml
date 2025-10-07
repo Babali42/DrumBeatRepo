@@ -1,0 +1,8 @@
+component_management:
+  individual_components:
+    - component_id: "domain"
+      paths:
+        - "frontend/src/app/domain/"
+
+comment:
+  layout: "header, diff, flags, components"  # show component info in the PR comment
