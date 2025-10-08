@@ -1,4 +1,4 @@
-import {Bpm} from "./bpm";
+import {Bpm} from "../../../domain/bpm";
 import {Injectable} from "@angular/core";
 
 @Injectable({

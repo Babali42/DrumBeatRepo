@@ -3,7 +3,7 @@ import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
-import {TempoService} from "../../../domain/tempo.service";
+import {TempoService} from "../tempo/tempo.service";
 
 @Injectable({
   providedIn: 'root'
