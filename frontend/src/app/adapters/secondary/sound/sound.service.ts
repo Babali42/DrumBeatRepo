@@ -4,44 +4,39 @@ import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
 import {Bpm} from "../../../domain/bpm";
+import {TempoService} from "../../../domain/tempo.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService implements IAudioEngine {
 
-  constructor(private readonly zone: NgZone) {
+  constructor(private readonly zone: NgZone, ) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
 
+
+  private readonly tempoService = new TempoService(new Bpm(128), 16);
+  bpm: Bpm = this.tempoService.bpm;
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
   private tracks: readonly Track[] = [];
 
   private clock: WAAClock | undefined;
 
-  bpm: Bpm = new Bpm(128);
   index: number = 0;
   isPlaying = false;
-  private signature = 16;
-
-  private readonly getStepDuration = (bpm: Bpm): number => 60 / (bpm.value * (this.signature / 4));
-  private stepDuration = this.getStepDuration(this.bpm);
-  private readonly getBarDur = () => this.signature * this.stepDuration;
-  private barDur = this.getBarDur();
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
-  private readonly getCurrentBar = (barDuration: number) => Math.floor(this.context.currentTime / barDuration);
-  private readonly nextStepTime = (stepIndex: number): number => this.getCurrentBar(this.barDur) * this.barDur + stepIndex * this.stepDuration;
   private readonly pause = () => this.clock!.stop();
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
-      const stepPosition = Math.floor(this.context.currentTime / this.stepDuration);
-      this.index = stepPosition % this.signature;
+      const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
+      this.index = stepPosition % this.tempoService.signature;
     });
   };
 
@@ -65,8 +60,8 @@ export class SoundService implements IAudioEngine {
       })
     })
 
-    this.clock.callbackAtTime(this.uiNextStep, this.nextStepTime(0))
-      .repeat(this.stepDuration)
+    this.clock.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(this.context.currentTime,0))
+      .repeat(this.tempoService.stepDuration)
       .tolerance({late: 100})
   }
 
@@ -112,14 +107,11 @@ export class SoundService implements IAudioEngine {
       this.clock.timeStretch(this.context.currentTime, events, this.bpm.value / newTempo.value);
     }
 
-    this.bpm = newTempo;
-    this.stepDuration = this.getStepDuration(this.bpm);
-    this.barDur = this.getBarDur();
+    this.tempoService.setBpm(newTempo);
   }
 
   setStepNumber(n: number) {
-    this.signature = n;
-    this.barDur = this.getBarDur();
+    this.tempoService.setSignature(n)
   }
 
   enableStep(trackName: string, stepIndex: number): void {
@@ -129,8 +121,8 @@ export class SoundService implements IAudioEngine {
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
       const bufferNode = this.trackSampleBuilderMap.get(trackName)!();
       bufferNode.start(event.deadline);
-    }, this.nextStepTime(stepIndex));
-    event.repeat(this.barDur);
+    }, this.tempoService.getNextStepTime(this.context.currentTime, stepIndex));
+    event.repeat(this.tempoService.barDuration);
 
     if (!this.trackStepMap.get(trackName)) this.trackStepMap.set(trackName, new Map());
     this.trackStepMap.get(trackName)!.set(stepIndex, event);
