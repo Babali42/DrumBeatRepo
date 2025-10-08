@@ -6,12 +6,12 @@ import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
-import {SoundService} from "../../adapters/secondary/sound/sound.service";
 import {Bpm} from "../../domain/bpm";
 import {Beat} from "../../domain/beat";
 import {Track} from "../../domain/track";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MockBreakpointObserver} from "../../testing/mock-breakpoint-observer";
+import {SoundServiceFake} from "../../adapters/secondary/sound/sound.service.fake";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -25,7 +25,7 @@ describe('SequencerComponent', () => {
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
-        {provide: AUDIO_ENGINE, useClass: SoundService},
+        {provide: AUDIO_ENGINE, useClass: SoundServiceFake},
         {provide: BreakpointObserver, useValue: mockBreakpointObserver},
         provideHttpClient(),
         provideRouter([])
@@ -140,3 +140,5 @@ describe('SequencerComponent', () => {
     });
   });
 })
+
+

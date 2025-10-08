@@ -19,6 +19,7 @@ import {filter, map} from "rxjs/operators";
 import {Bpm} from "../../domain/bpm";
 import {TrackSignature} from "../../domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {TempoService} from "../../domain/tempo.service";
 
 @Component({
     selector: 'sequencer',
@@ -49,7 +50,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               public readonly route: ActivatedRoute,
-              private readonly responsive: BreakpointObserver) {
+              private readonly responsive: BreakpointObserver,
+              protected readonly tempoService: TempoService) {
     this.beatBehaviourSubject = new Subject<Beat>();
     this.responsive.observe([
       Breakpoints.Web,
@@ -60,9 +62,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.beatBehaviourSubject.subscribe(beat => {
-      this.soundService.setBpm(beat.bpm);
+      this.tempoService.setSignature(beat.tracks[0].signature);
+      this.tempoService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
-      this.soundService.setStepNumber(beat.tracks[0].signature);
     });
 
     this.route.queryParamMap.subscribe((params) => {
@@ -146,7 +148,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   changeBeatBpm($event: number) {
-    this.soundService.setBpm(new Bpm($event));
+    this.soundService.pause();
+    this.tempoService.setBpm(new Bpm($event));
     this.beat = this.beat = {
       ...this.beat,
       bpm: new Bpm($event),

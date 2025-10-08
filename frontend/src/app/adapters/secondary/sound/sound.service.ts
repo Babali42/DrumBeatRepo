@@ -3,22 +3,17 @@ import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
-import {Bpm} from "../../../domain/bpm";
 import {TempoService} from "../../../domain/tempo.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService implements IAudioEngine {
-
-  constructor(private readonly zone: NgZone, ) {
+  constructor(private readonly zone: NgZone, private readonly tempoService: TempoService) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
 
-
-  private readonly tempoService = new TempoService(new Bpm(128), 16);
-  bpm: Bpm = this.tempoService.bpm;
   private readonly audioFilesService = new AudioFilesService();
   private readonly context: AudioContext;
   private tracks: readonly Track[] = [];
@@ -31,7 +26,10 @@ export class SoundService implements IAudioEngine {
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
-  private readonly pause = () => this.clock!.stop();
+  readonly pause = () => {
+    this.isPlaying = false;
+    this.clock!.stop();
+  };
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
@@ -50,6 +48,7 @@ export class SoundService implements IAudioEngine {
   }
 
   play() {
+    this.isPlaying = true;
     this.clock = new WAAClock(this.context, {toleranceEarly: 0.1});
     this.clock.start();
 
@@ -96,22 +95,6 @@ export class SoundService implements IAudioEngine {
       this.pause()
     else
       this.play();
-
-    this.isPlaying = !this.isPlaying;
-  }
-
-  setBpm(newTempo: Bpm) {
-    const events = Array.from(this.trackStepMap.values()).flatMap(x => Array.from(x.values()));
-
-    if (this.clock) {
-      this.clock.timeStretch(this.context.currentTime, events, this.bpm.value / newTempo.value);
-    }
-
-    this.tempoService.setBpm(newTempo);
-  }
-
-  setStepNumber(n: number) {
-    this.tempoService.setSignature(n)
   }
 
   enableStep(trackName: string, stepIndex: number): void {
