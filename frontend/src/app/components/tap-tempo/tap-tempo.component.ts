@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {Bpm} from "../../domain/bpm";
+import {TempoService} from "../../domain/tempo.service";
 
 @Component({
   selector: 'tap-tempo',
@@ -11,7 +12,8 @@ import {Bpm} from "../../domain/bpm";
 })
 export class TapTempoComponent {
 
-  constructor(@Inject(AUDIO_ENGINE) public readonly audioEngine: IAudioEngine) {
+  constructor(@Inject(AUDIO_ENGINE) public readonly audioEngine: IAudioEngine,
+              private readonly tempoService: TempoService) {
 
   }
 
@@ -24,7 +26,8 @@ export class TapTempoComponent {
   private elapsed = 0;
 
   changeBeatBpm($event: number) {
-    this.audioEngine.setBpm(new Bpm($event));
+    this.audioEngine.pause();
+    this.tempoService.setBpm(new Bpm($event));
   }
 
   tapTempo() {
