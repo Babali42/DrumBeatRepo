@@ -40,7 +40,8 @@ export class SoundService implements IAudioEngine {
 
   private readonly uiNextStep = () => {
     this.zone.run(() => {
-      this.index = this.getCurrentBar(this.stepDuration) % this.signature;
+      const stepPosition = Math.floor(this.context.currentTime / this.stepDuration);
+      this.index = stepPosition % this.signature;
     });
   };
 
