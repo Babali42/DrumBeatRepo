@@ -19,7 +19,7 @@ import {filter, map} from "rxjs/operators";
 import {Bpm} from "../../domain/bpm";
 import {TrackSignature} from "../../domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {TempoService} from "../../domain/tempo.service";
+import {TempoService} from "../../adapters/secondary/tempo/tempo.service";
 
 @Component({
     selector: 'sequencer',

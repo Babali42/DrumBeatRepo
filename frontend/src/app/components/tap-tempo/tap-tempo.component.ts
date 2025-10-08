@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {Bpm} from "../../domain/bpm";
-import {TempoService} from "../../domain/tempo.service";
+import {TempoService} from "../../adapters/secondary/tempo/tempo.service";
 
 @Component({
   selector: 'tap-tempo',
