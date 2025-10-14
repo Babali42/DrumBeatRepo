@@ -55,12 +55,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
               protected readonly tempoService: TempoService,
               private readonly playerEvents: PlayerEventsService) {
     this.beatBehaviourSubject = new Subject<Beat>();
+
     this.responsive.observe([
       Breakpoints.Web,
     ]).pipe(takeUntil(this.destroy$)).subscribe(result => {
       this.isMobileDisplay = !result.matches;
     });
-    this.playerEvents.playPause$.subscribe(() => this.soundService.playPause());
+
+    this.playerEvents.playPause$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.soundService.playPause());
   }
 
   ngOnInit() {
