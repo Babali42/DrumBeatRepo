@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
@@ -20,6 +20,7 @@ import {Bpm} from "../../domain/bpm";
 import {TrackSignature} from "../../domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoService} from "../../adapters/secondary/tempo/tempo.service";
+import {PlayerEventsService} from "../../services/player.events.service";
 
 @Component({
     selector: 'sequencer',
@@ -51,13 +52,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               public readonly route: ActivatedRoute,
               private readonly responsive: BreakpointObserver,
-              protected readonly tempoService: TempoService) {
+              protected readonly tempoService: TempoService,
+              private readonly playerEvents: PlayerEventsService) {
     this.beatBehaviourSubject = new Subject<Beat>();
     this.responsive.observe([
       Breakpoints.Web,
     ]).pipe(takeUntil(this.destroy$)).subscribe(result => {
       this.isMobileDisplay = !result.matches;
     });
+    this.playerEvents.playPause$.subscribe(() => this.soundService.playPause());
   }
 
   ngOnInit() {
@@ -95,13 +98,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   getCustomBeatUrl = (base64beat: string, selectedBeatLabel: string, bpm: string) : string =>
     `${window.location.origin}/#/?name=Sort%20Of%20${selectedBeatLabel}&bpm=${bpm}&beat=${base64beat}`;
-
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if (event.code == "Space") {
-      this.soundService.playPause()
-    }
-  }
 
   selectGenre(genres: readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
