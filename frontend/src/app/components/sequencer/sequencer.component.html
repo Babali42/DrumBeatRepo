@@ -20,9 +20,15 @@
                         placeHolder="Choose {{selectedGenreLabel}} beat">
       </app-select-input>
     </div>
-    <div class="flex label bpm-input-group">
-      <app-bpm-input [bpm]="this.tempoService.bpm.value" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
-      <span class="large user-select-none"> bpm</span>
+    <div class="flex buttons">
+      <div class="flex label bpm-input-group">
+        <app-bpm-input [bpm]="this.tempoService.bpm.value" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
+        <span class="large user-select-none"> bpm</span>
+      </div>
+      <div class="flex add-remove-step">
+        <button class="remove-step">-</button>
+        <button class="add-step">+</button>
+      </div>
     </div>
   </div>
   <div class="sequencer-header" *ngIf="isCustomBeatPage">

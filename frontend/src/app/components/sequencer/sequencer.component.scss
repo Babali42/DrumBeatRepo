@@ -125,9 +125,18 @@ $gap: 4px;
     margin-top: 8px;
   }
 
-  .bpm-input-group {
-    align-items: center;
-    gap: 5px;
+  .buttons {
+    justify-content: space-between;
+
+    .bpm-input-group {
+      align-items: center;
+      gap: 5px;
+    }
+
+    .add-remove-step {
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
 

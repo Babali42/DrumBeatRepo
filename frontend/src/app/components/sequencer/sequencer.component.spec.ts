@@ -103,4 +103,18 @@ describe('SequencerComponent', () => {
       expect(beatUrl).toContain("Sort%20Of%20Techno");
     });
   });
+
+  it("should display a + button in order to add a step", () => {
+    fixture.detectChanges();
+
+    const addStepButton = fixture.debugElement.query(By.css('button.add-step'));
+    expect(addStepButton).toBeTruthy();
+  });
+
+  it("should display a - button in order to remove a step", () => {
+    fixture.detectChanges();
+
+    const addStepButton = fixture.debugElement.query(By.css('button.remove-step'));
+    expect(addStepButton).toBeTruthy();
+  });
 })
