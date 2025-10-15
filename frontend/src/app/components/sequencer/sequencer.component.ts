@@ -7,7 +7,6 @@ import {BehaviorSubject, shareReplay, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
-import {TapTempoComponent} from "../tap-tempo/tap-tempo.component";
 import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
 import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
@@ -26,7 +25,7 @@ import {PlayerEventsService} from "../../services/player.events.service";
     selector: 'sequencer',
     templateUrl: './sequencer.component.html',
     styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, TapTempoComponent, FormsModule, AsyncPipe, NgIf]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule, AsyncPipe, NgIf]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
