@@ -11,12 +11,10 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ## 🚀 Features
 
-- 🎧 **Browse Beats** – Explore a variety of built-in drum patterns.  
-- ⏱️ **Play & Accelerate** – Listen and adjust the tempo in real-time.  
-- 🎛️ **Interactive Sequencer** – Visualize and follow patterns as they play.  
-- 🥁 **Create Your Own Beats** – Compose sequences right in your browser.  
-- 🔗 **Store in URL** – Share your creations instantly via custom URLs.
-
+- 🎧 **Browse Beats** – Explore a variety of built-in drum patterns
+- ⏱️ **Play & Accelerate** – Listen and adjust the tempo in real-time
+- 🎛️ **Interactive Sequencer** – Visualize and follow patterns as they play
+- 🥁 **Create Your Own Beats** – Compose sequences right in your browser
 ---
 
 ## 📂 Project Structure
