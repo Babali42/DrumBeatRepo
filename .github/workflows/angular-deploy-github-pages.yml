@@ -23,6 +23,9 @@ jobs:
         run: npm run build -- --output-path ../dist
         working-directory: frontend/
 
+      - name: Test
+        uses: ./.github/workflows/angular-tests
+
       - name: Copy CNAME file
         run: |
           echo "www.drumbeatrepo.com" > dist/browser/CNAME
