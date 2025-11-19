@@ -23,8 +23,13 @@ jobs:
         run: npm run build -- --output-path ../dist
         working-directory: frontend/
 
-      - name: Test
-        uses: ./.github/workflows/angular-tests
+      - name: Run angular/karma tests
+        run: npm run test-ci
+        working-directory: frontend/
+
+      - name: Run architecture tests
+        run: npm run test-jest
+        working-directory: frontend/
 
       - name: Copy CNAME file
         run: |
