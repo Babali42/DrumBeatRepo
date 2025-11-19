@@ -2,19 +2,16 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
-import {ActivatedRoute} from '@angular/router';
-import {BehaviorSubject, shareReplay, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../domain/track";
-import {BeatUrlMapper} from "../../adapters/secondary/beat-url.mapper";
 import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
 import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {filter, map} from "rxjs/operators";
 import {Bpm} from "../../domain/bpm";
 import {TrackSignature} from "../../domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
@@ -39,17 +36,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
   beats: readonly string[] = [];
   private genres: readonly BeatsGroupedByGenre[] = [];
 
-  isCustomBeatPage: boolean = false;
   isMobileDisplay: boolean = false;
 
-  customBeatName: string = "";
   selectedGenreLabel: string = "";
   selectedBeatLabel: string = "";
   private readonly destroy$ = new Subject<void>;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              public readonly route: ActivatedRoute,
               private readonly responsive: BreakpointObserver,
               protected readonly tempoService: TempoService,
               private readonly playerEvents: PlayerEventsService) {
@@ -73,23 +67,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.soundService.setTracks(beat.tracks);
     });
 
-    this.route.queryParamMap.subscribe((params) => {
-      const customBeatEncoded = params.get('beat');
-      const customName = params.get('name');
-      const customBpm = params.get('bpm');
-      if (customBeatEncoded && customName && customBpm) {
-        const customBeat = CompactBeatMapper.toBeat(BeatUrlMapper.fromBase64(customBeatEncoded));
-        this.selectBeat(customBeat);
-        this.isCustomBeatPage = true;
-        this.customBeatName = `${customName} at ${customBpm} bpm`;
-      } else {
-        this._beatsManager.getBeatsGroupedByGenres().then(genres => {
-          this.genres = genres;
-          this.genresLabel = genres.map(x => x.label);
-          this.selectGenre(genres, null, null);
-        }).catch(() => { });
-      }
-    });
+    this._beatsManager.getBeatsGroupedByGenres().then(genres => {
+      this.genres = genres;
+      this.genresLabel = genres.map(x => x.label);
+      this.selectGenre(genres, null, null);
+    }).catch(() => { });
   }
 
   ngOnDestroy(): void {
@@ -98,9 +80,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   genreChange = ($event: string)=> this.selectGenre(this.genres, $event, null);
-
-  getCustomBeatUrl = (base64beat: string, selectedBeatLabel: string, bpm: string) : string =>
-    `${window.location.origin}/#/?name=Sort%20Of%20${selectedBeatLabel}&bpm=${bpm}&beat=${base64beat}`;
 
   selectGenre(genres: readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
@@ -155,16 +134,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     };
     this.customBeatSubject.next(this.beat);
   }
-
-  readonly customBeatUrl$ = this.customBeatSubject.asObservable().pipe(
-    filter((b): b is Beat => !!b),
-    map((beat) => {
-      const compact = CompactBeatMapper.toCompactBeat(beat);
-      const base64 = BeatUrlMapper.toBase64(compact);
-      return this.getCustomBeatUrl(base64, this.selectedBeatLabel, this.beat.bpm.value.toString());
-    }),
-    shareReplay(1)
-  );
 
   protected readonly TrackSignature = TrackSignature;
 }

@@ -5,7 +5,7 @@
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
   </div>
-  <div class="sequencer-header" *ngIf="!isCustomBeatPage">
+  <div class="sequencer-header">
     <div class="label">
       <app-select-input [elements]="genresLabel"
                         [selectedElement]="selectedGenreLabel"
@@ -24,9 +24,6 @@
       <app-bpm-input [bpm]="this.tempoService.bpm.value" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
     </div>
-  </div>
-  <div class="sequencer-header" *ngIf="isCustomBeatPage">
-    {{customBeatName}}
   </div>
   <div class="tracks-name-container">
     <div *ngFor="let track of beat.tracks" class="tracks-name">

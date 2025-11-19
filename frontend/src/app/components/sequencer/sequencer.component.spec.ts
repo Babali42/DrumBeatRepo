@@ -62,45 +62,4 @@ describe('SequencerComponent', () => {
 
     expect(numberOfActiveStepsBeforeClick).not.toEqual(numberOfActiveStepsAfterClick);
   });
-
-  it("should update uri field after user change a beat", () => {
-    mockBreakpointObserver.setMatches(true);
-    fixture.detectChanges();
-
-    // eslint-disable-next-line
-    const textarea = fixture.nativeElement.querySelector('textarea');
-    // eslint-disable-next-line
-    const firstValue = textarea.value;
-
-    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    stepButtons[0].nativeElement.click()
-
-    fixture.detectChanges();
-
-    // eslint-disable-next-line
-    let querySelector = fixture.nativeElement.querySelector('textarea');
-    // eslint-disable-next-line
-    expect(querySelector.value).not.toEqual(firstValue);
-    // eslint-disable-next-line
-    expect(querySelector.value).toContain('#')
-  });
-
-  it("should generate custom url", () => {
-    const beat = {
-      bpm: new Bpm(200),
-      id: "test",
-      label: "Techno",
-      tracks: [
-        new Track("test", "test", [true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false])
-      ],
-    } as unknown as Beat;
-    component.selectBeat(beat);
-    component.customBeatUrl$.subscribe(beatUrl => {
-      expect(beatUrl).not.toContain(" ");
-      expect(beatUrl).toContain("200");
-      expect(beatUrl).toContain("Sort%20Of%20Techno");
-    });
-  });
 })
