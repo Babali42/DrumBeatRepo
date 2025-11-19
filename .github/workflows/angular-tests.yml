@@ -1,9 +1,6 @@
 name: Angular Tests
 
 on:
-  push:
-    branches: [ "main" ]
-    paths: [ 'frontend/**', '.github/**' ]
   pull_request:
     branches: [ "main" ]
     paths: [ 'frontend/**', '.github/**' ]
