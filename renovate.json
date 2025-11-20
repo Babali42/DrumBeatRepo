@@ -1,5 +1,7 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "rangeStrategy": "replace",
   "dependencyDashboard": true,
   "lockFileMaintenance": {
@@ -8,28 +10,49 @@
   "packageRules": [
     {
       "description": "Group Angular core and platform packages",
-      "matchPackagePatterns": ["^@angular/(animations|common|compiler|core|forms|platform-browser|platform-browser-dynamic|router)$"],
       "groupName": "Angular Framework Core",
       "groupSlug": "angular-core",
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "/^@angular/(animations|common|compiler|core|forms|platform-browser|platform-browser-dynamic|router)$/"
+      ]
     },
     {
       "description": "Group Angular CLI and Devkit tools",
-      "matchPackageNames": ["@angular/cli", "@angular-devkit/build-angular"],
+      "matchPackageNames": [
+        "@angular/cli",
+        "@angular-devkit/build-angular"
+      ],
       "groupName": "Angular CLI & Devkit",
       "groupSlug": "angular-cli",
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ]
     },
     {
       "description": "Group Angular ESLint packages",
-      "matchPackagePatterns": ["^@angular-eslint/"],
       "groupName": "Angular ESLint Packages",
       "groupSlug": "angular-eslint",
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "/^@angular-eslint//"
+      ]
     },
     {
       "description": "Disable lockfile-only updates",
-      "matchUpdateTypes": ["lockfile-only"],
+      "matchUpdateTypes": [
+        "lockfile-only"
+      ],
       "enabled": false
     }
   ]
