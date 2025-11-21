@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, provideZoneChangeDetection} from '@angular/core';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {provideRouter, RouterModule, RouterOutlet, Routes, withHashLocation} from "@angular/router";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -51,7 +51,8 @@ export const beatsProvider = {
     provideHttpClient(withInterceptorsFromDi()),
     beatsProvider,
     BeatsAdapterService,
-    InMemoryBeatGateway
+    InMemoryBeatGateway,
+    provideZoneChangeDetection()
   ]
 })
 
