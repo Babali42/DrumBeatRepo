@@ -1,7 +1,7 @@
 import {CompactBeatMapper} from "./compact-beat.mapper";
-import {Beat} from "./beat";
-import {Track} from "./track";
-import {Bpm} from "./bpm";
+import {Beat} from "../../domain/beat";
+import {Track} from "../../domain/track";
+import {Bpm} from "../../domain/bpm";
 
 describe('Compact beat mapper tests', () => {
   it("Should map compact beat to url to compact beat", () => {

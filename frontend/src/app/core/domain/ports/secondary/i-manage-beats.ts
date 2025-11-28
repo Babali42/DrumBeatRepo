@@ -1,5 +1,5 @@
-import {BeatsGroupedByGenre} from "../../beatsGroupedByGenre";
+import {Beat} from "../../beat";
 
 export default interface IManageBeats {
-  readonly getBeatsGroupedByGenres:() => Promise<readonly BeatsGroupedByGenre[]>
+  readonly getAllBeats:() => Promise<readonly Beat[]>
 }

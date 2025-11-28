@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
-import {BeatsAdapterService} from "../core/adapters/secondary/beats-adapter.service";
 import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
 import {FormsModule} from "@angular/forms";
 import {environment} from "../../environments/environment";
@@ -29,10 +28,10 @@ RouterModule.forRoot(routes, {
 
 export const beatsProvider = {
   provide: IManageBeatsToken,
-  useFactory: (inMemoryBeatGateway: InMemoryBeatGateway, beatsAdapterService: BeatsAdapterService) => {
+  useFactory: (inMemoryBeatGateway: InMemoryBeatGateway, beatsAdapterService: InMemoryBeatGateway) => {
     return environment.httpClientInMemory ? inMemoryBeatGateway : beatsAdapterService;
   },
-  deps: [InMemoryBeatGateway, BeatsAdapterService]
+  deps: [InMemoryBeatGateway, InMemoryBeatGateway]
 };
 
 @NgModule({
@@ -50,7 +49,6 @@ export const beatsProvider = {
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
     beatsProvider,
-    BeatsAdapterService,
     InMemoryBeatGateway,
     provideZoneChangeDetection()
   ]

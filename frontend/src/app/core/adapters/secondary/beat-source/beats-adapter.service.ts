@@ -1,5 +1,6 @@
-import {BeatsGroupedByGenre} from "../../../domain/beatsGroupedByGenre";
-import {CompactBeat} from "../../../domain/compact-beat";
+import {BeatsGroupedByGenre} from "../../../../ui/view-models/beatsGroupedByGenre";
+import {CompactBeat} from "../compact-beat";
+import {Beat} from "../../../domain/beat";
 
 const metalBeat: CompactBeat = {
   id: "metal",
@@ -539,17 +540,19 @@ const punkBeatEightNoteFill: CompactBeat = {
   //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
 };
 
-export const beatsGroupedByGenre : readonly BeatsGroupedByGenre[] = [
-  { label:"Techno", beats: [technoBeat, offBeatTechnoClap]} as BeatsGroupedByGenre,
-  { label:"Rock", beats: [rockBeat, rockBeatVariation]} as BeatsGroupedByGenre,
-  { label:"Punk", beats: [punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill]} as BeatsGroupedByGenre,
-  { label:"Metal", beats: [metalBeat, blastBeat, halfTimeGroove]} as BeatsGroupedByGenre,
-  { label:"BreakBeat", beats: [breakcoreBeat, drumAndBassBeat, twoStep]} as BeatsGroupedByGenre,
-  { label:"Dancehall", beats: [modernDancehallBeat, standardDancehallBeat]},
-  { label:"Psytrance", beats: [psytranceBeat]} as BeatsGroupedByGenre,
-  { label:"Techno Hardcore", beats: [gabberBeat]} as BeatsGroupedByGenre,
-  { label:"Reggaeton", beats: [reggaetonBeat]},
-  { label:"Dub", beats: [dubBeat]},
-  { label:"Indus", beats: [ebmBeat]},
-  { label:"Club", beats: [jerseyClubBeat]} as BeatsGroupedByGenre,
+export const beatsGroupedByGenre : readonly CompactBeat[] = [
+  technoBeat,
+  offBeatTechnoClap,
+  rockBeat,
+  rockBeatVariation,
+  punkBeatQuarterNoteGroove, punkBeatQuarterNoteGrooveVariation, punkBeatEightNoteFill,
+  metalBeat, blastBeat, halfTimeGroove,
+  breakcoreBeat, drumAndBassBeat, twoStep,
+  modernDancehallBeat, standardDancehallBeat,
+  psytranceBeat,
+  gabberBeat,
+  reggaetonBeat,
+  dubBeat,
+  ebmBeat,
+  jerseyClubBeat,
 ];
