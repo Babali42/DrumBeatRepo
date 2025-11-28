@@ -1,17 +1,17 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {InMemoryBeatGateway} from "../../adapters/secondary/in-memory-beat-gateway";
+import {InMemoryBeatGateway} from "../../../core/adapters/secondary/in-memory-beat-gateway";
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
-import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
-import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
-import {Bpm} from "../../domain/bpm";
-import {Beat} from "../../domain/beat";
-import {Track} from "../../domain/track";
+import {IManageBeatsToken} from "../../../core/infrastructure/injection-tokens/i-manage-beat.token";
+import {AUDIO_ENGINE} from "../../../core/infrastructure/injection-tokens/audio-engine.token";
+import {Bpm} from "../../../core/domain/bpm";
+import {Beat} from "../../../core/domain/beat";
+import {Track} from "../../../core/domain/track";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {MockBreakpointObserver} from "../../testing/mock-breakpoint-observer";
-import {SoundServiceFake} from "../../adapters/secondary/sound/sound.service.fake";
+import {MockBreakpointObserver} from "../../../core/testing/mock-breakpoint-observer";
+import {AudioEngineAdapterFake} from "../../../core/adapters/secondary/audio-engine/audio-engine.adapter.fake";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -25,7 +25,7 @@ describe('SequencerComponent', () => {
       imports: [SequencerComponent],
       providers: [
         {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
-        {provide: AUDIO_ENGINE, useClass: SoundServiceFake},
+        {provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake},
         {provide: BreakpointObserver, useValue: mockBreakpointObserver},
         provideHttpClient(),
         provideRouter([])

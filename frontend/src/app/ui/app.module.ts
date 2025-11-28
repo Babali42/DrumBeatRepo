@@ -9,14 +9,14 @@ import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
-import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
-import {InMemoryBeatGateway} from "./adapters/secondary/in-memory-beat-gateway";
+import {BeatsAdapterService} from "../core/adapters/secondary/beats-adapter.service";
+import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
 import {FormsModule} from "@angular/forms";
-import {environment} from "../environments/environment";
+import {environment} from "../../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
-import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
-import {AUDIO_ENGINE} from "./infrastructure/injection-tokens/audio-engine.token";
-import {SoundService} from "./adapters/secondary/sound/sound.service";
+import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
+import {AUDIO_ENGINE} from "../core/infrastructure/injection-tokens/audio-engine.token";
+import {AudioEngineAdapter} from "../core/adapters/secondary/audio-engine/audio-engine.adapter";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
@@ -46,7 +46,7 @@ export const beatsProvider = {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
-    { provide: AUDIO_ENGINE, useClass: SoundService },
+    { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
     beatsProvider,

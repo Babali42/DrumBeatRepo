@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: "root"
 })
-export class TempoService {
+export class TempoAdapterService {
   public bpm: Bpm = new Bpm(128);
   public signature: number = 16;
   private beatsPerBar: number = 4;

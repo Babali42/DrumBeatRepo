@@ -5,19 +5,19 @@ import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {By} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
-import {InMemoryBeatGateway} from "./adapters/secondary/in-memory-beat-gateway";
-import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
-import {environment} from "../environments/environment";
+import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
+import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
+import {BeatsAdapterService} from "../core/adapters/secondary/beats-adapter.service";
+import {environment} from "../../environments/environment";
 import {routes} from "./app.module";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {AUDIO_ENGINE} from "./infrastructure/injection-tokens/audio-engine.token";
-import {SoundService} from "./adapters/secondary/sound/sound.service";
-import {Beat} from "./domain/beat";
-import {CompactBeatMapper} from "./domain/compact-beat.mapper";
-import {BeatUrlMapper} from "./adapters/secondary/beat-url.mapper";
-import {Bpm} from "./domain/bpm";
-import {Track} from "./domain/track";
+import {AUDIO_ENGINE} from "../core/infrastructure/injection-tokens/audio-engine.token";
+import {AudioEngineAdapter} from "../core/adapters/secondary/audio-engine/audio-engine.adapter";
+import {Beat} from "../core/domain/beat";
+import {CompactBeatMapper} from "../core/domain/compact-beat.mapper";
+import {BeatUrlMapper} from "../core/adapters/secondary/beat-url.mapper";
+import {Bpm} from "../core/domain/bpm";
+import {Track} from "../core/domain/track";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -43,7 +43,7 @@ describe('Router', () => {
         LoadingBarModule,
       ],
       providers: [
-        { provide: AUDIO_ENGINE, useClass: SoundService },
+        { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
         provideHttpClient(withInterceptorsFromDi()),
         beatsProvider,
         BeatsAdapterService,

@@ -1,12 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {BeatsAdapterService} from "./adapters/secondary/beats-adapter.service";
+import {BeatsAdapterService} from "../core/adapters/secondary/beats-adapter.service";
 import {BrowserModule} from "@angular/platform-browser";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {routes} from "./app.module";
-import {IManageBeatsToken} from "./infrastructure/injection-tokens/i-manage-beat.token";
+import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
 
 describe('AppComponent', () => {
   let component: AppComponent;

@@ -5,6 +5,6 @@
     "esModuleInterop": true
   },
   "include": [
-    "src/app/architecture/**/spec.jest.ts"
+    "src/app/core/architecture/**/spec.jest.ts"
   ]
 }

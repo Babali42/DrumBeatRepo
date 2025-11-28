@@ -1,4 +1,4 @@
-import {beatsGroupedByGenre} from "./beats/beats-in-memory-data";
+import {beatsGroupedByGenre} from "./beat-source/beats-adapter.service";
 import {BeatUrlMapper} from "./beat-url.mapper";
 
 describe("Beat url mapper tests", () => {
