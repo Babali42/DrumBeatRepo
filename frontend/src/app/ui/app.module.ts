@@ -9,13 +9,11 @@ import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
-import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
+import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
 import {FormsModule} from "@angular/forms";
-import {environment} from "../../environments/environment";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
-import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
-import {AUDIO_ENGINE} from "../core/infrastructure/injection-tokens/audio-engine.token";
-import {AudioEngineAdapter} from "../core/adapters/secondary/audio-engine/audio-engine.adapter";
+import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
+import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
@@ -25,14 +23,6 @@ export const routes: Routes = [
 RouterModule.forRoot(routes, {
   onSameUrlNavigation: 'reload'
 })
-
-export const beatsProvider = {
-  provide: IManageBeatsToken,
-  useFactory: (inMemoryBeatGateway: InMemoryBeatGateway, beatsAdapterService: InMemoryBeatGateway) => {
-    return environment.httpClientInMemory ? inMemoryBeatGateway : beatsAdapterService;
-  },
-  deps: [InMemoryBeatGateway, InMemoryBeatGateway]
-};
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +38,6 @@ export const beatsProvider = {
     { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
-    beatsProvider,
     InMemoryBeatGateway,
     provideZoneChangeDetection()
   ]

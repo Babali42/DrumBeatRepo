@@ -5,8 +5,8 @@ import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http"
 import {LoadingBarModule} from "@ngx-loading-bar/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {routes} from "./app.module";
-import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
-import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
+import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
+import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
 
 describe('AppComponent', () => {
   let component: AppComponent;

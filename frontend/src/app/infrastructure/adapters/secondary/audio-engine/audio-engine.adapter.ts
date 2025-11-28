@@ -2,7 +2,7 @@ import {Injectable, NgZone} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/core/domain/track";
-import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
+import {IAudioEngine} from "../../../../core/domain/ports/secondary/i-audio-engine";
 import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
 
 @Injectable({

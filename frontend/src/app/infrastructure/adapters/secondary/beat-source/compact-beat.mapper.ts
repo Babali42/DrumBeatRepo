@@ -1,7 +1,7 @@
-import {Beat} from "../../domain/beat";
+import {Beat} from "../../../../core/domain/beat";
 import {CompactBeat} from "./compact-beat";
-import {Bpm} from "../../domain/bpm";
-import {Track} from "../../domain/track";
+import {Bpm} from "../../../../core/domain/bpm";
+import {Track} from "../../../../core/domain/track";
 
 export class CompactBeatMapper {
   static toBeat(compact: CompactBeat): Beat {

@@ -5,25 +5,21 @@ import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {By} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-import {IManageBeatsToken} from "../core/infrastructure/injection-tokens/i-manage-beat.token";
-import {InMemoryBeatGateway} from "../core/adapters/secondary/in-memory-beat-gateway";
-import {environment} from "../../environments/environment";
+import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
+import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
 import {routes} from "./app.module";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {AUDIO_ENGINE} from "../core/infrastructure/injection-tokens/audio-engine.token";
-import {AudioEngineAdapter} from "../core/adapters/secondary/audio-engine/audio-engine.adapter";
+import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
+import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
 import {Beat} from "../core/domain/beat";
-import {CompactBeatMapper} from "../core/adapters/secondary/compact-beat.mapper";
-import {BeatUrlMapper} from "../core/adapters/secondary/beat-url.mapper";
+import {CompactBeatMapper} from "../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
+import {BeatUrlMapper} from "../infrastructure/adapters/secondary/beat-source/beat-url.mapper";
 import {Bpm} from "../core/domain/bpm";
 import {Track} from "../core/domain/track";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
-  useFactory: (inMemoryBeatGateway: InMemoryBeatGateway, beatsAdapterService: InMemoryBeatGateway) => {
-    return environment.httpClientInMemory ? inMemoryBeatGateway : beatsAdapterService;
-  },
-  deps: [InMemoryBeatGateway, InMemoryBeatGateway]
+  deps: [InMemoryBeatGateway]
 };
 
 
@@ -49,10 +45,14 @@ describe('Router', () => {
         {
           provide: IManageBeatsToken,
           useValue: {
-            getBeatsGroupedByGenres: () => Promise.resolve([
+            getAllBeats: () => Promise.resolve([
               {
-                label: 'House',
-                beats: [{ label: 'Classic', bpm: 128, tracks: [{ steps: [0, 1, 0, 1] }] }]
+                id: 'classic',
+                label: 'Classic',
+                bpm: new Bpm(128),
+                tracks: [
+                  new Track("","", [true, false, true, false])
+                ]
               }
             ])
           }

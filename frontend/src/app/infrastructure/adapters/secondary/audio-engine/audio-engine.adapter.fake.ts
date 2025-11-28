@@ -1,5 +1,5 @@
-import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
-import {Track} from "../../../domain/track";
+import {IAudioEngine} from "../../../../core/domain/ports/secondary/i-audio-engine";
+import {Track} from "../../../../core/domain/track";
 
 export class AudioEngineAdapterFake implements IAudioEngine {
   disableStep(trackName: string, stepIndex: number): void {

@@ -6,23 +6,27 @@ import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../../core/domain/track";
-import {CompactBeatMapper} from "../../../core/adapters/secondary/compact-beat.mapper";
-import {IManageBeatsToken} from "../../../core/infrastructure/injection-tokens/i-manage-beat.token";
+import {CompactBeatMapper} from "../../../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
+import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
-import {AUDIO_ENGINE} from "../../../core/infrastructure/injection-tokens/audio-engine.token";
+import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
 import {Bpm} from "../../../core/domain/bpm";
 import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {TempoAdapterService} from "../../../core/adapters/secondary/tempo-control/tempo-adapter.service";
+import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
+import {InMemoryBeatGateway} from "../../../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
 
 @Component({
-    selector: 'sequencer',
-    templateUrl: './sequencer.component.html',
-    styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule]
+  selector: 'sequencer',
+  templateUrl: './sequencer.component.html',
+  styleUrls: ['./sequencer.component.scss'],
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule],
+  providers: [
+    {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
+  ]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -58,6 +62,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.soundService.playPause());
+
+    console.log('_beatsManager:', this._beatsManager);
+    console.log('getAllBeats exists:', typeof this._beatsManager.getAllBeats);
   }
 
   ngOnInit() {
@@ -69,7 +76,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
     this._beatsManager.getAllBeats().then(beats => {
       this.selectBeat(beats[0]);
-    }).catch(() => { });
+    }).catch(() => {
+    });
   }
 
   ngOnDestroy(): void {
@@ -77,7 +85,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  genreChange = ($event: string)=> this.selectGenre(this.genres, $event, null);
+  genreChange = ($event: string) => this.selectGenre(this.genres, $event, null);
 
   selectGenre(genres: readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
     const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
@@ -106,7 +114,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(fullBeat);
   }
 
-  stepClick = (track: Track, stepIndex: number, value: boolean) : void => {
+  stepClick = (track: Track, stepIndex: number, value: boolean): void => {
     track.steps.setStepAtIndex(stepIndex, !value);
 
     if (!track.steps.getStepAtIndex(stepIndex)) {
