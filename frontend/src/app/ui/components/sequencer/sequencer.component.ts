@@ -1,12 +1,12 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../../core/domain/beat';
-import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {BeatsGroupedByGenre} from "../../../core/domain/beatsGroupedByGenre";
+import {NgFor} from '@angular/common';
+import {BeatsGroupedByGenre} from "../../view-models/beatsGroupedByGenre";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../../core/domain/track";
-import {CompactBeatMapper} from "../../../core/domain/compact-beat.mapper";
+import {CompactBeatMapper} from "../../../core/adapters/secondary/compact-beat.mapper";
 import {IManageBeatsToken} from "../../../core/infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../core/infrastructure/injection-tokens/audio-engine.token";
@@ -22,7 +22,7 @@ import {PlayerEventsService} from "../../services/player.events.service";
     selector: 'sequencer',
     templateUrl: './sequencer.component.html',
     styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule, AsyncPipe, NgIf]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -67,10 +67,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.soundService.setTracks(beat.tracks);
     });
 
-    this._beatsManager.getBeatsGroupedByGenres().then(genres => {
-      this.genres = genres;
-      this.genresLabel = genres.map(x => x.label);
-      this.selectGenre(genres, null, null);
+    this._beatsManager.getAllBeats().then(beats => {
+      this.selectBeat(beats[0]);
     }).catch(() => { });
   }
 
