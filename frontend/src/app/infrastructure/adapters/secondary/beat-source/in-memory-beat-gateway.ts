@@ -1,7 +1,7 @@
-import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
-import {beatsGroupedByGenre} from "./beat-source/beats-adapter.service";
+import IManageBeats from "../../../../core/domain/ports/secondary/i-manage-beats";
+import {beatsGroupedByGenre} from "./beats-adapter.service";
 import {firstValueFrom, of} from "rxjs";
-import {Beat} from "../../domain/beat";
+import {Beat} from "../../../../core/domain/beat";
 import {CompactBeatMapper} from "./compact-beat.mapper";
 import {Injectable} from "@angular/core";
 

@@ -1,6 +1,4 @@
-import {BeatsGroupedByGenre} from "../../../../ui/view-models/beatsGroupedByGenre";
-import {CompactBeat} from "../compact-beat";
-import {Beat} from "../../../domain/beat";
+import {CompactBeat} from "./compact-beat";
 
 const metalBeat: CompactBeat = {
   id: "metal",
