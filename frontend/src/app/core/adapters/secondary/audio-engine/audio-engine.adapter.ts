@@ -1,15 +1,15 @@
 import {Injectable, NgZone} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
-import {Track} from "src/app/domain/track";
+import {Track} from "src/app/core/domain/track";
 import {IAudioEngine} from "../../../domain/ports/secondary/i-audio-engine";
-import {TempoService} from "../tempo/tempo.service";
+import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SoundService implements IAudioEngine {
-  constructor(private readonly zone: NgZone, private readonly tempoService: TempoService) {
+export class AudioEngineAdapter implements IAudioEngine {
+  constructor(private readonly zone: NgZone, private readonly tempoService: TempoAdapterService) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }

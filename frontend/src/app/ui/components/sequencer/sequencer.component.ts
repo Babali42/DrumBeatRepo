@@ -1,21 +1,21 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Beat} from '../../domain/beat';
+import {Beat} from '../../../core/domain/beat';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {BeatsGroupedByGenre} from "../../domain/beatsGroupedByGenre";
+import {BeatsGroupedByGenre} from "../../../core/domain/beatsGroupedByGenre";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
-import {Track} from "../../domain/track";
-import {CompactBeatMapper} from "../../domain/compact-beat.mapper";
-import {IManageBeatsToken} from "../../infrastructure/injection-tokens/i-manage-beat.token";
-import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
-import {AUDIO_ENGINE} from "../../infrastructure/injection-tokens/audio-engine.token";
-import {IAudioEngine} from "../../domain/ports/secondary/i-audio-engine";
+import {Track} from "../../../core/domain/track";
+import {CompactBeatMapper} from "../../../core/domain/compact-beat.mapper";
+import {IManageBeatsToken} from "../../../core/infrastructure/injection-tokens/i-manage-beat.token";
+import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
+import {AUDIO_ENGINE} from "../../../core/infrastructure/injection-tokens/audio-engine.token";
+import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {Bpm} from "../../domain/bpm";
-import {TrackSignature} from "../../domain/trackSignature";
+import {Bpm} from "../../../core/domain/bpm";
+import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {TempoService} from "../../adapters/secondary/tempo/tempo.service";
+import {TempoAdapterService} from "../../../core/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
 
 @Component({
@@ -45,7 +45,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               private readonly responsive: BreakpointObserver,
-              protected readonly tempoService: TempoService,
+              protected readonly tempoService: TempoAdapterService,
               private readonly playerEvents: PlayerEventsService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 

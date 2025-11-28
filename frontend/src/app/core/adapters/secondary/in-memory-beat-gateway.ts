@@ -1,6 +1,6 @@
-import {BeatsGroupedByGenre} from "src/app/domain/beatsGroupedByGenre";
+import {BeatsGroupedByGenre} from "src/app/core/domain/beatsGroupedByGenre";
 import IManageBeats from "../../domain/ports/secondary/i-manage-beats";
-import {beatsGroupedByGenre} from "./beats/beats-in-memory-data";
+import {beatsGroupedByGenre} from "./beat-source/beats-adapter.service";
 import {firstValueFrom, of} from "rxjs";
 
 export class InMemoryBeatGateway implements IManageBeats {

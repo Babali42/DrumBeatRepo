@@ -2,7 +2,7 @@
 <ng-container *ngIf="!isMobileDisplay">
   <main class="flex app-container">
     <img
-      src="./assets/images/title.svg"
+      src="../../assets/images/title.svg"
       id="title-image"
       alt="Website Title"
       class="top-left-corner cursor-pointer"
@@ -25,7 +25,7 @@
 <ng-container *ngIf="isMobileDisplay && isPortrait">
   <header class="header-mobile mt-40 mb-40">
     <img
-      src="./assets/images/title-mobile.svg"
+      src="../../assets/images/title-mobile.svg"
       class="title-image-mobile"
       alt="Website Title"
     />
@@ -33,13 +33,13 @@
   <div class="portrait-to-landscape">
     <img
       *ngIf="mode == Mode.LIGHT"
-      src="./assets/images/light/orientation.png"
+      src="../../assets/images/light/orientation.png"
       class="portrait-to-landscape-image"
       alt="Portrait to landscape image"
     />
     <img
       *ngIf="mode == Mode.DARK"
-      src="./assets/images/dark/orientation.png"
+      src="../../assets/images/dark/orientation.png"
       class="portrait-to-landscape-image"
       alt="Portrait to landscape image"
     />
