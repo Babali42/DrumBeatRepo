@@ -6,7 +6,7 @@ import {LoadingBarModule} from "@ngx-loading-bar/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {routes} from "./app.module";
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
-import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
+import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
     declarations: [AppComponent],
     imports: [BrowserModule, LoadingBarModule, RouterTestingModule.withRoutes(routes)],
-    providers: [{ provide: IManageBeatsToken, useClass: InMemoryBeatGateway }, provideHttpClient(withInterceptorsFromDi())]
+    providers: [{ provide: IManageBeatsToken, useClass: BeatAdapter }, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);

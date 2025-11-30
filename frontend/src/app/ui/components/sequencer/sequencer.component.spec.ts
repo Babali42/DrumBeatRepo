@@ -1,6 +1,6 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {InMemoryBeatGateway} from "../../../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
+import {BeatAdapter} from "../../../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
@@ -21,7 +21,7 @@ describe('SequencerComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
-        {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
+        {provide: IManageBeatsToken, useClass: BeatAdapter},
         {provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake},
         {provide: BreakpointObserver, useValue: mockBreakpointObserver},
         provideHttpClient(),
@@ -36,6 +36,12 @@ describe('SequencerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeDefined();
+  });
+
+  it("default genre and beat are selected", () => {
+    fixture.detectChanges();
+    expect(component.selectedGenreLabel).toBe("Techno");
+    expect(component.selectedBeatLabel).toBe("4 on the floor");
   });
 
   it("should display a step button", () => {

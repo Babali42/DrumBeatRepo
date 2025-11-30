@@ -197,7 +197,7 @@ const halfTimeGroove: CompactBeat = {
 
 const twoStep: CompactBeat = {
   label: "Two step",
-  genre: "hiphop",
+  genre: "BreakBeat",
   bpm: 130,
   tracks: [
     {
@@ -347,7 +347,7 @@ const blastBeat: CompactBeat = {
 
 const breakcoreBeat: CompactBeat = {
   label: "Breakcore",
-  genre: "breakcore",
+  genre: "BreakBeat",
   bpm: 180,
   tracks: [
     {
@@ -376,7 +376,7 @@ const breakcoreBeat: CompactBeat = {
 
 const drumAndBassBeat: CompactBeat = {
   label: "Drum & bass",
-  genre: "drum",
+  genre: "BreakBeat",
   bpm: 170,
   tracks: [
     {
@@ -399,7 +399,7 @@ const drumAndBassBeat: CompactBeat = {
 
 const standardDancehallBeat: CompactBeat = {
   label: "Standard dancehall",
-  genre: "dancehall",
+  genre: "Dancehall",
   bpm: 105,
   tracks: [
     {
@@ -422,7 +422,7 @@ const standardDancehallBeat: CompactBeat = {
 
 const reggaetonBeat: CompactBeat = {
   label: "Reggaeton",
-  genre: "dancehall",
+  genre: "Reggaeton",
   bpm: 105,
   tracks: [
     {
@@ -445,7 +445,7 @@ const reggaetonBeat: CompactBeat = {
 
 const modernDancehallBeat: CompactBeat = {
   label: "Modern dancehall",
-  genre: "dancehall",
+  genre: "Dancehall",
   bpm: 105,
   tracks: [
     {
@@ -468,7 +468,7 @@ const modernDancehallBeat: CompactBeat = {
 
 const punkBeatQuarterNoteGroove: CompactBeat = {
   label: "Quarter note groove",
-  genre: "punk",
+  genre: "Punk",
   bpm: 170,
   tracks: [
     {
@@ -492,7 +492,7 @@ const punkBeatQuarterNoteGroove: CompactBeat = {
 
 const punkBeatQuarterNoteGrooveVariation: CompactBeat = {
   label: "Quarter note groove variation",
-  genre: "punk",
+  genre: "Punk",
   bpm: 170,
   tracks: [
     {
@@ -516,7 +516,7 @@ const punkBeatQuarterNoteGrooveVariation: CompactBeat = {
 
 const punkBeatEightNoteFill: CompactBeat = {
   label: "Eight note fill",
-  genre: "punk",
+  genre: "Punk",
   bpm: 170,
   tracks: [
     {
