@@ -1,0 +1,165 @@
+@import "../../../../styles/styles";
+
+$step-size: 40px;
+$gap: 4px;
+
+#main-container {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 24px;
+  margin: 0 $main-app-margin-size;
+}
+
+.sequencer-grid {
+  flex-direction: column;
+}
+
+#track {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  gap: $gap;
+
+  .step {
+    height: $step-size;
+    width: $step-size;
+    background-color: var(--backgroundColor);
+    border-radius: 4px;
+    border: 1px solid var(--borderColor);
+  }
+
+  .current {
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--backgroundColor), var(--backgroundColor) 10px,
+        var(--textColor) 5px, var(--textColor) 15px
+    );
+  }
+
+  .active, .active.highlight {
+    background-color: $color3_purple;
+
+    &.current {
+      background: repeating-linear-gradient(
+          -45deg,
+          $color3_purple, $color3_purple 10px,
+          var(--backgroundColor) 5px, var(--backgroundColor) 15px
+      );
+    }
+  }
+
+  .highlight {
+    background: var(--gridHighLightColor);
+  }
+
+  .current.highlight {
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--gridHighLightColor), var(--gridHighLightColor) 10px,
+        var(--textColor) 5px, var(--textColor) 15px
+    );
+  }
+}
+
+@mixin step-grid($columns) {
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+.sixteen-steps {
+  @include step-grid(16);
+}
+
+.thirty-two-steps {
+  @include step-grid(32);
+}
+
+.sixty-four-steps {
+  @include step-grid(64);
+}
+
+.tracks-container {
+  grid-column-start: 2;
+  grid-row-start: 2;
+
+  display: grid;
+  grid-template-columns: auto;
+  gap: $gap;
+  overflow-x: auto;
+}
+
+.tracks-name-container {
+  grid-column-start: 1;
+  grid-row-start: 2;
+
+
+  .tracks-name {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: calc($step-size + $gap + 1px);
+
+    .svg-icon {
+      stroke: var(--textColor);
+      height: 32px;
+      width: 32px;
+    }
+
+    .track-name {
+      white-space: nowrap;
+    }
+  }
+}
+
+.sequencer-header {
+  grid-column-start: 2;
+  grid-row-start: 1;
+
+  .label {
+    vertical-align: bottom;
+
+    .small {
+      font-size: small;
+    }
+  }
+
+  div + div {
+    margin-top: 8px;
+  }
+
+  .bpm-input-group {
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.play-button-container {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  justify-content: center;
+  align-items: center;
+
+  .play-pause-button {
+    height: 64px;
+    width: 64px;
+    min-width: 64px;
+    font-size: 20px;
+    border-radius: 8px;
+    border-color: color-mix(in srgb, var(--textColor) 30%, var(--backgroundColor));
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
+  }
+
+  .play-pause-button:active {
+    transform: scale(0.9);
+  }
+
+  .play-pause-button:hover {
+    background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+    color: var(--backgroundColor);
+    border-radius: 10px;
+    border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+  }
+}
+
+.custom-url-text{
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+}
