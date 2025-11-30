@@ -111,7 +111,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   beatChange($event: string) {
     const beatToSelect = this.genres.get(this.selectedGenreLabel)!.find(x => x.label === $event);
-    this.selectBeat(beatToSelect!);
+    this.selectBeat(beatToSelect);
   }
 
   stepClick = (track: Track, stepIndex: number, value: boolean): void => {
