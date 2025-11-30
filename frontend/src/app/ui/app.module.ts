@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
-import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
+import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {FormsModule} from "@angular/forms";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
@@ -38,7 +38,7 @@ RouterModule.forRoot(routes, {
     { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
-    InMemoryBeatGateway,
+    BeatAdapter,
     provideZoneChangeDetection()
   ]
 })

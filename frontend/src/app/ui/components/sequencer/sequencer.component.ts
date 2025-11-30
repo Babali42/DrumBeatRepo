@@ -1,7 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../../core/domain/beat';
 import {NgFor} from '@angular/common';
-import {BeatsGroupedByGenre} from "../../view-models/beatsGroupedByGenre";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
@@ -16,8 +15,7 @@ import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
-import {InMemoryBeatGateway} from "../../../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
-import {CompactBeatMapper} from "../../../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
+import {BeatAdapter} from "../../../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 
 @Component({
   selector: 'sequencer',
@@ -25,7 +23,7 @@ import {CompactBeatMapper} from "../../../infrastructure/adapters/secondary/beat
   styleUrls: ['./sequencer.component.scss'],
   imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule],
   providers: [
-    {provide: IManageBeatsToken, useClass: InMemoryBeatGateway},
+    {provide: IManageBeatsToken, useClass: BeatAdapter},
   ]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -34,11 +32,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly Math = Math;
 
   beat = {} as Beat;
-  genre = {} as BeatsGroupedByGenre;
+  private genres: Map<string, Beat[]> = new Map();
 
   genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
-  private genres: readonly BeatsGroupedByGenre[] = [];
 
   isMobileDisplay: boolean = false;
 
@@ -62,9 +59,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.soundService.playPause());
-
-    console.log('_beatsManager:', this._beatsManager);
-    console.log('getAllBeats exists:', typeof this._beatsManager.getAllBeats);
   }
 
   ngOnInit() {
@@ -75,29 +69,36 @@ export class SequencerComponent implements OnInit, OnDestroy {
     });
 
     this._beatsManager.getAllBeats().then(beats => {
+      this.genres = new Map<string, Beat[]>();
+
+      for (const beat of beats) {
+        if (!this.genres.has(beat.genre))
+          this.genres.set(beat.genre, []);
+        this.genres.get(beat.genre)!.push(beat);
+      }
+
+      this.genresLabel = [...this.genres.keys()];
+      const firstBeat = this.genres.values().next().value!?.[0];
+      const genreLabel = firstBeat.genre;
+      const beatLabel = firstBeat.label;
+
+      this.selectGenre(this.genres, genreLabel, beatLabel);
       this.selectBeat(beats[0]);
     }).catch(() => {
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  genreChange = ($event: string) => this.selectGenre(this.genres, $event, undefined);
 
-  genreChange = ($event: string) => this.selectGenre(this.genres, $event, null);
+  selectGenre(genres: Map<string, Beat[]>, genre: string, beat: string | undefined): void {
+    const beats = genres.get(genre)!;
+    this.selectedGenreLabel = genres.keys().next().value!;
+    this.beats = beats.map(x => x.label);
 
-  selectGenre(genres: readonly BeatsGroupedByGenre[], genre: string | null, beat: string | null): void {
-    const firstGenre = genre ? genres.find(x => x.label === genre) : genres[0];
-    if (!firstGenre) return;
-
-    this.genre = firstGenre;
-    this.selectedGenreLabel = firstGenre.label;
-    this.beats = firstGenre.beats.map(x => x.label);
-
-    const beatToSelect = firstGenre.beats[0];
-    const fullBeat = CompactBeatMapper.toBeat(beatToSelect!);
-    this.selectBeat(fullBeat);
+    if (beat)
+      this.selectBeat((beats.find(x => x.label === beat))!);
+    else
+      this.selectBeat(beats[0]);
   }
 
   selectBeat(beatToSelect: Beat | undefined): void {
@@ -109,9 +110,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   beatChange($event: string) {
-    const beatToSelect = this.genres.find(x => x.label === this.selectedGenreLabel)?.beats.find(x => x.label === $event);
-    const fullBeat = CompactBeatMapper.toBeat(beatToSelect!);
-    this.selectBeat(fullBeat);
+    const beatToSelect = this.genres.get(this.selectedGenreLabel)!.find(x => x.label === $event);
+    this.selectBeat(beatToSelect!);
   }
 
   stepClick = (track: Track, stepIndex: number, value: boolean): void => {
@@ -139,6 +139,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
       bpm: new Bpm($event),
     };
     this.customBeatSubject.next(this.beat);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   protected readonly TrackSignature = TrackSignature;

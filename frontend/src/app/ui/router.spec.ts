@@ -6,7 +6,7 @@ import {By} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
-import {InMemoryBeatGateway} from "../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
+import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {routes} from "./app.module";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
@@ -19,7 +19,7 @@ import {Track} from "../core/domain/track";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
-  deps: [InMemoryBeatGateway]
+  deps: [BeatAdapter]
 };
 
 
@@ -41,7 +41,7 @@ describe('Router', () => {
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
         provideHttpClient(withInterceptorsFromDi()),
         beatsProvider,
-        InMemoryBeatGateway,
+        BeatAdapter,
         {
           provide: IManageBeatsToken,
           useValue: {
