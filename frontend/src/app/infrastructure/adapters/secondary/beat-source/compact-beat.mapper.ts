@@ -6,8 +6,8 @@ import {Track} from "../../../../core/domain/track";
 export class CompactBeatMapper {
   static toBeat(compact: CompactBeat): Beat {
     return {
-      id: compact.id,
       label: compact.label,
+      genre: compact.genre,
       bpm: new Bpm(compact.bpm),
       tracks: compact.tracks.map(track => new Track(track.name, track.fileName, [...track.steps].map(char => char === 'X')))
     };
@@ -15,8 +15,8 @@ export class CompactBeatMapper {
 
   static toCompactBeat(beat: Beat): CompactBeat {
     return {
-      id: beat.id,
       label: beat.label,
+      genre: beat.genre,
       bpm: beat.bpm.value,
       tracks: beat.tracks.map(track => ({
         name: track.name,

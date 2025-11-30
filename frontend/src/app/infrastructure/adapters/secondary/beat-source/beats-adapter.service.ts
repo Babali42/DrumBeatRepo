@@ -1,8 +1,8 @@
 import {CompactBeat} from "./compact-beat";
 
 const metalBeat: CompactBeat = {
-  id: "metal",
   label: "Metal",
+  genre: "Metal",
   bpm: 180,
   tracks: [
     {
@@ -24,8 +24,8 @@ const metalBeat: CompactBeat = {
 };
 
 const technoBeat: CompactBeat = {
-  id: "techno",
   label: "4 on the floor",
+  genre: "Techno",
   bpm: 128,
   tracks: [
     {
@@ -47,8 +47,8 @@ const technoBeat: CompactBeat = {
 };
 
 const rockBeat: CompactBeat = {
-  id: "rock-beat",
   label: "Rock",
+  genre: "Rock",
   bpm: 145,
   tracks: [
     {
@@ -70,8 +70,8 @@ const rockBeat: CompactBeat = {
 };
 
 const rockBeatVariation: CompactBeat = {
-  id: "rock-beat-variation",
   label: "Rock variation",
+  genre: "Rock",
   bpm: 145,
   tracks: [
     {
@@ -93,8 +93,8 @@ const rockBeatVariation: CompactBeat = {
 };
 
 const psytranceBeat: CompactBeat = {
-  id: "psytrance",
   label: "Psytrance",
+  genre: "Psytrance",
   bpm: 135,
   tracks: [
     {
@@ -126,8 +126,8 @@ const psytranceBeat: CompactBeat = {
 }
 
 const offBeatTechnoClap: CompactBeat = {
-  id: "off-beat-techno-clap",
   label: "OffBeat clap",
+  genre: "Techno",
   bpm: 128,
   tracks: [
     {
@@ -149,8 +149,8 @@ const offBeatTechnoClap: CompactBeat = {
 };
 
 const jerseyClubBeat: CompactBeat = {
-  id: "jersey-club",
   label: "Jersey club",
+  genre: "Club",
   bpm: 140,
   tracks: [
     {
@@ -173,8 +173,8 @@ const jerseyClubBeat: CompactBeat = {
 };
 
 const halfTimeGroove: CompactBeat = {
-  id: "half-time-groove",
   label: "Half time groove",
+  genre: "Metal",
   bpm: 145,
   tracks: [
     {
@@ -196,8 +196,8 @@ const halfTimeGroove: CompactBeat = {
 };
 
 const twoStep: CompactBeat = {
-  id: "garage",
   label: "Two step",
+  genre: "hiphop",
   bpm: 130,
   tracks: [
     {
@@ -219,8 +219,8 @@ const twoStep: CompactBeat = {
 };
 
 const gabberBeat: CompactBeat = {
-  id: "gabber",
   label: "Gabber",
+  genre: "Techno Hardcore",
   bpm: 200,
   tracks: [
     {
@@ -247,8 +247,8 @@ const gabberBeat: CompactBeat = {
 };
 
 const ebmBeat: CompactBeat = {
-  id: "ebm",
   label: "EBM",
+  genre: "Indus",
   bpm: 120,
   tracks: [
     {
@@ -280,8 +280,8 @@ const ebmBeat: CompactBeat = {
 };
 
 const dubBeat: CompactBeat = {
-  id: "dub",
   label: "Dub",
+  genre: "Dub",
   bpm: 140,
   tracks: [
     {
@@ -323,8 +323,8 @@ const dubBeat: CompactBeat = {
 };
 
 const blastBeat: CompactBeat = {
-  id: "blast-beat",
   label: "Blast beat",
+  genre: "Metal",
   bpm: 180,
   tracks: [
     {
@@ -346,8 +346,8 @@ const blastBeat: CompactBeat = {
 };
 
 const breakcoreBeat: CompactBeat = {
-  id: "breakcore",
   label: "Breakcore",
+  genre: "breakcore",
   bpm: 180,
   tracks: [
     {
@@ -375,8 +375,8 @@ const breakcoreBeat: CompactBeat = {
 };
 
 const drumAndBassBeat: CompactBeat = {
-  id: "drum-n-bass",
   label: "Drum & bass",
+  genre: "drum",
   bpm: 170,
   tracks: [
     {
@@ -398,8 +398,8 @@ const drumAndBassBeat: CompactBeat = {
 };
 
 const standardDancehallBeat: CompactBeat = {
-  id: "dancehall-standard",
   label: "Standard dancehall",
+  genre: "dancehall",
   bpm: 105,
   tracks: [
     {
@@ -421,8 +421,8 @@ const standardDancehallBeat: CompactBeat = {
 };
 
 const reggaetonBeat: CompactBeat = {
-  id: "dancehall-reggaeton",
   label: "Reggaeton",
+  genre: "dancehall",
   bpm: 105,
   tracks: [
     {
@@ -444,8 +444,8 @@ const reggaetonBeat: CompactBeat = {
 };
 
 const modernDancehallBeat: CompactBeat = {
-  id: "dancehall-modern",
   label: "Modern dancehall",
+  genre: "dancehall",
   bpm: 105,
   tracks: [
     {
@@ -467,8 +467,8 @@ const modernDancehallBeat: CompactBeat = {
 };
 
 const punkBeatQuarterNoteGroove: CompactBeat = {
-  id: "punk-beat-quarter-note-groove",
   label: "Quarter note groove",
+  genre: "punk",
   bpm: 170,
   tracks: [
     {
@@ -491,8 +491,8 @@ const punkBeatQuarterNoteGroove: CompactBeat = {
 };
 
 const punkBeatQuarterNoteGrooveVariation: CompactBeat = {
-  id: "punk-beat-quarter-note-groove-variation",
   label: "Quarter note groove variation",
+  genre: "punk",
   bpm: 170,
   tracks: [
     {
@@ -515,8 +515,8 @@ const punkBeatQuarterNoteGrooveVariation: CompactBeat = {
 };
 
 const punkBeatEightNoteFill: CompactBeat = {
-  id: "punk-beat-eight-note-fill",
   label: "Eight note fill",
+  genre: "punk",
   bpm: 170,
   tracks: [
     {
@@ -538,7 +538,7 @@ const punkBeatEightNoteFill: CompactBeat = {
   //source : https://freedrumlessons.com/drum-lessons/punk-drum-beats.php
 };
 
-export const beatsGroupedByGenre : readonly CompactBeat[] = [
+export const beats : readonly CompactBeat[] = [
   technoBeat,
   offBeatTechnoClap,
   rockBeat,

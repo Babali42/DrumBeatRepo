@@ -6,7 +6,6 @@ import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../../core/domain/track";
-import {CompactBeatMapper} from "../../../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
@@ -18,6 +17,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
 import {InMemoryBeatGateway} from "../../../infrastructure/adapters/secondary/beat-source/in-memory-beat-gateway";
+import {CompactBeatMapper} from "../../../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
 
 @Component({
   selector: 'sequencer',
@@ -95,7 +95,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectedGenreLabel = firstGenre.label;
     this.beats = firstGenre.beats.map(x => x.label);
 
-    const beatToSelect = beat ? firstGenre.beats.find(x => x.id === beat) : firstGenre.beats[0];
+    const beatToSelect = firstGenre.beats[0];
     const fullBeat = CompactBeatMapper.toBeat(beatToSelect!);
     this.selectBeat(fullBeat);
   }
