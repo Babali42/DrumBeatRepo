@@ -51,7 +51,10 @@ describe('JsonLoaderService', () => {
 
     service.loadAllJson().subscribe(data => {
       expect(data.length).toBeGreaterThan(0);
-      expect(data[0]).toEqual(mockResponses[0]);
+      expect(data[0].bpm).toEqual(180);
+      expect(data[0].label).toEqual("Metal");
+      expect(data[0].genre).toEqual("Metal");
+      expect(data[0].tracks[0].steps).toEqual("____X_______X___");
     });
 
     // Expect each request

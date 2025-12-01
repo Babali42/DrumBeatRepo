@@ -11,7 +11,6 @@ import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
 import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {FormsModule} from "@angular/forms";
-import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
 import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
 import {JSON_TOKEN} from "../infrastructure/adapters/secondary/beat-source/jsonFileReaderInterface";
@@ -37,7 +36,6 @@ RouterModule.forRoot(routes, {
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
     {provide: JSON_TOKEN, useClass: JsonFileReader},
     {provide: AUDIO_ENGINE, useClass: AudioEngineAdapter},
     {provide: IManageBeatsToken, useClass: BeatAdapter},
