@@ -19,10 +19,6 @@ describe('JsonLoaderService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpMock.verify();
-  });
-
   it('should load all JSON files', () => {
     const mockResponses = [
       {

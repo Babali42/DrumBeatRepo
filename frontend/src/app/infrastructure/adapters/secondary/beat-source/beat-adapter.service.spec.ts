@@ -1,13 +1,15 @@
 import {BeatAdapter} from "./beat-adapter.service";
 import {Beat} from "../../../../core/domain/beat";
-import {JSON_TOKEN, JsonFileReaderInterface} from "./jsonFileReaderInterface";
+import {JsonFilesReaderInterface} from "./json-files-reader.interface";
 import {Observable, of} from "rxjs";
 import {TestBed} from "@angular/core/testing";
+import {CompactBeat} from "./compact-beat";
+import {jsonFileReaderToken} from "../../../injection-tokens/json-file-reader.token";
 
 describe("Beat adapter service", () => {
 
-  let mock: JsonFileReaderInterface = {
-    loadAllJson(): Observable<any[]> {
+  const mock: JsonFilesReaderInterface = {
+    loadAllJson(): Observable<CompactBeat[]> {
       return of([{
         "label": "Metal",
         "genre": "Metal",
@@ -36,7 +38,7 @@ describe("Beat adapter service", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        { provide: JSON_TOKEN, useValue: mock },
+        { provide: jsonFileReaderToken, useValue: mock },
         BeatAdapter,
       ]
     }).compileComponents();
