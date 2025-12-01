@@ -14,6 +14,9 @@ import {FormsModule} from "@angular/forms";
 import {BaseUrlInterceptor} from "./interceptors/base-url-interceptor";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
 import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
+import {JSON_TOKEN} from "../infrastructure/adapters/secondary/beat-source/jsonFileReaderInterface";
+import {JsonFileReader} from "../infrastructure/adapters/secondary/beat-source/json-files-reader.service";
+import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent},
@@ -35,10 +38,11 @@ RouterModule.forRoot(routes, {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
-    { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
+    {provide: JSON_TOKEN, useClass: JsonFileReader},
+    {provide: AUDIO_ENGINE, useClass: AudioEngineAdapter},
+    {provide: IManageBeatsToken, useClass: BeatAdapter},
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
-    BeatAdapter,
     provideZoneChangeDetection()
   ]
 })

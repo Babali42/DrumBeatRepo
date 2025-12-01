@@ -1,13 +1,17 @@
 import IManageBeats from "../../../../core/domain/ports/secondary/i-manage-beats";
-import {beats} from "./beats.persistence";
 import {firstValueFrom, of} from "rxjs";
 import {Beat} from "../../../../core/domain/beat";
-import {CompactBeatMapper} from "./compact-beat.mapper";
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
+import {JSON_TOKEN, JsonFileReaderInterface} from "./jsonFileReaderInterface";
 
 @Injectable({providedIn: 'root'})
 export class BeatAdapter implements IManageBeats {
+  constructor(@Inject(JSON_TOKEN) private jsonFileReader: JsonFileReaderInterface) {
+
+  }
+
   getAllBeats(): Promise<readonly Beat[]> {
-    return firstValueFrom(of(beats.map(CompactBeatMapper.toBeat)));
+    //return firstValueFrom(of(beats.map(CompactBeatMapper.toBeat)));
+    return firstValueFrom(this.jsonFileReader.loadAllJson());
   }
 }

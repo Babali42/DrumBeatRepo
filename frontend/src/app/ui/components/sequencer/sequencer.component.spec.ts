@@ -1,6 +1,5 @@
 import {SequencerComponent} from "./sequencer.component";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {BeatAdapter} from "../../../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {provideRouter} from "@angular/router";
 import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
@@ -8,7 +7,15 @@ import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-mana
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MockBreakpointObserver} from "../../../core/testing/mock-breakpoint-observer";
-import {AudioEngineAdapterFake} from "../../../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter.fake";
+import {
+  AudioEngineAdapterFake
+} from "../../../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter.fake";
+import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
+import {Beat} from "../../../core/domain/beat";
+import {Bpm} from "../../../core/domain/bpm";
+import {Track} from "../../../core/domain/track";
+import {Steps} from "../../../core/domain/steps";
+import {TrackSignature} from "../../../core/domain/trackSignature";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -18,10 +25,30 @@ describe('SequencerComponent', () => {
   beforeEach(async () => {
     mockBreakpointObserver = new MockBreakpointObserver();
 
+    const beatsMock: IManageBeats = {
+      getAllBeats(): Promise<readonly Beat[]> {
+        return Promise.resolve([
+          {
+            "label": "4 on the floor",
+            "genre": "Techno",
+            "bpm": new Bpm(128),
+            "tracks": [
+              {
+                "name": "Snare",
+                "fileName": "metal/snare.mp3",
+                "steps": new Steps([true, false, false, false]),
+                "signature": TrackSignature.sixteen
+              }
+            ] as ReadonlyArray<Track>
+          } as Beat
+        ]);
+      }
+    };
+
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
-        {provide: IManageBeatsToken, useClass: BeatAdapter},
+        {provide: IManageBeatsToken, useValue: beatsMock},
         {provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake},
         {provide: BreakpointObserver, useValue: mockBreakpointObserver},
         provideHttpClient(),

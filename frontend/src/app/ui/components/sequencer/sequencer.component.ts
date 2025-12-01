@@ -15,16 +15,12 @@ import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
-import {BeatAdapter} from "../../../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 
 @Component({
   selector: 'sequencer',
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule],
-  providers: [
-    {provide: IManageBeatsToken, useClass: BeatAdapter},
-  ]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
