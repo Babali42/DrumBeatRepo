@@ -1,0 +1,22 @@
+{
+  "label": "Metal",
+  "genre": "Metal",
+  "bpm": "180",
+  "tracks": [
+    {
+      "name": "Snare",
+      "fileName": "metal/snare.mp3",
+      "steps": "____X_______X___"
+    },
+    {
+      "name": "Hats",
+      "fileName": "metal/crash.mp3",
+      "steps": "X___X___X___X___"
+    },
+    {
+      "name": "Kick",
+      "fileName": "metal/kick.mp3",
+      "steps": "XXXXXXXXXXXXXXXX"
+    }
+  ]
+}
