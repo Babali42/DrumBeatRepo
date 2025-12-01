@@ -1,0 +1,22 @@
+{
+  "label": "Eight note fill",
+  "genre": "Punk",
+  "bpm": 170,
+  "tracks": [
+    {
+      "name": "Hats",
+      "fileName": "metal/hat.mp3",
+      "steps": "X_X_X_X_X_X_X_X_"
+    },
+    {
+      "name": "Snare",
+      "fileName": "metal/snare.mp3",
+      "steps": "____X_______X___"
+    },
+    {
+      "name": "Kick",
+      "fileName": "metal/kick.mp3",
+      "steps": "X_X___X_X_X_____"
+    }
+  ]
+}

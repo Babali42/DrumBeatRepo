@@ -1,0 +1,42 @@
+{
+  "label": "Dub",
+  "genre": "Dub",
+  "bpm": 140,
+  "tracks": [
+    {
+      "name": "Kick",
+      "fileName": "dub/kick.wav",
+      "steps": "X_______X_______X_______X_______X_______X_______X_______X_______"
+    },
+    {
+      "name": "Sub Bass",
+      "fileName": "dub/sub.wav",
+      "steps": "X               X               X               X       X       "
+    },
+    {
+      "name": "Skank",
+      "fileName": "dub/skank.wav",
+      "steps": "____X_______X_______X_______X_______X_______X_______X_______X___"
+    },
+    {
+      "name": "Snare",
+      "fileName": "dub/snare.wav",
+      "steps": "        X               X               X               X X     "
+    },
+    {
+      "name": "Arpeggio",
+      "fileName": "dub/arpeggio_si.wav",
+      "steps": "____X_______X_______X_______X_______X_______X_______X_______X___"
+    },
+    {
+      "name": "Closed Hat",
+      "fileName": "dub/closed-hat.wav",
+      "steps": "    X X     X       XXX     X       X X     XX      X X     X XX"
+    },
+    {
+      "name": "Bass",
+      "fileName": "dub/bass.wav",
+      "steps": "X                                         X                     "
+    }
+  ]
+}

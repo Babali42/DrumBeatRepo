@@ -15,16 +15,12 @@ import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
-import {BeatAdapter} from "../../../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 
 @Component({
   selector: 'sequencer',
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule],
-  providers: [
-    {provide: IManageBeatsToken, useClass: BeatAdapter},
-  ]
+  imports: [NgFor, BpmInputComponent, SelectInputComponent, FormsModule]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -79,26 +75,19 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
       this.genresLabel = [...this.genres.keys()];
       const firstBeat = this.genres.values().next().value!?.[0];
-      const genreLabel = firstBeat.genre;
-      const beatLabel = firstBeat.label;
-
-      this.selectGenre(this.genres, genreLabel, beatLabel);
+      this.selectGenre(this.genres, firstBeat.genre);
       this.selectBeat(beats[0]);
     }).catch(() => {
     });
   }
 
-  genreChange = ($event: string) => this.selectGenre(this.genres, $event, undefined);
+  genreChange = ($event: string) => this.selectGenre(this.genres, $event);
 
-  selectGenre(genres: Map<string, Beat[]>, genre: string, beat: string | undefined): void {
+  selectGenre(genres: Map<string, Beat[]>, genre: string): void {
     const beats = genres.get(genre)!;
-    this.selectedGenreLabel = genres.keys().next().value!;
+    this.selectedGenreLabel = genre;
     this.beats = beats.map(x => x.label);
-
-    if (beat)
-      this.selectBeat((beats.find(x => x.label === beat))!);
-    else
-      this.selectBeat(beats[0]);
+    this.selectBeat(beats[0]);
   }
 
   selectBeat(beatToSelect: Beat | undefined): void {
