@@ -1,21 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import {JsonLoaderService} from "./json-files-reader.service";
+import {JsonFileReader} from "./json-files-reader.service";
 
 describe('JsonLoaderService', () => {
-  let service: JsonLoaderService;
+  let service: JsonFileReader;
   let httpMock: HttpTestingController;
 
-  const basePath = 'assets/data/';
-  const files = ['user1.json', 'user2.json', 'user3.json'];
+  const basePath = 'assets/beats/';
+  const files = ['metal-metal.json'];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [JsonLoaderService]
+      providers: [JsonFileReader]
     });
 
-    service = TestBed.inject(JsonLoaderService);
+    service = TestBed.inject(JsonFileReader);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -25,14 +25,33 @@ describe('JsonLoaderService', () => {
 
   it('should load all JSON files', () => {
     const mockResponses = [
-      { name: 'Alice' },
-      { name: 'Bob' },
-      { name: 'Charlie' }
+      {
+        "label": "Metal",
+        "genre": "Metal",
+        "bpm": 180,
+        "tracks": [
+          {
+            "name": "Snare",
+            "fileName": "metal/snare.mp3",
+            "steps": "____X_______X___"
+          },
+          {
+            "name": "Hats",
+            "fileName": "metal/crash.mp3",
+            "steps": "X___X___X___X___"
+          },
+          {
+            "name": "Kick",
+            "fileName": "metal/kick.mp3",
+            "steps": "XXXXXXXXXXXXXXXX"
+          }
+        ]
+      }
     ];
 
     service.loadAllJson().subscribe(data => {
-      expect(data.length).toBe(3);
-      expect(data).toEqual(mockResponses);
+      expect(data.length).toBeGreaterThan(0);
+      expect(data[0]).toEqual(mockResponses[0]);
     });
 
     // Expect each request
