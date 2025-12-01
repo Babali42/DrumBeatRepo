@@ -1,22 +1,22 @@
 {
-  "label": "Metal2",
+  "label": "Blast beat",
   "genre": "Metal",
-  "bpm": "180",
+  "bpm": 180,
   "tracks": [
     {
       "name": "Snare",
       "fileName": "metal/snare.mp3",
-      "steps": "____X_______X___"
+      "steps": "_X_X_X_X_X_X_X_X"
     },
     {
       "name": "Hats",
-      "fileName": "metal/crash.mp3",
-      "steps": "X___X___X___X___"
+      "fileName": "metal/hat.mp3",
+      "steps": "X_X_X_X_X_X_X_X_"
     },
     {
       "name": "Kick",
       "fileName": "metal/kick.mp3",
-      "steps": "XXXXXXXXXXXXXXXX"
+      "steps": "X_X_X_X_X_X_X_X_"
     }
   ]
 }

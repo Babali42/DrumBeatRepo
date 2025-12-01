@@ -1,0 +1,22 @@
+{
+  "label": "Quarter note groove",
+  "genre": "Punk",
+  "bpm": 170,
+  "tracks": [
+    {
+      "name": "Hats",
+      "fileName": "metal/hat.mp3",
+      "steps": "X___X___X___X___"
+    },
+    {
+      "name": "Snare",
+      "fileName": "metal/snare.mp3",
+      "steps": "____X_______X___"
+    },
+    {
+      "name": "Kick",
+      "fileName": "metal/kick.mp3",
+      "steps": "X_______X_______"
+    }
+  ]
+}

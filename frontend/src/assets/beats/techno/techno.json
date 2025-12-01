@@ -1,0 +1,22 @@
+{
+  "label": "4 on the floor",
+  "genre": "Techno",
+  "bpm": 128,
+  "tracks": [
+    {
+      "name": "Snare",
+      "fileName": "techno/snare.wav",
+      "steps": "____X_______X___"
+    },
+    {
+      "name": "Hats",
+      "fileName": "techno/hat.wav",
+      "steps": "X_X_X_X_X_X_X_X_"
+    },
+    {
+      "name": "Kick",
+      "fileName": "techno/kick.wav",
+      "steps": "X   X   X   X   "
+    }
+  ]
+}

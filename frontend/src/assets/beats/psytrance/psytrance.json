@@ -1,0 +1,32 @@
+{
+  "label": "Psytrance",
+  "genre": "Psytrance",
+  "bpm": 135,
+  "tracks": [
+    {
+      "name": "Closed hats",
+      "fileName": "psytrance/closed-hat.wav",
+      "steps": "X   X   X   X   "
+    },
+    {
+      "name": "Open hats",
+      "fileName": "psytrance/open-hat.wav",
+      "steps": "  X   X   X   X "
+    },
+    {
+      "name": "Snare",
+      "fileName": "psytrance/snare.wav",
+      "steps": "    X       X   "
+    },
+    {
+      "name": "Kick",
+      "fileName": "psytrance/kick.wav",
+      "steps": "X   X   X   X   "
+    },
+    {
+      "name": "Bass",
+      "fileName": "psytrance/bass.wav",
+      "steps": " XXX XXX XXX XXX"
+    }
+  ]
+}

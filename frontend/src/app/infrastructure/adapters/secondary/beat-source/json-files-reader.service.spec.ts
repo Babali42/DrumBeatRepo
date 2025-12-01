@@ -7,7 +7,7 @@ describe('JsonLoaderService', () => {
   let httpMock: HttpTestingController;
 
   const basePath = 'assets/beats/';
-  const files = ['metal-metal.json'];
+  const files = ['metal/metal.json'];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
