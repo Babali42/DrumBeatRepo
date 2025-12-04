@@ -19,7 +19,7 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ## 📂 Project Structure
 
-The main codebase and documentation are in the [`frontend`](./frontend) folder.
+The main codebase is in the [`frontend`](./frontend) folder.
 
 ---
 
@@ -31,9 +31,7 @@ The whole sequencer is represented in the domain layer
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+## 🤝 Contributors
 
 Huge thanks to our contributors:
 - **Kireo**  
