@@ -9,17 +9,115 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ---
 
-## 🚀 Features
+## 🤝 Contributing
 
-- 🎧 **Browse Beats** – Explore a variety of built-in drum patterns
-- ⏱️ **Play & Accelerate** – Listen and adjust the tempo in real-time
-- 🎛️ **Interactive Sequencer** – Visualize and follow patterns as they play
-- 🥁 **Create Your Own Beats** – Compose sequences right in your browser
----
+### How to ask for a missing beat ?
 
-## 📂 Project Structure
+You can either look for my contact on my github profile and send an email or simply open a bugfix :)
 
-The main codebase is in the [`frontend`](./frontend) folder.
+### How to add your own beat ?
+
+- Find a new genre or subgenre and verify it's not present yet
+- Add a new .json file in the [assets/beats/GENRE](https://github.com/Babali42/DrumBeatRepo/tree/main/frontend/src/assets/beats) folder 
+- Define genre, subgenres, samples, tracks and patterns in the file :
+```
+  {
+  "label": "Half time groove",
+  "genre": "Metal",
+  "bpm": 145,
+  "tracks": [
+    {
+      "name": "Snare",
+      "fileName": "metal/snare.mp3",
+      "steps": "        X       "
+    },
+    {
+      "name": "Crash",
+      "fileName": "metal/crash.mp3",
+      "steps": "X   X   X   X   "
+    },
+    {
+      "name": "Kick",
+      "fileName": "metal/kick.mp3",
+      "steps": "X               "
+    }
+  ]
+}
+```
+- Sounds samples are here (try mix them !)
+```
+  drum-n-bass
+    hat.wav
+    kick.wav
+    snare.wav
+  dub
+    arpeggio_si.wav
+    bass.wav
+    closed-hat.wav
+    kick.wav
+    pattern (bitinvader=bass et SID=arpeggio).png
+    skank.wav
+    snare.wav
+    sub.wav
+  ebm
+    clap.wav
+    closed-hihat.wav
+    kick.wav
+    open-hihat.wav
+    snare.wav
+  gabber
+    clap.wav
+    crash.wav
+    kick.wav
+    kick.wav.asd
+    open-hihat.wav
+  jersey-club
+    kick.mp3
+    snare.mp3
+    squeak_high.mp3
+    squeak_low.mp3
+  metal
+    crash.mp3
+    crash.wav
+    hat.mp3
+    hat.wav
+    kick.mp3
+    kick.wav
+    snare.mp3
+    snare.wav
+  psytrance
+    bass.wav
+    closed-hat.wav
+    kick.wav
+    open-hat.wav
+    snare.wav
+  techno
+    hat.wav
+    kick.wav
+    snare.wav
+```
+- Add your files in this string list
+```typescript
+  loadAllJson(): Observable<CompactBeat[]> {
+    let files = ['techno/techno.json', 'techno/off-beat-clap.json'];
+    files = files.concat('metal/metal.json', 'metal/metal-blastbeat.json', 'metal/half-time-groove.json');
+    files = files.concat('rock/rock.json', 'rock/variation.json');
+    files = files.concat('punk/punk-beat-quarter-note-groove.json', 'punk/punk-beat-quarter-note-groove-variation.json', 'punk/punk-beat-eight-note-fill.json');
+    files = files.concat('psytrance/psytrance.json');
+    files = files.concat('dancehall/standard.json');
+    files = files.concat('techno-hardcore/gabber.json');
+    files = files.concat('dub/dub.json');
+```
+- `cd frontend`
+- `npm i`
+- `npm run start`
+- Verify the beat
+- Open a PR !
+
+### Thanks to the contributors
+- **Kireo**
+- **GiaHuy0031**  
+  ...and everyone who's shared feedback and ideas ❤️
 
 ---
 
@@ -28,21 +126,6 @@ The main codebase is in the [`frontend`](./frontend) folder.
 The whole sequencer is represented in the domain layer
 
 ![Domain Schema](./domain.jpg)
-
----
-
-## 🤝 Contributors
-
-Huge thanks to our contributors:
-- **Kireo**  
-- **GiaHuy0031**  
-...and everyone who's shared feedback and ideas ❤️
-
----
-
-## 📨 Contact & Issues
-
-Have a suggestion or bug to report? [Open an issue](../../issues/new) here on GitHub.
 
 ---
 
