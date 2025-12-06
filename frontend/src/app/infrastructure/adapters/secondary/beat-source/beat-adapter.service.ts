@@ -14,6 +14,10 @@ export class BeatAdapter implements IManageBeats {
 
   getAllBeats(): Promise<readonly Beat[]> {
     return firstValueFrom(this.jsonFileReader.loadAllJson()
-      .pipe(map(beat => beat.map(CompactBeatMapper.toBeat))));
+      .pipe(
+        map(beat => beat
+          .filter(x => x != null)
+          .map(x => CompactBeatMapper.toBeat(x)))
+      ))
   }
 }
