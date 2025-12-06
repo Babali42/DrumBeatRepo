@@ -1,14 +1,16 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {firstValueFrom, from, Observable} from 'rxjs';
 import {JsonFilesReaderInterface} from "./json-files-reader.interface";
 import {CompactBeat} from "./compact-beat";
+import {Effect} from "effect";
 
 @Injectable({ providedIn: 'root' })
 export class JsonFileReader implements JsonFilesReaderInterface {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+  }
 
-  loadAllJson(): Observable<CompactBeat[]> {
+  loadAllJson(): Observable<readonly (CompactBeat | null)[]> {
     let files = ['techno/techno.json', 'techno/off-beat-clap.json'];
     files = files.concat('metal/metal.json', 'metal/metal-blastbeat.json', 'metal/half-time-groove.json');
     files = files.concat('rock/rock.json', 'rock/variation.json');
@@ -18,10 +20,20 @@ export class JsonFileReader implements JsonFilesReaderInterface {
     files = files.concat('techno-hardcore/gabber.json');
     files = files.concat('dub/dub.json');
 
-    const requests = files
-      .map(file => this.http.get('assets/beats/' + file))
-      .map(x => x as Observable<CompactBeat>);
-
-    return forkJoin(requests);
+    return from(Effect.runPromise(this.loadAllBeats(files)));
   }
+
+  loadAllBeats = (files: readonly string[]) =>
+    Effect.all(
+      files.map(file => this.fromObservable(() => this.http.get<CompactBeat>(`/assets/beats/${file}`)).pipe(
+        Effect.catchAll(() => Effect.succeed(null))
+      )),
+      { discard: false }
+    );
+
+  fromObservable = <A>(obs: () => Observable<A>): Effect.Effect<A, HttpErrorResponse> =>
+    Effect.tryPromise({
+      try: () => firstValueFrom(obs()),
+      catch: (err) => err as HttpErrorResponse
+    });
 }

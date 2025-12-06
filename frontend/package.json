@@ -25,7 +25,7 @@
     "@ngx-loading-bar/core": "^7.0.0",
     "@types/waaclock": "^0.5.2",
     "arch-unit-ts": "^1.0.8",
-    "effect": "^3.10.14",
+    "effect": "^3.19.9",
     "rxjs": "~7.8.0",
     "waaclock": "^0.5.5",
     "zone.js": "~0.15.0"

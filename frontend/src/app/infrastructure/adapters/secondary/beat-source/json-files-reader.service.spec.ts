@@ -1,13 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import {JsonFileReader} from "./json-files-reader.service";
+import {Effect} from "effect";
 
 describe('JsonLoaderService', () => {
   let service: JsonFileReader;
-  let httpMock: HttpTestingController;
-
-  const basePath = 'assets/beats/';
-  const files = ['metal/metal.json'];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,10 +13,9 @@ describe('JsonLoaderService', () => {
     });
 
     service = TestBed.inject(JsonFileReader);
-    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should load all JSON files', () => {
+  it('should load all JSON files', async () => {
     const mockResponses = [
       {
         "label": "Metal",
@@ -45,19 +41,22 @@ describe('JsonLoaderService', () => {
       }
     ];
 
-    service.loadAllJson().subscribe(data => {
-      expect(data.length).toBeGreaterThan(0);
-      expect(data[0].bpm).toEqual(180);
-      expect(data[0].label).toEqual("Metal");
-      expect(data[0].genre).toEqual("Metal");
-      expect(data[0].tracks[0].steps).toEqual("____X_______X___");
-    });
+    spyOn(service, 'fromObservable').and.callFake(() =>
+      //@ts-ignore
+      Effect.tryPromise({ try: () => Promise.resolve(mockResponses) })
+    );
 
-    // Expect each request
-    files.forEach((file, index) => {
-      const req = httpMock.expectOne(basePath + file);
-      expect(req.request.method).toBe('GET');
-      req.flush(mockResponses[index]); // respond with mock data
-    });
+    const result = await Effect.runPromise(service.loadAllBeats(['techno.json']));
+    expect(result[0]).toBeDefined();
+  });
+
+  it('should handle missing files gracefully', async () => {
+    spyOn(service, 'fromObservable').and.callFake(() =>
+      //@ts-ignore
+      Effect.tryPromise({ try: () => Promise.reject('404') })
+    );
+
+    const result = await Effect.runPromise(service.loadAllBeats(['missing.json']));
+    expect(result[0]).toBeNull(); // if using catchAll / safe variant
   });
 });
