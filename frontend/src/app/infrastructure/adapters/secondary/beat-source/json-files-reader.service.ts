@@ -11,21 +11,21 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadAllJson(): Observable<readonly (CompactBeat | null)[]> {
-    let files = ['techno/techno.json', 'techno/off-beat-clap.json', 'techno/tresillo.json'];
-    files = files.concat('metal/metal.json', 'metal/metal-blastbeat.json', 'metal/half-time-groove.json');
-    files = files.concat('rock/rock.json', 'rock/variation.json');
-    files = files.concat('punk/punk-beat-quarter-note-groove.json', 'punk/punk-beat-quarter-note-groove-variation.json', 'punk/punk-beat-eight-note-fill.json');
-    files = files.concat('psytrance/psytrance.json');
-    files = files.concat('dancehall/standard.json');
-    files = files.concat('techno-hardcore/gabber.json');
-    files = files.concat('dub/dub.json');
-
+    const files = ['techno/techno', 'techno/off-beat-clap']
+      .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')
+      .concat('hardcore-techno/gabber')
+      .concat('psytrance/psytrance')
+      .concat('dub/dub')
+      .concat('dancehall/standard')
+      .concat('metal/metal', 'metal/metal-blastbeat', 'metal/half-time-groove')
+      .concat('rock/rock', 'rock/variation')
+      .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
     return from(Effect.runPromise(this.loadAllBeats(files)));
   }
 
   loadAllBeats = (files: readonly string[]) =>
     Effect.all(
-      files.map(file => this.fromObservable(() => this.http.get<CompactBeat>(`/assets/beats/${file}`)).pipe(
+      files.map(file => this.fromObservable(() => this.http.get<CompactBeat>(`/assets/beats/${file}.json`)).pipe(
         Effect.catchAll(() => Effect.succeed(null))
       )),
       { discard: false }
