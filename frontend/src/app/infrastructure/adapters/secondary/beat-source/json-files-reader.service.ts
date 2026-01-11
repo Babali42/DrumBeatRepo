@@ -11,8 +11,8 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadAllJson(): Observable<readonly (CompactBeat | null)[]> {
-    const files = ['techno/techno', 'techno/off-beat-clap']
-      .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')
+    const files = ['hypnotic-techno/tresillo', 'hypnotic-techno/son-clave']
+      .concat('techno/techno', 'techno/off-beat-clap')
       .concat('hardcore-techno/gabber')
       .concat('psytrance/psytrance')
       .concat('dub/dub')
