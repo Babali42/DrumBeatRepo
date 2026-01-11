@@ -11,13 +11,13 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ## 🤝 Contributing
 
-### How to ask for a missing beat ?
-
-You can either look for my contact on my github profile and send an email or simply open a bugfix :)
-
 ### How to add your own beat ?
 
+- Check this issue which contains some ideas : https://github.com/Babali42/DrumBeatRepo/issues/270
 - Find a new genre or subgenre and verify it's not present yet
+  - Either :
+    - Add it to the issue above and I'll take care of it
+    - Continue with step below
 - Add a new .json file in the [assets/beats/GENRE](https://github.com/Babali42/DrumBeatRepo/tree/main/frontend/src/assets/beats) folder 
 - Define genre, subgenres, samples, tracks and patterns in the file :
 ```
@@ -118,14 +118,6 @@ You can either look for my contact on my github profile and send an email or sim
 - **Kireo**
 - **GiaHuy0031**  
   ...and everyone who's shared feedback and ideas ❤️
-
----
-
-## Domain folder schema
-
-The whole sequencer is represented in the domain layer
-
-![Domain Schema](./domain.jpg)
 
 ---
 

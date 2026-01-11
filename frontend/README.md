@@ -11,6 +11,13 @@ This project is built with:
 
 Hexagonal a.k.a. Port/Adapter
 
+
+## Domain naming schema
+
+The whole sequencer is represented in the domain layer
+
+![Domain Schema](./../domain.jpg)
+
 ## 📚 References
 
 <details>
