@@ -1,0 +1,23 @@
+{
+  "label": "Tresillo",
+  "genre": "Techno",
+  "bpm": 128,
+  "source": "https://www.youtube.com/watch?v=uvK_bIZ8igo",
+  "tracks": [
+    {
+      "name": "Synth in tresillo",
+      "fileName": "techno/tresillo/synth.mp3",
+      "steps": "X__X__X_X__X__X_"
+    },
+    {
+      "name": "Bass",
+      "fileName": "techno/tresillo/bass.mp3",
+      "steps": "X_X_X_X_X_X_X_X_"
+    },
+    {
+      "name": "Kick",
+      "fileName": "techno/tresillo/kick.mp3",
+      "steps": "X   X   X   X   "
+    }
+  ]
+}

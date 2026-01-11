@@ -11,7 +11,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadAllJson(): Observable<readonly (CompactBeat | null)[]> {
-    let files = ['techno/techno.json', 'techno/off-beat-clap.json'];
+    let files = ['techno/techno.json', 'techno/off-beat-clap.json', 'techno/tresillo.json'];
     files = files.concat('metal/metal.json', 'metal/metal-blastbeat.json', 'metal/half-time-groove.json');
     files = files.concat('rock/rock.json', 'rock/variation.json');
     files = files.concat('punk/punk-beat-quarter-note-groove.json', 'punk/punk-beat-quarter-note-groove-variation.json', 'punk/punk-beat-eight-note-fill.json');
