@@ -1,4 +1,5 @@
-@import "../../../../styles/styles";
+@use "../../../../styles/styles";
+@use "../../../../styles/utils";
 
 $step-size: 40px;
 $gap: 4px;
@@ -7,7 +8,7 @@ $gap: 4px;
   display: grid;
   grid-template-columns: max-content auto;
   gap: 24px;
-  margin: 0 $main-app-margin-size;
+  margin: 0 utils.$main-app-margin-size;
 }
 
 .sequencer-grid {
@@ -36,12 +37,12 @@ $gap: 4px;
   }
 
   .active, .active.highlight {
-    background-color: $color3_purple;
+    background-color: utils.$color3_purple;
 
     &.current {
       background: repeating-linear-gradient(
           -45deg,
-          $color3_purple, $color3_purple 10px,
+          utils.$color3_purple, utils.$color3_purple 10px,
           var(--backgroundColor) 5px, var(--backgroundColor) 15px
       );
     }

@@ -1,13 +1,13 @@
-@import "../../styles/utils";
-@import "../../styles/styles";
+@use "../../styles/utils";
+@use "../../styles/styles";
 
 .app-container {
   height: 100%;
 
   .top-left-corner{
     position: absolute;
-    top: $main-app-margin-size;
-    left: $main-app-margin-size;
+    top: utils.$main-app-margin-size;
+    left: utils.$main-app-margin-size;
   }
 }
 
