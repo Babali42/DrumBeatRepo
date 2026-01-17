@@ -1,14 +1,14 @@
-@import './base';
-@import './utils';
-@import './mixins';
+@use 'base';
+@use 'utils';
+@use 'mixins';
 
 body.dark{
-  @include darken();
+  @include mixins.darken();
   background-color: var(--backgroundColor);
   color: var(--textColor);
 }
 body.light {
-  @include lighten();
+  @include mixins.lighten();
   background-color: var(--backgroundColor);
   color: var(--textColor);
 }

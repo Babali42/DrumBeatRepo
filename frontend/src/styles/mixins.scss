@@ -1,4 +1,6 @@
-﻿@mixin centered-text{
+@use "utils";
+
+@mixin centered-text{
   text-align: center;
   vertical-align: middle;
 }
@@ -20,7 +22,7 @@ $gridHighLightColor_dark: #474747;
   --backgroundColor: #{$bgColor_light};
   --textColor: #{$textColor_light};
   --borderColor: #{$borderColor_light};
-  --menuButtonColor: #{$color1_light_blue};
+  --menuButtonColor: #{utils.$color1_light_blue};
   --gridHighLightColor: #{$gridHighLightColor_light};
 }
 
@@ -29,6 +31,6 @@ $gridHighLightColor_dark: #474747;
   --backgroundColor: #{$bgColor_dark};
   --textColor: #{$textColor_dark};
   --borderColor: #{$borderColor_dark};
-  --menuButtonColor: #{$color3_purple};
+  --menuButtonColor: #{utils.$color3_purple};
   --gridHighLightColor: #{$gridHighLightColor_dark};
 }
