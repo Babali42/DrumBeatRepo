@@ -7,17 +7,17 @@
     {
       "name": "Synth in tresillo",
       "fileName": "hypnotic-techno/synth.mp3",
-      "steps": "X__X__X_X__X__X_"
+      "steps": "X__X__X_"
     },
     {
       "name": "Bass",
       "fileName": "hypnotic-techno/bass.mp3",
-      "steps": "X_X_X_X_X_X_X_X_"
+      "steps": "X_X_X_X_"
     },
     {
       "name": "Kick",
       "fileName": "hypnotic-techno/kick.mp3",
-      "steps": "X   X   X   X   "
+      "steps": "X   X   "
     }
   ]
 }
