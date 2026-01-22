@@ -57,7 +57,9 @@
   </div>
   <section class="tracks-container">
     <article *ngFor="let track of beat.tracks">
-      <div id="track" [class.sixteen-steps]="track.signature == TrackSignature.sixteen"
+      <div id="track"
+           [class.eight-steps]="track.signature == TrackSignature.eight"
+           [class.sixteen-steps]="track.signature == TrackSignature.sixteen"
            [class.thirty-two-steps]="track.signature == TrackSignature.thirty_two"
            [class.sixty-four-steps]="track.signature == TrackSignature.sixty_four">
         <button *ngFor="let step of track.steps.steps; let i = index" class="step cursor-pointer"

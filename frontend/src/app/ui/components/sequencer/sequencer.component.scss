@@ -65,6 +65,10 @@ $gap: 4px;
   grid-template-columns: repeat($columns, 1fr);
 }
 
+.eight-steps {
+  @include step-grid(8);
+}
+
 .sixteen-steps {
   @include step-grid(16);
 }

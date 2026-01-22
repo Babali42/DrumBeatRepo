@@ -1,7 +1,7 @@
 import {Steps} from "./steps";
 import {TrackSignature} from "./trackSignature";
 
-const allowedStepLengths = [4, 16, 32, 64];
+const allowedStepLengths = [8, 16, 32, 64];
 
 export class Track {
   readonly name: string;

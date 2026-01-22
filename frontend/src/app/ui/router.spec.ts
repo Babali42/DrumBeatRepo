@@ -51,7 +51,7 @@ describe('Router', () => {
                 label: 'Classic',
                 bpm: new Bpm(128),
                 tracks: [
-                  new Track("","", [true, false, true, false])
+                  new Track("","", [true, false, true, false, true, false, true, false])
                 ]
               }
             ])
@@ -89,7 +89,7 @@ describe('Router', () => {
   }));
 
   it('should render the add beat page', fakeAsync (() => {
-    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [new Track("", "", [false, true, false, true])]} as Beat;
+    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [new Track("", "", [false, true, false, true, false, true, false, true])]} as Beat;
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
     const base64Beat = BeatUrlMapper.toBase64(compactBeat);
 
