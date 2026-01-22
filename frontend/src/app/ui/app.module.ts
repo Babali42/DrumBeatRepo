@@ -8,7 +8,6 @@ import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AppComponent} from './app.component';
 import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
-import {BeatCreatorComponent} from "./components/beat-creator/beat-creator.component";
 import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {FormsModule} from "@angular/forms";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
@@ -18,8 +17,7 @@ import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-bea
 import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-reader.token";
 
 export const routes: Routes = [
-  {path: '', component: SequencerComponent},
-  {path: 'add-beat', component: BeatCreatorComponent}
+  {path: '', component: SequencerComponent}
 ];
 
 RouterModule.forRoot(routes, {

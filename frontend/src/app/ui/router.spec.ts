@@ -87,27 +87,4 @@ describe('Router', () => {
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
     expect(seq.beat.bpm.value).toEqual(128);
   }));
-
-  it('should render the add beat page', fakeAsync (() => {
-    const beat = { id: 'custom-beat', label: 'Custom', genre: 'customGenre', bpm: new Bpm(128), tracks: [new Track("", "", [false, true, false, true, false, true, false, true])]} as Beat;
-    const compactBeat = CompactBeatMapper.toCompactBeat(beat);
-    const base64Beat = BeatUrlMapper.toBase64(compactBeat);
-
-    router.navigate([], { queryParams: { beat: base64Beat, name: 'test', bpm: '230' } });
-    tick();
-
-    flushMicrotasks();
-    fixture.detectChanges();
-
-    tick(); // simulate any pending async data (e.g., from `ngOnInit`)
-    fixture.detectChanges();
-
-    // 3) Assert
-    const dbg = fixture.debugElement.query(By.directive(SequencerComponent));
-    expect(dbg).withContext('SequencerComponent should be in the DOM').toBeTruthy();
-
-    const seq = dbg.componentInstance as SequencerComponent;
-    expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
-    expect(seq.beat.bpm.value).toEqual(128);
-  }));
 });
