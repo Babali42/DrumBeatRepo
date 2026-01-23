@@ -26,8 +26,8 @@ describe('SelectInputComponent', () => {
     spyOn(component.selectChange, 'emit');
 
     //Act
-    component.selectedElement = 'gabber';
-    component.onSelectChange();
+    fixture.componentRef.setInput('selectedElement', 'gabber');
+    component.onSelectChange('gabber');
 
     //Assert
     expect(component.selectChange.emit).toHaveBeenCalledWith('gabber');

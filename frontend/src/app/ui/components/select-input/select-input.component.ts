@@ -1,20 +1,20 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output } from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
 
 @Component({
     selector: 'app-select-input',
-    imports: [FormsModule, NgForOf],
+    imports: [FormsModule],
     templateUrl: './select-input.component.html',
     styleUrl: './select-input.component.scss'
 })
 export class SelectInputComponent {
-  @Input() elements: readonly string[] = [];
-  @Input() selectedElement: string = "";
-  @Input() placeHolder: string = "";
-  @Output() selectChange = new EventEmitter<string>();
+  elements = input<readonly string[]>([]);
+  selectedElement = input<string>('');
+  placeHolder = input<string>('');
 
-  onSelectChange() {
-    this.selectChange.emit(this.selectedElement);
+  selectChange = output<string>();
+
+  onSelectChange(value: string) {
+    this.selectChange.emit(value);
   }
 }
