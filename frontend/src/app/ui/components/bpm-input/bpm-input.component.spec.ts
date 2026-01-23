@@ -3,6 +3,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BpmInputComponent } from './bpm-input.component';
 import {By} from "@angular/platform-browser";
 
+type BeatChangeDataSet = {
+  min: number;
+  max: number;
+  actual: number;
+  expected: number;
+};
+
 describe('BpmInputComponent', () => {
   let component: BpmInputComponent;
   let fixture: ComponentFixture<BpmInputComponent>;
@@ -22,48 +29,62 @@ describe('BpmInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should increment the bpm in the desired range', () => {
-    //Arrange
-    component.maxBpm = 130;
-    component.bpm = 128;
+  const riseTempoCases: BeatChangeDataSet[] = [
+    { min: 120, max: 128, actual: 127 , expected: 128 },
+    { min: 120, max: 128, actual: 128 , expected: 128 },
+  ];
 
-    //Act
-    component.incrementBpm();
-    component.incrementBpm();
-    component.incrementBpm();
+  riseTempoCases.forEach(({ min, max, actual, expected }) => {
+    it('should increment the bpm in the range', () => {
+      component.maxBpm = max;
+      component.minBpm = min;
+      fixture.componentRef.setInput('bpm', actual);
+      fixture.detectChanges();
 
-    //Assert
-    expect(component.bpm).toEqual(component.maxBpm);
+      let lastValue!: number;
+      component.bpmChange.subscribe(v => lastValue = v);
+
+      component.incrementBpm();
+
+      expect(lastValue).toBe(expected);
+    });
   });
 
-  it('should decrement the bpm in the desired range', () => {
-    //Arrange
-    component.minBpm = 126;
-    component.bpm = 128;
+  const lowerTempoCases: BeatChangeDataSet[] = [
+    { min: 120, max: 128, actual: 121 , expected: 120 },
+    { min: 120, max: 128, actual: 120 , expected: 120 },
+  ];
 
-    //Act
-    component.decrementBpm();
-    component.decrementBpm();
-    component.decrementBpm();
+  lowerTempoCases.forEach(({ min, max, actual, expected }) => {
+    it('should increment the bpm in the range', () => {
+      component.maxBpm = max;
+      component.minBpm = min;
+      fixture.componentRef.setInput('bpm', actual);
+      fixture.detectChanges();
 
-    //Assert
-    expect(component.bpm).toEqual(component.minBpm);
+      let lastValue!: number;
+      component.bpmChange.subscribe(v => lastValue = v);
+
+      component.decrementBpm();
+
+      expect(lastValue).toBe(expected);
+    });
   });
 
-  it('should update the value', () => {
-    //Arrange
-    component.bpm = 128;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const inputElement = fixture.debugElement.query(By.css('.number-quantity')).nativeElement;
-
-    //Act
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    inputElement.value = '120';
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-    inputElement.dispatchEvent(new Event('change'));
-
-    //Assert
+  it('should emit updated value on input', () => {
+    fixture.componentRef.setInput('bpm', 128);
     fixture.detectChanges();
-    expect(component.bpm).toBe(120);
+
+    let lastValue!: number;
+    component.bpmChange.subscribe(v => lastValue = v);
+
+    const input = fixture.debugElement.query(
+      By.css('.number-quantity')
+    ).nativeElement as HTMLInputElement;
+
+    input.value = '120';
+    input.dispatchEvent(new Event('change'));
+
+    expect(lastValue).toBe(120);
   });
 });

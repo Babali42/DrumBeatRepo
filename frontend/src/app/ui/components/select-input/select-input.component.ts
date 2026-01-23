@@ -14,7 +14,5 @@ export class SelectInputComponent {
 
   selectChange = output<string>();
 
-  onSelectChange(value: string) {
-    this.selectChange.emit(value);
-  }
+  onSelectChange = (value: string) => this.selectChange.emit(value);
 }

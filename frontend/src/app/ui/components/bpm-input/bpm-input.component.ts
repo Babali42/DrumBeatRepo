@@ -16,13 +16,8 @@ export class BpmInputComponent {
   bpm = input(Bpm.minBpm);
   bpmChange = output<number>();
 
-  incrementBpm() {
-    this.updateBpm(Math.min(this.bpm() +1, this.maxBpm));
-  }
-
-  decrementBpm() {
-    this.updateBpm(Math.max(this.bpm() -1, this.minBpm));
-  }
+  incrementBpm = () => this.updateBpm(Math.min(this.bpm() + 1, this.maxBpm));
+  decrementBpm = () => this.updateBpm(Math.max(this.bpm() - 1, this.minBpm));
 
   updateNumber(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
@@ -32,7 +27,5 @@ export class BpmInputComponent {
     this.updateBpm(value);
   }
 
-  private updateBpm(value: number): void {
-    this.bpmChange.emit(value);
-  }
+  private updateBpm = (value: number) => this.bpmChange.emit(value);
 }

@@ -11,9 +11,6 @@ import {routes} from "./app.module";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
 import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
-import {Beat} from "../core/domain/beat";
-import {CompactBeatMapper} from "../infrastructure/adapters/secondary/beat-source/compact-beat.mapper";
-import {BeatUrlMapper} from "../infrastructure/adapters/secondary/beat-source/beat-url.mapper";
 import {Bpm} from "../core/domain/bpm";
 import {Track} from "../core/domain/track";
 
