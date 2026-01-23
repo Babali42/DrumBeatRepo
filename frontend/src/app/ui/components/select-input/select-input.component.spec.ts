@@ -21,7 +21,7 @@ describe('SelectInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit petChange when a new pet is selected', () => {
+  it('should emit onSelectChange when a new option is selected', () => {
     //Arrange
     spyOn(component.selectChange, 'emit');
 
