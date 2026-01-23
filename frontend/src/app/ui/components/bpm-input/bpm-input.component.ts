@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {LongPressDirective} from "../../directives/long-press.directive";
 import {Bpm} from "../../../core/domain/bpm";
 
@@ -13,15 +13,15 @@ import {Bpm} from "../../../core/domain/bpm";
 export class BpmInputComponent {
   maxBpm = Bpm.maxBpm;
   minBpm = Bpm.minBpm;
-  @Input() bpm : number = Bpm.minBpm;
-  @Output() bpmChange = new EventEmitter<number>();
+  bpm = input(Bpm.minBpm);
+  bpmChange = output<number>();
 
   incrementBpm() {
-    this.updateBpm(Math.min(this.bpm+1, this.maxBpm));
+    this.updateBpm(Math.min(this.bpm() +1, this.maxBpm));
   }
 
   decrementBpm() {
-    this.updateBpm(Math.max(this.bpm-1, this.minBpm));
+    this.updateBpm(Math.max(this.bpm() -1, this.minBpm));
   }
 
   updateNumber(event: Event): void {
@@ -33,7 +33,6 @@ export class BpmInputComponent {
   }
 
   private updateBpm(value: number): void {
-    this.bpm = value;
-    this.bpmChange.emit(this.bpm);
+    this.bpmChange.emit(value);
   }
 }
