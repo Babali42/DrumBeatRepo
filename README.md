@@ -1,6 +1,6 @@
 # 🥁 Drum Beat Repository
 
-[![CI](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml/badge.svg)](https://github.com/Babali42/DrumBeatRepo/actions/workflows/ci.yml)
+[![CI](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml/badge.svg)](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml)
 
 
 
