@@ -1,4 +1,9 @@
-# 🥁 Drum Beat Repository  
+# 🥁 Drum Beat Repository
+
+[![CI](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml/badge.svg)](https://github.com/Babali42/DrumBeatRepo/actions/workflows/ci.yml)
+
+
+
 *A library of drum patterns for music lovers / Une bibliothèque rythmique pour les mélomanes 🎵*
 
 Welcome to **Drum Beat Repository**, a web-based project for musicians to explore and create drum patterns. Built with **Angular** and the **Web Audio API**, this interactive tool delivers a smooth, in-browser drum sequencing experience.
