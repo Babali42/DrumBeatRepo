@@ -3,7 +3,7 @@
 [![CI](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml/badge.svg)](https://github.com/Babali42/DrumBeatRepo/actions/workflows/angular-deploy-github-pages.yml)
 [![License](https://img.shields.io/github/license/Babali42/DrumBeatRepo)](LICENSE)
 [![Good First Issues](https://img.shields.io/github/issues/Babali42/DrumBeatRepo/good%20first%20issue)](https://github.com/Babali42/DrumBeatRepo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
-
+[![Last Commit](https://img.shields.io/github/last-commit/Babali42/DrumBeatRepo)](https://github.com/Babali42/DrumBeatRepo/commits/main)
 
 *A library of drum patterns for music lovers / Une bibliothèque rythmique pour les mélomanes 🎵*
 
