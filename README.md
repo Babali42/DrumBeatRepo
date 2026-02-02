@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/github/license/Babali42/DrumBeatRepo)](LICENSE)
 [![Good First Issues](https://img.shields.io/github/issues/Babali42/DrumBeatRepo/good%20first%20issue)](https://github.com/Babali42/DrumBeatRepo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Last Commit](https://img.shields.io/github/last-commit/Babali42/DrumBeatRepo)](https://github.com/Babali42/DrumBeatRepo/commits/main)
+[![All Contributors](https://img.shields.io/github/all-contributors/babali42/drumbeatrepo?color=ee8449&style=flat-square)](#contributors)
 
 *A library of drum patterns for music lovers / Une bibliothèque rythmique pour les mélomanes 🎵*
 
@@ -24,11 +25,16 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
     - Add the name of the music genre/beat to the beggining of [issue](https://github.com/Babali42/DrumBeatRepo/issues/270) and I'll take care of it
     - Follow those steps in the bottom of [issue](https://github.com/Babali42/DrumBeatRepo/issues/270) and create a PR
 
-### Thanks to the contributors
-- **Kireo**
-- **GiaHuy0031**  
-  ...and everyone who's shared feedback and ideas ❤️
+## Contributors
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 ---
 
 ## 📄 License
