@@ -46,7 +46,9 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
----
+
+- **Louison** for the ideation of the very first version of this app
+- **Etienne** for the testing and the dub beat pattern
 
 ## 📄 License
 
