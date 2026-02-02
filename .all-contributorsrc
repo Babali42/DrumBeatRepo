@@ -36,6 +36,15 @@
         "design",
         "example"
       ]
+    },
+    {
+      "login": "Linasti",
+      "name": "Linasti",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6755695?v=4",
+      "profile": "https://github.com/Linasti",
+      "contributions": [
+        "ideas"
+      ]
     }
   ]
 }
