@@ -1,4 +1,21 @@
 {
   "projectName": "DrumBeatRepo",
-  "projectOwner": "Babali42"
+  "projectOwner": "Babali42",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "GiaHuy0031",
+      "name": "GiaHuy0031",
+      "avatar_url": "https://avatars.githubusercontent.com/u/118426220?v=4",
+      "profile": "https://github.com/GiaHuy0031",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
