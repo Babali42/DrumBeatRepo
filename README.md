@@ -37,6 +37,7 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/khg051203"><img src="https://avatars.githubusercontent.com/u/163498317?v=4?s=100" width="100px;" alt="Kireo"/><br /><sub><b>Kireo</b></sub></a><br /><a href="#code-khg051203" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Konscept440"><img src="https://avatars.githubusercontent.com/u/26309656?v=4?s=100" width="100px;" alt="Konscept440"/><br /><sub><b>Konscept440</b></sub></a><br /><a href="#audio-Konscept440" title="Audio">🔊</a> <a href="#design-Konscept440" title="Design">🎨</a> <a href="#example-Konscept440" title="Examples">💡</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Linasti"><img src="https://avatars.githubusercontent.com/u/6755695?v=4?s=100" width="100px;" alt="Linasti"/><br /><sub><b>Linasti</b></sub></a><br /><a href="#ideas-Linasti" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jpeg729"><img src="https://avatars.githubusercontent.com/u/3158606?v=4?s=100" width="100px;" alt="jpeg729"/><br /><sub><b>jpeg729</b></sub></a><br /><a href="#ideas-jpeg729" title="Ideas, Planning, & Feedback">🤔</a> <a href="#code-jpeg729" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
