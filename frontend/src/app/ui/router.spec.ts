@@ -11,8 +11,8 @@ import {routes} from "./app.module";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
 import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
-import {Bpm} from "../core/domain/bpm";
 import {Track} from "../core/domain/track";
+import {BPM} from "../core/domain/bpm";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -46,7 +46,7 @@ describe('Router', () => {
               {
                 id: 'classic',
                 label: 'Classic',
-                bpm: new Bpm(128),
+                bpm: BPM(128),
                 tracks: [
                   new Track("","", [true, false, true, false, true, false, true, false])
                 ]
@@ -82,6 +82,6 @@ describe('Router', () => {
 
     const seq = dbg.componentInstance as SequencerComponent;
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
-    expect(seq.beat.bpm.value).toEqual(128);
+    expect(seq.beat.bpm.valueOf()).toEqual(128);
   }));
 });

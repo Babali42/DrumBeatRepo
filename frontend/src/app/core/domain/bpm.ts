@@ -1,17 +1,19 @@
-export class Bpm {
-  value: number;
-  static readonly minBpm = 40;
-  static readonly maxBpm = 300;
+import {Brand} from "./brand";
 
-  constructor(value: number) {
-    if (!this.isValidBPM(value)) {
-      throw new Error(`Invalid BPM '${value}'. Must be between ${Bpm.minBpm} and ${Bpm.maxBpm}.`);
-    }
+export const minBpm = 40;
+export const maxBpm = 300;
 
-    this.value = value;
+export type BPM = Brand<number, "BPM">;
+
+export const BPM = (n: number) => {
+  if (!isValidBPM(n)) {
+    throw new Error(`Invalid BPM '${n}'. Must be between ${minBpm} and ${maxBpm}.`);
   }
 
-  private isValidBPM(value: number): boolean {
-    return value >= Bpm.minBpm && value <= Bpm.maxBpm;
-  }
-}
+  return n as BPM;
+};
+
+const isValidBPM = (value: number): boolean =>
+  Number.isFinite(value) &&
+  value >= minBpm &&
+  value <= maxBpm;

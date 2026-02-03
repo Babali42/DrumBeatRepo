@@ -12,10 +12,10 @@ import {
 } from "../../../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter.fake";
 import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {Beat} from "../../../core/domain/beat";
-import {Bpm} from "../../../core/domain/bpm";
 import {Track} from "../../../core/domain/track";
 import {Steps} from "../../../core/domain/steps";
 import {TrackSignature} from "../../../core/domain/trackSignature";
+import {BPM} from "../../../core/domain/bpm";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -31,7 +31,7 @@ describe('SequencerComponent', () => {
           {
             "label": "4 on the floor",
             "genre": "Techno",
-            "bpm": new Bpm(128),
+            "bpm": BPM(128),
             "tracks": [
               {
                 "name": "Snare",
