@@ -56,7 +56,7 @@ describe('BpmInputComponent', () => {
   ];
 
   lowerTempoCases.forEach(({ min, max, actual, expected }) => {
-    it('should increment the bpm in the range', () => {
+    it('should decrement the bpm in the range', () => {
       component.maxBpm = max;
       component.minBpm = min;
       fixture.componentRef.setInput('bpm', actual);

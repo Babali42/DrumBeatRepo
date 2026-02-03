@@ -10,11 +10,11 @@ import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {Bpm} from "../../../core/domain/bpm";
 import {TrackSignature} from "../../../core/domain/trackSignature";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
+import {BPM} from "../../../core/domain/bpm";
 
 @Component({
   selector: 'sequencer',
@@ -122,10 +122,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   changeBeatBpm($event: number) {
     this.soundService.pause();
-    this.tempoService.setBpm(new Bpm($event));
+    this.tempoService.setBpm(BPM($event));
     this.beat = this.beat = {
       ...this.beat,
-      bpm: new Bpm($event),
+      bpm: BPM($event),
     };
     this.customBeatSubject.next(this.beat);
   }
