@@ -1,13 +1,6 @@
-import {Bpm} from "../../../../core/domain/bpm";
 import {Injectable} from "@angular/core";
 import {TrackSignature} from "../../../../core/domain/trackSignature";
-
-const map : Record<TrackSignature, number> = {
-  "64": 16,
-  "32": 8,
-  "16": 4,
-  "8": 2,
-}
+import {Bpm} from "../../../../core/domain/bpm";
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +16,7 @@ export class TempoAdapterService {
 
   setSignature(signature: TrackSignature) {
     this.signature = signature;
-    this.beatsPerBar = map[signature];
+    this.beatsPerBar = signature / 4;
   }
 
   get stepDuration(): number {
