@@ -4,6 +4,7 @@ import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/core/domain/track";
 import {IAudioEngine} from "../../../../core/domain/ports/secondary/i-audio-engine";
 import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
+import {Option} from "effect";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,8 @@ export class AudioEngineAdapter implements IAudioEngine {
   isPlaying = false;
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
+  // ⚠ AudioBufferSourceNode objects cannot be reused.
+  // Always create a new node for each playback.
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
   readonly pause = () => {
@@ -73,9 +76,12 @@ export class AudioEngineAdapter implements IAudioEngine {
 
     const loadPromises = trackNames.map(sample =>
       this.audioFilesService.getAudioBuffer(sample).then(arrayBuffer => {
+        if (Option.isNone(arrayBuffer))
+          return;
+
         const createNode = () => {
           const node = this.context.createBufferSource();
-          node.buffer = arrayBuffer;
+          node.buffer = Option.getOrThrow(arrayBuffer);
           node.connect(this.context.destination);
           return node;
         };
@@ -102,7 +108,12 @@ export class AudioEngineAdapter implements IAudioEngine {
       return;
 
     const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
-      const bufferNode = this.trackSampleBuilderMap.get(trackName)!();
+      const builder = this.trackSampleBuilderMap.get(trackName);
+
+      if(builder == undefined)
+        return;
+
+      const bufferNode = builder();
       bufferNode.start(event.deadline);
     }, this.tempoService.getNextStepTime(this.context.currentTime, stepIndex));
     event.repeat(this.tempoService.barDuration);
@@ -118,8 +129,13 @@ export class AudioEngineAdapter implements IAudioEngine {
   }
 
   playTrack(trackName: string) {
-    const source = this.trackSampleBuilderMap.get(trackName)!();
-    source.connect(this.context.destination);
-    source.start();
+    const builder = this.trackSampleBuilderMap.get(trackName);
+
+    if(builder == undefined)
+      return;
+
+    const bufferNode = builder();
+    bufferNode.connect(this.context.destination);
+    bufferNode.start();
   }
 }
