@@ -122,10 +122,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   changeBeatBpm($event: number) {
     this.soundService.pause();
-    this.tempoService.setBpm(BPM($event));
+    const newBpm = BPM($event);
+    this.tempoService.setBpm(newBpm);
     this.beat = this.beat = {
       ...this.beat,
-      bpm: BPM($event),
+      bpm: newBpm,
     };
     this.customBeatSubject.next(this.beat);
   }
