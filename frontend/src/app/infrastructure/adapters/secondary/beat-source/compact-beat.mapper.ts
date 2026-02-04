@@ -8,7 +8,7 @@ export class CompactBeatMapper {
     return {
       label: compact.label,
       genre: compact.genre,
-      bpm: BPM(compact.bpm),
+      bpm: parseBPM(compact.bpm),
       tracks: compact.tracks.map(track => new Track(track.name, track.fileName, [...track.steps].map(char => char === 'X')))
     };
   }
@@ -25,4 +25,13 @@ export class CompactBeatMapper {
       }))
     }
   }
+}
+
+export function parseBPM(value: unknown): BPM {
+  const n =
+    typeof value === "number" ? value :
+      typeof value === "string" ? Number(value) :
+        NaN;
+
+  return BPM(n);
 }
