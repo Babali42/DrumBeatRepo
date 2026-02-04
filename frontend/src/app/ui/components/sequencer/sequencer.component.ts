@@ -15,6 +15,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../core/domain/bpm";
+import {StepIndex} from "../../../core/domain/step-index";
 
 @Component({
   selector: 'sequencer',
@@ -103,7 +104,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatToSelect);
   }
 
-  stepClick = (track: Track, stepIndex: number, value: boolean): void => {
+  stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
     track.steps.setStepAtIndex(stepIndex, !value);
 
     if (!track.steps.getStepAtIndex(stepIndex)) {
@@ -137,4 +138,5 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   protected readonly TrackSignature = TrackSignature;
+  protected readonly StepIndex = StepIndex;
 }

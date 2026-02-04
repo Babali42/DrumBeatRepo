@@ -1,4 +1,5 @@
 import { Track } from '../../track';
+import {StepIndex} from "../../step-index";
 
 export interface IAudioEngineCommands {
   readonly playPause: () => void;
@@ -6,14 +7,14 @@ export interface IAudioEngineCommands {
 
   readonly setTracks : (tracks: readonly Track[]) => void;
 
-  readonly enableStep: (trackName: string, stepIndex: number) => void;
-  readonly disableStep: (trackName: string, stepIndex: number) => void;
+  readonly enableStep: (trackName: string, stepIndex: StepIndex) => void;
+  readonly disableStep: (trackName: string, stepIndex: StepIndex) => void;
 
   readonly playTrack: (trackName: string) => void;
 }
 
 export interface IAudioEngineQuery {
-  readonly index: number;
+  readonly index: StepIndex;
   readonly isPlaying: boolean;
 }
 

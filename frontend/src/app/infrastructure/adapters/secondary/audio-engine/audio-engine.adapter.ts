@@ -5,6 +5,8 @@ import {Track} from "src/app/core/domain/track";
 import {IAudioEngine} from "../../../../core/domain/ports/secondary/i-audio-engine";
 import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
 import {Option} from "effect";
+import {Seconds} from "../../../../core/domain/seconds";
+import {StepIndex} from "../../../../core/domain/step-index";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   private clock: WAAClock | undefined;
 
-  index: number = 0;
+  index: StepIndex = StepIndex(0);
   isPlaying = false;
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
@@ -37,7 +39,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   private readonly uiNextStep = () => {
     this.zone.run(() => {
       const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
-      this.index = stepPosition % this.tempoService.signature;
+      this.index = StepIndex(stepPosition % this.tempoService.signature);
     });
   };
 
@@ -58,11 +60,11 @@ export class AudioEngineAdapter implements IAudioEngine {
     this.tracks.forEach((track) => {
       track.steps.steps.forEach((step, index) => {
         if (step)
-          this.enableStep(track.fileName, index);
+          this.enableStep(track.fileName, StepIndex(index));
       })
     })
 
-    this.clock.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(this.context.currentTime,0))
+    this.clock.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), StepIndex(0)))
       .repeat(this.tempoService.stepDuration)
       .tolerance({late: 100})
   }
@@ -103,7 +105,7 @@ export class AudioEngineAdapter implements IAudioEngine {
       this.play();
   }
 
-  enableStep(trackName: string, stepIndex: number): void {
+  enableStep(trackName: string, stepIndex: StepIndex): void {
     if (!this.clock)
       return;
 
@@ -115,7 +117,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
       const bufferNode = builder();
       bufferNode.start(event.deadline);
-    }, this.tempoService.getNextStepTime(this.context.currentTime, stepIndex));
+    }, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), stepIndex));
     event.repeat(this.tempoService.barDuration);
 
     if (!this.trackStepMap.get(trackName)) this.trackStepMap.set(trackName, new Map());

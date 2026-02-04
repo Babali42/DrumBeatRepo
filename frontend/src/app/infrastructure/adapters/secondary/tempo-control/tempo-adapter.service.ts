@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {TrackSignature} from "../../../../core/domain/trackSignature";
 import {BPM} from "../../../../core/domain/bpm";
+import {Seconds} from "../../../../core/domain/seconds";
+import {StepIndex} from "../../../../core/domain/step-index";
 
 @Injectable({
   providedIn: "root"
@@ -19,16 +21,16 @@ export class TempoAdapterService {
     this.beatsPerBar = signature / 4;
   }
 
-  get stepDuration(): number {
-    return this.barDuration / this.signature;
+  get stepDuration(): Seconds {
+    return Seconds(this.barDuration / this.signature);
   }
 
-  get barDuration(): number {
-    return (60 / this.bpm) * this.beatsPerBar;
+  get barDuration(): Seconds {
+    return Seconds((60 / this.bpm) * this.beatsPerBar);
   }
 
   /** Pure math: given a time offset in seconds, where does a step fall? */
-  getNextStepTime(baseTime: number, stepIndex: number): number {
+  getNextStepTime(baseTime: Seconds, stepIndex: StepIndex): number {
     const bar = Math.floor(baseTime / this.barDuration);
     return bar * this.barDuration + stepIndex * this.stepDuration;
   }
