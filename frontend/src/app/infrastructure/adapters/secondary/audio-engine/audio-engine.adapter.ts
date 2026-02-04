@@ -39,7 +39,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   private readonly uiNextStep = () => {
     this.zone.run(() => {
       const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
-      this.index = StepIndex(stepPosition % this.tempoService.signature);
+      this.index = StepIndex(stepPosition % this.tempoService.numberOfSteps);
     });
   };
 

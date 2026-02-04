@@ -14,7 +14,7 @@ import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {Beat} from "../../../core/domain/beat";
 import {Track} from "../../../core/domain/track";
 import {Steps} from "../../../core/domain/steps";
-import {TrackSignature} from "../../../core/domain/trackSignature";
+import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
 import {BPM} from "../../../core/domain/bpm";
 
 describe('SequencerComponent', () => {
@@ -37,7 +37,7 @@ describe('SequencerComponent', () => {
                 "name": "Snare",
                 "fileName": "metal/snare.mp3",
                 "steps": new Steps([true, false, false, false]),
-                "signature": TrackSignature.sixteen
+                "numberOfSteps": NumberOfSteps.sixteen
               }
             ] as ReadonlyArray<Track>
           } as Beat
