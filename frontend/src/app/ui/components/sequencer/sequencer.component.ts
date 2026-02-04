@@ -10,7 +10,7 @@ import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {TrackSignature} from "../../../core/domain/trackSignature";
+import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
@@ -60,7 +60,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.beatBehaviourSubject.subscribe(beat => {
-      this.tempoService.setSignature(beat.tracks[0].signature);
+      this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
       this.tempoService.setBpm(beat.bpm);
       this.soundService.setTracks(beat.tracks);
     });
@@ -137,6 +137,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  protected readonly TrackSignature = TrackSignature;
+  protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly StepIndex = StepIndex;
 }

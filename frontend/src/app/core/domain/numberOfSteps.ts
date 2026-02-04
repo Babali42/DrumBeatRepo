@@ -1,4 +1,4 @@
-export enum TrackSignature {
+export enum NumberOfSteps {
   eight =   8,
   sixteen = 16,
   thirty_two = 32,

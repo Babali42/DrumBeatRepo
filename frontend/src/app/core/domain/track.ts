@@ -1,5 +1,5 @@
 import {Steps} from "./steps";
-import {TrackSignature} from "./trackSignature";
+import {NumberOfSteps} from "./numberOfSteps";
 
 const allowedStepLengths = [8, 16, 32, 64];
 
@@ -7,7 +7,7 @@ export class Track {
   readonly name: string;
   readonly fileName: string;
   readonly steps: Steps;
-  readonly signature: TrackSignature;
+  readonly numberOfSteps: NumberOfSteps;
 
   constructor(name: string, fileName: string, steps: boolean[]) {
     this.fileName = fileName;
@@ -18,6 +18,6 @@ export class Track {
     }
 
     this.steps = new Steps(steps);
-    this.signature = this.steps.steps.length;
+    this.numberOfSteps = this.steps.steps.length;
   }
 }
