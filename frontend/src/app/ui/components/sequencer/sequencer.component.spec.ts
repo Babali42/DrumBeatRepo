@@ -68,7 +68,7 @@ describe('SequencerComponent', () => {
   it("default genre and beat are selected", () => {
     fixture.detectChanges();
     expect(component.selectedGenreLabel).toBe("Techno");
-    expect(component.selectedBeatLabel).toBe("4 on the floor");
+    expect(component.beat.label).toBe("4 on the floor");
   });
 
   it("should display a step button", () => {

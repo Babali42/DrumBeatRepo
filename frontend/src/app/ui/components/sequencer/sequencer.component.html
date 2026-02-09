@@ -15,7 +15,7 @@
     </div>
     <div class="label">
       <app-select-input [elements]="beats"
-                        [selectedElement]="selectedBeatLabel"
+                        [selectedElement]="this.beat.label"
                         (selectChange)="beatChange($event)"
                         placeHolder="Choose {{selectedGenreLabel}} beat">
       </app-select-input>

@@ -25,7 +25,11 @@ import {StepIndex} from "../../../core/domain/step-index";
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
   private readonly beatBehaviourSubject: Subject<Beat>;
+  private readonly destroy$ = new Subject<void>;
+
   protected readonly Math = Math;
+  protected readonly NumberOfSteps = NumberOfSteps;
+  protected readonly StepIndex = StepIndex;
 
   beat = {} as Beat;
   private genres: Map<string, Beat[]> = new Map();
@@ -34,10 +38,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   beats: readonly string[] = [];
 
   isMobileDisplay: boolean = false;
-
   selectedGenreLabel: string = "";
-  selectedBeatLabel: string = "";
-  private readonly destroy$ = new Subject<void>;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -90,17 +91,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beats[0]);
   }
 
-  selectBeat(beatToSelect: Beat | undefined): void {
-    if (beatToSelect == undefined) return;
+  selectBeat(beatToSelect: Beat): void {
     this.beat = beatToSelect;
     this.beatBehaviourSubject.next(this.beat);
-    this.selectedBeatLabel = this.beat.label;
     this.customBeatSubject.next(this.beat);
   }
 
   beatChange($event: string) {
     const beatToSelect = this.genres.get(this.selectedGenreLabel)!.find(x => x.label === $event);
-    this.selectBeat(beatToSelect);
+    this.selectBeat(beatToSelect!);
   }
 
   stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
@@ -122,11 +121,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   changeBeatBpm($event: number) {
     this.soundService.pause();
-    const newBpm = BPM($event);
-    this.tempoService.setBpm(newBpm);
+    this.tempoService.setBpm(BPM($event));
     this.beat = this.beat = {
       ...this.beat,
-      bpm: newBpm,
+      bpm: BPM($event),
     };
     this.customBeatSubject.next(this.beat);
   }
@@ -135,7 +133,4 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  protected readonly NumberOfSteps = NumberOfSteps;
-  protected readonly StepIndex = StepIndex;
 }
