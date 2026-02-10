@@ -54,6 +54,10 @@
         "lockfile-only"
       ],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["eslint"],
+      "allowedVersions": "<10"
     }
   ]
 }
