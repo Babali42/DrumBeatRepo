@@ -32,7 +32,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly StepIndex = StepIndex;
 
   beat = {} as Beat;
-  private genres: Map<string, Beat[]> = new Map();
+  genres: Map<string, Beat[]> = new Map();
 
   genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
@@ -76,17 +76,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
       this.genresLabel = [...this.genres.keys()];
       const firstBeat = this.genres.values().next().value!?.[0];
-      this.selectGenre(this.genres, firstBeat.genre);
+      this.selectGenre(firstBeat.genre);
       this.selectBeat(beats[0]);
     }).catch(() => {
     });
   }
 
-  genreChange = ($event: string) => this.selectGenre(this.genres, $event);
-
-  selectGenre(genres: Map<string, Beat[]>, genre: string): void {
-    const beats = genres.get(genre)!;
+  selectGenre(genre: string): void {
     this.selectedGenreLabel = genre;
+    const beats = this.genres.get(genre)!;
     this.beats = beats.map(x => x.label);
     this.selectBeat(beats[0]);
   }

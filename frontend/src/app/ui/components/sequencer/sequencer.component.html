@@ -9,7 +9,7 @@
     <div class="label">
       <app-select-input [elements]="genresLabel"
                         [selectedElement]="selectedGenreLabel"
-                        (selectChange)="genreChange($event)"
+                        (selectChange)="this.selectGenre($event)"
                         placeHolder="Choose genre">
       </app-select-input>
     </div>
