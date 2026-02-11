@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-select-input',
+    standalone: true,
     imports: [FormsModule],
     templateUrl: './select-input.component.html',
     styleUrl: './select-input.component.scss'

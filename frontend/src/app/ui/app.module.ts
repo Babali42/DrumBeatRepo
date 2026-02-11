@@ -15,7 +15,7 @@ import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-eng
 import {JsonFileReader} from "../infrastructure/adapters/secondary/beat-source/json-files-reader.service";
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
 import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-reader.token";
-import {provideTranslateService, TranslatePipe} from "@ngx-translate/core";
+import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 
 export const routes: Routes = [
@@ -32,7 +32,8 @@ RouterModule.forRoot(routes, {
   imports: [BrowserModule,
     LoadingBarModule,
     FormsModule,
-    RouterOutlet, TranslatePipe
+    RouterOutlet,
+    TranslateModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
