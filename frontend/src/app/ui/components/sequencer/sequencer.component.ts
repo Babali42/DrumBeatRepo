@@ -15,13 +15,14 @@ import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/te
 import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../core/domain/bpm";
 import {StepIndex} from "../../../core/domain/step-index";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'sequencer',
+  standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe]
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);

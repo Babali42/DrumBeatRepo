@@ -8,17 +8,18 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
 import {BeatAdapter} from "../infrastructure/adapters/secondary/beat-source/beat-adapter.service";
 import {routes} from "./app.module";
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
 import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter";
 import {Track} from "../core/domain/track";
 import {BPM} from "../core/domain/bpm";
+import {provideTranslateService} from "@ngx-translate/core";
+import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
   deps: [BeatAdapter]
 };
-
 
 describe('Router', () => {
   let router: Router;
@@ -33,10 +34,18 @@ describe('Router', () => {
         RouterTestingModule.withRoutes(routes),
         SequencerComponent,
         LoadingBarModule,
+        HttpClientTestingModule
       ],
       providers: [
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideTranslateService({
+          lang: 'fr',
+          fallbackLang: 'en',
+          loader: provideTranslateHttpLoader({
+            prefix: './assets/i18n/',
+            suffix: '.json'
+          })
+        }),
         beatsProvider,
         BeatAdapter,
         {

@@ -16,6 +16,9 @@ import {Track} from "../../../core/domain/track";
 import {Steps} from "../../../core/domain/steps";
 import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
 import {BPM} from "../../../core/domain/bpm";
+import {translateServiceMock} from "../../../core/testing/translate-service.mock";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslatePipeMock} from "../../../core/testing/translate-pipe.mock";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -46,14 +49,20 @@ describe('SequencerComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [SequencerComponent],
+      imports: [
+        SequencerComponent,
+      ],
       providers: [
-        {provide: IManageBeatsToken, useValue: beatsMock},
-        {provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake},
-        {provide: BreakpointObserver, useValue: mockBreakpointObserver},
+        { provide: IManageBeatsToken, useValue: beatsMock },
+        { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
+        { provide: BreakpointObserver, useValue: mockBreakpointObserver },
+        { provide: TranslateService, useValue: translateServiceMock },
         provideHttpClient(),
         provideRouter([])
       ]
+    }).overrideComponent(SequencerComponent, {
+      remove: { imports: [TranslateModule] },
+      add: { imports: [TranslatePipeMock] }
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
