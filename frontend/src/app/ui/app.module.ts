@@ -15,6 +15,8 @@ import {AudioEngineAdapter} from "../infrastructure/adapters/secondary/audio-eng
 import {JsonFileReader} from "../infrastructure/adapters/secondary/beat-source/json-files-reader.service";
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
 import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-reader.token";
+import {provideTranslateService} from "@ngx-translate/core";
+import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent}
@@ -39,7 +41,15 @@ RouterModule.forRoot(routes, {
     {provide: IManageBeatsToken, useClass: BeatAdapter},
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
-    provideZoneChangeDetection()
+    provideZoneChangeDetection(),
+    provideTranslateService({
+      lang: 'fr',
+      fallbackLang: 'en',
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json'
+      })
+    })
   ]
 })
 
