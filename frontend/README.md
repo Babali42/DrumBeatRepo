@@ -80,3 +80,13 @@ Lint and show only errors
 ````
 npx eslint --quiet
 ````
+
+## i18n
+
+To test another language just use this in appcomponent.ts.
+
+```typescript
+this.translateService.use('xx');
+```
+
+with xx as **'fr'** or **'en'**

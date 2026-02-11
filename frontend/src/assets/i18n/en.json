@@ -1,0 +1,8 @@
+{
+  "portraitMode" : {
+    "onlyAvailableInLandscapeMode" : "Only available in landscape mode",
+    "turnYourDevice" : "Turn your device !"
+  },
+  "chooseGenre" : "Choose a musical genre",
+  "chooseBeat" : "Choose a {{ genre }} beat"
+}
