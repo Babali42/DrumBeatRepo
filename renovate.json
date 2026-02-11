@@ -12,7 +12,7 @@
       "groupSlug": "angular-core",
       "matchUpdateTypes": ["major", "minor", "patch"],
       "matchPackageNames": [
-        "/^@angular/(animations|common|compiler|core|forms|platform-browser|platform-browser-dynamic|router|cdk)$/"
+        "/^@angular/(animations|common|compiler|core|forms|platform-browser|platform-browser-dynamic|router|cdk|localize|compiler-cli|build)$/"
       ]
     },
     {
