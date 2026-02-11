@@ -1,5 +1,5 @@
 <ngx-loading-bar></ngx-loading-bar>
-<ng-container *ngIf="!isMobileDisplay">
+@if (!isMobileDisplay) {
   <main class="flex app-container">
     <img
       src="../../assets/images/title.svg"
@@ -12,17 +12,13 @@
       <router-outlet></router-outlet>
     </section>
   </main>
-</ng-container>
-
-<ng-container *ngIf="isMobileDisplay && isLandscape">
+} @else if (isMobileDisplay && isLandscape) {
   <main class="app-container">
     <section class="flex content">
       <router-outlet></router-outlet>
     </section>
   </main>
-</ng-container>
-
-<ng-container *ngIf="isMobileDisplay && isPortrait">
+} @else if (isMobileDisplay && isPortrait) {
   <header class="header-mobile mt-40 mb-40">
     <img
       src="../../assets/images/title-mobile.svg"
@@ -32,14 +28,7 @@
   </header>
   <div class="portrait-to-landscape">
     <img
-      *ngIf="mode == Mode.LIGHT"
-      src="../../assets/images/light/orientation.png"
-      class="portrait-to-landscape-image"
-      alt="Portrait to landscape image"
-    />
-    <img
-      *ngIf="mode == Mode.DARK"
-      src="../../assets/images/dark/orientation.png"
+      [src]="mode == Mode.LIGHT ? '../../assets/images/light/orientation.png' : `../../assets/images/dark/orientation.png`"
       class="portrait-to-landscape-image"
       alt="Portrait to landscape image"
     />
@@ -48,4 +37,4 @@
     <h1>Only available in landscape mode</h1>
     <h3>Turn your device !</h3>
   </div>
-</ng-container>
+}
