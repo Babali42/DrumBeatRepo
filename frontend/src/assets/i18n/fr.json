@@ -1,0 +1,8 @@
+{
+  "portraitMode" : {
+    "onlyAvailableInLandscapeMode" : "Seulement disponible en mode paysage",
+    "turnYourDevice" : "Tourne ton écran !"
+  },
+  "chooseGenre" : "Choisis un genre musical",
+  "chooseBeat" : "Choisis un rythme {{ genre }}"
+}
