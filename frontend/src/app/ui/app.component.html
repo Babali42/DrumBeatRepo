@@ -1,5 +1,5 @@
 <ngx-loading-bar></ngx-loading-bar>
-@if (!isMobileDisplay) {
+@if (!isMobile()) {
   <main class="flex app-container">
     <img
       src="../../assets/images/title.svg"
@@ -12,13 +12,13 @@
       <router-outlet></router-outlet>
     </section>
   </main>
-} @else if (isMobileDisplay && isLandscape) {
+} @else if (isMobile() && isLandscape) {
   <main class="app-container">
     <section class="flex content">
       <router-outlet></router-outlet>
     </section>
   </main>
-} @else if (isMobileDisplay && isPortrait) {
+} @else if (isMobile() && isPortrait) {
   <header class="header-mobile mt-40 mb-40">
     <img
       src="../../assets/images/title-mobile.svg"

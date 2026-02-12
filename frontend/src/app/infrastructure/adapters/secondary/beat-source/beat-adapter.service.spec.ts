@@ -38,8 +38,7 @@ describe("Beat adapter service", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        { provide: jsonFileReaderToken, useValue: mock },
-        BeatAdapter,
+        { provide: jsonFileReaderToken, useValue: mock }
       ]
     }).compileComponents();
   });

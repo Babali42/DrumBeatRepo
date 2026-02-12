@@ -5,7 +5,6 @@ import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {MockBreakpointObserver} from "../../../core/testing/mock-breakpoint-observer";
 import {
   AudioEngineAdapterFake
@@ -55,7 +54,6 @@ describe('SequencerComponent', () => {
       providers: [
         { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
-        { provide: BreakpointObserver, useValue: mockBreakpointObserver },
         { provide: TranslateService, useValue: translateServiceMock },
         provideHttpClient(),
         provideRouter([])

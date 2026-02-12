@@ -70,7 +70,6 @@ describe('Router', () => {
     fixture = TestBed.createComponent(AppComponent);
 
     const app = fixture.componentInstance;
-    app.isMobileDisplay = true;
     app.isLandscape = true;
     app.isPortrait = false; // optional, just for clarity
   });

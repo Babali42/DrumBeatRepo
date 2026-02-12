@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../../core/domain/beat';
-import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../../core/domain/track";
@@ -10,7 +10,6 @@ import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engin
 import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
 import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
-import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../core/domain/bpm";
@@ -39,21 +38,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
   genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
 
-  isMobileDisplay: boolean = false;
   selectedGenreLabel: string = "";
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              private readonly responsive: BreakpointObserver,
               protected readonly tempoService: TempoAdapterService,
               private readonly playerEvents: PlayerEventsService) {
     this.beatBehaviourSubject = new Subject<Beat>();
-
-    this.responsive.observe([
-      Breakpoints.Web,
-    ]).pipe(takeUntil(this.destroy$)).subscribe(result => {
-      this.isMobileDisplay = !result.matches;
-    });
 
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
@@ -61,11 +52,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.beatBehaviourSubject.subscribe(beat => {
-      this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
-      this.tempoService.setBpm(beat.bpm);
-      this.soundService.setTracks(beat.tracks);
-    });
+    this.beatBehaviourSubject.pipe(
+      tap(beat => {
+        this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
+        this.tempoService.setBpm(beat.bpm);
+        this.soundService.setTracks(beat.tracks);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
 
     this._beatsManager.getAllBeats().then(beats => {
       this.genres = new Map<string, Beat[]>();

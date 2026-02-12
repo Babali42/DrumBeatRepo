@@ -8,8 +8,7 @@ describe('JsonLoaderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [JsonFileReader]
+      imports: [HttpClientTestingModule]
     });
 
     service = TestBed.inject(JsonFileReader);
