@@ -1,0 +1,22 @@
+{
+  "label": "Trap",
+  "genre": "Hip-Hop",
+  "bpm": 140,
+  "tracks": [
+    {
+      "name": "Hats",
+      "fileName": "trap/hat.mp3",
+      "steps": "X X X X X X XXX X X XXX X X X X "
+    },
+    {
+      "name": "Snare",
+      "fileName": "trap/snare.mp3",
+      "steps": "        X               X       "
+    },
+    {
+      "name": "Kick",
+      "fileName": "trap/kick.mp3",
+      "steps": "X     X     X       X     X     "
+    }
+  ]
+}

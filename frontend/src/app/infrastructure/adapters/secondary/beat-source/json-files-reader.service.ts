@@ -17,6 +17,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
       .concat('psytrance/psytrance')
       .concat('dub/dub')
       .concat('dancehall/standard')
+      .concat('hip-hop/trap')
       .concat('metal/metal', 'metal/metal-blastbeat', 'metal/half-time-groove')
       .concat('rock/rock', 'rock/variation')
       .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
