@@ -15,6 +15,7 @@ import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../core/domain/bpm";
 import {StepIndex} from "../../../core/domain/step-index";
 import {TranslateModule} from "@ngx-translate/core";
+import {Steps} from "../../../core/domain/steps";
 
 @Component({
   selector: 'sequencer',
@@ -86,7 +87,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   selectBeat(beatToSelect: Beat): void {
-    this.beat = beatToSelect;
+    this.beat = {
+      ...beatToSelect,
+      tracks: beatToSelect.tracks.map(track => ({
+        ...track,
+        steps: new Steps(track.steps.steps)
+      }))
+    };
     this.beatBehaviourSubject.next(this.beat);
     this.customBeatSubject.next(this.beat);
   }
