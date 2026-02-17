@@ -1,13 +1,20 @@
 export class Steps {
-  readonly steps: boolean[];
+  private _steps: readonly boolean[];
 
-  constructor(steps: boolean[]) {
-    this.steps = steps;
+  constructor(steps: readonly boolean[]) {
+    this._steps = [...steps];
   }
 
-  getStepAtIndex = (index: number) => this.steps[index];
+  getStepAtIndex(index: number): boolean {
+    return this._steps[index];
+  }
 
-  setStepAtIndex = (stepIndex: number, value: boolean): void => {
-    this.steps[stepIndex] = value;
+  get steps(): readonly boolean[] {
+    return this._steps;
+  }
+
+  setStepAtIndex(stepIndex: number, value: boolean): void {
+    //immutable update, returns a new array
+    this._steps = this._steps.map((s, i) => i === stepIndex ? value : s);
   }
 }
