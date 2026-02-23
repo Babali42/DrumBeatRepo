@@ -21,7 +21,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   private readonly context: AudioContext;
   private tracks: readonly Track[] = [];
 
-  private clock: WAAClock | undefined;
+  private clock: Option.Option<WAAClock> = Option.none();
 
   index: StepIndex = StepIndex(0);
   isPlaying = false;
@@ -33,7 +33,10 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   readonly pause = () => {
     this.isPlaying = false;
-    this.clock!.stop();
+    Option.match(this.clock, {
+      onSome: (clock) => { clock.stop() },
+      onNone: () => ""
+    } )
   };
 
   private readonly uiNextStep = () => {
@@ -54,8 +57,9 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   play() {
     this.isPlaying = true;
-    this.clock = new WAAClock(this.context, {toleranceEarly: 0.1});
-    this.clock.start();
+    this.clock = Option.some(new WAAClock(this.context, {toleranceEarly: 0.1}));
+    const clockInstance = Option.getOrThrow(this.clock);
+    clockInstance.start();
 
     this.tracks.forEach((track) => {
       track.steps.steps.forEach((step, index) => {
@@ -64,7 +68,7 @@ export class AudioEngineAdapter implements IAudioEngine {
       })
     })
 
-    this.clock.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), StepIndex(0)))
+    clockInstance.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), StepIndex(0)))
       .repeat(this.tempoService.stepDuration)
       .tolerance({late: 100})
   }
@@ -106,10 +110,10 @@ export class AudioEngineAdapter implements IAudioEngine {
   }
 
   enableStep(trackName: string, stepIndex: StepIndex): void {
-    if (!this.clock)
+    if (Option.isNone(this.clock))
       return;
 
-    const event = this.clock.callbackAtTime((event: WAAClock.Event) => {
+    const event = Option.getOrThrow(this.clock).callbackAtTime((event: WAAClock.Event) => {
       const builder = this.trackSampleBuilderMap.get(trackName);
 
       if(builder == undefined)
