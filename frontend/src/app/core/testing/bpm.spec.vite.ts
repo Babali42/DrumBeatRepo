@@ -1,4 +1,4 @@
-import {BPM} from "./bpm";
+import {BPM} from "../domain/bpm";
 
 describe("BPM", () => {
   it("Should create a Bpm", () => {
