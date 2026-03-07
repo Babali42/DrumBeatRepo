@@ -135,7 +135,7 @@ export default [
 
   // ✅ Allow Node.js globals in config files
   {
-    files: ['jest.config.js', 'karma.conf.js'],
+    files: ['karma.conf.js'],
     languageOptions: {
       globals: {
         module: 'writable',

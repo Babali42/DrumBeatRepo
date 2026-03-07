@@ -28,11 +28,16 @@ jobs:
       - name: Run angular/karma tests
         run: npm run test-ci
 
+      - name: Run vitest
+        run: npm run test-vitest-coverage
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/ng17-lib-test/lcov.info
+          files: |
+            coverage/ng17-lib-test/lcov.info
+            coverage/lcov.info
+          fail_ci_if_error: true
 
-      - name: Run architecture tests
-        run: npm run test-jest
+

@@ -17,7 +17,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
 
-  private readonly audioFilesService = new AudioFilesService();
+  private readonly audioFilesService = new AudioFilesService(fetch.bind(globalThis), () => this.context);
   private readonly context: AudioContext;
   private tracks: readonly Track[] = [];
 

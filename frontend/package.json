@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage --watch",
     "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
-    "test-jest": "npx jest"
+    "test-vitest": "vitest",
+    "test-vitest-coverage": "vitest --coverage"
   },
   "private": true,
   "dependencies": {
@@ -43,21 +44,20 @@
     "@angular/compiler-cli": "21.2.1",
     "@angular/localize": "21.2.1",
     "@types/jasmine": "~6.0.0",
-    "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.55.0",
     "@typescript-eslint/parser": "^8.55.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-functional": "^9.0.2",
     "jasmine-core": "~6.1.0",
-    "jest": "^30.0.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.2.0",
-    "ts-jest": "^29.3.4",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.55.0"
+    "typescript-eslint": "^8.55.0",
+    "vitest": "^4.0.18"
   }
 }
