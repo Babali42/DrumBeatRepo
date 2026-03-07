@@ -27,8 +27,8 @@ jobs:
         run: npm run test-ci
         working-directory: frontend/
 
-      - name: Run architecture tests
-        run: npm run test-jest
+      - name: Run vitest
+        run: npm run test-vitest
         working-directory: frontend/
 
       - name: Copy CNAME file
