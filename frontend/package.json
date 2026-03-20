@@ -28,7 +28,7 @@
     "@ngx-translate/http-loader": "^17.0.0",
     "@types/waaclock": "^0.5.2",
     "arch-unit-ts": "^1.0.8",
-    "effect": "^3.19.9",
+    "effect": "^3.20.0",
     "rxjs": "~7.8.0",
     "waaclock": "^0.5.5",
     "zone.js": "~0.16.0"
