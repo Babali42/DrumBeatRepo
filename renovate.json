@@ -8,17 +8,16 @@
   "packageRules": [
     {
       "description": "Group Angular core and platform packages",
-      "groupName": "Angular Framework Core",
-      "groupSlug": "angular-core",
+      "groupName": "Angular Framework",
+      "groupSlug": "angular",
       "matchUpdateTypes": ["major", "minor"],
       "matchPackageNames": [
-        "/^@angular/(animations|common|compiler|core|forms|platform-browser|platform-browser-dynamic|router|cdk|localize|compiler-cli|build)$/"
+        "/^@angular/"
       ]
     },
     {
-      "description": "Group Angular CLI and Devkit tools",
-      "groupName": "Angular CLI & Devkit",
-      "groupSlug": "angular-cli",
+      "description": "Group Angular CLI and Devkit",
+      "groupName": "Angular CLI",
       "matchUpdateTypes": ["major", "minor"],
       "matchPackageNames": [
         "@angular/cli",
@@ -26,16 +25,6 @@
       ]
     },
     {
-      "description": "Group Angular ESLint packages",
-      "groupName": "Angular ESLint Packages",
-      "groupSlug": "angular-eslint",
-      "matchUpdateTypes": ["major", "minor"],
-      "matchPackageNames": [
-        "/^@angular-eslint/"
-      ]
-    },
-    {
-      "description": "Disable lockfile-only updates",
       "matchUpdateTypes": ["lockfile-only"],
       "enabled": false
     },
