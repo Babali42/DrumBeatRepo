@@ -1,8 +1,8 @@
 <div class="modal-overlay" *ngIf="isOpen()" (click)="onOverlayClick($event)">
-  <div class="modal-content">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
     <div class="modal-header">
-      <h2>Export Beat</h2>
-      <button class="close-btn" (click)="onClose()">×</button>
+      <h2 id="exportDialogTitle">Export Beat</h2>
+      <button class="close-btn" aria-label="Close export dialog" (click)="onClose()">×</button>
     </div>
     
     <div class="modal-body">
