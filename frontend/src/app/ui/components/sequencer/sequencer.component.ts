@@ -16,13 +16,15 @@ import {BPM} from "../../../core/domain/bpm";
 import {StepIndex} from "../../../core/domain/step-index";
 import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../core/domain/steps";
+import {ExportModalComponent} from "../export-modal/export-modal.component";
+import {ExportOptions} from "../../../core/domain/export-options";
 
 @Component({
   selector: 'sequencer',
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule]
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportModalComponent]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -40,6 +42,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   beats: readonly string[] = [];
 
   selectedGenreLabel: string = "";
+  isExportModalOpen = false;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -133,5 +136,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  async onExport(options: ExportOptions): Promise<void> {
+    this.isExportModalOpen = false;
+    const durationSeconds = this.tempoService.barDuration * options.loopCount;
+    console.log(`Exporting ${this.beat.label} with options:`, options, `Duration: ${durationSeconds}s`);
   }
 }
