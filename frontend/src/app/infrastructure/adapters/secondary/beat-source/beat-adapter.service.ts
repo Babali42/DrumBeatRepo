@@ -5,6 +5,7 @@ import {Inject, Injectable} from "@angular/core";
 import {JsonFilesReaderInterface} from "./json-files-reader.interface";
 import {CompactBeatMapper} from "./compact-beat.mapper";
 import {jsonFileReaderToken} from "../../../injection-tokens/json-file-reader.token";
+import {Effect} from "effect";
 
 @Injectable({providedIn: 'root'})
 export class BeatAdapter implements IManageBeats {
@@ -15,9 +16,12 @@ export class BeatAdapter implements IManageBeats {
   getAllBeats(): Promise<readonly Beat[]> {
     return firstValueFrom(this.jsonFileReader.loadAllJson()
       .pipe(
-        map(beat => beat
-          .filter(x => x != null)
-          .map(x => CompactBeatMapper.toBeat(x)))
+        map(beats => beats.filter(x => x != null)),
+        map(beats => Effect.all(
+          beats.map(b => CompactBeatMapper.toBeatEffect(b!)),
+          { discard: false, mode: 'either' }
+        )),
+        map(effect => Effect.runSync(effect).filter(x => x._tag === 'Right').map(x => x.right))
       ))
   }
 }

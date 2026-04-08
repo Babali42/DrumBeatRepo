@@ -56,6 +56,6 @@ describe('JsonLoaderService', () => {
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['missing.json']));
-    expect(result[0]).toBeNull(); // if using catchAll / safe variant
+    expect(result[0]).toBeNull();
   });
 });
