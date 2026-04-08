@@ -16,7 +16,11 @@ export class AudioExportService {
     const barDurationSeconds = this.tempoService.barDuration;
     const totalDurationSeconds = barDurationSeconds * options.loopCount;
     const sampleRate = 44100;
-    const totalSamples = Math.ceil(totalDurationSeconds * sampleRate);
+
+    const rawBuffers = await this.loadAllBuffers(tracks);
+    const maxBufferDuration = this.getMaxBufferDuration(rawBuffers);
+    const totalWithTail = totalDurationSeconds + maxBufferDuration;
+    const totalSamples = Math.ceil(totalWithTail * sampleRate);
 
     const offlineContext = new OfflineAudioContext(2, totalSamples, sampleRate);
     const stepDurationSeconds = this.tempoService.stepDuration;
@@ -47,16 +51,20 @@ export class AudioExportService {
     return this.bufferToWav(renderedBuffer);
   }
 
-  private async loadAllTracks(
-    tracks: readonly Track[],
-    context: OfflineAudioContext
-  ): Promise<Map<string, AudioBuffer>> {
-    const buffers = new Map<string, AudioBuffer>();
+  private async loadAllBuffers(
+    tracks: readonly Track[]
+  ): Promise<Map<string, ArrayBuffer>> {
+    const buffers = new Map<string, ArrayBuffer>();
 
     const loadPromises = tracks.map(async (track) => {
-      const buffer = await this.loadAudioBuffer(track.fileName, context);
-      if (buffer) {
-        buffers.set(track.fileName, buffer);
+      try {
+        const response = await fetch(`/assets/sounds/${track.fileName}`);
+        if (response.ok) {
+          const arrayBuffer = await response.arrayBuffer();
+          buffers.set(track.fileName, arrayBuffer);
+        }
+      } catch (error) {
+        console.warn(`Failed to load ${track.fileName}:`, error);
       }
     });
 
@@ -64,20 +72,38 @@ export class AudioExportService {
     return buffers;
   }
 
-  private async loadAudioBuffer(fileName: string, context: OfflineAudioContext): Promise<AudioBuffer | null> {
-    try {
-      const response = await fetch(`/assets/sounds/${fileName}`);
-      if (!response.ok) {
-        console.warn(`Failed to fetch ${fileName}: ${response.status}`);
-        return null;
+  private getMaxBufferDuration(buffers: Map<string, ArrayBuffer>): number {
+    let maxDuration = 0;
+    buffers.forEach((arrayBuffer) => {
+      const duration = arrayBuffer.byteLength / (44100 * 2 * 2);
+      if (duration > maxDuration) {
+        maxDuration = duration;
       }
+    });
+    return maxDuration;
+  }
 
-      const arrayBuffer = await response.arrayBuffer();
-      return await context.decodeAudioData(arrayBuffer);
-    } catch (error) {
-      console.warn(`Failed to load ${fileName}:`, error);
-      return null;
-    }
+  private async loadAllTracks(
+    tracks: readonly Track[],
+    context: OfflineAudioContext
+  ): Promise<Map<string, AudioBuffer>> {
+    const buffers = new Map<string, AudioBuffer>();
+
+    const loadPromises = tracks.map(async (track) => {
+      try {
+        const response = await fetch(`/assets/sounds/${track.fileName}`);
+        if (response.ok) {
+          const arrayBuffer = await response.arrayBuffer();
+          const audioBuffer = await context.decodeAudioData(arrayBuffer);
+          buffers.set(track.fileName, audioBuffer);
+        }
+      } catch (error) {
+        console.warn(`Failed to load ${track.fileName}:`, error);
+      }
+    });
+
+    await Promise.all(loadPromises);
+    return buffers;
   }
 
   private bufferToWav(buffer: AudioBuffer): Blob {

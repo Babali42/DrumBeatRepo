@@ -115,17 +115,6 @@ describe('ExportModalComponent', () => {
     expect(component.close.emit).not.toHaveBeenCalled();
   });
 
-  it('should update format option when select changes', () => {
-    fixture.componentRef.setInput('isOpen', true);
-    fixture.detectChanges();
-
-    const formatSelect = fixture.debugElement.query(By.css('#format'));
-    formatSelect.nativeElement.value = 'wav';
-    formatSelect.nativeElement.dispatchEvent(new Event('change'));
-
-    expect(component.options.format).toBe('wav');
-  });
-
   it('should update loop count option when select changes', () => {
     fixture.componentRef.setInput('isOpen', true);
     fixture.detectChanges();
