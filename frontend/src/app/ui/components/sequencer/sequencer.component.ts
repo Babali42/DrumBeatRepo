@@ -18,6 +18,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../core/domain/steps";
 import {ExportModalComponent} from "../export-modal/export-modal.component";
 import {ExportOptions} from "../../../core/domain/export-options";
+import {AudioExportService} from "../../../infrastructure/adapters/secondary/audio-engine/audio-export.service";
 
 @Component({
   selector: 'sequencer',
@@ -47,7 +48,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               protected readonly tempoService: TempoAdapterService,
-              private readonly playerEvents: PlayerEventsService) {
+              private readonly playerEvents: PlayerEventsService,
+              private readonly audioExportService: AudioExportService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -140,7 +142,17 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   async onExport(options: ExportOptions): Promise<void> {
     this.isExportModalOpen = false;
-    const durationSeconds = this.tempoService.barDuration * options.loopCount;
-    console.log(`Exporting ${this.beat.label} with options:`, options, `Duration: ${durationSeconds}s`);
+
+    try {
+      const blob = await this.audioExportService.exportBeat(
+        this.beat.tracks,
+        options
+      );
+
+      const filename = `${this.beat.label.replace(/\s+/g, '_')}_${Date.now()}.wav`;
+      this.audioExportService.downloadBlob(blob, filename);
+    } catch (error) {
+      console.error('Export failed:', error);
+    }
   }
 }
