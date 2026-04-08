@@ -1,0 +1,41 @@
+<div class="modal-overlay" *ngIf="isOpen()" (click)="onOverlayClick($event)">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Export Beat</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="beatName">Beat</label>
+        <input id="beatName" type="text" [value]="beatName()" readonly class="beat-name-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="format">Format</label>
+        <select id="format" [(ngModel)]="options.format" class="form-select">
+          <option *ngFor="let format of formats" [value]="format">{{ format | uppercase }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="loopCount">Duration (loops)</label>
+        <select id="loopCount" [(ngModel)]="options.loopCount" class="form-select">
+          <option *ngFor="let count of loopCounts" [value]="count">{{ count }} loop{{ count > 1 ? 's' : '' }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="quality">Quality (kbps)</label>
+        <select id="quality" [(ngModel)]="options.quality" class="form-select">
+          <option *ngFor="let q of qualities" [value]="q">{{ q }} kbps</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onClose()">Cancel</button>
+      <button class="btn btn-primary" (click)="onExport()">Export</button>
+    </div>
+  </div>
+</div>

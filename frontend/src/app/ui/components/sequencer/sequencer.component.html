@@ -24,6 +24,9 @@
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
     </div>
+    <div>
+      <button class="export-button" (click)="isExportModalOpen = true">Export</button>
+    </div>
   </div>
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
@@ -77,3 +80,10 @@
     }
   </section>
 </div>
+
+<app-export-modal
+  [isOpen]="isExportModalOpen"
+  [beatName]="beat.label"
+  (close)="isExportModalOpen = false"
+  (export)="onExport($event)">
+</app-export-modal>

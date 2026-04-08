@@ -168,3 +168,11 @@ $gap: 4px;
   background-color: var(--backgroundColor);
   color: var(--textColor);
 }
+
+.export-button{
+  border: 1px var(--borderColor) solid;
+  border-radius: 5px;
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+  font-size: large;
+}
