@@ -6,27 +6,32 @@
     {
       "name": "Clap",
       "fileName": "ebm/clap.wav",
-      "steps": "  X X X   X   XX  XXXX   X X  X "
+      "steps": "  X X X   X   XX  XXXX   X X  X ",
+      "midiNote": 39
     },
     {
       "name": "Open High-Hat",
       "fileName": "ebm/open-hihat.wav",
-      "steps": "  X   X   X   X   X   X   X   X "
+      "steps": "  X   X   X   X   X   X   X   X ",
+      "midiNote": 46
     },
     {
       "name": "Closed High-Hat",
       "fileName": "ebm/closed-hihat.wav",
-      "steps": "XX  XX  XX  XX  XX  XX  XX  XX  "
+      "steps": "XX  XX  XX  XX  XX  XX  XX  XX  ",
+      "midiNote": 42
     },
     {
       "name": "Snare",
       "fileName": "ebm/snare.wav",
-      "steps": "    X       X       X       X XX"
+      "steps": "    X       X       X       X XX",
+      "midiNote": 38
     },
     {
       "name": "Kick",
       "fileName": "ebm/kick.wav",
-      "steps": "X   X   X   X   X   X   X   X   "
+      "steps": "X   X   X   X   X   X   X   X   ",
+      "midiNote": 36
     }
   ]
 }

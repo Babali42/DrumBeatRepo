@@ -6,7 +6,8 @@
     {
       "name": "Kick",
       "fileName": "dub/kick.wav",
-      "steps": "X_______X_______X_______X_______X_______X_______X_______X_______"
+      "steps": "X_______X_______X_______X_______X_______X_______X_______X_______",
+      "midiNote": 36
     },
     {
       "name": "Sub Bass",
@@ -21,7 +22,8 @@
     {
       "name": "Snare",
       "fileName": "dub/snare.wav",
-      "steps": "        X               X               X               X X     "
+      "steps": "        X               X               X               X X     ",
+      "midiNote": 38
     },
     {
       "name": "Arpeggio",
@@ -31,7 +33,8 @@
     {
       "name": "Closed Hat",
       "fileName": "dub/closed-hat.wav",
-      "steps": "    X X     X       XXX     X       X X     XX      X X     X XX"
+      "steps": "    X X     X       XXX     X       X X     XX      X X     X XX",
+      "midiNote": 42
     },
     {
       "name": "Bass",

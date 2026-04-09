@@ -6,17 +6,20 @@
     {
       "name": "Snare",
       "fileName": "metal/snare.mp3",
-      "steps": "    X       X   "
+      "steps": "    X       X   ",
+      "midiNote": 38
     },
     {
       "name": "Crash",
       "fileName": "metal/crash.mp3",
-      "steps": "X   X   X   X   "
+      "steps": "X   X   X   X   ",
+      "midiNote": 49
     },
     {
       "name": "Kick",
       "fileName": "metal/kick.mp3",
-      "steps": "X       X       "
+      "steps": "X       X       ",
+      "midiNote": 36
     }
   ]
 }

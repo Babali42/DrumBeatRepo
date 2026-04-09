@@ -6,17 +6,20 @@
     {
       "name": "Hats",
       "fileName": "trap/hat.mp3",
-      "steps": "X X X X X X XXX X X XXX X X X X "
+      "steps": "X X X X X X XXX X X XXX X X X X ",
+      "midiNote": 42
     },
     {
       "name": "Snare",
       "fileName": "trap/snare.mp3",
-      "steps": "        X               X       "
+      "steps": "        X               X       ",
+      "midiNote": 38
     },
     {
       "name": "Kick",
       "fileName": "trap/kick.mp3",
-      "steps": "X     X     X       X     X     "
+      "steps": "X     X     X       X     X     ",
+      "midiNote": 36
     }
   ]
 }

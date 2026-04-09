@@ -2,6 +2,7 @@ import {Beat} from "../../../../core/domain/beat";
 import {CompactBeat} from "./compact-beat";
 import {Track} from "../../../../core/domain/track";
 import {BPM} from "../../../../core/domain/bpm";
+import {MidiDrumType} from "../../../../core/domain/midi-drum-type";
 import {Effect} from "effect";
 
 export class CompactBeatMapper {
@@ -11,7 +12,12 @@ export class CompactBeatMapper {
         label: compact.label,
         genre: compact.genre,
         bpm: parseBPM(compact.bpm),
-        tracks: compact.tracks.map(track => new Track(track.name, track.fileName, [...track.steps].map(char => char === 'X')))
+        tracks: compact.tracks.map(track => new Track(
+          track.name,
+          track.fileName,
+          [...track.steps].map(char => char === 'X'),
+          track.midiNote !== undefined ? track.midiNote as MidiDrumType : undefined
+        ))
       }),
       catch: (e) => {
         console.error(e);
@@ -28,7 +34,8 @@ export class CompactBeatMapper {
       tracks: beat.tracks.map(track => ({
         name: track.name,
         fileName: track.fileName,
-        steps: track.steps.steps.map(x => x? "X":" ").join('')
+        steps: track.steps.steps.map(x => x? "X":" ").join(''),
+        midiNote: track.midiNote
       }))
     }
   }

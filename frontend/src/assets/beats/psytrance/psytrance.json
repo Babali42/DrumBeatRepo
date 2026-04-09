@@ -6,22 +6,26 @@
     {
       "name": "Closed hats",
       "fileName": "psytrance/closed-hat.wav",
-      "steps": "X   X   X   X   "
+      "steps": "X   X   X   X   ",
+      "midiNote": 42
     },
     {
       "name": "Open hats",
       "fileName": "psytrance/open-hat.wav",
-      "steps": "  X   X   X   X "
+      "steps": "  X   X   X   X ",
+      "midiNote": 46
     },
     {
       "name": "Snare",
       "fileName": "psytrance/snare.wav",
-      "steps": "    X       X   "
+      "steps": "    X       X   ",
+      "midiNote": 38
     },
     {
       "name": "Kick",
       "fileName": "psytrance/kick.wav",
-      "steps": "X   X   X   X   "
+      "steps": "X   X   X   X   ",
+      "midiNote": 36
     },
     {
       "name": "Bass",
