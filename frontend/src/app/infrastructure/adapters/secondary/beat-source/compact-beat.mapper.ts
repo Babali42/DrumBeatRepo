@@ -5,6 +5,12 @@ import {BPM} from "../../../../core/domain/bpm";
 import {MidiDrumType} from "../../../../core/domain/midi-drum-type";
 import {Effect} from "effect";
 
+const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as number[];
+
+export function isValidMidiDrumType(value: unknown): value is MidiDrumType {
+  return typeof value === 'number' && MIDI_DRUM_TYPE_VALUES.includes(value);
+}
+
 export class CompactBeatMapper {
   static toBeatEffect(compact: CompactBeat): Effect.Effect<Beat, Error> {
     return Effect.try({
@@ -16,7 +22,7 @@ export class CompactBeatMapper {
           track.name,
           track.fileName,
           [...track.steps].map(char => char === 'X'),
-          track.midiNote !== undefined ? track.midiNote as MidiDrumType : undefined
+          isValidMidiDrumType(track.midiNote) ? track.midiNote : undefined
         ))
       }),
       catch: (e) => {
