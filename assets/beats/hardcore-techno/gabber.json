@@ -6,22 +6,26 @@
     {
       "name": "Crash Cymbal",
       "fileName": "gabber/crash.wav",
-      "steps": "                               X"
+      "steps": "                               X",
+      "midiNote": 49
     },
     {
       "name": "Open HiHats",
       "fileName": "gabber/open-hihat.wav",
-      "steps": "X X X X X X X X X X X X X X X X "
+      "steps": "X X X X X X X X X X X X X X X X ",
+      "midiNote": 46
     },
     {
       "name": "Clap",
       "fileName": "gabber/clap.wav",
-      "steps": "X   X   X   X   X   X   X   X   "
+      "steps": "X   X   X   X   X   X   X   X   ",
+      "midiNote": 39
     },
     {
       "name": "Kick",
       "fileName": "gabber/kick.wav",
-      "steps": "X   X   X   X   X   X   X   X   "
+      "steps": "X   X   X   X   X   X   X   X   ",
+      "midiNote": 36
     }
   ]
 }

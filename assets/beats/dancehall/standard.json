@@ -6,17 +6,20 @@
     {
       "name": "Hats",
       "fileName": "techno/hat.wav",
-      "steps": "XXXXXXXXXXXXXXXX"
+      "steps": "XXXXXXXXXXXXXXXX",
+      "midiNote": 42
     },
     {
       "name": "Snare",
       "fileName": "techno/snare.wav",
-      "steps": "      X       X "
+      "steps": "      X       X ",
+      "midiNote": 38
     },
     {
       "name": "Kick",
       "fileName": "techno/kick.wav",
-      "steps": "X  X  X X  X  X "
+      "steps": "X  X  X X  X  X ",
+      "midiNote": 36
     }
   ]
 }
