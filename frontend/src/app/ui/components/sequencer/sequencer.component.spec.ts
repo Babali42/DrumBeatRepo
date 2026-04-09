@@ -15,6 +15,7 @@ import {Track} from "../../../core/domain/track";
 import {Steps} from "../../../core/domain/steps";
 import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
 import {BPM} from "../../../core/domain/bpm";
+import {MidiDrumType} from "../../../core/domain/midi-drum-type";
 import {translateServiceMock} from "../../../core/testing/translate-service.mock";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslatePipeMock} from "../../../core/testing/translate-pipe.mock";
@@ -40,7 +41,8 @@ describe('SequencerComponent', () => {
                 "name": "Snare",
                 "fileName": "metal/snare.mp3",
                 "steps": new Steps([false, false, false, false]),
-                "numberOfSteps": NumberOfSteps.sixteen
+                "numberOfSteps": NumberOfSteps.sixteen,
+                "midiNote": MidiDrumType.ACOUSTIC_SNARE
               }
             ] as ReadonlyArray<Track>
           } as Beat,
@@ -53,7 +55,8 @@ describe('SequencerComponent', () => {
                 "name": "Snare",
                 "fileName": "metal/snare.mp3",
                 "steps": new Steps([true, true, true, true]),
-                "numberOfSteps": NumberOfSteps.sixteen
+                "numberOfSteps": NumberOfSteps.sixteen,
+                "midiNote": MidiDrumType.ACOUSTIC_SNARE
               }
             ] as ReadonlyArray<Track>
           } as Beat

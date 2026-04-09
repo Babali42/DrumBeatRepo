@@ -6,17 +6,20 @@
     {
       "name": "Snare",
       "fileName": "metal/snare.mp3",
-      "steps": "_X_X_X_X_X_X_X_X"
+      "steps": "_X_X_X_X_X_X_X_X",
+      "midiNote": 38
     },
     {
       "name": "Hats",
       "fileName": "metal/hat.mp3",
-      "steps": "X_X_X_X_X_X_X_X_"
+      "steps": "X_X_X_X_X_X_X_X_",
+      "midiNote": 42
     },
     {
       "name": "Kick",
       "fileName": "metal/kick.mp3",
-      "steps": "X_X_X_X_X_X_X_X_"
+      "steps": "X_X_X_X_X_X_X_X_",
+      "midiNote": 36
     }
   ]
 }
