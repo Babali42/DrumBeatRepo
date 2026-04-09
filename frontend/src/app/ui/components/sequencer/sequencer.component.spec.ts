@@ -19,6 +19,7 @@ import {MidiDrumType} from "../../../core/domain/midi-drum-type";
 import {translateServiceMock} from "../../../core/testing/translate-service.mock";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslatePipeMock} from "../../../core/testing/translate-pipe.mock";
+import {Option} from "effect";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -42,7 +43,7 @@ describe('SequencerComponent', () => {
                 "fileName": "metal/snare.mp3",
                 "steps": new Steps([false, false, false, false]),
                 "numberOfSteps": NumberOfSteps.sixteen,
-                "midiNote": MidiDrumType.ACOUSTIC_SNARE
+                "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
               }
             ] as ReadonlyArray<Track>
           } as Beat,
@@ -56,7 +57,7 @@ describe('SequencerComponent', () => {
                 "fileName": "metal/snare.mp3",
                 "steps": new Steps([true, true, true, true]),
                 "numberOfSteps": NumberOfSteps.sixteen,
-                "midiNote": MidiDrumType.ACOUSTIC_SNARE
+                "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
               }
             ] as ReadonlyArray<Track>
           } as Beat

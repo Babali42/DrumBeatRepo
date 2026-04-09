@@ -3,7 +3,7 @@ import {CompactBeat} from "./compact-beat";
 import {Track} from "../../../../core/domain/track";
 import {BPM} from "../../../../core/domain/bpm";
 import {MidiDrumType} from "../../../../core/domain/midi-drum-type";
-import {Effect} from "effect";
+import {Effect, Option} from "effect";
 
 const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as number[];
 
@@ -22,7 +22,7 @@ export class CompactBeatMapper {
           track.name,
           track.fileName,
           [...track.steps].map(char => char === 'X'),
-          isValidMidiDrumType(track.midiNote) ? track.midiNote : undefined
+          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none()
         ))
       }),
       catch: (e) => {
@@ -41,7 +41,7 @@ export class CompactBeatMapper {
         name: track.name,
         fileName: track.fileName,
         steps: track.steps.steps.map(x => x? "X":" ").join(''),
-        midiNote: track.midiNote
+        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
       }))
     }
   }

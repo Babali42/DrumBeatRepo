@@ -1,6 +1,7 @@
 import {Steps} from "./steps";
 import {NumberOfSteps} from "./numberOfSteps";
 import {MidiDrumType} from "./midi-drum-type";
+import {Option} from "effect";
 
 const allowedStepLengths = [8, 16, 32, 64];
 
@@ -9,9 +10,9 @@ export class Track {
   readonly fileName: string;
   readonly steps: Steps;
   readonly numberOfSteps: NumberOfSteps;
-  readonly midiNote: MidiDrumType;
+  readonly midiNote: Option.Option<MidiDrumType>;
 
-  constructor(name: string, fileName: string, steps: boolean[], midiNote: MidiDrumType = MidiDrumType.ACOUSTIC_BASS_DRUM) {
+  constructor(name: string, fileName: string, steps: boolean[], midiNote: Option.Option<MidiDrumType> = Option.none()) {
     this.fileName = fileName;
     this.name = name;
 

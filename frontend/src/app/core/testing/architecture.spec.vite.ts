@@ -13,8 +13,8 @@ describe("Hexagonal architecture test", () => {
         .resideInAPackage("..domain..")
         .should()
         .onlyDependOnClassesThat()
-        .resideInAPackage("..domain..")
-        .because("domain model should only depend on domain")
+        .resideInAnyPackage("..domain..", "node_modules.effect..")
+        .because("domain model should only depend on domain or effect library")
         .check(srcProject.allClasses())
     });
   });
