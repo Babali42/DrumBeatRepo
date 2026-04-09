@@ -9,7 +9,7 @@ import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
+import {NumberOfSteps} from "../../../core/domain/number-of-steps";
 import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../core/domain/bpm";
@@ -18,7 +18,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../core/domain/steps";
 import {ExportModalComponent} from "../export-modal/export-modal.component";
 import {ExportOptions} from "../../../core/domain/export-options";
-import {AudioExportService} from "../../../infrastructure/adapters/secondary/audio-engine/audio-export.service";
+import {AudioExporterService} from "../../../infrastructure/adapters/secondary/audio-engine/audio-exporter.service";
 
 @Component({
   selector: 'sequencer',
@@ -49,7 +49,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               protected readonly tempoService: TempoAdapterService,
               private readonly playerEvents: PlayerEventsService,
-              private readonly audioExportService: AudioExportService) {
+              private readonly audioExporterService: AudioExporterService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -144,13 +144,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.isExportModalOpen = false;
 
     try {
-      const blob = await this.audioExportService.exportBeat(
+      const blob = await this.audioExporterService.exportBeat(
         this.beat.tracks,
         options
       );
 
       const filename = `${this.beat.label.replace(/\s+/g, '_')}_${Date.now()}.wav`;
-      this.audioExportService.downloadBlob(blob, filename);
+      this.audioExporterService.downloadBlob(blob, filename);
     } catch (error) {
       console.error('Export failed:', error);
     }

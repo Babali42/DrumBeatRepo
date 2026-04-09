@@ -1,5 +1,5 @@
 import {Steps} from "./steps";
-import {NumberOfSteps} from "./numberOfSteps";
+import {NumberOfSteps} from "./number-of-steps";
 import {MidiDrumType} from "./midi-drum-type";
 import {Option} from "effect";
 

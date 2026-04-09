@@ -13,7 +13,7 @@ import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
 import {Beat} from "../../../core/domain/beat";
 import {Track} from "../../../core/domain/track";
 import {Steps} from "../../../core/domain/steps";
-import {NumberOfSteps} from "../../../core/domain/numberOfSteps";
+import {NumberOfSteps} from "../../../core/domain/number-of-steps";
 import {BPM} from "../../../core/domain/bpm";
 import {MidiDrumType} from "../../../core/domain/midi-drum-type";
 import {translateServiceMock} from "../../../core/testing/translate-service.mock";

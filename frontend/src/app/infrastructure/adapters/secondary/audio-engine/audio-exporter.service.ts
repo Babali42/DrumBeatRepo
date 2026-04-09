@@ -6,7 +6,7 @@ import { TempoAdapterService } from '../tempo-control/tempo-adapter.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AudioExportService {
+export class AudioExporterService {
   constructor(private readonly tempoService: TempoAdapterService) {}
 
   async exportBeat(
