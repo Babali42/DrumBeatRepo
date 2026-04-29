@@ -1,5 +1,5 @@
-<div class="number-control">
+<form [formGroup]="form" class="number-control">
   <div longPress class="number-left cursor-pointer" (mouseLongPress)="decrementBpm()" (click)="decrementBpm()"></div>
-  <input type="number" name="number" class="number-quantity large" [value]="bpm()" (change)="updateNumber($event)">
+  <input name="bpm" type="number" formControlName="bpm" class="number-quantity large" [class.invalid]="!this.form.valid">
   <div longPress class="number-right cursor-pointer" (mouseLongPress)="incrementBpm()" (click)="incrementBpm()"></div>
-</div>
+</form>

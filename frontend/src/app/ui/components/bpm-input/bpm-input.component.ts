@@ -1,31 +1,54 @@
-import {Component, input, output} from '@angular/core';
+import {Component, inject, Input, OnChanges, output, SimpleChanges} from '@angular/core';
 import {LongPressDirective} from "../../directives/long-press.directive";
 import {maxBpm, minBpm} from "../../../core/domain/bpm";
+import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
-    selector: 'app-bpm-input',
-    templateUrl: './bpm-input.component.html',
-    imports: [
-        LongPressDirective
-    ],
-    styleUrl: './bpm-input.component.scss'
+  selector: 'app-bpm-input',
+  templateUrl: './bpm-input.component.html',
+  imports: [
+    LongPressDirective,
+    ReactiveFormsModule
+  ],
+  styleUrl: './bpm-input.component.scss'
 })
-export class BpmInputComponent {
+export class BpmInputComponent implements OnChanges {
+  private fb = inject(FormBuilder);
+
+  @Input() bpm!: number;
+  form = this.fb.group({
+    bpm: [this.bpm, [
+      Validators.required,
+      Validators.min(minBpm),
+      Validators.max(maxBpm)
+    ]]
+  });
+
   maxBpm = maxBpm;
   minBpm = minBpm;
-  bpm = input(minBpm);
   bpmChange = output<number>();
 
-  incrementBpm = () => this.updateBpm(Math.min(this.bpm() + 1, this.maxBpm));
-  decrementBpm = () => this.updateBpm(Math.max(this.bpm() - 1, this.minBpm));
-
-  updateNumber(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    let value = Number(inputElement.value);
-    value = Math.min(value, this.maxBpm);
-    value = Math.max(value, this.minBpm);
-    this.updateBpm(value);
+  constructor() {
+    this.form.controls.bpm.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(value => {
+        if (value != null) {
+          this.bpmChange.emit(value);
+        }
+      });
   }
 
-  private updateBpm = (value: number) => this.bpmChange.emit(value);
+  incrementBpm = () => this.updateBpm(Math.min(this.form.controls.bpm.value! + 1, this.maxBpm));
+  decrementBpm = () => this.updateBpm(Math.max(this.form.controls.bpm.value! - 1, this.minBpm));
+
+  private updateBpm = (value: number) => {
+    this.form.controls.bpm.setValue(Number(value));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['bpm']) {
+      this.form.controls.bpm.setValue(changes['bpm'].currentValue)
+    }
+  }
 }
