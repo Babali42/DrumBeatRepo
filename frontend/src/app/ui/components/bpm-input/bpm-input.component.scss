@@ -39,5 +39,11 @@
     background-color: var(--backgroundColor);
     color: var(--textColor);
   }
-}
 
+  .number-quantity {
+    &.ng-touched.ng-invalid {
+      border: 2px solid #FF0000;
+      background-color: #ffe6e6;
+    }
+  }
+}
