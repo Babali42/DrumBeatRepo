@@ -3,6 +3,7 @@ import {LongPressDirective} from "../../directives/long-press.directive";
 import {maxBpm, minBpm} from "../../../core/domain/bpm";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {distinctUntilChanged, filter, map} from "rxjs/operators";
 
 @Component({
   selector: 'app-bpm-input',
@@ -14,7 +15,10 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
   styleUrl: './bpm-input.component.scss'
 })
 export class BpmInputComponent implements OnChanges {
-  private fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
+  maxBpm = maxBpm;
+  minBpm = minBpm;
+  bpmChange = output<number>();
 
   @Input() bpm!: number;
   form = this.fb.group({
@@ -25,30 +29,25 @@ export class BpmInputComponent implements OnChanges {
     ]]
   });
 
-  maxBpm = maxBpm;
-  minBpm = minBpm;
-  bpmChange = output<number>();
-
   constructor() {
     this.form.controls.bpm.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe(value => {
-        if (value != null) {
-          this.bpmChange.emit(value);
-        }
-      });
+      .pipe(
+        filter(() => this.form.controls.bpm.valid),
+        map(value => Number(value)),
+        distinctUntilChanged(),
+        takeUntilDestroyed()
+      )
+      .subscribe(value => this.bpmChange.emit(value));
   }
 
-  incrementBpm = () => this.updateBpm(Math.min(this.form.controls.bpm.value! + 1, this.maxBpm));
-  decrementBpm = () => this.updateBpm(Math.max(this.form.controls.bpm.value! - 1, this.minBpm));
+  incrementBpm = () => this.updateBpm(Math.min(this.form.controls.bpm.value! + 1, this.maxBpm), true);
+  decrementBpm = () => this.updateBpm(Math.max(this.form.controls.bpm.value! - 1, this.minBpm), true);
 
-  private updateBpm = (value: number) => {
-    this.form.controls.bpm.setValue(Number(value));
-  }
+  private readonly updateBpm = (value: number, emitEvent: boolean) => this.form.controls.bpm.setValue(Number(value), { emitEvent: emitEvent });
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bpm']) {
-      this.form.controls.bpm.setValue(changes['bpm'].currentValue)
+      this.updateBpm(changes['bpm'].currentValue, false);
     }
   }
 }
