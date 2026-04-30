@@ -17,6 +17,7 @@ import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-bea
 import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-reader.token";
 import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
+import {getBrowserLanguage} from "./i18n/i18n.utils";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent}
@@ -44,7 +45,7 @@ RouterModule.forRoot(routes, {
     provideHttpClient(withInterceptorsFromDi()),
     provideZoneChangeDetection(),
     provideTranslateService({
-      lang: 'fr',
+      lang: getBrowserLanguage(),
       fallbackLang: 'en',
       loader: provideTranslateHttpLoader({
         prefix: './assets/i18n/',

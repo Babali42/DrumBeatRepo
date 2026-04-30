@@ -1,20 +1,20 @@
 <div class="modal-overlay" *ngIf="isOpen()" (click)="onOverlayClick($event)">
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
     <div class="modal-header">
-      <h2 id="exportDialogTitle">Export Beat to audio file</h2>
+      <h2 id="exportDialogTitle">{{ 'export.title' | translate }}</h2>
       <button class="close-btn" aria-label="Close export dialog" (click)="onClose()">×</button>
     </div>
 
     <div class="modal-body">
       <div class="form-group">
-        <label for="beatName">Beat</label>
+        <label for="beatName">{{ 'export.beat' | translate }}</label>
         <input id="beatName" type="text" [value]="beatName()" readonly class="beat-name-input" />
       </div>
 
       <div class="form-group">
-        <label for="loopCount">Duration (loops)</label>
+        <label for="loopCount">{{ 'export.duration' | translate }}</label>
         <select id="loopCount" [(ngModel)]="options.loopCount" class="form-select">
-          <option *ngFor="let count of loopCounts" [value]="count">{{ count }} loop{{ count > 1 ? 's' : '' }}</option>
+          <option *ngFor="let count of loopCounts" [value]="count">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate) }}</option>
         </select>
       </div>
 
@@ -35,8 +35,8 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-secondary" (click)="onClose()">Cancel</button>
-      <button class="btn btn-primary" (click)="onExport()">Export</button>
+      <button class="btn btn-secondary" (click)="onClose()">{{ 'export.cancel' | translate }}</button>
+      <button class="btn btn-primary" (click)="onExport()">{{ 'export.export' | translate }}</button>
     </div>
   </div>
 </div>

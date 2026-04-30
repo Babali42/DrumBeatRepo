@@ -4,5 +4,15 @@
     "turnYourDevice" : "Turn your device !"
   },
   "chooseGenre" : "Choose a musical genre",
-  "chooseBeat" : "Choose a {{ genre }} beat"
+  "chooseBeat" : "Choose a {{ genre }} beat",
+  "export": {
+    "title": "Export Beat to audio file",
+    "beat": "Beat",
+    "duration": "Duration (loops)",
+    "loop": "loop",
+    "loops": "loops",
+    "cancel": "Cancel",
+    "export": "Export",
+    "wavButton": "Export to .wav"
+  }
 }

@@ -2,11 +2,12 @@ import {Component, input, output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ExportOptions, ExportFormat, ExportQuality} from '../../../core/domain/export-options';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-export-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslatePipe],
   templateUrl: './export-modal.component.html',
   styleUrl: './export-modal.component.scss'
 })
