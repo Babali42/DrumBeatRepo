@@ -1,6 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ExportModalComponent} from './export-modal.component';
 import {By} from '@angular/platform-browser';
+import {TranslateModule} from '@ngx-translate/core';
+import {provideTranslateService} from '@ngx-translate/core';
 
 describe('ExportModalComponent', () => {
   let component: ExportModalComponent;
@@ -8,7 +10,11 @@ describe('ExportModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExportModalComponent]
+      imports: [ExportModalComponent, TranslateModule.forRoot()],
+      providers: [provideTranslateService({
+        lang: 'en',
+        fallbackLang: 'en'
+      })]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExportModalComponent);

@@ -5,7 +5,6 @@ import {provideHttpClient} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {MockBreakpointObserver} from "../../../core/testing/mock-breakpoint-observer";
 import {
   AudioEngineAdapterFake
 } from "../../../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter.fake";
@@ -16,20 +15,16 @@ import {Steps} from "../../../core/domain/steps";
 import {NumberOfSteps} from "../../../core/domain/number-of-steps";
 import {BPM} from "../../../core/domain/bpm";
 import {MidiDrumType} from "../../../core/domain/midi-drum-type";
-import {translateServiceMock} from "../../../core/testing/translate-service.mock";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
 import {TranslatePipeMock} from "../../../core/testing/translate-pipe.mock";
 import {Option} from "effect";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
-  let mockBreakpointObserver: MockBreakpointObserver;
   let beatsMock: IManageBeats;
 
   beforeEach(async () => {
-    mockBreakpointObserver = new MockBreakpointObserver();
-
     beatsMock = {
       getAllBeats(): Promise<readonly Beat[]> {
         return Promise.resolve([
@@ -72,13 +67,13 @@ describe('SequencerComponent', () => {
       providers: [
         { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
-        { provide: TranslateService, useValue: translateServiceMock },
+        provideTranslateService({
+          lang: 'en',
+          fallbackLang: 'en'
+        }),
         provideHttpClient(),
         provideRouter([])
       ]
-    }).overrideComponent(SequencerComponent, {
-      remove: { imports: [TranslateModule] },
-      add: { imports: [TranslatePipeMock] }
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
