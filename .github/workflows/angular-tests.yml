@@ -40,4 +40,5 @@ jobs:
             coverage/lcov.info
           fail_ci_if_error: true
 
-
+      - name: Verify i18n translations
+        run: bash ./verify_i18n_json.sh
