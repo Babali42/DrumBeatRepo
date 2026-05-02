@@ -23,7 +23,7 @@ export class TempoAdapterService {
   }
 
   get stepDuration(): Seconds {
-    return Seconds((numberOfSecondsInOneMinute / this.bpm) / signature);
+    return Seconds(numberOfSecondsInOneMinute / this.bpm / signature);
   }
 
   get barDuration(): Seconds {
