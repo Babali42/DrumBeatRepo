@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "متاح فقط في الوضع الأفقي",
+    "turnYourDevice": "قم بتدوير جهازك!"
+  },
+  "chooseGenre": "اختر نوع الموسيقى",
+  "chooseBeat": "اختر إيقاع {{ genre }}",
+  "export": {
+    "title": "تصدير الإيقاع إلى ملف صوتي",
+    "beat": "الإيقاع",
+    "duration": "المدة (الحلقات)",
+    "loop": "حلقة",
+    "loops": "حلقات",
+    "cancel": "إلغاء",
+    "export": "تصدير",
+    "wavButton": "تصدير إلى .wav"
+  }
+}

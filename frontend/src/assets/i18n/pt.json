@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "Disponível apenas no modo paisagem",
+    "turnYourDevice": "Gire seu dispositivo!"
+  },
+  "chooseGenre": "Escolher um gênero musical",
+  "chooseBeat": "Escolher um ritmo {{ genre }}",
+  "export": {
+    "title": "Exportar ritmo para arquivo de áudio",
+    "beat": "Ritmo",
+    "duration": "Duração (loops)",
+    "loop": "loop",
+    "loops": "loops",
+    "cancel": "Cancelar",
+    "export": "Exportar",
+    "wavButton": "Exportar para .wav"
+  }
+}

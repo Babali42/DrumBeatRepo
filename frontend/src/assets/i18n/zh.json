@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "仅在横屏模式下可用",
+    "turnYourDevice": "请旋转您的设备！"
+  },
+  "chooseGenre": "选择音乐类型",
+  "chooseBeat": "选择{{ genre }}节奏",
+  "export": {
+    "title": "导出节奏到音频文件",
+    "beat": "节奏",
+    "duration": "时长（循环次数）",
+    "loop": "循环",
+    "loops": "循环",
+    "cancel": "取消",
+    "export": "导出",
+    "wavButton": "导出为 .wav"
+  }
+}
