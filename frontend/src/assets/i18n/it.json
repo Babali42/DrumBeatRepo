@@ -13,7 +13,6 @@
     "loops": "cicli",
     "cancel": "Annulla",
     "export": "Esporta",
-    "wavButton": "Esporta in .wav",
-    "mustFail": "true"
+    "wavButton": "Esporta in .wav"
   }
 }
