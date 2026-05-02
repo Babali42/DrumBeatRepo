@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "Nur im Querformat verfügbar",
+    "turnYourDevice": "Drehen Sie Ihr Gerät!"
+  },
+  "chooseGenre": "Musikgenre wählen",
+  "chooseBeat": "{{ genre }} Rhythmus wählen",
+  "export": {
+    "title": "Rhythmus in Audiodatei exportieren",
+    "beat": "Rhythmus",
+    "duration": "Dauer (Schleifen)",
+    "loop": "Schleife",
+    "loops": "Schleifen",
+    "cancel": "Abbrechen",
+    "export": "Exportieren",
+    "wavButton": "Als .wav exportieren"
+  }
+}

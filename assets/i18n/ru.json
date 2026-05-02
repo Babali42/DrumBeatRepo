@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "Доступно только в альбомном режиме",
+    "turnYourDevice": "Поверните ваше устройство!"
+  },
+  "chooseGenre": "Выберите музыкальный жанр",
+  "chooseBeat": "Выберите ритм {{ genre }}",
+  "export": {
+    "title": "Экспорт ритма в аудиофайл",
+    "beat": "Ритм",
+    "duration": "Длительность (циклы)",
+    "loop": "цикл",
+    "loops": "циклов",
+    "cancel": "Отмена",
+    "export": "Экспорт",
+    "wavButton": "Экспорт в .wav"
+  }
+}
