@@ -1,0 +1,18 @@
+{
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "横向きモードのみで利用可能",
+    "turnYourDevice": "デバイスを回転させてください！"
+  },
+  "chooseGenre": "音楽ジャンルを選ぶ",
+  "chooseBeat": "{{ genre }}リズムを選ぶ",
+  "export": {
+    "title": "リズムをオーディオファイルにエクスポート",
+    "beat": "リズム",
+    "duration": "長さ（ループ数）",
+    "loop": "ループ",
+    "loops": "ループ",
+    "cancel": "キャンセル",
+    "export": "エクスポート",
+    "wavButton": ".wavにエクスポート"
+  }
+}
