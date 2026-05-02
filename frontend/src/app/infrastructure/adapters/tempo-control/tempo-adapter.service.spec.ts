@@ -1,7 +1,7 @@
 import {TempoAdapterService} from "./tempo-adapter.service";
-import {NumberOfSteps} from "../../../../core/domain/number-of-steps";
-import {BPM} from "../../../../core/domain/bpm";
-import {Seconds} from "../../../../core/domain/seconds";
+import {NumberOfSteps} from "../../../domain/number-of-steps";
+import {BPM} from "../../../domain/bpm";
+import {Seconds} from "../../../domain/seconds";
 
 describe('Tempo service', () => {
   type TempoDataSet = {

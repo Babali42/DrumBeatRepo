@@ -1,7 +1,7 @@
 import {Component, input, output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ExportOptions, ExportFormat, ExportQuality} from '../../../core/domain/export-options';
+import {ExportOptions, ExportFormat, ExportQuality} from '../../../domain/export-options';
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({

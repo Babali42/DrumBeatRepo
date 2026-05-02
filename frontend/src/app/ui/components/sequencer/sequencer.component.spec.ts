@@ -7,16 +7,15 @@ import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-mana
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {
   AudioEngineAdapterFake
-} from "../../../infrastructure/adapters/secondary/audio-engine/audio-engine.adapter.fake";
-import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
-import {Beat} from "../../../core/domain/beat";
-import {Track} from "../../../core/domain/track";
-import {Steps} from "../../../core/domain/steps";
-import {NumberOfSteps} from "../../../core/domain/number-of-steps";
-import {BPM} from "../../../core/domain/bpm";
-import {MidiDrumType} from "../../../core/domain/midi-drum-type";
-import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
-import {TranslatePipeMock} from "../../../core/testing/translate-pipe.mock";
+} from "../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake";
+import IManageBeats from "../../../domain/ports/i-manage-beats";
+import {Beat} from "../../../domain/beat";
+import {Track} from "../../../domain/track";
+import {Steps} from "../../../domain/steps";
+import {NumberOfSteps} from "../../../domain/number-of-steps";
+import {BPM} from "../../../domain/bpm";
+import {MidiDrumType} from "../../../domain/midi-drum-type";
+import {provideTranslateService} from "@ngx-translate/core";
 import {Option} from "effect";
 
 describe('SequencerComponent', () => {

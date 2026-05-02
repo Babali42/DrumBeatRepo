@@ -1,24 +1,24 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Beat} from '../../../core/domain/beat';
+import {Beat} from '../../../domain/beat';
 import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
-import {Track} from "../../../core/domain/track";
+import {Track} from "../../../domain/track";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
-import IManageBeats from "../../../core/domain/ports/secondary/i-manage-beats";
+import IManageBeats from "../../../domain/ports/i-manage-beats";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {IAudioEngine} from "../../../core/domain/ports/secondary/i-audio-engine";
+import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
 import {FormsModule} from "@angular/forms";
-import {NumberOfSteps} from "../../../core/domain/number-of-steps";
-import {TempoAdapterService} from "../../../infrastructure/adapters/secondary/tempo-control/tempo-adapter.service";
+import {NumberOfSteps} from "../../../domain/number-of-steps";
+import {TempoAdapterService} from "../../../infrastructure/adapters/tempo-control/tempo-adapter.service";
 import {PlayerEventsService} from "../../services/player.events.service";
-import {BPM} from "../../../core/domain/bpm";
-import {StepIndex} from "../../../core/domain/step-index";
+import {BPM} from "../../../domain/bpm";
+import {StepIndex} from "../../../domain/step-index";
 import {TranslateModule} from "@ngx-translate/core";
-import {Steps} from "../../../core/domain/steps";
+import {Steps} from "../../../domain/steps";
 import {ExportModalComponent} from "../export-modal/export-modal.component";
-import {ExportOptions} from "../../../core/domain/export-options";
-import {AudioExporterService} from "../../../infrastructure/adapters/secondary/audio-engine/audio-exporter.service";
+import {ExportOptions} from "../../../domain/export-options";
+import {AudioExporterService} from "../../../infrastructure/adapters/audio-engine/audio-exporter.service";
 
 @Component({
   selector: 'sequencer',

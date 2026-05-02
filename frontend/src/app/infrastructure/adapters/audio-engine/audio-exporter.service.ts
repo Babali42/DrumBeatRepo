@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ExportOptions } from '../../../../core/domain/export-options';
-import { Track } from '../../../../core/domain/track';
+import { ExportOptions } from '../../../domain/export-options';
+import { Track } from '../../../domain/track';
 import { TempoAdapterService } from '../tempo-control/tempo-adapter.service';
 
 @Injectable({

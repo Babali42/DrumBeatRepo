@@ -1,10 +1,10 @@
 import {BeatAdapter} from "./beat-adapter.service";
-import {Beat} from "../../../../core/domain/beat";
+import {Beat} from "../../../domain/beat";
 import {JsonFilesReaderInterface} from "./json-files-reader.interface";
 import {Observable, of} from "rxjs";
 import {TestBed} from "@angular/core/testing";
 import {CompactBeat} from "./compact-beat";
-import {jsonFileReaderToken} from "../../../injection-tokens/json-file-reader.token";
+import {jsonFileReaderToken} from "../../injection-tokens/json-file-reader.token";
 
 describe("Beat adapter service", () => {
 

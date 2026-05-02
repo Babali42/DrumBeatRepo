@@ -1,10 +1,10 @@
-import IManageBeats from "../../../../core/domain/ports/secondary/i-manage-beats";
+import IManageBeats from "../../../domain/ports/i-manage-beats";
 import {firstValueFrom, map} from "rxjs";
-import {Beat} from "../../../../core/domain/beat";
+import {Beat} from "../../../domain/beat";
 import {Inject, Injectable} from "@angular/core";
 import {JsonFilesReaderInterface} from "./json-files-reader.interface";
 import {CompactBeatMapper} from "./compact-beat.mapper";
-import {jsonFileReaderToken} from "../../../injection-tokens/json-file-reader.token";
+import {jsonFileReaderToken} from "../../injection-tokens/json-file-reader.token";
 import {Effect} from "effect";
 
 @Injectable({providedIn: 'root'})

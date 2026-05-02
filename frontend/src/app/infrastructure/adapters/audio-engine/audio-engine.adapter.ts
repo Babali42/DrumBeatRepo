@@ -1,12 +1,12 @@
 import {Injectable, NgZone} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
-import {Track} from "src/app/core/domain/track";
-import {IAudioEngine} from "../../../../core/domain/ports/secondary/i-audio-engine";
+import {Track} from "src/app/domain/track";
+import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
 import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
 import {Option} from "effect";
-import {Seconds} from "../../../../core/domain/seconds";
-import {StepIndex} from "../../../../core/domain/step-index";
+import {Seconds} from "../../../domain/seconds";
+import {StepIndex} from "../../../domain/step-index";
 
 @Injectable({
   providedIn: 'root'

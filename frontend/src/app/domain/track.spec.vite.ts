@@ -1,6 +1,6 @@
-import {Track} from "../domain/track";
+import {Track} from "./track";
 import {expect, test} from 'vitest'
-import {MidiDrumType} from "../domain/midi-drum-type";
+import {MidiDrumType} from "./midi-drum-type";
 import {Option} from "effect";
 
 test("Should not be created with unsupported step count", () => {

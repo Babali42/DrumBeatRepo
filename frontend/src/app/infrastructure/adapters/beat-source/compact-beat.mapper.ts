@@ -1,8 +1,8 @@
-import {Beat} from "../../../../core/domain/beat";
+import {Beat} from "../../../domain/beat";
 import {CompactBeat} from "./compact-beat";
-import {Track} from "../../../../core/domain/track";
-import {BPM} from "../../../../core/domain/bpm";
-import {MidiDrumType} from "../../../../core/domain/midi-drum-type";
+import {Track} from "../../../domain/track";
+import {BPM} from "../../../domain/bpm";
+import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {Effect, Option} from "effect";
 
 const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as number[];

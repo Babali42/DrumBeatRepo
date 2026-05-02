@@ -1,5 +1,5 @@
-import { Track } from '../../track';
-import {StepIndex} from "../../step-index";
+import { Track } from '../track';
+import {StepIndex} from "../step-index";
 
 export interface IAudioEngineCommands {
   readonly playPause: () => void;
