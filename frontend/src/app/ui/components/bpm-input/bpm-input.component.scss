@@ -1,3 +1,5 @@
+@use "../../../../styles/utils";
+
 /* From Uiverse.io by Cybercom682 */
 .number-control {
   display: flex;
@@ -17,15 +19,15 @@
   }
 
   .number-left::before {
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    border-bottom-left-radius: utils.$little-radius;
+    border-top-left-radius: utils.$little-radius;
     content: "-";
   }
 
   .number-right::after {
     content: "+";
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    border-bottom-right-radius: utils.$little-radius;
+    border-top-right-radius: utils.$little-radius;
   }
 
   .number-quantity {
