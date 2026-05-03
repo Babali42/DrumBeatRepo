@@ -25,34 +25,35 @@
       <span class="large user-select-none"> bpm</span>
     </div>
     <div>
-      <button class="export-button" (click)="isExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
+      <button class="button export-button" (click)="isExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
     </div>
   </div>
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
       <div class="tracks-name">
-        <svg class="svg-icon cursor-pointer" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false"
-             (mousedown)="soundService.playTrack(track.fileName)">
-          <g stroke-width="0"></g>
-          <g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134">
-            <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m6.5 8.5v4"></path>
-              <path d="m8.5 6.5v9"></path>
-              <path d="m10.5 9.5v2"></path>
-              <path d="m12.5 7.5v6.814"></path>
-              <path d="m14.5 4.5v12"></path>
+        <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.fileName)">
+          <svg class="svg-icon cursor-pointer" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false">
+            <g stroke-width="0"></g>
+            <g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134">
+              <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6.5 8.5v4"></path>
+                <path d="m8.5 6.5v9"></path>
+                <path d="m10.5 9.5v2"></path>
+                <path d="m12.5 7.5v6.814"></path>
+                <path d="m14.5 4.5v12"></path>
+              </g>
             </g>
-          </g>
-          <g>
-            <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m6.5 8.5v4"></path>
-              <path d="m8.5 6.5v9"></path>
-              <path d="m10.5 9.5v2"></path>
-              <path d="m12.5 7.5v6.814"></path>
-              <path d="m14.5 4.5v12"></path>
+            <g>
+              <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6.5 8.5v4"></path>
+                <path d="m8.5 6.5v9"></path>
+                <path d="m10.5 9.5v2"></path>
+                <path d="m12.5 7.5v6.814"></path>
+                <path d="m14.5 4.5v12"></path>
+              </g>
             </g>
-          </g>
-        </svg>
+          </svg>
+        </button>
         <div class="track-name user-select-none medium">
           {{ track.name }}
         </div>
