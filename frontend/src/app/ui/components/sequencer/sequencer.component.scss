@@ -24,7 +24,7 @@ $gap: 4px;
     height: $step-size;
     width: $step-size;
     background-color: var(--backgroundColor);
-    border-radius: 4px;
+    border-radius: utils.$little-radius;
     border: 1px solid var(--borderColor);
   }
 
@@ -106,6 +106,8 @@ $gap: 4px;
       stroke: var(--textColor);
       height: 32px;
       width: 32px;
+      border: solid 1px var(--borderColor);
+      border-radius: utils.$little-radius;
     }
 
     .track-name {
@@ -147,7 +149,7 @@ $gap: 4px;
     width: 64px;
     min-width: 64px;
     font-size: 20px;
-    border-radius: 8px;
+    border-radius: utils.$big-radius;
     border-color: color-mix(in srgb, var(--textColor) 30%, var(--backgroundColor));
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
   }
@@ -171,7 +173,7 @@ $gap: 4px;
 
 .export-button{
   border: 1px var(--borderColor) solid;
-  border-radius: 5px;
+  border-radius: utils.$little-radius;
   background-color: var(--backgroundColor);
   color: var(--textColor);
   font-size: large;
