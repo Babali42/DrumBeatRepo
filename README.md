@@ -18,6 +18,10 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ## 🤝 Contributing
 
+### Solve an issue in the [list](https://github.com/Babali42/DrumBeatRepo/issues)
+
+These issues are a bit mixed, but they are open and friendly. There is something for everyone here: code, music, design, or small improvements. Don’t hesitate to join, even if it’s your first contribution.
+
 ### How to add your own beat ?
 
 - Find a new genre or subgenre and verify it's not present yet
