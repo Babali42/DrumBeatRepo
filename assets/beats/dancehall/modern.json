@@ -1,0 +1,25 @@
+{
+  "label": "Modern Dancehall",
+  "genre": "Dancehall",
+  "bpm": 105,
+  "tracks": [
+    {
+      "name": "Hats",
+      "fileName": "techno/hat.wav",
+      "steps": "XXXXXXXXXXXXXXXX",
+      "midiNote": 42
+    },
+    {
+      "name": "Rim",
+      "fileName": "techno/snare.wav",
+      "steps": "   X  X     X   ",
+      "midiNote": 38
+    },
+    {
+      "name": "Kick",
+      "fileName": "techno/kick.wav",
+      "steps": "X         X     ",
+      "midiNote": 36
+    }
+  ]
+}
