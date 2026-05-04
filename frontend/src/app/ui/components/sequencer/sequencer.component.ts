@@ -94,34 +94,35 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
 
   selectBeat(beatToSelect: Beat): void {
-    const allTracks = beatToSelect.tracks.map(track => ({
+    const allTracks: Track[] = beatToSelect.tracks.map(track => ({
       ...track,
       steps: new Steps(track.steps.steps)
     }));
 
-    const kicks: any[] = [];
-    const snares: any[] = [];
-    const hats: any[] = [];
-    const others: any[] = [];
+    const drums: Track[] = [];
+    const other: Track[] = [];
 
-    allTracks.forEach((t: any) => {
-      const name = t.name?.toUpperCase() || "";
-      const midi = t.midiNote?.value?.toString().toUpperCase() || "";
-
-      if (name.includes('KICK') || midi.includes('KICK')) {
-        kicks.push(t);
-      } else if (name.includes('SNARE') || midi.includes('SNARE')) {
-        snares.push(t);
-      } else if (name.includes('HAT') || midi.includes('HAT')) {
-        hats.push(t);
+    allTracks.forEach((t: Track) => {
+      if (Option.isSome(t.midiNote)) {
+        drums.push(t);
       } else {
-        others.push(t);
+        other.push(t);
       }
     });
-    const finalOrder = [...others, ...hats, ...snares, ...kicks];
-    this.beat = {
+    drums.sort((a: Track, b: Track) => {
+      const aMidi = (a.midiNote as any).value?.value || 0;
+      const bMidi = (b.midiNote as any).value?.value || 0;
+      return bMidi - aMidi;
+
+    });
+
+    const onlyKicks = drums.filter(t => (t.name?.toUpperCase().includes('KICK')));
+    const nonKicks = drums.filter(t => !(t.name?.toUpperCase().includes('KICK')));
+    const finalOrder = [...other, ...nonKicks, ...onlyKicks];
+
+  this.beat = {
       ...beatToSelect,
-      tracks: finalOrder as any
+      tracks: finalOrder
     };
     this.beatBehaviourSubject.next(this.beat);
     this.customBeatSubject.next(this.beat);
