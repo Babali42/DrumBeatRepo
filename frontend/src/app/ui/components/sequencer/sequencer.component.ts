@@ -1,24 +1,25 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Beat} from '../../../domain/beat';
-import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
-import {BpmInputComponent} from "../bpm-input/bpm-input.component";
-import {SelectInputComponent} from "../select-input/select-input.component";
-import {Track} from "../../../domain/track";
-import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
+import { Option } from "effect";
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Beat } from '../../../domain/beat';
+import { BehaviorSubject, Subject, takeUntil, tap } from "rxjs";
+import { BpmInputComponent } from "../bpm-input/bpm-input.component";
+import { SelectInputComponent } from "../select-input/select-input.component";
+import { Track } from "../../../domain/track";
+import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
-import {FormsModule} from "@angular/forms";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {TempoAdapterService} from "../../../infrastructure/adapters/tempo-control/tempo-adapter.service";
-import {PlayerEventsService} from "../../services/player.events.service";
-import {BPM} from "../../../domain/bpm";
-import {StepIndex} from "../../../domain/step-index";
-import {TranslateModule} from "@ngx-translate/core";
-import {Steps} from "../../../domain/steps";
-import {ExportModalComponent} from "../export-modal/export-modal.component";
-import {ExportOptions} from "../../../domain/export-options";
-import {AudioExporterService} from "../../../infrastructure/adapters/audio-engine/audio-exporter.service";
+import { AUDIO_ENGINE } from "../../../infrastructure/injection-tokens/audio-engine.token";
+import { IAudioEngine } from "../../../domain/ports/i-audio-engine";
+import { FormsModule } from "@angular/forms";
+import { NumberOfSteps } from "../../../domain/number-of-steps";
+import { TempoAdapterService } from "../../../infrastructure/adapters/tempo-control/tempo-adapter.service";
+import { PlayerEventsService } from "../../services/player.events.service";
+import { BPM } from "../../../domain/bpm";
+import { StepIndex } from "../../../domain/step-index";
+import { TranslateModule } from "@ngx-translate/core";
+import { Steps } from "../../../domain/steps";
+import { ExportModalComponent } from "../export-modal/export-modal.component";
+import { ExportOptions } from "../../../domain/export-options";
+import { AudioExporterService } from "../../../infrastructure/adapters/audio-engine/audio-exporter.service";
 
 @Component({
   selector: 'sequencer',
@@ -46,10 +47,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
   isExportModalOpen = false;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
-              @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              protected readonly tempoService: TempoAdapterService,
-              private readonly playerEvents: PlayerEventsService,
-              private readonly audioExporterService: AudioExporterService) {
+    @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+    protected readonly tempoService: TempoAdapterService,
+    private readonly playerEvents: PlayerEventsService,
+    private readonly audioExporterService: AudioExporterService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -91,21 +92,47 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beats[0]);
   }
 
+
   selectBeat(beatToSelect: Beat): void {
+    const allTracks = beatToSelect.tracks.map(track => ({
+      ...track,
+      steps: new Steps(track.steps.steps)
+    }));
+
+    const kicks: any[] = [];
+    const snares: any[] = [];
+    const hats: any[] = [];
+    const others: any[] = [];
+
+    allTracks.forEach((t: any) => {
+      const name = t.name?.toUpperCase() || "";
+      const midi = t.midiNote?.value?.toString().toUpperCase() || "";
+
+      if (name.includes('KICK') || midi.includes('KICK')) {
+        kicks.push(t);
+      } else if (name.includes('SNARE') || midi.includes('SNARE')) {
+        snares.push(t);
+      } else if (name.includes('HAT') || midi.includes('HAT')) {
+        hats.push(t);
+      } else {
+        others.push(t);
+      }
+    });
+    const finalOrder = [...others, ...hats, ...snares, ...kicks];
     this.beat = {
       ...beatToSelect,
-      tracks: beatToSelect.tracks.map(track => ({
-        ...track,
-        steps: new Steps(track.steps.steps)
-      }))
+      tracks: finalOrder as any
     };
     this.beatBehaviourSubject.next(this.beat);
     this.customBeatSubject.next(this.beat);
   }
 
+
   beatChange($event: string) {
     const beatToSelect = this.genres.get(this.selectedGenreLabel)!.find(x => x.label === $event);
-    this.selectBeat(beatToSelect!);
+    if (beatToSelect) {
+      this.selectBeat(beatToSelect);
+    }
   }
 
   stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
@@ -128,7 +155,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   changeBeatBpm($event: number) {
     this.soundService.pause();
     this.tempoService.setBpm(BPM($event));
-    this.beat = this.beat = {
+    this.beat = {
       ...this.beat,
       bpm: BPM($event),
     };
