@@ -14,26 +14,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24 # Ensure this matches your project's Node.js version
-
-      - name: Install Dependencies
-        run: npm install
-        working-directory: frontend/
-
-      - name: Build Angular App
-        run: npm run build -- --output-path ../dist
-        working-directory: frontend/
-
-      - name: Run angular/karma tests
-        run: npm run test-ci
-        working-directory: frontend/
-
-      - name: Run vitest
-        run: npm run test-vitest
-        working-directory: frontend/
+      - name: Test
+        uses: .github/actions/test.yml
 
       - name: Copy CNAME file
         run: |
