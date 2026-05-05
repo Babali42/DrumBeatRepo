@@ -39,6 +39,15 @@ runs:
       shell: bash
       working-directory: ./frontend
 
+    - name: Debug lcov paths
+      run: |
+        echo "=== Karma ==="
+        grep "^SF:" coverage/ng17-lib-test/lcov.info | head -3
+        echo "=== Vitest ==="
+        grep "^SF:" coverage/vitest/lcov.info | head -3
+      shell: bash
+      working-directory: ./frontend
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v6
       with:
