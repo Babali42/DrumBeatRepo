@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: 24 # Ensure this matches your project's Node.js version
 
+      - name: Test
+        uses: ./.github/actions/test/
+        with:
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Install Dependencies
         run: npm install
         working-directory: frontend/
@@ -26,11 +31,6 @@ jobs:
       - name: Build Angular App
         run: npm run build -- --output-path ../dist
         working-directory: frontend/
-
-      - name: Test
-        uses: ./.github/actions/test/
-        with:
-          codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Copy CNAME file
         run: |
