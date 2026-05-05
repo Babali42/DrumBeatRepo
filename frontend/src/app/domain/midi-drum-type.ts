@@ -48,6 +48,8 @@ export enum MidiDrumType {
   OPEN_TRIANGLE = 81
 }
 
+export const MaxMidiNote = MidiDrumType.OPEN_TRIANGLE + 1;
+
 export const MidiDrumNames: Record<MidiDrumType, string> = {
   [MidiDrumType.ACOUSTIC_BASS_DRUM]: "Acoustic Bass Drum",
   [MidiDrumType.BASS_DRUM_1]: "Bass Drum 1",
