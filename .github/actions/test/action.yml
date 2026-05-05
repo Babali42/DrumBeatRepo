@@ -1,0 +1,46 @@
+name: Test
+description: Run Angular/Karma, Vitest, Codecov upload, and i18n verification
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24.15'
+
+    - name: Install dependencies
+      run: npm install
+      shell: bash
+      working-directory: ./frontend
+
+    - name: Run angular/karma tests
+      run: npm run test-ci
+      shell: bash
+      working-directory: ./frontend
+
+    - name: Run vitest
+      run: npm run test-vitest-coverage
+      shell: bash
+      working-directory: ./frontend
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v6
+      with:
+        token: ${{ inputs.CODECOV_TOKEN }}
+        files: |
+          coverage/ng17-lib-test/lcov.info
+          coverage/lcov.info
+        fail_ci_if_error: true
+
+    - name: Verify i18n translations
+      run: bash ./verify_i18n_json.sh
+      shell: bash
+      working-directory: ./frontend
+
+inputs:
+  codecov_token:
+    description: 'Codecov upload token'
+    required: true

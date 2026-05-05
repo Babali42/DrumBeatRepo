@@ -7,8 +7,17 @@ on:
 
 jobs:
   test:
+    defaults:
+      run:
+        working-directory: ./frontend
+
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
       - name: Test
-        uses: .github/actions/test.yml
+        uses: ./.github/actions/test/
+        with:
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
