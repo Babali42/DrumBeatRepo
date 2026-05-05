@@ -32,17 +32,19 @@ runs:
       shell: bash
       working-directory: ./frontend
 
+    - name: Fix lcov paths
+      run: |
+        sed -i 's|SF:src/|SF:frontend/src/|g' coverage/vitest/lcov.info
+        sed -i 's|SF:src/|SF:frontend/src/|g' coverage/ng17-lib-test/lcov.info
+      shell: bash
+      working-directory: ./frontend
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v6
       with:
         token: ${{ inputs.codecov_token }}
         files: frontend/coverage/ng17-lib-test/lcov.info,frontend/coverage/vitest/lcov.info
         fail_ci_if_error: true
-
-    - name: Check coverage files
-      run: find coverage -name "lcov.info" | sort
-      shell: bash
-      working-directory: ./frontend
 
     - name: Verify i18n translations
       run: bash ./verify_i18n_json.sh
