@@ -7,12 +7,7 @@ on:
 
 jobs:
   test:
-    defaults:
-      run:
-        working-directory: ./frontend
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

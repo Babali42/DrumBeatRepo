@@ -51,7 +51,7 @@ describe('ExportModalComponent', () => {
   });
 
   it('should have mp3 as default format', () => {
-    expect(component.options.format).toBe('mp4');
+    expect(component.options.format).toBe('mp3');
   });
 
   it('should have 1 loop as default duration', () => {
