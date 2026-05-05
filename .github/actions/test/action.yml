@@ -1,5 +1,11 @@
 name: Test
 description: Run Angular/Karma, Vitest, Codecov upload, and i18n verification
+
+inputs:
+  codecov_token:
+    description: 'Codecov upload token'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -30,17 +36,15 @@ runs:
       uses: codecov/codecov-action@v6
       with:
         token: ${{ inputs.codecov_token }}
-        files: |
-          coverage/ng17-lib-test/lcov.info
-          coverage/lcov.info
+        files: frontend/coverage/ng17-lib-test/lcov.info,frontend/coverage/vitest/lcov.info
         fail_ci_if_error: true
+
+    - name: Check coverage files
+      run: find coverage -name "lcov.info" | sort
+      shell: bash
+      working-directory: ./frontend
 
     - name: Verify i18n translations
       run: bash ./verify_i18n_json.sh
       shell: bash
       working-directory: ./frontend
-
-inputs:
-  codecov_token:
-    description: 'Codecov upload token'
-    required: true

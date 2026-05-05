@@ -1,2 +1,2 @@
 fixes:
-  - "src/::frontend/src/"
+  - "frontend/::"
