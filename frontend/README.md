@@ -40,7 +40,7 @@ To run the project locally, follow these steps:
 
     ```bash
     git clone https://github.com/Babali42/drumbeatrepo.git
-    cd drum-beat-repo/frontend
+    cd drumbeatrepo/frontend
     ```
 
 2. Install the dependencies:
@@ -81,12 +81,3 @@ Lint and show only errors
 npx eslint --quiet
 ````
 
-## i18n
-
-To test another language just use this in appcomponent.ts.
-
-```typescript
-this.translateService.use('xx');
-```
-
-with xx as **'fr'** or **'en'**
