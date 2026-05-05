@@ -9,7 +9,7 @@
     "test": "ng test --code-coverage --watch",
     "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
     "test-vitest": "vitest",
-    "test-vitest-coverage": "vitest --coverage"
+    "test-vitest-coverage": "vitest run --coverage"
   },
   "private": true,
   "dependencies": {

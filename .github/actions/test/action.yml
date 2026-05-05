@@ -29,7 +29,7 @@ runs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v6
       with:
-        token: ${{ inputs.CODECOV_TOKEN }}
+        token: ${{ inputs.codecov_token }}
         files: |
           coverage/ng17-lib-test/lcov.info
           coverage/lcov.info
