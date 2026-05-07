@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MidiExportOptions } from '../../../domain/midi-export-options';
-import { Track } from '../../../domain/track';
 import { IMidi } from '../../../domain/ports/i-midi';
 import {Beat} from "../../../domain/beat";
+import {Option} from "effect";
 // @ts-ignore
 import MidiWriter from 'midi-writer-js';
-import {Option} from "effect";
 
 @Injectable()
 export class MidiExportService implements IMidi {
