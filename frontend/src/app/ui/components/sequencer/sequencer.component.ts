@@ -21,8 +21,6 @@ import {MaxMidiNote} from "../../../domain/midi-drum-type";
 import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
-import {IAudioExport} from "../../../domain/ports/i-audio-export";
 
 @Component({
   selector: 'sequencer',
