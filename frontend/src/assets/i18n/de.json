@@ -14,5 +14,17 @@
     "cancel": "Abbrechen",
     "export": "Exportieren",
     "wavButton": "Als .wav exportieren"
+  },
+  "exportMidi": {
+    "title": "Rhythmus als MIDI-Datei exportieren",
+    "fileName": "Dateiname",
+    "duration": "Dauer (Schleifen)",
+    "cancel": "Abbrechen",
+    "export": "MIDI exportieren",
+    "button": "Als .mid exportieren (MIDI)",
+    "validation": {
+      "required": "Dateiname ist erforderlich",
+      "pattern": "Muss ein gültiger .mid-Dateiname sein (z.B. \"track.mid\")"
+    }
   }
 }

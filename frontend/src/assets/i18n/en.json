@@ -21,6 +21,7 @@
     "duration": "Duration (loops)",
     "cancel": "Cancel",
     "export": "Export MIDI",
+    "button": "Export to .mid (MIDI)",
     "validation": {
       "required": "Filename is required",
       "pattern": "Must be a valid .mid file name (e.g. \"track.mid\")"

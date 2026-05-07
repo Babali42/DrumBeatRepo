@@ -14,5 +14,17 @@
     "cancel": "取消",
     "export": "导出",
     "wavButton": "导出为 .wav"
+  },
+  "exportMidi": {
+    "title": "导出节奏到MIDI文件",
+    "fileName": "文件名",
+    "duration": "时长（循环次数）",
+    "cancel": "取消",
+    "export": "导出MIDI",
+    "button": "导出为 .mid (MIDI)",
+    "validation": {
+      "required": "文件名为必填项",
+      "pattern": "必须为有效的.mid文件名（例如 \"track.mid\"）"
+    }
   }
 }

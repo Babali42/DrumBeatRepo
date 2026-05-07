@@ -14,5 +14,17 @@
     "cancel": "إلغاء",
     "export": "تصدير",
     "wavButton": "تصدير إلى .wav"
+  },
+  "exportMidi": {
+    "title": "تصدير الإيقاع إلى ملف MIDI",
+    "fileName": "اسم الملف",
+    "duration": "المدة (الحلقات)",
+    "cancel": "إلغاء",
+    "export": "تصدير MIDI",
+    "button": "تصدير إلى .mid (MIDI)",
+    "validation": {
+      "required": "اسم الملف مطلوب",
+      "pattern": "يجب أن يكون اسم ملف .mid صالح (مثل \"track.mid\")"
+    }
   }
 }
