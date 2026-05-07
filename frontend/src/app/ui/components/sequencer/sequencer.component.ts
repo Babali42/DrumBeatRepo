@@ -15,9 +15,11 @@ import {BPM} from "../../../domain/bpm";
 import {StepIndex} from "../../../domain/step-index";
 import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../domain/steps";
-import {ExportModalComponent} from "../export-modal/export-modal.component";
+import {ExportAudioModalComponent} from "../modals/export-audio-modal/export-audio-modal.component";
 import {ExportOptions} from "../../../domain/export-options";
 import {MaxMidiNote} from "../../../domain/midi-drum-type";
+import {ExportMidiModalComponent} from "../modals/export-midi-modal/export-midi-modal.component";
+import {MidiExportOptions} from "../modals/export-midi-modal/midi-export.options";
 import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
@@ -27,7 +29,7 @@ import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engin
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportModalComponent]
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -45,7 +47,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   beats: readonly string[] = [];
 
   selectedGenreLabel: string = "";
-  isExportModalOpen = false;
+  isAudioExportModalOpen = false;
+  isMidiExportModalOpen = false;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -148,8 +151,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  async onExport(options: ExportOptions): Promise<void> {
-    this.isExportModalOpen = false;
+  async onAudioExport(options: ExportOptions): Promise<void> {
+    this.isAudioExportModalOpen = false;
 
     try {
       const blob = await this.audioExportAdapter.exportBeat(
@@ -162,5 +165,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Export failed:', error);
     }
+  }
+
+  async onMidiExport(options: MidiExportOptions) {
+    this.isMidiExportModalOpen = false;
   }
 }

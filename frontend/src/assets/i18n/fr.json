@@ -6,13 +6,25 @@
   "chooseGenre" : "Choisis un genre musical",
   "chooseBeat" : "Choisis un rythme {{ genre }}",
   "export": {
-    "title": "Exporter le beat en fichier audio",
-    "beat": "beat",
+    "title": "Exporter le rythme en fichier audio",
+    "beat": "Rythme",
     "duration": "Durée (boucles)",
     "loop": "boucle",
     "loops": "boucles",
     "cancel": "Annuler",
     "export": "Exporter",
     "wavButton": "Exporter en .wav"
+  },
+  "exportMidi": {
+    "title": "Exporter le rythme en fichier MIDI",
+    "fileName": "Nom du fichier",
+    "duration": "Durée (boucles)",
+    "cancel": "Annuler",
+    "export": "Exporter MIDI",
+    "button": "Exporter en .mid (MIDI)",
+    "validation": {
+      "required": "Le nom du fichier est requis",
+      "pattern": "Doit être un nom de fichier .mid valide (ex. \"track.mid\")"
+    }
   }
 }

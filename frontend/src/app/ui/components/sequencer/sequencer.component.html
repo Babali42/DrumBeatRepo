@@ -25,7 +25,8 @@
       <span class="large user-select-none"> bpm</span>
     </div>
     <div>
-      <button class="button export-button" (click)="isExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
+      <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
+      <button class="button export-button" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate }}</button>
     </div>
   </div>
   <div class="tracks-name-container">
@@ -83,8 +84,15 @@
 </div>
 
 <app-export-modal
-  [isOpen]="isExportModalOpen"
+  [isOpen]="isAudioExportModalOpen"
   [beatName]="beat.label"
-  (close)="isExportModalOpen = false"
-  (export)="onExport($event)">
+  (close)="isAudioExportModalOpen = false"
+  (export)="onAudioExport($event)">
 </app-export-modal>
+
+<app-export-midi-modal
+  [isOpen]="isMidiExportModalOpen"
+  [beatName]="beat.label"
+  (close)="isMidiExportModalOpen = false"
+  (export)="onMidiExport($event)">
+</app-export-midi-modal>

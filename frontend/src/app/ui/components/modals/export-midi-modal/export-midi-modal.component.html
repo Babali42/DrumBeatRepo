@@ -1,0 +1,44 @@
+@if(isOpen){
+  <div class="modal-overlay" (click)="onOverlayClick($event)">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportMidiDialogTitle">
+      <div class="modal-header">
+        <h2 id="exportMidiDialogTitle">{{ 'exportMidi.title' | translate }}</h2>
+        <button class="close-btn" aria-label="Close MIDI export dialog" (click)="onClose()">×</button>
+      </div>
+
+      <div class="modal-body" [formGroup]="form">
+        <div class="form-group">
+          @let fileName = form.controls.fileName;
+
+          <label for="midiFileName">{{ 'exportMidi.fileName' | translate }}</label>
+          <input id="midiFileName" type="text" [formControl]="fileName" class="beat-name-input" />
+
+          @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
+            <div>
+              @if (fileName.errors?.['required']) {
+                <small>{{ 'exportMidi.validation.required' | translate }}</small>
+              }
+              @if (fileName.errors?.['pattern']) {
+                <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="midiLoopCount">{{ 'exportMidi.duration' | translate }}</label>
+          <select id="midiLoopCount" formControlName="loopCount" class="form-select">
+            @for (count of loopCounts; track count) {
+              <option [value]="count">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate) }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="onClose()">{{ 'exportMidi.cancel' | translate }}</button>
+        <button class="btn btn-primary" (click)="onExport()" [disabled]="!this.form.valid">{{ 'exportMidi.export' | translate }}</button>
+      </div>
+    </div>
+  </div>
+}
