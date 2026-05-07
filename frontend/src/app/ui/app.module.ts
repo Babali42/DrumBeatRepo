@@ -20,6 +20,8 @@ import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {getBrowserLanguage} from "./i18n/i18n.utils";
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
+import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
+import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent}
@@ -44,6 +46,7 @@ RouterModule.forRoot(routes, {
     {provide: AUDIO_ENGINE, useClass: AudioEngineAdapter},
     {provide: AUDIO_EXPORT, useClass: AudioExportAdapter},
     {provide: IManageBeatsToken, useClass: BeatAdapter},
+    {provide: IMIDI, useClass: MidiExportService},
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),
     provideZoneChangeDetection(),

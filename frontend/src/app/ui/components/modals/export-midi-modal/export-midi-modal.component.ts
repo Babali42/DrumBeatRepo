@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} 
 import {CommonModule} from '@angular/common';
 import {TranslatePipe} from "@ngx-translate/core";
 import {BaseExportModalComponent} from "../base-export-modal.component";
-import {MidiExportOptions} from "./midi-export.options";
+import {MidiExportOptions} from "../../../../domain/midi-export-options";
 import {LoopCount} from "../../../../domain/export-options";
 import {MidiFilename, toMidiFilename} from "../../../../domain/midi.filename";
 

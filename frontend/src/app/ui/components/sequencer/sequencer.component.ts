@@ -19,10 +19,14 @@ import {ExportAudioModalComponent} from "../modals/export-audio-modal/export-aud
 import {ExportOptions} from "../../../domain/export-options";
 import {MaxMidiNote} from "../../../domain/midi-drum-type";
 import {ExportMidiModalComponent} from "../modals/export-midi-modal/export-midi-modal.component";
-import {MidiExportOptions} from "../modals/export-midi-modal/midi-export.options";
+import {MidiExportOptions} from "../../../domain/midi-export-options";
 import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
+import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
+import {IMidi} from "../../../domain/ports/i-midi";
 import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
+import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
+import {IAudioExport} from "../../../domain/ports/i-audio-export";
 
 @Component({
   selector: 'sequencer',
@@ -54,7 +58,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
               @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
               protected readonly tempoService: TempoAdapterService,
-              private readonly playerEvents: PlayerEventsService) {
+              private readonly playerEvents: PlayerEventsService,
+              @Inject(IMIDI) public readonly midiExportService: IMidi) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -169,5 +174,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   async onMidiExport(options: MidiExportOptions) {
     this.isMidiExportModalOpen = false;
+
+    try {
+      const blob = await this.midiExportService.exportBeat(this.beat, options);
+
+      downloadBlob(blob, options.fileName);
+    } catch (error) {
+      console.error('Midi export failed:', error);
+    }
   }
 }
