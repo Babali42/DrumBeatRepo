@@ -14,5 +14,17 @@
     "cancel": "キャンセル",
     "export": "エクスポート",
     "wavButton": ".wavにエクスポート"
+  },
+  "exportMidi": {
+    "title": "リズムをMIDIファイルにエクスポート",
+    "fileName": "ファイル名",
+    "duration": "長さ（ループ数）",
+    "cancel": "キャンセル",
+    "export": "MIDIをエクスポート",
+    "button": ".midにエクスポート (MIDI)",
+    "validation": {
+      "required": "ファイル名は必須です",
+      "pattern": "有効な.midファイル名を入力してください（例: \"track.mid\"）"
+    }
   }
 }

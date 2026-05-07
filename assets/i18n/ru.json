@@ -14,5 +14,17 @@
     "cancel": "Отмена",
     "export": "Экспорт",
     "wavButton": "Экспорт в .wav"
+  },
+  "exportMidi": {
+    "title": "Экспорт ритма в MIDI-файл",
+    "fileName": "Имя файла",
+    "duration": "Длительность (циклы)",
+    "cancel": "Отмена",
+    "export": "Экспорт MIDI",
+    "button": "Экспорт в .mid (MIDI)",
+    "validation": {
+      "required": "Имя файла обязательно",
+      "pattern": "Должно быть действительным именем .mid файла (напр. \"track.mid\")"
+    }
   }
 }
