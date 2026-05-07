@@ -17,6 +17,9 @@ import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {provideTranslateService} from "@ngx-translate/core";
 import {Option} from "effect";
+import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
+import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
+import {ExportOptions} from "../../../domain/export-options";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -66,6 +69,7 @@ describe('SequencerComponent', () => {
       providers: [
         { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
+        { provide: AUDIO_EXPORT, useClass: AudioExportAdapter },
         provideTranslateService({
           lang: 'en',
           fallbackLang: 'en'
@@ -150,5 +154,15 @@ describe('SequencerComponent', () => {
 
     console.error(`${modifiedPatternNumberOfClicks} and ${numberOfStepsAfterBeatChangeAndReset}`)
     expect(modifiedPatternNumberOfClicks).not.toEqual(numberOfStepsAfterBeatChangeAndReset);
+  });
+
+
+  it("Should call export audio adapter on modal validation", async () => {
+    //Arrange
+    const spy = spyOn(fixture.componentInstance.audioExportAdapter, "exportBeat");
+    await fixture.componentInstance.onExport({} as ExportOptions)
+
+    //Assert
+    expect(spy).toHaveBeenCalled();
   });
 })

@@ -18,6 +18,8 @@ import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-
 import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {getBrowserLanguage} from "./i18n/i18n.utils";
+import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
+import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent}
@@ -40,6 +42,7 @@ RouterModule.forRoot(routes, {
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: jsonFileReaderToken, useClass: JsonFileReader},
     {provide: AUDIO_ENGINE, useClass: AudioEngineAdapter},
+    {provide: AUDIO_EXPORT, useClass: AudioExportAdapter},
     {provide: IManageBeatsToken, useClass: BeatAdapter},
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptorsFromDi()),

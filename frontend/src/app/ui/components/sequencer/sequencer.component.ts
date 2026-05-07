@@ -5,9 +5,7 @@ import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
 import {SelectInputComponent} from "../select-input/select-input.component";
 import {Track} from "../../../domain/track";
-import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
 import {FormsModule} from "@angular/forms";
 import {NumberOfSteps} from "../../../domain/number-of-steps";
@@ -19,9 +17,12 @@ import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../domain/steps";
 import {ExportModalComponent} from "../export-modal/export-modal.component";
 import {ExportOptions} from "../../../domain/export-options";
-import {AudioExporterService} from "../../../infrastructure/adapters/audio-engine/audio-exporter.service";
 import {MaxMidiNote} from "../../../domain/midi-drum-type";
 import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
+import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
+import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
+import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
+import {IAudioExport} from "../../../domain/ports/i-audio-export";
 
 @Component({
   selector: 'sequencer',
@@ -50,9 +51,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+              @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
               protected readonly tempoService: TempoAdapterService,
-              private readonly playerEvents: PlayerEventsService,
-              private readonly audioExporterService: AudioExporterService) {
+              private readonly playerEvents: PlayerEventsService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -153,7 +154,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.isExportModalOpen = false;
 
     try {
-      const blob = await this.audioExporterService.exportBeat(
+      const blob = await this.audioExportAdapter.exportBeat(
         this.beat.tracks,
         options
       );

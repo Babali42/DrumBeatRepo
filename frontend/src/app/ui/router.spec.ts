@@ -15,6 +15,8 @@ import {BPM} from "../domain/bpm";
 import {provideTranslateService} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
+import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -38,6 +40,7 @@ describe('Router', () => {
       ],
       providers: [
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapter },
+        { provide: AUDIO_EXPORT, useClass: AudioExportAdapter },
         provideTranslateService({
           lang: 'fr',
           fallbackLang: 'en',

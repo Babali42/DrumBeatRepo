@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ExportOptions } from '../../../domain/export-options';
 import { Track } from '../../../domain/track';
+import { IAudioExport } from '../../../domain/ports/i-audio-export';
 import { TempoAdapterService } from '../tempo-control/tempo-adapter.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AudioExporterService {
+export class AudioExportAdapter implements IAudioExport {
   constructor(private readonly tempoService: TempoAdapterService) {}
 
   async exportBeat(
