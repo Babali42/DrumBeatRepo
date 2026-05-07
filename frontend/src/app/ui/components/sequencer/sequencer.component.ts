@@ -21,6 +21,7 @@ import {ExportModalComponent} from "../export-modal/export-modal.component";
 import {ExportOptions} from "../../../domain/export-options";
 import {AudioExporterService} from "../../../infrastructure/adapters/audio-engine/audio-exporter.service";
 import {MaxMidiNote} from "../../../domain/midi-drum-type";
+import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
 
 @Component({
   selector: 'sequencer',
@@ -158,7 +159,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       );
 
       const filename = `${this.beat.label.replace(/\s+/g, '_')}_${Date.now()}.wav`;
-      this.audioExporterService.downloadBlob(blob, filename);
+      downloadBlob(blob, filename);
     } catch (error) {
       console.error('Export failed:', error);
     }
