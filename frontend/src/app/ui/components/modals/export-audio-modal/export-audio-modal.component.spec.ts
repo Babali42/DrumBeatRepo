@@ -4,7 +4,7 @@ import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
 
-describe('ExportModalComponent', () => {
+describe('ExportAudioModalComponent', () => {
   let component: ExportAudioModalComponent;
   let fixture: ComponentFixture<ExportAudioModalComponent>;
 

@@ -28,24 +28,16 @@ export class ExportMidiModalComponent extends BaseExportModalComponent<MidiExpor
     loopCount: 1
   };
 
-  fileName = signal<MidiFilename>("file.mid");
-  loopCount = signal<LoopCount>(1);
-
   form = this.fb.nonNullable.group({
-    fileName: new FormControl<MidiFilename>(this.fileName(), [
+    fileName: new FormControl<MidiFilename>(toMidiFilename(this.beatName + ".mid"), [
       Validators.required,
       Validators.pattern(/^[^.].+\.mid$/i)
     ]),
-    loopCount: new FormControl<LoopCount>(this.loopCount(), [Validators.required]),
+    loopCount: new FormControl<LoopCount>(1, [Validators.required]),
   })
 
   constructor() {
     super();
-
-    effect(() => {
-      this.options.fileName = this.fileName();
-      this.options.loopCount = this.loopCount();
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,8 +47,11 @@ export class ExportMidiModalComponent extends BaseExportModalComponent<MidiExpor
   }
 
   override onExport(): void {
-    if(this.form.valid) {
-      this.export.emit(this.options);
+    if (this.form.valid) {
+      this.export.emit({
+        fileName: this.form.controls.fileName.value!,
+        loopCount: this.form.controls.loopCount.value!,
+      });
     }
   }
 }

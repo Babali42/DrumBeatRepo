@@ -27,11 +27,12 @@
 
         <div class="form-group">
           <label for="midiLoopCount">{{ 'exportMidi.duration' | translate }}</label>
-          <select id="midiLoopCount" formControlName="loopCount" class="form-select">
+          <select id="midiLoopCount" formControlName="loopCount" class="form-select" [disabled]="true">
             @for (count of loopCounts; track count) {
-              <option [value]="count">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate) }}</option>
+              <option [value]="count" [disabled]="true">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate) }}</option>
             }
           </select>
+          <small>Loop count : to be implemented</small>
         </div>
       </div>
 
