@@ -14,5 +14,17 @@
     "cancel": "Cancelar",
     "export": "Exportar",
     "wavButton": "Exportar para .wav"
+  },
+  "exportMidi": {
+    "title": "Exportar ritmo para arquivo MIDI",
+    "fileName": "Nome do arquivo",
+    "duration": "Duração (loops)",
+    "cancel": "Cancelar",
+    "export": "Exportar MIDI",
+    "button": "Exportar para .mid (MIDI)",
+    "validation": {
+      "required": "O nome do arquivo é obrigatório",
+      "pattern": "Deve ser um nome .mid válido (ex. \"track.mid\")"
+    }
   }
 }

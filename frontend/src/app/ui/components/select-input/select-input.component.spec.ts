@@ -23,13 +23,13 @@ describe('SelectInputComponent', () => {
 
   it('should emit onSelectChange when a new option is selected', () => {
     //Arrange
-    spyOn(component.selectChange, 'emit');
+    const spy = spyOn(component.selectChange, 'emit');
 
     //Act
     fixture.componentRef.setInput('selectedElement', 'gabber');
     component.onSelectChange('gabber');
 
     //Assert
-    expect(component.selectChange.emit).toHaveBeenCalledWith('gabber');
+    expect(spy).toHaveBeenCalledWith('gabber');
   });
 });

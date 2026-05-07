@@ -15,6 +15,8 @@ import {BPM} from "../domain/bpm";
 import {provideTranslateService} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
+import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
 
@@ -65,7 +67,8 @@ describe('Router', () => {
               }
             ])
           }
-        }
+        },
+        { provide: IMIDI, useClass: MidiExportService }
       ]
     });
 

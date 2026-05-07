@@ -1,4 +1,4 @@
-@use "../../../../styles/utils";
+@use "../utils";
 
 .modal-overlay {
   position: fixed;
@@ -67,7 +67,7 @@
   padding: 8px;
   border: 1px solid color-mix(in srgb, var(--textColor) 30%, transparent);
   border-radius: utils.$little-radius;
-  background-color: color-mix(in srgb, var(--backgroundColor) 80%, var(--textColor));
+  background-color: var(--backgroundColor);
   color: var(--textColor);
 }
 

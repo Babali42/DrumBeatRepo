@@ -1,4 +1,4 @@
-@if(isOpen()){
+@if(isOpen){
   <div class="modal-overlay" (click)="onOverlayClick($event)">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
       <div class="modal-header">
@@ -9,7 +9,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="beatName">{{ 'export.beat' | translate }}</label>
-          <input id="beatName" type="text" [value]="beatName()" readonly class="beat-name-input" />
+          <input id="beatName" type="text" [value]="beatName" readonly class="beat-name-input" />
         </div>
 
         <div class="form-group">

@@ -17,10 +17,12 @@ import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {provideTranslateService} from "@ngx-translate/core";
 import {Option} from "effect";
+import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
+import {MidiExportService} from "../../../infrastructure/adapters/midi-export/midi-exporter.service";
 import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
+import {MidiExportOptions} from "../../../domain/midi-export-options";
 import {ExportOptions} from "../../../domain/export-options";
-
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
@@ -75,7 +77,8 @@ describe('SequencerComponent', () => {
           fallbackLang: 'en'
         }),
         provideHttpClient(),
-        provideRouter([])
+        provideRouter([]),
+        { provide: IMIDI, useClass: MidiExportService }
       ]
     }).compileComponents();
 
@@ -156,11 +159,20 @@ describe('SequencerComponent', () => {
     expect(modifiedPatternNumberOfClicks).not.toEqual(numberOfStepsAfterBeatChangeAndReset);
   });
 
+  it("Should call export midi service on modal validation", async () => {
+    //Arrange
+    const spy = spyOn(fixture.componentInstance.midiExportService, "exportBeat");
+    await fixture.componentInstance.onMidiExport({} as MidiExportOptions)
+
+    //Assert
+    expect(spy).toHaveBeenCalled();
+  });
+
 
   it("Should call export audio adapter on modal validation", async () => {
     //Arrange
     const spy = spyOn(fixture.componentInstance.audioExportAdapter, "exportBeat");
-    await fixture.componentInstance.onExport({} as ExportOptions)
+    await fixture.componentInstance.onAudioExport({} as ExportOptions)
 
     //Assert
     expect(spy).toHaveBeenCalled();
