@@ -46,7 +46,7 @@ These issues are a bit mixed, but they are open and friendly. There is something
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/PelinEnginDuran"><img src="https://avatars.githubusercontent.com/u/143960111?v=4?s=100" width="100px;" alt="Pelin Engin Duran"/><br /><sub><b>Pelin Engin Duran</b></sub></a><br /><a href="#code-PelinEnginDuran" title="Code">💻</a></td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/slaiker"><img src="https://avatars.githubusercontent.com/u/23040703?v=4?s=100" width="100px;" alt="Slaiker"/><br /><sub><b>Slaiker</b></sub></a><br /><a href="#ideas-Slaiker" title="Ideas, Planning, & Feedback">🤔</a> <a href="#audio-Slaiker" title="Audio">🔊</a></td>
+      <td align="center" valign="top" width="14.28%"><br /><sub><b>Slaiker</b></sub></a><br /><a href="#ideas-Slaiker" title="Ideas, Planning, & Feedback">🤔</a> <a href="#audio-Slaiker" title="Audio">🔊</a></td>
     </tr>
   </tbody>
 </table>
