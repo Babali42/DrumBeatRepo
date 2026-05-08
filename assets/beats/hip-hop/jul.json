@@ -1,0 +1,31 @@
+{
+  "label": "Jul type beat",
+  "genre": "Hip-Hop",
+  "bpm": 143,
+  "tracks": [
+    {
+      "name": "Tom",
+      "fileName": "jul/tom.mp3",
+      "steps": "__________________________X_____",
+      "midiNote": 42
+    },
+    {
+      "name": "Hats",
+      "fileName": "trap/hat.mp3",
+      "steps": "__________X________X________X_X_",
+      "midiNote": 42
+    },
+    {
+      "name": "Snare",
+      "fileName": "techno/snare.wav",
+      "steps": "___X__X____X__X____X__X____X__X_",
+      "midiNote": 38
+    },
+    {
+      "name": "Kick",
+      "fileName": "techno/kick.wav",
+      "steps": "X   X   X   X   X   X   X   X   ",
+      "midiNote": 36
+    }
+  ]
+}
