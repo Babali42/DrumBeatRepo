@@ -1,4 +1,4 @@
-export type MidiFilename = `${string}${string}.mid`;
+export type MidiFilename = `${string}.mid`;
 
 export function toMidiFilename(name: string): MidiFilename {
   if (!/^[^.\s][^\\/:*?"<>|]*\.mid$/i.test(name)) {

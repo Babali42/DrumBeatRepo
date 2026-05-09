@@ -3,13 +3,14 @@ import {Beat} from "../../../domain/beat";
 import {Track} from "../../../domain/track";
 import {BPM} from "../../../domain/bpm";
 import {Effect} from "effect";
+import {toMp3FilePath} from "../../../domain/mp3.filename";
 
 describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
     const beat : Beat = {
       genre: "test", label: "", bpm: BPM(150), tracks: [
-        new Track("", "", [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
-        new Track("", "", [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
       ]
     };
 

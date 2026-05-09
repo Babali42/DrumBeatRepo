@@ -19,6 +19,7 @@ import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
+import {toMp3FilePath} from "../domain/mp3.filename";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -62,7 +63,7 @@ describe('Router', () => {
                 label: 'Classic',
                 bpm: BPM(128),
                 tracks: [
-                  new Track("","", [true, false, true, false, true, false, true, false])
+                  new Track("",toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
                 ]
               }
             ])
