@@ -64,7 +64,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     this.tracks.forEach((track) => {
       track.steps.steps.forEach((step, index) => {
         if (step)
-          this.enableStep(track.fileName, StepIndex(index));
+          this.enableStep(track.name, StepIndex(index));
       })
     })
 
@@ -78,10 +78,10 @@ export class AudioEngineAdapter implements IAudioEngine {
       this.pause();
 
     this.tracks = tracks;
-    const trackNames = tracks.map(x => x.fileName);
+    const trackNames = tracks.map(x => x.name);
 
-    const loadPromises = trackNames.map(sample =>
-      this.audioFilesService.getAudioBuffer(sample).then(arrayBuffer => {
+    const loadPromises = trackNames.map(trackName =>
+      this.audioFilesService.getAudioBuffer(tracks.find(x => x.name == trackName)?.fileName!).then(arrayBuffer => {
         if (Option.isNone(arrayBuffer))
           return;
 
@@ -91,7 +91,7 @@ export class AudioEngineAdapter implements IAudioEngine {
           node.connect(this.context.destination);
           return node;
         };
-        this.trackSampleBuilderMap.set(sample, createNode);
+        this.trackSampleBuilderMap.set(trackName, createNode);
       })
     );
 

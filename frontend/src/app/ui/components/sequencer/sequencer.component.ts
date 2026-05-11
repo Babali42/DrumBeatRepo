@@ -128,9 +128,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
     track.steps.setStepAtIndex(stepIndex, !value);
 
     if (!track.steps.getStepAtIndex(stepIndex)) {
-      this.soundService.disableStep(track.fileName, stepIndex);
+      this.soundService.disableStep(track.name, stepIndex);
     } else {
-      this.soundService.enableStep(track.fileName, stepIndex);
+      this.soundService.enableStep(track.name, stepIndex);
     }
 
     this.beat = {

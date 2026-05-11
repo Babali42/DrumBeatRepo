@@ -34,7 +34,7 @@
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
       <div class="tracks-name">
-        <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.fileName)">
+        <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
           <svg class="svg-icon cursor-pointer" role="img" viewBox="0 0 21 21" aria-hidden="true" focusable="false">
             <g stroke-width="0"></g>
             <g stroke-linecap="round" stroke-linejoin="round" stroke-width="1.134">
