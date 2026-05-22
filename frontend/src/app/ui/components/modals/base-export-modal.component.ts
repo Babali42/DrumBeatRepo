@@ -1,7 +1,7 @@
 import {Input, Output, EventEmitter, Directive} from '@angular/core';
 
 export interface BaseExportOptions {
-  loopCount: number;
+
 }
 
 @Directive()
@@ -13,7 +13,6 @@ export class BaseExportModalComponent<T extends BaseExportOptions> {
   @Output() export = new EventEmitter<T>();
 
   options!: T;
-  loopCounts: number[] = [1, 2, 4];
 
   onClose(): void {
     this.close.emit();

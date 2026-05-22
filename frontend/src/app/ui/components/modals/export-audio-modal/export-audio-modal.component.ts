@@ -19,6 +19,8 @@ export class ExportAudioModalComponent extends BaseExportModalComponent<ExportOp
   @Output() override close = new EventEmitter<void>();
   @Output() override export = new EventEmitter<ExportOptions>();
 
+  loopCounts: number[] = [1, 2, 4];
+
   override options: ExportOptions = {
     format: 'mp3',
     loopCount: 1,

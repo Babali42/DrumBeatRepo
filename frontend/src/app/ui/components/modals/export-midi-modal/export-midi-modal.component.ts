@@ -24,8 +24,7 @@ export class ExportMidiModalComponent extends BaseExportModalComponent<MidiExpor
   @Output() override export = new EventEmitter<MidiExportOptions>();
 
   override options: MidiExportOptions = {
-    fileName: '',
-    loopCount: 1
+    fileName: toMidiFilename('file.mid')
   };
 
   form = this.fb.nonNullable.group({
@@ -50,7 +49,6 @@ export class ExportMidiModalComponent extends BaseExportModalComponent<MidiExpor
     if (this.form.valid) {
       this.export.emit({
         fileName: this.form.controls.fileName.value!,
-        loopCount: this.form.controls.loopCount.value!,
       });
     }
   }

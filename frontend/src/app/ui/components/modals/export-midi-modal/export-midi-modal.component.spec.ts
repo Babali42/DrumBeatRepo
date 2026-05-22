@@ -58,10 +58,6 @@ describe('ExportMidiModalComponent', () => {
       .toBe('My Awesome Beat.mid');
   });
 
-  it('should have 1 loop as default duration', () => {
-    expect(component.options.loopCount).toBe(1);
-  });
-
   it('should emit close event when close button is clicked', () => {
     spyOn(component.close, 'emit');
     component.isOpen = true;
@@ -104,16 +100,6 @@ describe('ExportMidiModalComponent', () => {
     modalContent.nativeElement.click();
 
     expect(component.close.emit).not.toHaveBeenCalled();
-  });
-
-  it('should update loop count option when select changes', () => {
-    component.isOpen = true;
-    fixture.detectChanges();
-
-    component.options.loopCount = 2;
-    fixture.detectChanges();
-
-    expect(component.options.loopCount).toBe(2);
   });
 
   it('should not emit export event if form is invalid', () => {
