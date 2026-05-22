@@ -13,7 +13,8 @@
     "loops": "ループ",
     "cancel": "キャンセル",
     "export": "エクスポート",
-    "wavButton": ".wavにエクスポート"
+    "wavButton": ".wavにエクスポート",
+    "exportWithTail": "Export with tail"
   },
   "exportMidi": {
     "title": "リズムをMIDIファイルにエクスポート",

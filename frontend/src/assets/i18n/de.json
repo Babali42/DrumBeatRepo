@@ -13,7 +13,8 @@
     "loops": "Schleifen",
     "cancel": "Abbrechen",
     "export": "Exportieren",
-    "wavButton": "Als .wav exportieren"
+    "wavButton": "Als .wav exportieren",
+    "exportWithTail": "Export with tail"
   },
   "exportMidi": {
     "title": "Rhythmus als MIDI-Datei exportieren",
