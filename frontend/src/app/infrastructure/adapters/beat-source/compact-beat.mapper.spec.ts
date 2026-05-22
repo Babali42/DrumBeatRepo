@@ -3,7 +3,7 @@ import {Beat} from "../../../domain/beat";
 import {Track} from "../../../domain/track";
 import {BPM} from "../../../domain/bpm";
 import {Effect} from "effect";
-import {toMp3FilePath} from "../../../domain/mp3.filename";
+import {toMp3FilePath} from "../../../domain/filenames/mp3.filepath";
 
 describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {

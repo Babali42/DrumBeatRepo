@@ -2,7 +2,7 @@ import {expect, test} from 'vitest'
 import {MidiDrumType} from "../../../src/app/domain/midi-drum-type";
 import {Option} from "effect";
 import {Track} from "../../../src/app/domain/track";
-import {toMp3FilePath} from "../../../src/app/domain/mp3.filename";
+import {toMp3FilePath} from "../../../src/app/domain/filenames/mp3.filepath";
 
 test("Should not be created with unsupported step count", () => {
   expect(() => new Track("Kick", toMp3FilePath("test.wav"), [true, false], Option.some(MidiDrumType.BASS_DRUM_1))).toThrow();

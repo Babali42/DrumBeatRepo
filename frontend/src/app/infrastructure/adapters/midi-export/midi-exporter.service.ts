@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MidiExportOptions } from '../../../domain/midi-export-options';
+import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';
 import { IMidi } from '../../../domain/ports/i-midi';
 import {Beat} from "../../../domain/beat";
 import {Option} from "effect";

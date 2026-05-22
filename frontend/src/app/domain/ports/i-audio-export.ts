@@ -1,6 +1,6 @@
 import {Track} from "../track";
-import {ExportOptions} from "../export-options";
+import {AudioExportOptions} from "../export-options/audio-export-options";
 
 export interface IAudioExport {
-  exportBeat(tracks: readonly Track[], options: ExportOptions): Promise<Blob>
+  exportBeat(tracks: readonly Track[], options: AudioExportOptions): Promise<Blob>
 }

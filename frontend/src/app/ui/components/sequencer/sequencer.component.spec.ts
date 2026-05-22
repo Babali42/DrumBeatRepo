@@ -21,8 +21,8 @@ import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../../../infrastructure/adapters/midi-export/midi-exporter.service";
 import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
-import {MidiExportOptions} from "../../../domain/midi-export-options";
-import {ExportOptions} from "../../../domain/export-options";
+import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
+import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
@@ -172,7 +172,7 @@ describe('SequencerComponent', () => {
   it("Should call export audio adapter on modal validation", async () => {
     //Arrange
     const spy = spyOn(fixture.componentInstance.audioExportAdapter, "exportBeat");
-    await fixture.componentInstance.onAudioExport({} as ExportOptions)
+    await fixture.componentInstance.onAudioExport({} as AudioExportOptions)
 
     //Assert
     expect(spy).toHaveBeenCalled();

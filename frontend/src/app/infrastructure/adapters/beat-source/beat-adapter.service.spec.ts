@@ -5,7 +5,7 @@ import {Observable, of} from "rxjs";
 import {TestBed} from "@angular/core/testing";
 import {CompactBeat} from "./compact-beat";
 import {jsonFileReaderToken} from "../../injection-tokens/json-file-reader.token";
-import {toMp3FilePath} from "../../../domain/mp3.filename";
+import {toMp3FilePath} from "../../../domain/filenames/mp3.filepath";
 
 describe("Beat adapter service", () => {
 

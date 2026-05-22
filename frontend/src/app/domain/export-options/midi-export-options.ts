@@ -1,4 +1,4 @@
-import {MidiFilename} from "./midi.filename";
+import {MidiFilename} from "../filenames/midi.filename";
 
 export interface MidiExportOptions {
   fileName: MidiFilename;

@@ -16,10 +16,10 @@ import {StepIndex} from "../../../domain/step-index";
 import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../domain/steps";
 import {ExportAudioModalComponent} from "../modals/export-audio-modal/export-audio-modal.component";
-import {ExportOptions} from "../../../domain/export-options";
+import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
 import {MaxMidiNote} from "../../../domain/midi-drum-type";
 import {ExportMidiModalComponent} from "../modals/export-midi-modal/export-midi-modal.component";
-import {MidiExportOptions} from "../../../domain/midi-export-options";
+import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
 import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
 import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
 import {IMidi} from "../../../domain/ports/i-midi";
@@ -156,7 +156,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  async onAudioExport(options: ExportOptions): Promise<void> {
+  async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;
 
     try {

@@ -3,6 +3,7 @@ import {ExportAudioModalComponent} from './export-audio-modal.component';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
+import {DEFAULT_EXPORT_OPTIONS} from "../../../../domain/export-options/audio-export-options";
 
 describe('ExportAudioModalComponent', () => {
   let component: ExportAudioModalComponent;
@@ -19,6 +20,7 @@ describe('ExportAudioModalComponent', () => {
 
     fixture = TestBed.createComponent(ExportAudioModalComponent);
     component = fixture.componentInstance;
+    component.options = DEFAULT_EXPORT_OPTIONS;
   });
 
   it('should create', () => {

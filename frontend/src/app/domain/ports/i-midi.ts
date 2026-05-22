@@ -1,4 +1,4 @@
-import {MidiExportOptions} from "../midi-export-options";
+import {MidiExportOptions} from "../export-options/midi-export-options";
 import {Beat} from "../beat";
 
 export interface IMidi {

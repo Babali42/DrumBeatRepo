@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExportOptions } from '../../../domain/export-options';
+import { AudioExportOptions } from '../../../domain/export-options/audio-export-options';
 import { Track } from '../../../domain/track';
 import { IAudioExport } from '../../../domain/ports/i-audio-export';
 import { TempoAdapterService } from '../tempo-control/tempo-adapter.service';
@@ -12,7 +12,7 @@ export class AudioExportAdapter implements IAudioExport {
 
   async exportBeat(
     tracks: readonly Track[],
-    options: ExportOptions
+    options: AudioExportOptions
   ): Promise<Blob> {
     const barDurationSeconds = this.tempoService.barDuration;
     const totalDurationSeconds = barDurationSeconds * options.loopCount;

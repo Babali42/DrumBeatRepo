@@ -2,8 +2,8 @@ import {Steps} from "./steps";
 import {NumberOfSteps} from "./number-of-steps";
 import {MidiDrumType} from "./midi-drum-type";
 import {Option} from "effect";
-import {Mp3FilePath, toMp3FilePath} from "./mp3.filename";
-import {toWavFilePath, WavFilePath} from "./wav.filename";
+import {Mp3FilePath, toMp3FilePath} from "./filenames/mp3.filepath";
+import {toWavFilePath, WavFilePath} from "./filenames/wav.filepath";
 
 const allowedStepLengths = [8, 16, 32, 64];
 

@@ -19,7 +19,7 @@ import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
-import {toMp3FilePath} from "../domain/mp3.filename";
+import {toMp3FilePath} from "../domain/filenames/mp3.filepath";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
