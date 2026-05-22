@@ -6,10 +6,12 @@ export interface AudioExportOptions {
   format: ExportFormat;
   loopCount: LoopCount;
   quality: ExportQuality;
+  exportWithTail: Boolean;
 }
 
 export const DEFAULT_EXPORT_OPTIONS: AudioExportOptions = {
   format: 'wav',
   loopCount: 1,
-  quality: 192
+  quality: 192,
+  exportWithTail: true
 };
