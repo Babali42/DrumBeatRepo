@@ -6,7 +6,7 @@ export interface AudioExportOptions {
   format: ExportFormat;
   loopCount: LoopCount;
   quality: ExportQuality;
-  exportWithTail: Boolean;
+  exportWithTail: boolean;
 }
 
 export const DEFAULT_EXPORT_OPTIONS: AudioExportOptions = {
