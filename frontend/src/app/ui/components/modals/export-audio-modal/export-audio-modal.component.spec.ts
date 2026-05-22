@@ -3,6 +3,7 @@ import {ExportAudioModalComponent} from './export-audio-modal.component';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
+import {toWavFilename} from "../../../../domain/filenames/wav.filepath";
 
 describe('ExportAudioModalComponent', () => {
   let component: ExportAudioModalComponent;
@@ -43,15 +44,19 @@ describe('ExportAudioModalComponent', () => {
 
   it('should display beat name when provided', () => {
     component.isOpen = true;
-    component.beatName = 'My Awesome Beat';
+    component.beatName = 'myawesomebeat';
+    component.ngOnChanges({
+      beatName: {
+        currentValue: 'myawesomebeat',
+        previousValue: '',
+        firstChange: true,
+        isFirstChange: () => true
+      }
+    });
     fixture.detectChanges();
 
     const beatNameInput = fixture.debugElement.query(By.css('.beat-name-input'));
-    expect(beatNameInput.nativeElement.value).toBe('My Awesome Beat');
-  });
-
-  it('should have wav as default format', () => {
-    expect(component.options.format).toBe('wav');
+    expect(beatNameInput.nativeElement.value).toBe('myawesomebeat.wav');
   });
 
   it('default export with tail option should be true', () => {
@@ -123,34 +128,32 @@ describe('ExportAudioModalComponent', () => {
     expect(component.options.loopCount).toBe(2);
   });
 
-  it('should update quality option when select changes', () => {
-    component.isOpen = true;
-    fixture.detectChanges();
-
-    component.options.quality = 320;
-    fixture.detectChanges();
-
-    expect(component.options.quality).toBe(320);
-  });
-
   it('should emit export with updated options', () => {
     spyOn(component.export, 'emit');
     component.isOpen = true;
     fixture.detectChanges();
 
-    component.options.format = 'wav';
-    component.options.loopCount = 4;
-    component.options.quality = 320;
+    component.form.controls.loopCount.setValue(4);
     fixture.detectChanges();
 
     const exportBtn = fixture.debugElement.query(By.css('.btn-primary'));
     exportBtn.nativeElement.click();
 
     expect(component.export.emit).toHaveBeenCalledWith({
-      format: 'wav',
+      fileName: toWavFilename('file.wav'),
       loopCount: 4,
-      quality: 320,
       exportWithTail: true,
     });
+  });
+
+  it('should not emit export event if form is invalid', () => {
+    spyOn(component.export, 'emit');
+    component.isOpen = true;
+    fixture.detectChanges();
+
+    component.form.controls.fileName.setValue("test.mp3" as any);
+    component.onExport();
+
+    expect(component.export.emit).not.toHaveBeenCalled();
   });
 });

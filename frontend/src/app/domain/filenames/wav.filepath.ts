@@ -9,3 +9,10 @@ export function toWavFilePath(path: string): WavFilePath {
 
   return path as WavFilePath;
 }
+
+export function toWavFilename(name: string): WavFilename {
+  if (!/^[^.\s][^\\/:*?"<>|]*\.wav/i.test(name)) {
+    throw new Error('Invalid .wav filename');
+  }
+  return name as WavFilename;
+}

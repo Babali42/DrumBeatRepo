@@ -165,8 +165,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
         options
       );
 
-      const filename = `${this.beat.label.replace(/\s+/g, '_')}_${Date.now()}.wav`;
-      downloadBlob(blob, filename);
+      downloadBlob(blob, options.fileName);
     } catch (error) {
       console.error('Export failed:', error);
     }
