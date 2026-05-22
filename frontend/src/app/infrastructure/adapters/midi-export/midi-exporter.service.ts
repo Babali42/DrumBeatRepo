@@ -45,7 +45,8 @@ export class MidiExportService implements IMidi {
             pitch: [midiNote],
             startTick: tick,
             duration: 'T32',
-            channel: 10
+            channel: 10,
+            velocity: 100
           })
         );
       });
