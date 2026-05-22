@@ -20,8 +20,8 @@ export class AudioExportAdapter implements IAudioExport {
 
     const rawBuffers = await this.loadAllBuffers(tracks);
     const maxBufferDuration = this.getMaxBufferDuration(rawBuffers);
-    const totalWithTail = totalDurationSeconds + maxBufferDuration;
-    const totalSamples = Math.ceil(totalWithTail * sampleRate);
+    const total = totalDurationSeconds + ((options.exportWithTail) ? maxBufferDuration * 2 : 0);
+    const totalSamples = Math.ceil(total * sampleRate);
 
     const offlineContext = new OfflineAudioContext(2, totalSamples, sampleRate);
     const stepDurationSeconds = this.tempoService.stepDuration;

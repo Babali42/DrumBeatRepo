@@ -13,7 +13,8 @@
     "loops": "loops",
     "cancel": "Cancelar",
     "export": "Exportar",
-    "wavButton": "Exportar para .wav"
+    "wavButton": "Exportar para .wav",
+    "exportWithTail": "Export with tail"
   },
   "exportMidi": {
     "title": "Exportar ritmo para arquivo MIDI",

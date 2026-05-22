@@ -21,6 +21,11 @@
           </select>
         </div>
 
+        <div class="form-group">
+          <label for="exportWithTail">{{ 'export.exportWithTail' | translate }}</label>
+          <input id="exportWithTail" type="checkbox" [(ngModel)]="options.exportWithTail" />
+        </div>
+
         <!-- TODO: MP3 support -->
         <!-- <div class="form-group">
           <label for="format">Format</label>

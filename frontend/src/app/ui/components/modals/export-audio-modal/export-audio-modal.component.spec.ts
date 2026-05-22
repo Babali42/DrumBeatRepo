@@ -54,8 +54,8 @@ describe('ExportAudioModalComponent', () => {
     expect(component.options.format).toBe('wav');
   });
 
-  it('should have 1 loop as default duration', () => {
-    expect(component.options.loopCount).toBe(1);
+  it('default export with tail option should be true', () => {
+    expect(component.options.exportWithTail).toBeTruthy();
   });
 
   it('should emit close event when close button is clicked', () => {
@@ -149,7 +149,8 @@ describe('ExportAudioModalComponent', () => {
     expect(component.export.emit).toHaveBeenCalledWith({
       format: 'wav',
       loopCount: 4,
-      quality: 320
+      quality: 320,
+      exportWithTail: true,
     });
   });
 });
