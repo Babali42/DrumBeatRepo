@@ -13,7 +13,8 @@
     "loops": "циклов",
     "cancel": "Отмена",
     "export": "Экспорт",
-    "wavButton": "Экспорт в .wav"
+    "wavButton": "Экспорт в .wav",
+    "exportWithTail": "Export with tail"
   },
   "exportMidi": {
     "title": "Экспорт ритма в MIDI-файл",

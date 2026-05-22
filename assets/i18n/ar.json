@@ -13,7 +13,8 @@
     "loops": "حلقات",
     "cancel": "إلغاء",
     "export": "تصدير",
-    "wavButton": "تصدير إلى .wav"
+    "wavButton": "تصدير إلى .wav",
+    "exportWithTail": "Export with tail"
   },
   "exportMidi": {
     "title": "تصدير الإيقاع إلى ملف MIDI",
