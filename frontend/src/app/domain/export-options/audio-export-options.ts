@@ -9,7 +9,7 @@ export interface AudioExportOptions {
 }
 
 export const DEFAULT_EXPORT_OPTIONS: AudioExportOptions = {
-  format: 'mp3',
+  format: 'wav',
   loopCount: 1,
   quality: 192
 };

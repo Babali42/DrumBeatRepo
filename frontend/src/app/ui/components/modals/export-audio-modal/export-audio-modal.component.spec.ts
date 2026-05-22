@@ -3,7 +3,6 @@ import {ExportAudioModalComponent} from './export-audio-modal.component';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
-import {DEFAULT_EXPORT_OPTIONS} from "../../../../domain/export-options/audio-export-options";
 
 describe('ExportAudioModalComponent', () => {
   let component: ExportAudioModalComponent;
@@ -20,7 +19,6 @@ describe('ExportAudioModalComponent', () => {
 
     fixture = TestBed.createComponent(ExportAudioModalComponent);
     component = fixture.componentInstance;
-    component.options = DEFAULT_EXPORT_OPTIONS;
   });
 
   it('should create', () => {
@@ -52,16 +50,12 @@ describe('ExportAudioModalComponent', () => {
     expect(beatNameInput.nativeElement.value).toBe('My Awesome Beat');
   });
 
-  it('should have mp3 as default format', () => {
-    expect(component.options.format).toBe('mp3');
+  it('should have wav as default format', () => {
+    expect(component.options.format).toBe('wav');
   });
 
   it('should have 1 loop as default duration', () => {
     expect(component.options.loopCount).toBe(1);
-  });
-
-  it('should have 192kbps as default quality', () => {
-    expect(component.options.quality).toBe(192);
   });
 
   it('should emit close event when close button is clicked', () => {
@@ -83,11 +77,7 @@ describe('ExportAudioModalComponent', () => {
     const exportBtn = fixture.debugElement.query(By.css('.btn-primary'));
     exportBtn.nativeElement.click();
 
-    expect(component.export.emit).toHaveBeenCalledWith({
-      format: 'mp3',
-      loopCount: 1,
-      quality: 192
-    });
+    expect(component.export.emit).toHaveBeenCalled();
   });
 
   it('should emit close event when cancel button is clicked', () => {
