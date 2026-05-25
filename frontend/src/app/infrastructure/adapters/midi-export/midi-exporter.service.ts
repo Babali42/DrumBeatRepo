@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';
 import { IMidi } from '../../../domain/ports/i-midi';
 import {Beat} from "../../../domain/beat";
 import {Option} from "effect";
@@ -8,10 +7,7 @@ import MidiWriter from 'midi-writer-js';
 
 @Injectable()
 export class MidiExportService implements IMidi {
-  async exportBeat(
-    beat: Beat,
-    options: MidiExportOptions
-  ): Promise<Blob> {
+  async exportBeat(beat: Beat): Promise<Blob> {
     const track = this.getTrack(beat);
     const writer = new MidiWriter.Writer(track);
     return new Blob([writer.buildFile()], { type: 'audio/midi' });

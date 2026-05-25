@@ -175,7 +175,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.isMidiExportModalOpen = false;
 
     try {
-      const blob = await this.midiExportService.exportBeat(this.beat, options);
+      const blob = await this.midiExportService.exportBeat(this.beat);
 
       downloadBlob(blob, options.fileName);
     } catch (error) {
