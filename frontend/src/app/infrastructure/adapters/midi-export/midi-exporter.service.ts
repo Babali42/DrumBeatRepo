@@ -23,8 +23,8 @@ export class MidiExportService implements IMidi {
     midiTrack.setTempo(beat.bpm.valueOf());
     midiTrack.setTimeSignature(4, 4);
 
-    const events: MidiWriter.NoteEvent[] = [];
     const TICKS_PER_STEP = 32;
+    const events: { tick: number; event: MidiWriter.NoteEvent }[] = [];
 
     for (const track of beat.tracks) {
       if (Option.isNone(track.midiNote)) {
@@ -38,23 +38,27 @@ export class MidiExportService implements IMidi {
           return;
         }
 
-        const tick = stepIndex * TICKS_PER_STEP;
+        const EMPTY_STEPS_AT_START = 16;
 
-        events.push(
-          new MidiWriter.NoteEvent({
+        const tick =
+          (stepIndex + EMPTY_STEPS_AT_START) * TICKS_PER_STEP;
+
+        events.push({
+          tick,
+          event: new MidiWriter.NoteEvent({
             pitch: [midiNote],
             startTick: tick,
             duration: 'T32',
             channel: 10,
             velocity: 100
           })
-        );
+        });
       });
     }
 
-    events.sort((a, b) => a.data.tick - b.data.tick);
+    events.sort((a, b) => a.tick - b.tick);
 
-    midiTrack.addEvent(events);
+    midiTrack.addEvent(events.map(e => e.event));
 
     return midiTrack;
   }
