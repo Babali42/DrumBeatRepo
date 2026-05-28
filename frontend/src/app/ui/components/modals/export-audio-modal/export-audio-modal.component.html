@@ -46,7 +46,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-secondary" (click)="onClose()">{{ 'export.cancel' | translate }}</button>
-        <button class="btn btn-primary" (click)="onExport()">{{ 'export.export' | translate }}</button>
+        <button class="btn btn-primary" (click)="onExport()" [disabled]="!this.form.valid">{{ 'export.export' | translate }}</button>
       </div>
     </div>
   </div>
