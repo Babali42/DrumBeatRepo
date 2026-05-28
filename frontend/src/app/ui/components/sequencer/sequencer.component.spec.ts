@@ -23,6 +23,7 @@ import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-expor
 import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
 import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
 import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
+
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
@@ -161,6 +162,8 @@ describe('SequencerComponent', () => {
 
   it("Should call export midi service on modal validation", async () => {
     //Arrange
+    spyOn(URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(URL, 'revokeObjectURL');
     const spy = spyOn(fixture.componentInstance.midiExportService, "exportBeat");
     await fixture.componentInstance.onMidiExport({} as MidiExportOptions)
 
@@ -171,7 +174,11 @@ describe('SequencerComponent', () => {
 
   it("Should call export audio adapter on modal validation", async () => {
     //Arrange
+    spyOn(URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(URL, 'revokeObjectURL');
     const spy = spyOn(fixture.componentInstance.audioExportAdapter, "exportBeat");
+
+    //Act
     await fixture.componentInstance.onAudioExport({} as AudioExportOptions)
 
     //Assert

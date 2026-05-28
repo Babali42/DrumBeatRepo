@@ -26,7 +26,6 @@ export class CompactBeatMapper {
         ))
       }),
       catch: (e) => {
-        console.error(e);
         return e instanceof Error ? e : new Error(String(e))
       }
     });
