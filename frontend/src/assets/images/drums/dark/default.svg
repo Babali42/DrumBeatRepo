@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 21 21"
+     class="svg-icon cursor-pointer"
+     role="img"
+     aria-hidden="true"
+     focusable="false">
+
+  <g fill="none"
+     stroke="#FFFFFF"
+     stroke-width="1.134"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+
+    <path d="M6.5 8.5v4"/>
+    <path d="M8.5 6.5v9"/>
+    <path d="M10.5 9.5v2"/>
+    <path d="M12.5 7.5v6.814"/>
+    <path d="M14.5 4.5v12"/>
+
+  </g>
+</svg>
