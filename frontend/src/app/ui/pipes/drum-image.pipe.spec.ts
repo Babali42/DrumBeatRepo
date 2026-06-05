@@ -21,6 +21,15 @@ describe('DrumImagePipe', () => {
       .toEqual("assets/images/drums/light/default.svg");
   });
 
+  it('should transform none to default image when dark mode is on', () => {
+    const darkModeToggleService = {
+      modeChanged$: of(Mode.DARK)
+    } as Partial<ModeToggleService> as ModeToggleService;
+    const pipe = new DrumImagePipe(darkModeToggleService);
+    expect(pipe.transform(Option.none<MidiDrumType>()))
+      .toEqual("assets/images/drums/dark/default.svg");
+  });
+
   it('should transform bass drum to kick image', () => {
     const pipe = new DrumImagePipe(mockModeToggleService);
     expect(pipe.transform(Option.some<MidiDrumType>(MidiDrumType.BASS_DRUM_1)))
