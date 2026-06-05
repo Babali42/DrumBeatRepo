@@ -3,6 +3,7 @@ import {MidiDrumType} from "../../domain/midi-drum-type";
 import {Option} from "effect";
 import {ModeToggleService} from "../services/light-dark-mode/mode-toggle.service";
 import {Mode} from "../services/light-dark-mode/mode-toggle.model";
+import {of} from "rxjs";
 
 describe('DrumImagePipe', () => {
   const mockModeToggleService = {
