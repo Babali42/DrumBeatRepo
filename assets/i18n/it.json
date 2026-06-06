@@ -26,6 +26,7 @@
     "validation": {
       "required": "Il nome del file è obbligatorio",
       "pattern": "Deve essere un nome file .mid valido (es. \"track.mid\")"
-    }
+    },
+    "warning": "A seconda della tua DAW, il mapping MIDI può differire e le percussioni potrebbero non corrispondere dopo l'esportazione."
   }
 }

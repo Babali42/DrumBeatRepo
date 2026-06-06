@@ -26,6 +26,7 @@
     "validation": {
       "required": "Filename is required",
       "pattern": "Must be a valid .mid file name (e.g. \"track.mid\")"
-    }
+    },
+    "warning": "Depending on your DAW, MIDI drum mapping may differ and percussion may not match after export."
   }
 }
