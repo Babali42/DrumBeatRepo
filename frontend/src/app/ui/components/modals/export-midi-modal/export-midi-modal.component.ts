@@ -6,11 +6,12 @@ import {BaseExportModalComponent} from "../base-export-modal.component";
 import {MidiExportOptions} from "../../../../domain/export-options/midi-export-options";
 import {LoopCount} from "../../../../domain/export-options/audio-export-options";
 import {MidiFilename, toMidiFilename} from "../../../../domain/filenames/midi.filename";
+import {IconDarkModePipe} from "../../../pipes/icon-dark-mode.pipe";
 
 @Component({
   selector: 'app-export-midi-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslatePipe, ReactiveFormsModule, NgOptimizedImage],
+  imports: [FormsModule, CommonModule, TranslatePipe, ReactiveFormsModule, NgOptimizedImage, IconDarkModePipe],
   templateUrl: './export-midi-modal.component.html',
   styleUrl: '../../../../../styles/modals/modal.base.scss'
 })

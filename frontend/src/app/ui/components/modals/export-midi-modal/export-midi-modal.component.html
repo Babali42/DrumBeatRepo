@@ -25,7 +25,7 @@
           }
         </div>
         <div class="flex align-center">
-          <img ngSrc="assets/images/icons/warning.svg" height="28" width="28" class="mr-10" aria-hidden="true" alt="warning-icon"/>
+          <img [ngSrc]="'assets/images/icons/warning.svg' | iconDarkMode" height="28" width="28" class="mr-10" aria-hidden="true" alt="warning-icon"/>
           <small class="warning-label">{{ 'exportMidi.warning' | translate }}</small>
         </div>
       </div>

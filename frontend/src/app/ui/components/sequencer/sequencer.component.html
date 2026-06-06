@@ -35,7 +35,7 @@
     @for (track of beat.tracks; track track){
       <div class="tracks-name">
         <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
-          <img alt="drum" [ngSrc]="track.midiNote | drumImage" height="28" width="28">
+          <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
         </button>
         <div class="track-name user-select-none medium">
           {{ track.name }}

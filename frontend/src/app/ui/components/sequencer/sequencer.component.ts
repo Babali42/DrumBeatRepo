@@ -29,13 +29,14 @@ import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-expor
 import {IAudioExport} from "../../../domain/ports/i-audio-export";
 import {NgOptimizedImage} from "@angular/common";
 import {DrumImagePipe} from "../../pipes/drum-image.pipe";
+import {IconDarkModePipe} from "../../pipes/icon-dark-mode.pipe";
 
 @Component({
   selector: 'sequencer',
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe]
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe]
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
