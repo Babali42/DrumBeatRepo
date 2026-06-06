@@ -26,6 +26,7 @@
     "validation": {
       "required": "Dateiname ist erforderlich",
       "pattern": "Muss ein gültiger .mid-Dateiname sein (z.B. \"track.mid\")"
-    }
+    },
+    "warning": "Abhängig von Ihrer DAW kann das MIDI-Mapping abweichen und die Percussion nach dem Export nicht übereinstimmen."
   }
 }

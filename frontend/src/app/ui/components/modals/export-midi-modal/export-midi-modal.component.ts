@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, OnChanges, Output, signal, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {TranslatePipe} from "@ngx-translate/core";
 import {BaseExportModalComponent} from "../base-export-modal.component";
 import {MidiExportOptions} from "../../../../domain/export-options/midi-export-options";
@@ -10,7 +10,7 @@ import {MidiFilename, toMidiFilename} from "../../../../domain/filenames/midi.fi
 @Component({
   selector: 'app-export-midi-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslatePipe, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, TranslatePipe, ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './export-midi-modal.component.html',
   styleUrl: '../../../../../styles/modals/modal.base.scss'
 })
