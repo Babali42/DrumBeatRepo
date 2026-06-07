@@ -22,6 +22,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
       .concat('rock/rock', 'rock/variation')
       .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
       .concat('ebm/ebm')
+      .concat('dnb/dnb')
     return from(Effect.runPromise(this.loadAllBeats(files)));
   }
 

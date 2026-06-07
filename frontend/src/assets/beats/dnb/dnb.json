@@ -1,0 +1,31 @@
+{
+  "label": "Drum and Bass",
+  "genre": "Drum and Bass",
+  "bpm": 180,
+  "tracks": [
+    {
+      "name": "Snare",
+      "fileName": "drum-n-bass/snare.wav",
+      "steps": "    X       X       X       X   ",
+      "midiNote": 38
+    },
+    {
+      "name": "Open hats",
+      "fileName": "psytrance/open-hat.wav",
+      "steps": "X X X X X X X X X X X X X X X XX",
+      "midiNote": 42
+    },
+    {
+      "name": "Closed hats",
+      "fileName": "psytrance/closed-hat.wav",
+      "steps": " X X X X X X X   X X X X X X X  ",
+      "midiNote": 42
+    },
+    {
+      "name": "Kick",
+      "fileName": "drum-n-bass/kick.wav",
+      "steps": "X         X     X         X   XX",
+      "midiNote": 36
+    }
+  ]
+}
