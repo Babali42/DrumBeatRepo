@@ -1,0 +1,38 @@
+{
+  "label": "(new) Basic Dnb Drum Pattern",
+  "genre": "(new) Drum and Bass",
+  "bpm": 180,
+  "source": "https://www.studiobrootle.com/drum-and-bass-drum-patterns/",
+  "tracks": [
+    {
+      "name": "Ghost snare",
+      "fileName": "techno/snare.wav",
+      "steps": "       X               X X      ",
+      "midiNote": 40
+    },
+    {
+      "name": "Main snare",
+      "fileName": "drum-n-bass/snare.wav",
+      "steps": "    X       X       X       X   ",
+      "midiNote": 38
+    },
+    {
+      "name": "Open hats",
+      "fileName": "psytrance/open-hat.wav",
+      "steps": "                          X   X ",
+      "midiNote": 42
+    },
+    {
+      "name": "Closed hats",
+      "fileName": "techno/hat.wav",
+      "steps": "X X X X X X X X X X X X X   X   ",
+      "midiNote": 42
+    },
+    {
+      "name": "Kick",
+      "fileName": "drum-n-bass/kick.wav",
+      "steps": "X         X     X         X     ",
+      "midiNote": 36
+    }
+  ]
+}
