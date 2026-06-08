@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24 # Ensure this matches your project's Node.js version
+          node-version: 26 # Ensure this matches your project's Node.js version
 
       - name: Test
         uses: ./.github/actions/test/

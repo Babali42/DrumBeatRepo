@@ -1,5 +1,5 @@
 import {Option} from "effect";
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../../domain/beat';
 import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
@@ -36,7 +36,8 @@ import {IconDarkModePipe} from "../../pipes/icon-dark-mode.pipe";
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe]
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
