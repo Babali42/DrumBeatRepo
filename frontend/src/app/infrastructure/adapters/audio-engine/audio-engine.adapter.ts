@@ -68,7 +68,7 @@ export class AudioEngineAdapter implements IAudioEngine {
       toleranceEarly: 0.1
     }) as WAAClock;
     this.clock = Option.some(clockInstance);
-    (clockInstance as any).start();
+    clockInstance.start();
 
     const {stepDuration, numberOfSteps} = this.tempoService;
     let last = -1;
