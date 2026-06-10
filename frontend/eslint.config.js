@@ -123,13 +123,14 @@ export default [
 
   // Test files - more relaxed rules
   {
-    files: ['**/*.spec.ts', '**/*.test.ts'],
+    files: ['**/*.spec.ts', '**/*.spec.vite.ts'],
     rules: {
       'functional/immutable-data': 'off',
       'functional/no-mixed-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
 
