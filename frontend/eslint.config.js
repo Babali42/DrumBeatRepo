@@ -121,16 +121,31 @@ export default [
     },
   },
 
-  // Test files - more relaxed rules
+  // Test files - minimal lint (only structural/error-catching rules)
   {
     files: ['**/*.spec.ts', '**/*.spec.vite.ts'],
     rules: {
+      // Unused variables/params are common in tests (mocks, stubs, etc.)
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      // Functional rules are too strict for test patterns
+      'functional/no-let': 'off',
       'functional/immutable-data': 'off',
       'functional/no-mixed-types': 'off',
+      'functional/type-declaration-immutability': 'off',
+      'functional/prefer-readonly-type': 'off',
+      'functional/prefer-property-signatures': 'off',
+      // TypeScript strict rules that conflict with test patterns
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     },
   },
 

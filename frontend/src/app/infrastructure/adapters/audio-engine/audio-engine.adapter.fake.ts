@@ -3,10 +3,10 @@ import {Track} from "../../../domain/track";
 import {StepIndex} from "../../../domain/step-index";
 
 export class AudioEngineAdapterFake implements IAudioEngine {
-  disableStep(trackName: string, stepIndex: number): void {
+  disableStep(_trackName: string, _stepIndex: number): void {
   }
 
-  enableStep(trackName: string, stepIndex: number): void {
+  enableStep(_trackName: string, _stepIndex: number): void {
   }
 
   index: StepIndex = StepIndex(0);
@@ -19,10 +19,10 @@ export class AudioEngineAdapterFake implements IAudioEngine {
     this.isPlaying = !this.isPlaying;
   }
 
-  playTrack(trackName: string): void {
+  playTrack(_trackName: string): void {
   }
 
-  setTracks(tracks: readonly Track[]): void {
+  setTracks(_tracks: readonly Track[]): void {
   }
 
 }

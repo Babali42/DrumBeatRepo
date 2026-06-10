@@ -63,6 +63,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   play() {
     this.isPlaying = true;
     this.playStartTime = Seconds(this.context.currentTime);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
     const clockInstance = new (WAAClock as any)(this.context, {
       tickMethod: 'manual',
       toleranceEarly: 0.1
@@ -71,13 +72,12 @@ export class AudioEngineAdapter implements IAudioEngine {
     clockInstance.start();
 
     const {stepDuration, numberOfSteps} = this.tempoService;
-    let last = -1;
     this.timerId = setInterval(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       (clockInstance as any).tick();
       if (this.isPlaying) {
         const elapsed = this.context.currentTime - this.playStartTime;
-        const i = StepIndex(Math.floor(elapsed / stepDuration) % numberOfSteps);
-        if (i !== last) this.index = last = i;
+        this.index = StepIndex(Math.floor(elapsed / stepDuration) % numberOfSteps);
       }
     }, 25);
 
@@ -94,7 +94,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     const trackNames = tracks.map(x => x.name);
 
     const loadPromises = trackNames.map(trackName =>
-      this.audioFilesService.getAudioBuffer(tracks.find(x => x.name == trackName)?.fileName!).then(arrayBuffer => {
+      this.audioFilesService.getAudioBuffer(tracks.find(x => x.name == trackName)!.fileName).then(arrayBuffer => {
         if (Option.isNone(arrayBuffer))
           return;
 

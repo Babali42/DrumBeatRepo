@@ -149,15 +149,10 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should start index at 0 regardless of absolute AudioContext time', () => {
-    let intervalCallback: () => void = () => {};
-    let intervalId = 0;
-    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
-      intervalCallback = args[0] as () => void;
-      return ++intervalId;
-    });
+    spyOn(window, 'setInterval').and.returnValue(1);
     spyOn(window, 'clearInterval');
 
-    let mockCurrentTime = 100.5;
+    const mockCurrentTime = 100.5;
     Object.defineProperty(mockContext, 'currentTime', {
       get: () => mockCurrentTime,
       configurable: true
@@ -200,7 +195,7 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should call getNextStepTime with elapsed time relative to playStartTime', () => {
-    let mockCurrentTime = 100.5;
+    const mockCurrentTime = 100.5;
     Object.defineProperty(mockContext, 'currentTime', {
       get: () => mockCurrentTime,
       configurable: true

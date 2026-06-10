@@ -6,7 +6,7 @@ import {MidiExportService} from "./midi-exporter.service";
 describe('Midi Export', () => {
   it('should define trackName, tempo and signature', () => {
     //Arrange
-    let beat = {
+    const beat = {
       label: "Techno",
       genre: "FromBerlin",
       bpm: BPM(128),

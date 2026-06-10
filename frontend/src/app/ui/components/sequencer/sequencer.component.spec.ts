@@ -10,7 +10,6 @@ import {
 } from "../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
 import {Beat} from "../../../domain/beat";
-import {Track} from "../../../domain/track";
 import {Steps} from "../../../domain/steps";
 import {NumberOfSteps} from "../../../domain/number-of-steps";
 import {BPM} from "../../../domain/bpm";
@@ -45,8 +44,8 @@ describe('SequencerComponent', () => {
                 "numberOfSteps": NumberOfSteps.sixteen,
                 "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
               }
-            ] as ReadonlyArray<Track>
-          } as Beat,
+            ]
+          },
           {
             "label": "Techno2",
             "genre": "Techno",
@@ -59,8 +58,8 @@ describe('SequencerComponent', () => {
                 "numberOfSteps": NumberOfSteps.sixteen,
                 "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
               }
-            ] as ReadonlyArray<Track>
-          } as Beat
+            ]
+          }
         ]);
       }
     };

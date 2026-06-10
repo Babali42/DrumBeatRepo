@@ -30,7 +30,6 @@ describe('Compact beat mapper tests', () => {
   });
 
   it("Should map compact beat to beat", async () => {
-    // @ts-ignore
     const compactBeat: any = {
       "label": "Metal",
       "genre": "Metal",
