@@ -6,6 +6,7 @@ import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {StepIndex} from "../../../domain/step-index";
 import {Option} from "effect";
+import {Seconds} from "../../../domain/seconds";
 
 describe('AudioEngineAdapter', () => {
   let mockContext: jasmine.SpyObj<AudioContext>;
@@ -145,5 +146,70 @@ describe('AudioEngineAdapter', () => {
     mockCurrentTime = mockTempoService.stepDuration * mockTempoService.numberOfSteps;
     intervalCallback();
     expect(adapter.index).toBe(StepIndex(0));
+  });
+
+  it('should start index at 0 regardless of absolute AudioContext time', () => {
+    let intervalCallback: () => void = () => {};
+    let intervalId = 0;
+    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
+      intervalCallback = args[0] as () => void;
+      return ++intervalId;
+    });
+    spyOn(window, 'clearInterval');
+
+    let mockCurrentTime = 100.5;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    adapter.play();
+
+    expect(adapter.index).toBe(StepIndex(0));
+
+    adapter.pause();
+  });
+
+  it('should advance index relative to playStartTime, not absolute time', () => {
+    let intervalCallback: () => void = () => {};
+    let intervalId = 0;
+    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
+      intervalCallback = args[0] as () => void;
+      return ++intervalId;
+    });
+    spyOn(window, 'clearInterval');
+
+    let mockCurrentTime = 100.5;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    adapter.play();
+    expect(adapter.index).toBe(StepIndex(0));
+
+    mockCurrentTime = 100.5 + mockTempoService.stepDuration;
+    intervalCallback();
+    expect(adapter.index).toBe(StepIndex(1));
+
+    mockCurrentTime = 100.5 + 2 * mockTempoService.stepDuration;
+    intervalCallback();
+    expect(adapter.index).toBe(StepIndex(2));
+
+    adapter.pause();
+  });
+
+  it('should call getNextStepTime with elapsed time relative to playStartTime', () => {
+    let mockCurrentTime = 100.5;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    const spy = spyOn(mockTempoService, 'getNextStepTime').and.returnValue(0);
+
+    adapter.play();
+
+    expect(spy).toHaveBeenCalledWith(Seconds(0), StepIndex(0));
   });
 });

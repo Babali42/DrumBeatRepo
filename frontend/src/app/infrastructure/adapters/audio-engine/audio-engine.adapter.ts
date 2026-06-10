@@ -23,6 +23,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   private clock: Option.Option<WAAClock> = Option.none();
   private timerId: ReturnType<typeof setInterval> | null = null;
+  private playStartTime: Seconds = Seconds(0);
 
   private readonly _index = signal(StepIndex(0));
   get index(): StepIndex { return this._index(); }
@@ -61,6 +62,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   play() {
     this.isPlaying = true;
+    this.playStartTime = Seconds(this.context.currentTime);
     const clockInstance = new (WAAClock as any)(this.context, {
       tickMethod: 'manual',
       toleranceEarly: 0.1
@@ -73,7 +75,8 @@ export class AudioEngineAdapter implements IAudioEngine {
     this.timerId = setInterval(() => {
       (clockInstance as any).tick();
       if (this.isPlaying) {
-        const i = StepIndex(Math.floor(this.context.currentTime / stepDuration) % numberOfSteps);
+        const elapsed = this.context.currentTime - this.playStartTime;
+        const i = StepIndex(Math.floor(elapsed / stepDuration) % numberOfSteps);
         if (i !== last) this.index = last = i;
       }
     }, 25);
@@ -123,6 +126,8 @@ export class AudioEngineAdapter implements IAudioEngine {
     if (Option.isNone(this.clock))
       return;
 
+    const elapsed = this.context.currentTime - this.playStartTime;
+    const absoluteDeadline = this.playStartTime + this.tempoService.getNextStepTime(Seconds(elapsed), stepIndex);
     const event = Option.getOrThrow(this.clock).callbackAtTime((event: WAAClock.Event) => {
       const builder = this.trackSampleBuilderMap.get(trackName);
 
@@ -131,7 +136,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
       const bufferNode = builder();
       bufferNode.start(event.deadline);
-    }, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), stepIndex));
+    }, absoluteDeadline);
     event.repeat(this.tempoService.barDuration);
 
     if (!this.trackStepMap.get(trackName)) this.trackStepMap.set(trackName, new Map());
