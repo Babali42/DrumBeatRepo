@@ -22,7 +22,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   private tracks: readonly Track[] = [];
 
   private clock: Option.Option<WAAClock> = Option.none();
-  private rafHandle: number | null = null;
+  private timerId: ReturnType<typeof setInterval> | null = null;
 
   private readonly _index = signal(StepIndex(0));
   get index(): StepIndex { return this._index(); }
@@ -37,14 +37,17 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   readonly pause = () => {
     this.isPlaying = false;
-    if (this.rafHandle !== null) {
-      cancelAnimationFrame(this.rafHandle);
-      this.rafHandle = null;
+    if (this.timerId !== null) {
+      clearInterval(this.timerId);
+      this.timerId = null;
     }
-    Option.match(this.clock, {
-      onSome: (clock) => { clock.stop() },
-      onNone: () => ""
-    } )
+    for (const [, stepMap] of this.trackStepMap) {
+      for (const [, event] of stepMap) {
+        event.clear();
+      }
+    }
+    this.trackStepMap.clear();
+    this.clock = Option.none();
   };
 
   private resumeAudioContext() {
@@ -64,19 +67,16 @@ export class AudioEngineAdapter implements IAudioEngine {
     }) as WAAClock;
     this.clock = Option.some(clockInstance);
     (clockInstance as any).start();
-    (clockInstance as any)._clockNode = { disconnect: () => {} };
 
     const {stepDuration, numberOfSteps} = this.tempoService;
     let last = -1;
-    const tick = () => {
+    this.timerId = setInterval(() => {
       (clockInstance as any).tick();
       if (this.isPlaying) {
         const i = StepIndex(Math.floor(this.context.currentTime / stepDuration) % numberOfSteps);
         if (i !== last) this.index = last = i;
       }
-      this.rafHandle = requestAnimationFrame(tick);
-    };
-    this.rafHandle = requestAnimationFrame(tick);
+    }, 25);
 
     this.tracks.forEach(t => t.steps.steps.forEach((s, i) => {
       if (s) this.enableStep(t.name, StepIndex(i));

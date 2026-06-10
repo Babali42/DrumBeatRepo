@@ -70,13 +70,13 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should update index step by step during playback as AudioContext time advances', () => {
-    let rafCallback: FrameRequestCallback | null = null;
-    let rafId = 0;
-    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
-      rafCallback = cb;
-      return ++rafId;
+    let intervalCallback: () => void = () => {};
+    let intervalId = 0;
+    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
+      intervalCallback = args[0] as () => void;
+      return ++intervalId;
     });
-    spyOn(window, 'cancelAnimationFrame');
+    spyOn(window, 'clearInterval');
 
     let mockCurrentTime = 0;
     Object.defineProperty(mockContext, 'currentTime', {
@@ -88,11 +88,10 @@ describe('AudioEngineAdapter', () => {
 
     expect(adapter.isPlaying).toBeTrue();
     expect(adapter.index).toBe(StepIndex(0));
-    expect(rafCallback).not.toBeNull();
 
     for (let step = 1; step < mockTempoService.numberOfSteps; step++) {
       mockCurrentTime = mockTempoService.stepDuration * step;
-      rafCallback!(mockCurrentTime);
+      intervalCallback();
       expect(adapter.index).toBe(StepIndex(step));
     }
 
@@ -101,13 +100,13 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should not update index when paused even if time advances', () => {
-    let rafCallback: FrameRequestCallback | null = null;
-    let rafId = 0;
-    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
-      rafCallback = cb;
-      return ++rafId;
+    let intervalCallback: () => void = () => {};
+    let intervalId = 0;
+    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
+      intervalCallback = args[0] as () => void;
+      return ++intervalId;
     });
-    spyOn(window, 'cancelAnimationFrame');
+    spyOn(window, 'clearInterval');
 
     let mockCurrentTime = 0;
     Object.defineProperty(mockContext, 'currentTime', {
@@ -117,24 +116,23 @@ describe('AudioEngineAdapter', () => {
 
     adapter.play();
     expect(adapter.isPlaying).toBeTrue();
-    expect(rafCallback).not.toBeNull();
 
     adapter.pause();
     expect(adapter.isPlaying).toBeFalse();
 
     mockCurrentTime = mockTempoService.stepDuration * 5;
-    rafCallback!(mockCurrentTime);
+    intervalCallback();
     expect(adapter.index).toBe(StepIndex(0));
   });
 
   it('should wrap index around when reaching total number of steps', () => {
-    let rafCallback: FrameRequestCallback | null = null;
-    let rafId = 0;
-    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
-      rafCallback = cb;
-      return ++rafId;
+    let intervalCallback: () => void = () => {};
+    let intervalId = 0;
+    spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
+      intervalCallback = args[0] as () => void;
+      return ++intervalId;
     });
-    spyOn(window, 'cancelAnimationFrame');
+    spyOn(window, 'clearInterval');
 
     let mockCurrentTime = 0;
     Object.defineProperty(mockContext, 'currentTime', {
@@ -145,7 +143,7 @@ describe('AudioEngineAdapter', () => {
     adapter.play();
 
     mockCurrentTime = mockTempoService.stepDuration * mockTempoService.numberOfSteps;
-    rafCallback!(mockCurrentTime);
+    intervalCallback();
     expect(adapter.index).toBe(StepIndex(0));
   });
 });
