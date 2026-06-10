@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from "@angular/core";
+import {Injectable, signal} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
@@ -12,7 +12,7 @@ import {StepIndex} from "../../../domain/step-index";
   providedIn: 'root'
 })
 export class AudioEngineAdapter implements IAudioEngine {
-  constructor(private readonly zone: NgZone, private readonly tempoService: TempoAdapterService) {
+  constructor(private readonly tempoService: TempoAdapterService) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
@@ -22,8 +22,13 @@ export class AudioEngineAdapter implements IAudioEngine {
   private tracks: readonly Track[] = [];
 
   private clock: Option.Option<WAAClock> = Option.none();
+  private timerId: ReturnType<typeof setInterval> | null = null;
+  private playStartTime: Seconds = Seconds(0);
 
-  index: StepIndex = StepIndex(0);
+  private readonly _index = signal(StepIndex(0));
+  get index(): StepIndex { return this._index(); }
+  set index(v: StepIndex) { this._index.set(v); }
+
   isPlaying = false;
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
@@ -33,17 +38,17 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   readonly pause = () => {
     this.isPlaying = false;
-    Option.match(this.clock, {
-      onSome: (clock) => { clock.stop() },
-      onNone: () => ""
-    } )
-  };
-
-  private readonly uiNextStep = () => {
-    this.zone.run(() => {
-      const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
-      this.index = StepIndex(stepPosition % this.tempoService.numberOfSteps);
-    });
+    if (this.timerId !== null) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    }
+    for (const [, stepMap] of this.trackStepMap) {
+      for (const [, event] of stepMap) {
+        event.clear();
+      }
+    }
+    this.trackStepMap.clear();
+    this.clock = Option.none();
   };
 
   private resumeAudioContext() {
@@ -57,20 +62,28 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   play() {
     this.isPlaying = true;
-    this.clock = Option.some(new WAAClock(this.context, {toleranceEarly: 0.1}));
-    const clockInstance = Option.getOrThrow(this.clock);
+    this.playStartTime = Seconds(this.context.currentTime);
+    const clockInstance = new (WAAClock as any)(this.context, {
+      tickMethod: 'manual',
+      toleranceEarly: 0.1
+    }) as WAAClock;
+    this.clock = Option.some(clockInstance);
     clockInstance.start();
 
-    this.tracks.forEach((track) => {
-      track.steps.steps.forEach((step, index) => {
-        if (step)
-          this.enableStep(track.name, StepIndex(index));
-      })
-    })
+    const {stepDuration, numberOfSteps} = this.tempoService;
+    let last = -1;
+    this.timerId = setInterval(() => {
+      (clockInstance as any).tick();
+      if (this.isPlaying) {
+        const elapsed = this.context.currentTime - this.playStartTime;
+        const i = StepIndex(Math.floor(elapsed / stepDuration) % numberOfSteps);
+        if (i !== last) this.index = last = i;
+      }
+    }, 25);
 
-    clockInstance.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), StepIndex(0)))
-      .repeat(this.tempoService.stepDuration)
-      .tolerance({late: 100})
+    this.tracks.forEach(t => t.steps.steps.forEach((s, i) => {
+      if (s) this.enableStep(t.name, StepIndex(i));
+    }));
   }
 
   setTracks(tracks: readonly Track[]) {
@@ -113,6 +126,8 @@ export class AudioEngineAdapter implements IAudioEngine {
     if (Option.isNone(this.clock))
       return;
 
+    const elapsed = this.context.currentTime - this.playStartTime;
+    const absoluteDeadline = this.playStartTime + this.tempoService.getNextStepTime(Seconds(elapsed), stepIndex);
     const event = Option.getOrThrow(this.clock).callbackAtTime((event: WAAClock.Event) => {
       const builder = this.trackSampleBuilderMap.get(trackName);
 
@@ -121,7 +136,7 @@ export class AudioEngineAdapter implements IAudioEngine {
 
       const bufferNode = builder();
       bufferNode.start(event.deadline);
-    }, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), stepIndex));
+    }, absoluteDeadline);
     event.repeat(this.tempoService.barDuration);
 
     if (!this.trackStepMap.get(trackName)) this.trackStepMap.set(trackName, new Map());
