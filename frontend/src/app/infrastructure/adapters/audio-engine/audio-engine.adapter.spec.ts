@@ -4,13 +4,13 @@ import {Steps} from "../../../domain/steps";
 import {NumberOfSteps} from "../../../domain/number-of-steps";
 import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
+import {StepIndex} from "../../../domain/step-index";
 import {Option} from "effect";
 
 describe('AudioEngineAdapter', () => {
   let mockContext: jasmine.SpyObj<AudioContext>;
   let mockBufferSourceNode: jasmine.SpyObj<AudioBufferSourceNode>;
   let adapter: AudioEngineAdapter;
-  let mockNgZone: any;
   let mockTempoService: any;
 
   beforeEach(() => {
@@ -30,7 +30,6 @@ describe('AudioEngineAdapter', () => {
 
     spyOn(window, 'AudioContext').and.returnValue(mockContext);
 
-    mockNgZone = { run: (fn: Function) => fn() };
     mockTempoService = {
       bpm: BPM(128),
       stepDuration: 0.125,
@@ -39,7 +38,7 @@ describe('AudioEngineAdapter', () => {
       getNextStepTime: () => 0
     };
 
-    adapter = new AudioEngineAdapter(mockNgZone, mockTempoService);
+    adapter = new AudioEngineAdapter(mockTempoService);
 
     const track: Track = {
       name: 'Kick',
@@ -68,5 +67,85 @@ describe('AudioEngineAdapter', () => {
     adapter.playTrack('Unknown Track');
 
     expect(mockBufferSourceNode.start).not.toHaveBeenCalled();
+  });
+
+  it('should update index step by step during playback as AudioContext time advances', () => {
+    let rafCallback: FrameRequestCallback | null = null;
+    let rafId = 0;
+    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
+      rafCallback = cb;
+      return ++rafId;
+    });
+    spyOn(window, 'cancelAnimationFrame');
+
+    let mockCurrentTime = 0;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    adapter.play();
+
+    expect(adapter.isPlaying).toBeTrue();
+    expect(adapter.index).toBe(StepIndex(0));
+    expect(rafCallback).not.toBeNull();
+
+    for (let step = 1; step < mockTempoService.numberOfSteps; step++) {
+      mockCurrentTime = mockTempoService.stepDuration * step;
+      rafCallback!(mockCurrentTime);
+      expect(adapter.index).toBe(StepIndex(step));
+    }
+
+    adapter.pause();
+    expect(adapter.isPlaying).toBeFalse();
+  });
+
+  it('should not update index when paused even if time advances', () => {
+    let rafCallback: FrameRequestCallback | null = null;
+    let rafId = 0;
+    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
+      rafCallback = cb;
+      return ++rafId;
+    });
+    spyOn(window, 'cancelAnimationFrame');
+
+    let mockCurrentTime = 0;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    adapter.play();
+    expect(adapter.isPlaying).toBeTrue();
+    expect(rafCallback).not.toBeNull();
+
+    adapter.pause();
+    expect(adapter.isPlaying).toBeFalse();
+
+    mockCurrentTime = mockTempoService.stepDuration * 5;
+    rafCallback!(mockCurrentTime);
+    expect(adapter.index).toBe(StepIndex(0));
+  });
+
+  it('should wrap index around when reaching total number of steps', () => {
+    let rafCallback: FrameRequestCallback | null = null;
+    let rafId = 0;
+    spyOn(window, 'requestAnimationFrame').and.callFake((cb: FrameRequestCallback) => {
+      rafCallback = cb;
+      return ++rafId;
+    });
+    spyOn(window, 'cancelAnimationFrame');
+
+    let mockCurrentTime = 0;
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => mockCurrentTime,
+      configurable: true
+    });
+
+    adapter.play();
+
+    mockCurrentTime = mockTempoService.stepDuration * mockTempoService.numberOfSteps;
+    rafCallback!(mockCurrentTime);
+    expect(adapter.index).toBe(StepIndex(0));
   });
 });

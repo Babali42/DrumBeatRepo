@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from "@angular/core";
+import {Injectable, signal, WritableSignal} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
@@ -12,7 +12,7 @@ import {StepIndex} from "../../../domain/step-index";
   providedIn: 'root'
 })
 export class AudioEngineAdapter implements IAudioEngine {
-  constructor(private readonly zone: NgZone, private readonly tempoService: TempoAdapterService) {
+  constructor(private readonly tempoService: TempoAdapterService) {
     this.context = new AudioContext();
     document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
   }
@@ -22,8 +22,12 @@ export class AudioEngineAdapter implements IAudioEngine {
   private tracks: readonly Track[] = [];
 
   private clock: Option.Option<WAAClock> = Option.none();
+  private rafHandle: number | null = null;
 
-  index: StepIndex = StepIndex(0);
+  private readonly _indexSignal: WritableSignal<StepIndex> = signal(StepIndex(0));
+  get index(): StepIndex { return this._indexSignal(); }
+  set index(value: StepIndex) { this._indexSignal.set(value); }
+
   isPlaying = false;
 
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
@@ -33,17 +37,14 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   readonly pause = () => {
     this.isPlaying = false;
+    if (this.rafHandle !== null) {
+      cancelAnimationFrame(this.rafHandle);
+      this.rafHandle = null;
+    }
     Option.match(this.clock, {
       onSome: (clock) => { clock.stop() },
       onNone: () => ""
     } )
-  };
-
-  private readonly uiNextStep = () => {
-    this.zone.run(() => {
-      const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
-      this.index = StepIndex(stepPosition % this.tempoService.numberOfSteps);
-    });
   };
 
   private resumeAudioContext() {
@@ -57,9 +58,30 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   play() {
     this.isPlaying = true;
-    this.clock = Option.some(new WAAClock(this.context, {toleranceEarly: 0.1}));
-    const clockInstance = Option.getOrThrow(this.clock);
-    clockInstance.start();
+    const clockInstance = new (WAAClock as any)(this.context, {
+      tickMethod: 'manual',
+      toleranceEarly: 0.1
+    }) as WAAClock;
+    this.clock = Option.some(clockInstance);
+    (clockInstance as any).start();
+    (clockInstance as any)._clockNode = { disconnect: () => {} };
+
+    let lastStepIndex = -1;
+    const tick = () => {
+      (clockInstance as any).tick();
+
+      if (this.isPlaying) {
+        const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
+        const currentStep = StepIndex(stepPosition % this.tempoService.numberOfSteps);
+        if (currentStep !== lastStepIndex) {
+          lastStepIndex = currentStep;
+          this.index = currentStep;
+        }
+      }
+
+      this.rafHandle = requestAnimationFrame(tick);
+    };
+    this.rafHandle = requestAnimationFrame(tick);
 
     this.tracks.forEach((track) => {
       track.steps.steps.forEach((step, index) => {
@@ -67,10 +89,6 @@ export class AudioEngineAdapter implements IAudioEngine {
           this.enableStep(track.name, StepIndex(index));
       })
     })
-
-    clockInstance.callbackAtTime(this.uiNextStep, this.tempoService.getNextStepTime(Seconds(this.context.currentTime), StepIndex(0)))
-      .repeat(this.tempoService.stepDuration)
-      .tolerance({late: 100})
   }
 
   setTracks(tracks: readonly Track[]) {

@@ -183,13 +183,15 @@ describe('SequencerComponent', () => {
     expect(component.soundService.isPlaying).toBeTrue();
 
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-    expect(stepButtons[0].nativeElement.classList.contains('current')).toBeTrue();
 
-    (component.soundService as AudioEngineAdapterFake).index = StepIndex(1);
-    fixture.detectChanges();
+    for (let i = 0; i < stepButtons.length; i++) {
+      (component.soundService as AudioEngineAdapterFake).index = StepIndex(i);
+      fixture.detectChanges();
 
-    expect(stepButtons[1].nativeElement.classList.contains('current')).toBeTrue();
-    expect(stepButtons[0].nativeElement.classList.contains('current')).toBeFalse();
+      stepButtons.forEach((btn, index) => {
+        expect(btn.nativeElement.classList.contains('current')).toBe(index === i);
+      });
+    }
   });
 
   it("Should call export audio adapter on modal validation", async () => {
