@@ -1,4 +1,4 @@
-import {Injectable, signal, WritableSignal} from "@angular/core";
+import {Injectable, signal} from "@angular/core";
 import WAAClock from "waaclock";
 import {AudioFilesService} from "./files/audio-files.service";
 import {Track} from "src/app/domain/track";
@@ -24,9 +24,9 @@ export class AudioEngineAdapter implements IAudioEngine {
   private clock: Option.Option<WAAClock> = Option.none();
   private rafHandle: number | null = null;
 
-  private readonly _indexSignal: WritableSignal<StepIndex> = signal(StepIndex(0));
-  get index(): StepIndex { return this._indexSignal(); }
-  set index(value: StepIndex) { this._indexSignal.set(value); }
+  private readonly _index = signal(StepIndex(0));
+  get index(): StepIndex { return this._index(); }
+  set index(v: StepIndex) { this._index.set(v); }
 
   isPlaying = false;
 
@@ -66,29 +66,21 @@ export class AudioEngineAdapter implements IAudioEngine {
     (clockInstance as any).start();
     (clockInstance as any)._clockNode = { disconnect: () => {} };
 
-    let lastStepIndex = -1;
+    const {stepDuration, numberOfSteps} = this.tempoService;
+    let last = -1;
     const tick = () => {
       (clockInstance as any).tick();
-
       if (this.isPlaying) {
-        const stepPosition = Math.floor(this.context.currentTime / this.tempoService.stepDuration);
-        const currentStep = StepIndex(stepPosition % this.tempoService.numberOfSteps);
-        if (currentStep !== lastStepIndex) {
-          lastStepIndex = currentStep;
-          this.index = currentStep;
-        }
+        const i = StepIndex(Math.floor(this.context.currentTime / stepDuration) % numberOfSteps);
+        if (i !== last) this.index = last = i;
       }
-
       this.rafHandle = requestAnimationFrame(tick);
     };
     this.rafHandle = requestAnimationFrame(tick);
 
-    this.tracks.forEach((track) => {
-      track.steps.steps.forEach((step, index) => {
-        if (step)
-          this.enableStep(track.name, StepIndex(index));
-      })
-    })
+    this.tracks.forEach(t => t.steps.steps.forEach((s, i) => {
+      if (s) this.enableStep(t.name, StepIndex(i));
+    }));
   }
 
   setTracks(tracks: readonly Track[]) {

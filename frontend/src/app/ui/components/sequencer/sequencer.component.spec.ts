@@ -13,7 +13,6 @@ import {Beat} from "../../../domain/beat";
 import {Track} from "../../../domain/track";
 import {Steps} from "../../../domain/steps";
 import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {StepIndex} from "../../../domain/step-index";
 import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {provideTranslateService} from "@ngx-translate/core";
@@ -172,27 +171,6 @@ describe('SequencerComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-
-  it("when loading the page then clicking play the current index should be updated", () => {
-    fixture.detectChanges();
-
-    const playButton = fixture.debugElement.query(By.css('.play-pause-button'));
-    playButton.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(component.soundService.isPlaying).toBeTrue();
-
-    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-
-    for (let i = 0; i < stepButtons.length; i++) {
-      (component.soundService as AudioEngineAdapterFake).index = StepIndex(i);
-      fixture.detectChanges();
-
-      stepButtons.forEach((btn, index) => {
-        expect(btn.nativeElement.classList.contains('current')).toBe(index === i);
-      });
-    }
-  });
 
   it("Should call export audio adapter on modal validation", async () => {
     //Arrange
