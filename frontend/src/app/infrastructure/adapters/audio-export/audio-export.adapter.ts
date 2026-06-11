@@ -73,7 +73,7 @@ export class AudioExportAdapter implements IAudioExport {
     return buffers;
   }
 
-  private getMaxBufferDuration(buffers: Map<string, ArrayBuffer>): number {
+  private getMaxBufferDuration(buffers: ReadonlyMap<string, ArrayBuffer>): number {
     let maxDuration = 0;
     buffers.forEach((arrayBuffer) => {
       const duration = arrayBuffer.byteLength / (44100 * 2 * 2);

@@ -16,7 +16,7 @@ import {toWavFilename, WavFilename} from "../../../../domain/filenames/wav.filep
 export class ExportAudioModalComponent extends BaseExportModalComponent<AudioExportOptions> implements OnChanges {
   private readonly fb = inject(FormBuilder);
 
-  loopCounts: number[] = [1, 2, 4];
+  loopCounts: readonly number[] = [1, 2, 4];
 
   @Input() override isOpen: boolean = false;
   @Input() override beatName: string = "file";
@@ -25,6 +25,7 @@ export class ExportAudioModalComponent extends BaseExportModalComponent<AudioExp
   @Output() override export = new EventEmitter<AudioExportOptions>();
   form = this.fb.nonNullable.group({
     fileName: new FormControl<WavFilename>(toWavFilename(this.beatName + ".wav"), [
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
       Validators.pattern(/^[^.].+\.wav$/i)
     ]),

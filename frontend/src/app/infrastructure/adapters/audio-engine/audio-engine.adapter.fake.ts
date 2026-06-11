@@ -4,9 +4,13 @@ import {StepIndex} from "../../../domain/step-index";
 
 export class AudioEngineAdapterFake implements IAudioEngine {
   disableStep(_trackName: string, _stepIndex: number): void {
+    void _trackName;
+    void _stepIndex;
   }
 
   enableStep(_trackName: string, _stepIndex: number): void {
+    void _trackName;
+    void _stepIndex;
   }
 
   index: StepIndex = StepIndex(0);
@@ -20,9 +24,11 @@ export class AudioEngineAdapterFake implements IAudioEngine {
   }
 
   playTrack(_trackName: string): void {
+    void _trackName;
   }
 
   setTracks(_tracks: readonly Track[]): void {
+    void _tracks;
   }
 
 }

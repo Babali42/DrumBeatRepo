@@ -16,7 +16,8 @@ export class IconDarkModePipe implements PipeTransform, OnDestroy {
     this.subscription = this.modeToggleService.modeChanged$.subscribe(x => this.mode = x);
   }
 
-  transform(value: string, ..._args: unknown[]): string {
+  transform(value: string, ..._args: readonly unknown[]): string {
+    void _args;
     return value.replace(".svg", `-${this.mode == Mode.LIGHT ? "light" : "dark"}.svg`);
   }
 

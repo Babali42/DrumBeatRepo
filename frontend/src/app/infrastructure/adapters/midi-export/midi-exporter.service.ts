@@ -2,25 +2,34 @@ import { Injectable } from '@angular/core';
 import { IMidi } from '../../../domain/ports/i-midi';
 import {Beat} from "../../../domain/beat";
 import {Option} from "effect";
-// @ts-ignore
+// @ts-expect-error: midi-writer-js has no type declarations
 import MidiWriter from 'midi-writer-js';
 
 @Injectable()
 export class MidiExportService implements IMidi {
-  async exportBeat(beat: Beat): Promise<Blob> {
+  exportBeat(beat: Beat): Promise<Blob> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const track = this.getTrack(beat);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const writer = new MidiWriter.Writer(track);
-    return new Blob([writer.buildFile()], { type: 'audio/midi' });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    return Promise.resolve(new Blob([writer.buildFile()], { type: 'audio/midi' }));
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public getTrack : (beat: Beat) => any = (beat: Beat) : any => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const midiTrack = new MidiWriter.Track();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     midiTrack.addTrackName(beat.label);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     midiTrack.setTempo(beat.bpm.valueOf());
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     midiTrack.setTimeSignature(4, 4);
 
     const TICKS_PER_STEP = 32;
-    const events: { tick: number; event: MidiWriter.NoteEvent }[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const events: { tick: number; event: any }[] = [];
 
     for (const track of beat.tracks) {
       if (Option.isNone(track.midiNote)) {
@@ -41,6 +50,7 @@ export class MidiExportService implements IMidi {
 
         events.push({
           tick,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           event: new MidiWriter.NoteEvent({
             pitch: [midiNote],
             startTick: tick,
@@ -54,6 +64,7 @@ export class MidiExportService implements IMidi {
 
     events.sort((a, b) => a.tick - b.tick);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
     midiTrack.addEvent(events.map(e => e.event));
 
     return midiTrack;

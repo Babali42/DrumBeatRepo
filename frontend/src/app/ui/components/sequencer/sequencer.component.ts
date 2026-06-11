@@ -86,13 +86,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
       for (const beat of beats) {
         if (!this.genres.has(beat.genre))
-          this.genres.set(beat.genre, []);
-        this.genres.get(beat.genre)!.push(beat);
+          this.genres.set(beat.genre, [beat]);
+        else
+          this.genres.get(beat.genre)!.push(beat);
       }
 
       this.genresLabel = [...this.genres.keys()];
-      const firstBeat = this.genres.values().next().value!?.[0];
-      this.selectGenre(firstBeat.genre);
+      const firstBeat = this.genres.values().next().value?.[0];
+      if (firstBeat)
+        this.selectGenre(firstBeat.genre);
       this.selectBeat(beats[0]);
     }).catch(() => {
     });

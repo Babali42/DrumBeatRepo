@@ -102,17 +102,17 @@ describe('SequencerComponent', () => {
 
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
     const numberOfActiveStepsBeforeClick = stepButtons.filter(btn =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+       
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+     
     stepButtons[0].nativeElement.click()
 
     fixture.detectChanges();
 
     const numberOfActiveStepsAfterClick = fixture.debugElement.queryAll(By.css('button.step')).filter(btn =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+       
       btn.nativeElement.classList.contains('active')
     ).length;
 
@@ -131,7 +131,7 @@ describe('SequencerComponent', () => {
     fixture.detectChanges();
 
     const modifiedPatternNumberOfClicks = stepButtons.filter(btn =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+       
       btn.nativeElement.classList.contains('active')
     ).length;
 
@@ -151,7 +151,7 @@ describe('SequencerComponent', () => {
 
     const stepButtons2 = fixture.debugElement.queryAll(By.css('button.step'));
     const numberOfStepsAfterBeatChangeAndReset = stepButtons2.filter(btn =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+       
       btn.nativeElement.classList.contains('active')
     ).length;
 

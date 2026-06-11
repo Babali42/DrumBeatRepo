@@ -14,7 +14,7 @@ export class Track {
   readonly numberOfSteps: NumberOfSteps;
   readonly midiNote: Option.Option<MidiDrumType>;
 
-  constructor(name: string, fileName: string, steps: boolean[], midiNote: Option.Option<MidiDrumType> = Option.none()) {
+  constructor(name: string, fileName: string, steps: readonly boolean[], midiNote: Option.Option<MidiDrumType> = Option.none()) {
     if (fileName.toLowerCase().endsWith('.mp3')) {
       this.fileName = toMp3FilePath(fileName);
     } else if (fileName.toLowerCase().endsWith('.wav')) {
