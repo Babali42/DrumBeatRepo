@@ -53,6 +53,7 @@ For more details see [CONTRIBUTING.MD](./CONTRIBUTING.md)
 
 - **Louison** for the ideation of the very first version of this app
 - **Etienne** for the testing and the dub beat pattern
+- **[Damien Musy](https://Damien-musy.fr)** pour la maquette mobile réalisée avec une efficacité redoutable !
 
 ## 📄 License
 
