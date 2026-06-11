@@ -15,8 +15,8 @@ export class AudioExportAdapter implements IAudioExport {
     options: AudioExportOptions
   ): Promise<Blob> {
     const barDurationSeconds = this.tempoService.barDuration;
-    const totalDurationSeconds = barDurationSeconds * options.loopCount;
-    const sampleRate = 44100;
+    var totalDurationSeconds = barDurationSeconds * options.loopCount;
+    var sampleRate = 44100;
 
     const rawBuffers = await this.loadAllBuffers(tracks);
     const maxBufferDuration = this.getMaxBufferDuration(rawBuffers);
