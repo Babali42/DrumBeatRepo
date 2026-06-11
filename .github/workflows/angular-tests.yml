@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
     paths: [ 'frontend/**', '.github/**' ]
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Test
+      - name: Validate
         uses: ./.github/actions/test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
