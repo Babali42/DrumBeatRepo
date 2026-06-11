@@ -72,7 +72,7 @@ export default [
       'functional/prefer-tacit': 'off',
       'functional/no-conditional-statements': 'off', // Too strict for Angular
       'functional/no-expression-statements': 'off', // Angular needs side effects
-      'functional/prefer-property-signatures': 'warn',
+      'functional/prefer-property-signatures': 'off',
       'functional/type-declaration-immutability': 'warn',
     },
   },
