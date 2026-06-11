@@ -41,7 +41,7 @@ describe('JsonLoaderService', () => {
     ];
 
     spyOn(service, 'fromObservable').and.callFake(() =>
-      //@ts-ignore
+      //@ts-expect-error: fromObservable type mismatch
       Effect.tryPromise({ try: () => Promise.resolve(mockResponses) })
     );
 
@@ -51,8 +51,8 @@ describe('JsonLoaderService', () => {
 
   it('should handle missing files gracefully', async () => {
     spyOn(service, 'fromObservable').and.callFake(() =>
-      //@ts-ignore
-      Effect.tryPromise({ try: () => Promise.reject('404') })
+      //@ts-expect-error: fromObservable type mismatch
+      Effect.tryPromise({ try: () => Promise.reject(new Error('404')) })
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['missing.json']));

@@ -18,7 +18,7 @@ export class BeatAdapter implements IManageBeats {
       .pipe(
         map(beats => beats.filter(x => x != null)),
         map(beats => Effect.all(
-          beats.map(b => CompactBeatMapper.toBeatEffect(b!)),
+          beats.map(b => CompactBeatMapper.toBeatEffect(b)),
           { discard: false, mode: 'either' }
         )),
         map(effect => Effect.runSync(effect).filter(x => x._tag === 'Right').map(x => x.right))

@@ -5,7 +5,7 @@ import {BPM} from "../../../domain/bpm";
 import {MidiDrumType} from "../../../domain/midi-drum-type";
 import {Effect, Option} from "effect";
 
-const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as number[];
+const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as readonly number[];
 
 export function isValidMidiDrumType(value: unknown): value is MidiDrumType {
   return typeof value === 'number' && MIDI_DRUM_TYPE_VALUES.includes(value);

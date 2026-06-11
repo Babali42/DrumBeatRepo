@@ -30,10 +30,13 @@ export class ExportMidiModalComponent extends BaseExportModalComponent<MidiExpor
 
   form = this.fb.nonNullable.group({
     fileName: new FormControl<MidiFilename>(toMidiFilename(this.beatName + ".mid"), [
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
       Validators.pattern(/^[^.].+\.mid$/i)
     ]),
-    loopCount: new FormControl<LoopCount>(1, [Validators.required]),
+    loopCount: new FormControl<LoopCount>(1, [
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      Validators.required]),
   })
 
   constructor() {

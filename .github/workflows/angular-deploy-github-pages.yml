@@ -2,42 +2,57 @@ name: Deploy Angular App to GitHub Pages
 
 permissions:
   contents: write
+  security-events: write
 
 on:
   push:
     branches:
-      - main # Adjust this to your default branch
+      - main
+
 jobs:
-  build-and-deploy:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 26 # Ensure this matches your project's Node.js version
-
-      - name: Test
-        uses: ./.github/actions/test/
+      - uses: ./.github/actions/test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Install Dependencies
-        run: npm install
+  build:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '26'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
         working-directory: frontend/
 
-      - name: Build Angular App
-        run: npm run build -- --output-path ../dist
+      - run: npm run build -- --output-path ../dist
         working-directory: frontend/
 
-      - name: Copy CNAME file
-        run: |
-          echo "www.drumbeatrepo.com" > dist/browser/CNAME
+      - run: echo "www.drumbeatrepo.com" > dist/browser/CNAME
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/browser/
+
+  deploy:
+    needs: [validate, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist/browser/
+          publish_dir: ./

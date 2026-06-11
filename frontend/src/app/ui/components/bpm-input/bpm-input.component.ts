@@ -21,6 +21,7 @@ export class BpmInputComponent {
 
   form = this.fb.group({
     bpm: [this.bpm(), [
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
       Validators.min(minBpm),
       Validators.max(maxBpm)

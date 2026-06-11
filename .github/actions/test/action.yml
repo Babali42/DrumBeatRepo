@@ -1,5 +1,5 @@
 name: Test
-description: Run Angular/Karma, Vitest, Codecov upload, and i18n verification
+description: Validate Angular project — ESLint, Karma, Vitest, coverage, and i18n
 
 inputs:
   codecov_token:
@@ -16,11 +16,25 @@ runs:
       uses: actions/setup-node@v6
       with:
         node-version: '26'
+        cache: npm
+        cache-dependency-path: frontend/package-lock.json
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
       shell: bash
       working-directory: ./frontend
+
+    - name: Run ESLint
+      run: npx eslint . --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
+      shell: bash
+      working-directory: ./frontend
+
+    - name: Upload ESLint results to GitHub
+      if: always()
+      uses: github/codeql-action/upload-sarif@v4
+      with:
+        sarif_file: frontend/eslint-results.sarif
+        wait-for-processing: true
 
     - name: Run angular/karma tests
       run: npm run test-ci

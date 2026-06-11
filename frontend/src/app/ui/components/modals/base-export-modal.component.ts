@@ -1,5 +1,6 @@
 import {Input, Output, EventEmitter, Directive} from '@angular/core';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BaseExportOptions {
 
 }
