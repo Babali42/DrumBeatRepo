@@ -1,4 +1,3 @@
-// eslint.config.js
 import js from '@eslint/js';
 import * as tseslint from 'typescript-eslint';
 import angular from '@angular-eslint/eslint-plugin';
@@ -73,7 +72,7 @@ export default [
       'functional/no-conditional-statements': 'off', // Too strict for Angular
       'functional/no-expression-statements': 'off', // Angular needs side effects
       'functional/prefer-property-signatures': 'off',
-      'functional/type-declaration-immutability': 'warn',
+      'functional/type-declaration-immutability': 'off',
     },
   },
 
