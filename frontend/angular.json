@@ -37,7 +37,7 @@
               "src/styles/utils.scss",
               "src/styles/styles.scss"
             ],
-            "scripts": [],
+            "scripts": ["engine/main.js"],
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -131,7 +131,7 @@
             "styles": [
               "src/styles/styles.scss"
             ],
-            "scripts": [],
+            "scripts": ["engine/main.js"],
             "karmaConfig": "karma.conf.js"
           }
         }

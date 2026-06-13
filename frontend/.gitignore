@@ -42,3 +42,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /test-results/.last-run.json
+
+# ScalaJS generated code
+/engine
