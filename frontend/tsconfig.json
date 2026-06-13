@@ -33,5 +33,5 @@
     "strictTemplates": true,
     "typeCheckHostBindings": false
   },
-  "exclude": [".eslintrc.js", "karma.conf.js"]
+  "exclude": [".eslintrc.js", "karma.conf.js", "src/**/*.spec.ts"]
 }
