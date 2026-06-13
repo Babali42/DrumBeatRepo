@@ -3,6 +3,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "src/types/engine": [
+        "src/types/engine.js"
+      ]
+    },
     "ignoreDeprecations": "6.0",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -33,5 +38,8 @@
     "strictTemplates": true,
     "typeCheckHostBindings": false
   },
-  "exclude": [".eslintrc.js", "karma.conf.js"]
+  "exclude": [
+    ".eslintrc.js",
+    "karma.conf.js"
+  ]
 }

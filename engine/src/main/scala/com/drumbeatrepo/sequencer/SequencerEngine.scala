@@ -1,8 +1,7 @@
-package com.example.sequencer
+package com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
-import scala.scalajs.js.JSConverters.*
 
 @JSExportTopLevel("SequencerEngine")
 object SequencerEngine:
@@ -13,19 +12,17 @@ object SequencerEngine:
     val command = Command.fromJS(cmd)
     command match
       case Command.Undo | Command.Redo => state = state.dispatch(command)
-      case _                           => state = state.dispatch(command).copy(future = Nil)
+      case _ => state = state.dispatch(command).copy(future = Nil)
 
   @JSExport
   def reset(): Unit =
     state = SequencerState.initial
 
   @JSExport
-  def getState(): js.Object =
-    val stepObjs = state.steps.map: active =>
-      js.Dynamic.literal(active = active)
+  def getState: js.Object =
     js.Dynamic.literal(
-      steps = stepObjs.toJSArray,
-      currentStep = if state.currentStep >= 0 then state.currentStep.asInstanceOf[js.Any] else null,
+      genre = state.genre,
+      beat = state.beat,
       historyLength = state.history.length,
-      futureLength = state.future.length,
+      futureLength = state.future.length
     )

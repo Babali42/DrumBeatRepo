@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
+import { SequencerEngine } from 'src/types/engine';
 
 describe('SequencerService undo', () => {
   let service: SequencerService;
@@ -15,21 +16,22 @@ describe('SequencerService undo', () => {
     return service.state$.getValue();
   }
 
-  it('undoes a single toggle', () => {
-    service.dispatch({ type: 'CHANGE_BEAT', payload: { selectedBeat: "Techo" } });
-    expect(currentState().steps[0].active).toBeTrue();
+  it('undoes a SELECT_BEAT', () => {
+    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techo' } });
+    expect(currentState().beat).toBe('Techo');
 
     service.dispatch({ type: 'UNDO' });
-    expect(currentState().steps[0].active).toBeFalse();
+    expect(currentState().beat).toBe('');
+    expect(currentState().futureLength).toBe(1);
   });
 
-  it('reapplies step after undo then redo', () => {
-    service.dispatch({ type: 'TOGGLE_STEP', payload: { index: 0 } });
+  it('reapplies SELECT_BEAT after undo then redo', () => {
+    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techo' } });
     service.dispatch({ type: 'UNDO' });
-    expect(currentState().steps[0].active).toBeFalse();
+    expect(currentState().beat).toBe('');
 
     service.dispatch({ type: 'REDO' });
-    expect(currentState().steps[0].active).toBeTrue();
+    expect(currentState().beat).toBe('Techo');
   });
 
   it('does nothing when undoing with an empty history', () => {
@@ -42,7 +44,6 @@ describe('SequencerService undo', () => {
   });
 
   it('does nothing when redoing with an empty future', () => {
-    service.dispatch({ type: 'TOGGLE_STEP', payload: { index: 0 } });
     const state = currentState();
     service.dispatch({ type: 'REDO' });
     expect(currentState()).toEqual(state);
