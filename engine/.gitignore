@@ -23,3 +23,7 @@ bin/
 # User specific
 /.jvmopts
 /.sbtopts
+
+# misc
+project/.bloop
+project/project

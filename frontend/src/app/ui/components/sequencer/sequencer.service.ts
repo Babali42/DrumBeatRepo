@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SequencerEngine } from 'src/types/engine';
 
 export interface Command {
   type: string;

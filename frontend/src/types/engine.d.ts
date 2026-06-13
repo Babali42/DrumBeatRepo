@@ -1,12 +1,12 @@
-export interface SequencerState {
-  beat : string;
-  genre : string;
-}
+declare module "src/types/engine" {
+  export interface SequencerState {
+    beat: string;
+    genre: string;
+  }
 
-interface SequencerEngineStatic {
-  dispatch(cmd: any): void;
-  getState(): SequencerState;
-  reset(): void;
+  export var SequencerEngine: {
+    dispatch(cmd: any): void;
+    getState(): SequencerState;
+    reset(): void;
+  };
 }
-
-declare var SequencerEngine: SequencerEngineStatic;
