@@ -1,21 +1,17 @@
 package com.example.sequencer
 
 case class SequencerState(
-  steps: Vector[Boolean],
-  currentStep: Int,
+  genre: String,
+  beat: String,
   history: List[Command],
   future: List[Command],
 ):
 
   def dispatch(command: Command): SequencerState = command match
-    case Command.ToggleStep(index) =>
-      if index >= 0 && index < 16 then
+    case Command.SelectGenre(genre) =>
         SequencerState(steps.updated(index, !steps(index)), currentStep, history :+ command, future)
-      else this
-    case Command.SetCurrentStep(index) =>
-      if index >= -1 && index < 16 then
-        SequencerState(steps, index, history :+ command, future)
-      else this
+    case Command.SelectBeat(beat) =>
+        SequencerState(genre, index, history :+ command, future)
     case Command.ClearAll =>
       SequencerState(Vector.fill(16)(false), currentStep, history :+ command, future)
     case Command.Undo =>
