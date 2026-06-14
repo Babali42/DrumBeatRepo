@@ -57,7 +57,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
   selectedGenreLabel: string = "";
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
+  //TODO : will be implemented with the command pattern
   historyLength: number = 0;
+
+  //TODO : will be implemented with the command pattern
   futureLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
