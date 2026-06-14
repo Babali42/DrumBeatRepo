@@ -1,4 +1,4 @@
-package com.drumbeatrepo.sequencer
+package scala.com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
 

@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
-import { SequencerEngine } from 'src/types/engine';
 
 describe('SequencerService undo', () => {
   let service: SequencerService;
@@ -17,8 +16,8 @@ describe('SequencerService undo', () => {
   }
 
   it('undoes a SELECT_BEAT', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techo' } });
-    expect(currentState().beat).toBe('Techo');
+    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techno' } });
+    expect(currentState().beat).toBe('Techno');
 
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('');
@@ -26,12 +25,12 @@ describe('SequencerService undo', () => {
   });
 
   it('reapplies SELECT_BEAT after undo then redo', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techo' } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: '4 on the floor' } });
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('');
 
     service.dispatch({ type: 'REDO' });
-    expect(currentState().beat).toBe('Techo');
+    expect(currentState().beat).toBe('4 on the floor');
   });
 
   it('does nothing when undoing with an empty history', () => {

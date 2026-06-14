@@ -1,5 +1,6 @@
-package com.drumbeatrepo.sequencer
+package scala.com.drumbeatrepo.sequencer
 
+import scala.com.drumbeatrepo.sequencer.{Command, SequencerState}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
 
@@ -19,7 +20,7 @@ object SequencerEngine:
     state = SequencerState.initial
 
   @JSExport
-  def getState: js.Object =
+  def getState(): js.Object =
     js.Dynamic.literal(
       genre = state.genre,
       beat = state.beat,

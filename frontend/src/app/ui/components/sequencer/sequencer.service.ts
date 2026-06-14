@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SequencerEngine } from 'src/types/engine';
 
 export interface Command {
   type: string;
   payload?: any;
 }
 
-@Injectable()
+@Injectable({providedIn : 'root'})
 export class SequencerService {
 
   state$ = new BehaviorSubject<any>(null);

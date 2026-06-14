@@ -30,6 +30,7 @@ import {IAudioExport} from "../../../domain/ports/i-audio-export";
 import {NgOptimizedImage} from "@angular/common";
 import {DrumImagePipe} from "../../pipes/drum-image.pipe";
 import {IconDarkModePipe} from "../../pipes/icon-dark-mode.pipe";
+import {SequencerService} from "./sequencer.service";
 
 @Component({
   selector: 'sequencer',
@@ -57,10 +58,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   selectedGenreLabel: string = "";
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
-  //TODO : will be implemented with the command pattern
   historyLength: number = 0;
-
-  //TODO : will be implemented with the command pattern
   futureLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
@@ -68,7 +66,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
               @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
               protected readonly tempoService: TempoAdapterService,
               private readonly playerEvents: PlayerEventsService,
-              @Inject(IMIDI) public readonly midiExportService: IMidi) {
+              @Inject(IMIDI) public readonly midiExportService: IMidi,
+              protected readonly sequencerService: SequencerService) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -77,6 +76,26 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.sequencerService.state$.pipe(
+      tap(state => {
+        if (state) {
+          this.historyLength = state.historyLength;
+          this.futureLength = state.futureLength;
+
+          if (state.genre) {
+            this.selectedGenreLabel = state.genre;
+            this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
+          }
+
+          if (state.beat && state.genre) {
+            const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
+            if (beat) this._applyBeat(beat);
+          }
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+
     this.beatBehaviourSubject.pipe(
       tap(beat => {
         this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
@@ -97,23 +116,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
       }
 
       this.genresLabel = [...this.genres.keys()];
-      const firstBeat = this.genres.values().next().value?.[0];
-      if (firstBeat)
-        this.selectGenre(firstBeat.genre);
-      this.selectBeat(beats[0]);
+      const firstBeat = beats[0];
+      if (firstBeat) {
+        this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
+        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
+      }
     }).catch(() => {
     });
   }
 
-  selectGenre(genre: string): void {
-    this.selectedGenreLabel = genre;
-    const beats = this.genres.get(genre)!;
-    this.beats = beats.map(x => x.label);
-    this.selectBeat(beats[0]);
-  }
-
-
-  selectBeat(beatToSelect: Beat): void {
+  private _applyBeat(beatToSelect: Beat): void {
     const orderedTracks: Track[] = beatToSelect.tracks.map(track => ({
       ...track,
       steps: new Steps(track.steps.steps)
@@ -127,9 +139,21 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.customBeatSubject.next(this.beat);
   }
 
+  selectGenre(genre: string): void {
+    this.beats = this.genres.get(genre)?.map(b => b.label) ?? [];
+    this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre } });
+    const firstBeat = this.genres.get(genre)?.[0];
+    if (firstBeat) {
+      this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
+    }
+  }
+
+  selectBeat(beatToSelect: Beat): void {
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: beatToSelect.label } });
+  }
 
   beatChange($event: string) {
-    const beatToSelect = this.genres.get(this.selectedGenreLabel)!.find(x => x.label === $event);
+    const beatToSelect = this.genres.get(this.selectedGenreLabel)?.find(x => x.label === $event);
     if (beatToSelect) {
       this.selectBeat(beatToSelect);
     }
@@ -162,11 +186,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.customBeatSubject.next(this.beat);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;
 
@@ -192,5 +211,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Midi export failed:', error);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
