@@ -57,6 +57,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   selectedGenreLabel: string = "";
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
+  historyLength: number = 0;
+  futureLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
