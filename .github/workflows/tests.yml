@@ -1,4 +1,4 @@
-name: Angular Tests
+name: Tests
 
 on:
   pull_request:
@@ -16,6 +16,6 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Validate
-        uses: ./.github/actions/test/
+        uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
