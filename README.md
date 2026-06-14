@@ -16,6 +16,21 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ---
 
+## How to setup dev env
+First to build the scala engine you must run :
+```shell
+cd engine/
+sbt compile
+sbt fastLinkJS
+```
+
+Next to build the angular app :
+```shell
+cd frontend/
+npm i
+npm run start
+```
+
 ## 🤝 Contributing
 
 There is something for everyone here: code, music, design, or small improvements.
@@ -23,6 +38,7 @@ There is something for everyone here: code, music, design, or small improvements
 Don’t hesitate to join, even if it’s your first contribution.
 
 For more details see [CONTRIBUTING.MD](./CONTRIBUTING.md)
+
 
 ## Contributors
 
