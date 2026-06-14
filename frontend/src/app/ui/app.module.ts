@@ -22,7 +22,7 @@ import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.toke
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
 import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
-import {SequencerService} from "./components/sequencer/sequencer.service";
+
 
 export const routes: Routes = [
   {path: '', component: SequencerComponent}

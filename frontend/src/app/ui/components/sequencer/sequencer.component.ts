@@ -1,5 +1,5 @@
 import {Option} from "effect";
-import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Beat} from '../../../domain/beat';
 import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
 import {BpmInputComponent} from "../bpm-input/bpm-input.component";
@@ -38,7 +38,7 @@ import {SequencerService} from "./sequencer.service";
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
   imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
@@ -50,7 +50,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly StepIndex = StepIndex;
 
   beat = {} as Beat;
-  genres: Map<string, Beat[]> = new Map();
+  genres: ReadonlyMap<string, readonly Beat[]> = new Map();
 
   genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
@@ -67,7 +67,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
               protected readonly tempoService: TempoAdapterService,
               private readonly playerEvents: PlayerEventsService,
               @Inject(IMIDI) public readonly midiExportService: IMidi,
-              protected readonly sequencerService: SequencerService) {
+              protected readonly sequencerService: SequencerService,
+              private readonly cdr: ChangeDetectorRef) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -91,6 +92,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
             const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
             if (beat) this._applyBeat(beat);
           }
+          this.cdr.markForCheck();
         }
       }),
       takeUntil(this.destroy$)
@@ -106,21 +108,24 @@ export class SequencerComponent implements OnInit, OnDestroy {
     ).subscribe();
 
     this._beatsManager.getAllBeats().then(beats => {
-      this.genres = new Map<string, Beat[]>();
+      const genreMap = new Map<string, Beat[]>();
 
       for (const beat of beats) {
-        if (!this.genres.has(beat.genre))
-          this.genres.set(beat.genre, [beat]);
+        const existing = genreMap.get(beat.genre);
+        if (existing)
+          existing.push(beat);
         else
-          this.genres.get(beat.genre)!.push(beat);
+          genreMap.set(beat.genre, [beat]);
       }
 
-      this.genresLabel = [...this.genres.keys()];
+      this.genres = genreMap;
+      this.genresLabel = [...genreMap.keys()];
       const firstBeat = beats[0];
       if (firstBeat) {
         this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
         this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
       }
+      this.cdr.markForCheck();
     }).catch(() => {
     });
   }

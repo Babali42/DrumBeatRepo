@@ -12,7 +12,7 @@ describe('SequencerService undo', () => {
   });
 
   function currentState() {
-    return service.state$.getValue();
+    return service.state$.getValue()!;
   }
 
   it('undoes a SELECT_BEAT', () => {

@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SequencerState } from '../../../../types/engine';
 
 export interface Command {
-  type: string;
-  payload?: any;
+  readonly type: string;
+  readonly payload?: unknown;
 }
 
 @Injectable({providedIn : 'root'})
 export class SequencerService {
 
-  state$ = new BehaviorSubject<any>(null);
+  state$ = new BehaviorSubject<SequencerState | null>(null);
 
   dispatch(cmd: Command) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     SequencerEngine.dispatch(cmd);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     this.state$.next(SequencerEngine.getState());
   }
 }

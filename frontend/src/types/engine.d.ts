@@ -1,11 +1,13 @@
 export interface SequencerState {
-  beat: string;
-  genre: string;
+  readonly beat: string;
+  readonly genre: string;
+  readonly historyLength: number;
+  readonly futureLength: number;
 }
 
 declare global {
   var SequencerEngine: {
-    dispatch(cmd: any): void;
+    dispatch(cmd: unknown): void;
     getState(): SequencerState;
     reset(): void;
   };

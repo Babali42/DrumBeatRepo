@@ -3,9 +3,9 @@ import {toWavFilename, WavFilename} from "../filenames/wav.filepath";
 export type LoopCount = 1 | 2 | 4;
 
 export interface AudioExportOptions {
-  fileName: WavFilename;
-  loopCount: LoopCount;
-  exportWithTail: boolean;
+  readonly fileName: WavFilename;
+  readonly loopCount: LoopCount;
+  readonly exportWithTail: boolean;
 }
 
 export const DEFAULT_EXPORT_OPTIONS: AudioExportOptions = {
