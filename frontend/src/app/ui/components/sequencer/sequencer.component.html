@@ -23,6 +23,16 @@
     <div class="flex label bpm-input-group">
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
+      @if (historyLength > 0) {
+        <button class="button play-sample-button undo">
+          <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28" width="28">
+        </button>
+      }
+      @if (futureLength > 0) {
+        <button class="button play-sample-button redo">
+          <img alt="redo" aria-label="Redo" [ngSrc]="'assets/images/icons/redo.svg' | iconDarkMode" height="28" width="28">
+        </button>
+      }
     </div>
     <div>
       <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
