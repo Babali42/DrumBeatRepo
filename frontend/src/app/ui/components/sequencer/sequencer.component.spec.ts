@@ -187,7 +187,7 @@ describe('SequencerComponent', () => {
     expect(undoButton.length).not.toBe(0);
   });
 
-  it("Should not contain a redo button when there is not future command to apply", () => {
+  it("Should not contain a redo button when there are not future commands to apply", () => {
     fixture.componentInstance.futureLength = 0;
     fixture.detectChanges();
 
@@ -196,7 +196,7 @@ describe('SequencerComponent', () => {
     expect(redoButton.length).toBe(0);
   });
 
-  it("Should contain a redo button when there is none future commands", () => {
+  it("Should contain a redo button when there are future commands to apply", () => {
     fixture.componentInstance.futureLength = 23;
     fixture.detectChanges();
 
