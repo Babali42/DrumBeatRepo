@@ -28,7 +28,13 @@ jobs:
         with:
           node-version: '26'
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: 'frontend/package-lock.json', 'frontend/engine/'
+
+      - name: Download Scala.js artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: scalajs-artifact
+          path: frontend/engine/
 
       - run: npm ci
         working-directory: frontend/
