@@ -18,8 +18,15 @@ jobs:
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
+  scala-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/scala-test/
+
   build:
-    needs: validate
+    needs: [validate, scala-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -28,7 +35,7 @@ jobs:
         with:
           node-version: '26'
           cache: npm
-          cache-dependency-path: 'frontend/package-lock.json', 'frontend/engine/'
+          cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Download Scala.js artifact
         uses: actions/download-artifact@v4

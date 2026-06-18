@@ -88,6 +88,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
             this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
           }
 
+          if (state.beat) {
+            const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
+            if (beat) this._applyBeat(beat);
+          }
+
           if (state.beat && state.genre) {
             const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
             if (beat) this._applyBeat(beat);

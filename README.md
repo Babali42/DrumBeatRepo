@@ -26,7 +26,7 @@ sbt fastLinkJS
 
 Next to build the angular app :
 ```shell
-cd frontend/
+cd ../frontend/
 npm i
 npm run start
 ```
