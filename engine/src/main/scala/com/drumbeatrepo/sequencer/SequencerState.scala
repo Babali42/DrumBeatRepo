@@ -25,8 +25,8 @@ case class SequencerState(
           val remaining = history.init
           remaining.foldLeft(
             SequencerState(
-              SequencerState.initial.beat,
               SequencerState.initial.genre,
+              SequencerState.initial.beat,
               Nil,
               undone :: future
             )
@@ -43,4 +43,4 @@ case class SequencerState(
 end SequencerState
 
 object SequencerState:
-  val initial: SequencerState = SequencerState("", "", Nil, Nil)
+  val initial: SequencerState = SequencerState("Hypnotic Techno", "Tresillo", Nil, Nil)

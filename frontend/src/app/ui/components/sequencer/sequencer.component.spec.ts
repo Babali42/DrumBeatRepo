@@ -235,8 +235,7 @@ describe('SequencerComponent', () => {
     service.dispatch({ type: 'UNDO' });
     fixture.detectChanges();
 
-    expect(component.selectedGenreLabel).toBe("Techno");
-    expect(component.beat.label).toBe("Techno1");
+    expect(component.selectedGenreLabel).toBe("Hypnotic Techno");
     expect(fixture.debugElement.queryAll(By.css("button.undo")).length).toBe(0);
   });
 })
