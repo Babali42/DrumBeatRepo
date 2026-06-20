@@ -12,9 +12,13 @@ class SequencerStateTest extends AnyFunSuite {
   test("dispatch SelectGenre sets the genre") {
     SequencerState.initial.dispatch(Command.SelectGenre("Metal")).genre shouldBe "Metal"
   }
+  
+  test("dispatch SetTempo sets the tempo") {
+    SequencerState.initial.dispatch(Command.SetTempo(126)).tempo shouldBe 126
+  }
 
   test("undo restores initial beat") {
-    val state = SequencerState("Hypnotic Techno", "Tresillo", Nil, Nil)
+    val state = SequencerState("Hypnotic Techno", "Tresillo", 128, Nil, Nil)
       .dispatch(Command.SelectBeat("Techno"))
       .dispatch(Command.Undo)
     state.genre shouldBe "Hypnotic Techno"

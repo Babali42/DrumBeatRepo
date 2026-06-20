@@ -5,6 +5,7 @@ import scala.scalajs.js
 enum Command:
   case SelectGenre(genre: String)
   case SelectBeat(beat: String)
+  case SetTempo(tempo: Int)
   case Undo
   case Redo
 
