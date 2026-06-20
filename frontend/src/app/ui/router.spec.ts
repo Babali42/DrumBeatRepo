@@ -20,6 +20,7 @@ import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exp
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
 import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
 import {toMp3FilePath} from "../domain/filenames/mp3.filepath";
+import {SequencerService} from "./components/sequencer/sequencer.service";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -31,6 +32,7 @@ describe('Router', () => {
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(() => {
+    SequencerEngine.reset();
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
@@ -59,8 +61,8 @@ describe('Router', () => {
           useValue: {
             getAllBeats: () => Promise.resolve([
               {
-                id: 'classic',
                 label: 'Classic',
+                genre: 'Classic',
                 bpm: BPM(128),
                 tracks: [
                   new Track("",toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
@@ -69,7 +71,8 @@ describe('Router', () => {
             ])
           }
         },
-        { provide: IMIDI, useClass: MidiExportService }
+        { provide: IMIDI, useClass: MidiExportService },
+        SequencerService
       ]
     });
 

@@ -159,4 +159,9 @@ export default [
       }
     },
   },
+
+  // Ignore compiled ScalaJS engine output
+  {
+    ignores: ['engine/main.js'],
+  },
 ];

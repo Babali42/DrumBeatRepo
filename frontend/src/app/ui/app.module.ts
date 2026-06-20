@@ -1,6 +1,6 @@
 import {NgModule, provideZoneChangeDetection} from '@angular/core';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideRouter, RouterModule, RouterOutlet, Routes, withHashLocation} from "@angular/router";
+import {provideRouter, RouterOutlet, Routes, withHashLocation, withRouterConfig} from "@angular/router";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -23,13 +23,10 @@ import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-
 import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 
+
 export const routes: Routes = [
   {path: '', component: SequencerComponent}
 ];
-
-RouterModule.forRoot(routes, {
-  onSameUrlNavigation: 'reload'
-})
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,7 +44,7 @@ RouterModule.forRoot(routes, {
     {provide: AUDIO_EXPORT, useClass: AudioExportAdapter},
     {provide: IManageBeatsToken, useClass: BeatAdapter},
     {provide: IMIDI, useClass: MidiExportService},
-    provideRouter(routes, withHashLocation()),
+    provideRouter(routes, withHashLocation(), withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptorsFromDi()),
     provideZoneChangeDetection(),
     provideTranslateService({

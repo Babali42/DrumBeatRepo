@@ -122,7 +122,7 @@ describe('ExportAudioModalComponent', () => {
     component.isOpen = true;
     fixture.detectChanges();
 
-    component.options.loopCount = 2;
+    component.options = { ...component.options, loopCount: 2 };
     fixture.detectChanges();
 
     expect(component.options.loopCount).toBe(2);

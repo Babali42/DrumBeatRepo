@@ -22,11 +22,13 @@ import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-expor
 import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
 import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
 import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
+import {SequencerService} from "./sequencer.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
   let beatsMock: IManageBeats;
+  let service: SequencerService;
 
   beforeEach(async () => {
     beatsMock = {
@@ -64,6 +66,8 @@ describe('SequencerComponent', () => {
       }
     };
 
+    SequencerEngine.reset();
+
     await TestBed.configureTestingModule({
       imports: [
         SequencerComponent,
@@ -78,12 +82,14 @@ describe('SequencerComponent', () => {
         }),
         provideHttpClient(),
         provideRouter([]),
-        { provide: IMIDI, useClass: MidiExportService }
+        { provide: IMIDI, useClass: MidiExportService },
+        SequencerService
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject(SequencerService);
     fixture.detectChanges();
   });
 
@@ -95,6 +101,21 @@ describe('SequencerComponent', () => {
     fixture.detectChanges();
     expect(component.selectedGenreLabel).toBe("Techno");
     expect(component.beat.label).toBe("Techno1");
+  });
+
+  it("should change the selected beat when a new beat is chosen via the app-select-input dropdown", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(component.beat.label).toBe("Techno1");
+
+    const beatSelect = fixture.debugElement.queryAll(By.css("app-select-input select"))[1];
+    beatSelect.nativeElement.value = "Techno2";
+    beatSelect.nativeElement.dispatchEvent(new Event("change"));
+    fixture.detectChanges();
+
+    expect(component.beat.label).toBe("Techno2");
   });
 
   it("should toggle a step when clicked", () => {
@@ -203,5 +224,18 @@ describe('SequencerComponent', () => {
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
 
     expect(redoButton.length).not.toBe(0);
+  });
+
+  it("should not undo past the initial state commands", () => {
+    fixture.detectChanges();
+    expect(component.selectedGenreLabel).toBe("Techno");
+    expect(component.beat.label).toBe("Techno1");
+
+    service.dispatch({ type: 'UNDO' });
+    service.dispatch({ type: 'UNDO' });
+    fixture.detectChanges();
+
+    expect(component.selectedGenreLabel).toBe("Hypnotic Techno");
+    expect(fixture.debugElement.queryAll(By.css("button.undo")).length).toBe(0);
   });
 })

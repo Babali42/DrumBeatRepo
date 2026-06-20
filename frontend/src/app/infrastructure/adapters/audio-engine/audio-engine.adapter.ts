@@ -31,9 +31,11 @@ export class AudioEngineAdapter implements IAudioEngine {
 
   isPlaying = false;
 
+  // eslint-disable-next-line functional/prefer-readonly-type
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
   // ⚠ AudioBufferSourceNode objects cannot be reused.
   // Always create a new node for each playback.
+  // eslint-disable-next-line functional/prefer-readonly-type
   private readonly trackSampleBuilderMap: Map<string, () => AudioBufferSourceNode> = new Map();
 
   readonly pause = () => {

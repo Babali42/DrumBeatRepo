@@ -15,7 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Validate
+      - name: Validate Scala
+        uses: ./.github/actions/scala-test/
+
+      - name: Validate Angular
         uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
