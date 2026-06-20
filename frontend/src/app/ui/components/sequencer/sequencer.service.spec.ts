@@ -33,6 +33,15 @@ describe('SequencerService undo', () => {
     expect(currentState().beat).toBe('4 on the floor');
   });
 
+  it('undoes a SELECT_GENRE', () => {
+    service.dispatch({ type: 'SELECT_GENRE', payload: { genre: 'Techno' } });
+    expect(currentState().genre).toBe('Techno');
+
+    service.dispatch({ type: 'UNDO' });
+    expect(currentState().genre).toBe('');
+    expect(currentState().futureLength).toBe(1);
+  });
+
   it('does nothing when undoing with an empty history', () => {
     SequencerEngine.reset();
     service.state$.next(SequencerEngine.getState());

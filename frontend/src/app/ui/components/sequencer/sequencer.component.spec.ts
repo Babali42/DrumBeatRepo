@@ -28,6 +28,7 @@ describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
   let beatsMock: IManageBeats;
+  let service: SequencerService;
 
   beforeEach(async () => {
     beatsMock = {
@@ -88,6 +89,7 @@ describe('SequencerComponent', () => {
 
     fixture = TestBed.createComponent(SequencerComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject(SequencerService);
     fixture.detectChanges();
   });
 
@@ -222,5 +224,19 @@ describe('SequencerComponent', () => {
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
 
     expect(redoButton.length).not.toBe(0);
+  });
+
+  it("should not undo past the initial state commands", () => {
+    fixture.detectChanges();
+    expect(component.selectedGenreLabel).toBe("Techno");
+    expect(component.beat.label).toBe("Techno1");
+
+    service.dispatch({ type: 'UNDO' });
+    service.dispatch({ type: 'UNDO' });
+    fixture.detectChanges();
+
+    expect(component.selectedGenreLabel).toBe("Techno");
+    expect(component.beat.label).toBe("Techno1");
+    expect(fixture.debugElement.queryAll(By.css("button.undo")).length).toBe(0);
   });
 })

@@ -60,6 +60,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   isMidiExportModalOpen = false;
   historyLength: number = 0;
   futureLength: number = 0;
+  minHistoryLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
               @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -86,16 +87,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
           if (state.genre) {
             this.selectedGenreLabel = state.genre;
             this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
-          }
 
-          if (state.beat) {
-            const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
-            if (beat) this._applyBeat(beat);
-          }
-
-          if (state.beat && state.genre) {
-            const beat = this.genres.get(state.genre)?.find(b => b.label === state.beat);
-            if (beat) this._applyBeat(beat);
+            const beat = state.beat
+              ? this.genres.get(state.genre)?.find(b => b.label === state.beat)
+              : undefined;
+            if (beat) {
+              this._applyBeat(beat);
+            } else {
+              const firstBeat = this.genres.get(state.genre)?.[0];
+              if (firstBeat) this._applyBeat(firstBeat);
+            }
           }
           this.cdr.markForCheck();
         }
@@ -129,6 +130,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       if (firstBeat) {
         this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
         this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
+        this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       }
       this.cdr.markForCheck();
     }).catch(() => {
@@ -150,12 +152,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   selectGenre(genre: string): void {
-    this.beats = this.genres.get(genre)?.map(b => b.label) ?? [];
     this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre } });
-    const firstBeat = this.genres.get(genre)?.[0];
-    if (firstBeat) {
-      this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
-    }
   }
 
   selectBeat(beatToSelect: Beat): void {

@@ -23,7 +23,7 @@
     <div class="flex label bpm-input-group">
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
-      @if (historyLength > 0) {
+      @if (historyLength > minHistoryLength) {
         <button class="button play-sample-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})">
           <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28" width="28">
         </button>
