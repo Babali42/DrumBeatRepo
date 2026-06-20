@@ -5,7 +5,6 @@ import scala.scalajs.js
 enum Command:
   case SelectGenre(genre: String)
   case SelectBeat(beat: String)
-  case ClearAll
   case Undo
   case Redo
 
@@ -26,7 +25,6 @@ object Command:
             .selectDynamic("beat")
             .asInstanceOf[String]
         )
-      case "CLEAR_ALL" => ClearAll
       case "UNDO"      => Undo
       case "REDO"      => Redo
       case t           => throw new RuntimeException(s"Unknown command: $t")

@@ -17,13 +17,6 @@ case class SequencerState(
       )
     case Command.SelectBeat(newBeat) =>
       SequencerState(genre, newBeat, history :+ command, future)
-    case Command.ClearAll =>
-      SequencerState(
-        SequencerState.initial.beat,
-        SequencerState.initial.genre,
-        history :+ command,
-        future
-      )
     case Command.Undo =>
       history match
         case Nil => this
