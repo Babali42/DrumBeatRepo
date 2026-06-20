@@ -9,7 +9,15 @@ on:
       - main
 
 jobs:
-  validate:
+  validate-scala:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/scala-test/
+
+  validate-angular:
+    needs: [validate-scala]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -18,15 +26,8 @@ jobs:
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
-  scala-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: ./.github/actions/scala-test/
-
   build:
-    needs: [validate, scala-test]
+    needs: [validate-angular]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -57,7 +58,7 @@ jobs:
           path: dist/browser/
 
   deploy:
-    needs: [validate, build]
+    needs: [validate-angular, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v8

@@ -35,6 +35,11 @@ runs:
       working-directory: engine
       shell: bash
 
+    - name: Post-process Scala.js output
+      run: echo 'globalThis.SequencerEngine = SequencerEngine;' >> ../frontend/engine/main.js
+      working-directory: engine
+      shell: bash
+
     - name: Upload Scala.js artifact
       uses: actions/upload-artifact@v4
       with:
