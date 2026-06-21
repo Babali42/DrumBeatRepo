@@ -8,7 +8,8 @@ case class SequencerState(genre: String, beat: String, tempo: Int, history: List
     case Command.SelectBeat(newBeat) =>
       SequencerState(genre, newBeat, tempo, history :+ command, future)
     case Command.SetTempo(newTempo) =>
-      SequencerState(genre, beat, newTempo, history :+ command, future)
+      val updatedHistory = mergeSetTempoCommands(history, command)
+      SequencerState(genre, beat, newTempo, updatedHistory, future)
     case Command.Undo =>
       history match
         case Nil => this
@@ -16,7 +17,7 @@ case class SequencerState(genre: String, beat: String, tempo: Int, history: List
           val undone = history.last
           val remaining = history.init
           remaining.foldLeft(
-            SequencerState(SequencerState.initial.genre, SequencerState.initial.beat, tempo, Nil, undone :: future)
+            SequencerState(SequencerState.initial.genre, SequencerState.initial.beat, SequencerState.initial.tempo, Nil, undone :: future)
           ) { (s, cmd) =>
             s.dispatch(cmd)
           }
@@ -27,6 +28,12 @@ case class SequencerState(genre: String, beat: String, tempo: Int, history: List
           val prevHistory = history
           dispatch(next).copy(history = prevHistory :+ next, future = rest)
 
+  private def mergeSetTempoCommands(history: List[Command], cmd: Command): List[Command] =
+    history match {
+      case init :+ Command.SetTempo(_) => init :+ cmd
+      case _ => history :+ cmd
+    }
+    
 end SequencerState
 
 object SequencerState:
