@@ -26,6 +26,13 @@ object Command:
             .selectDynamic("beat")
             .asInstanceOf[String]
         )
+      case "SET_TEMPO" =>
+        SetTempo(
+          cmd
+            .selectDynamic("payload")
+            .selectDynamic("tempo")
+            .asInstanceOf[Int]
+        )
       case "UNDO"      => Undo
       case "REDO"      => Redo
       case t           => throw new RuntimeException(s"Unknown command: $t")

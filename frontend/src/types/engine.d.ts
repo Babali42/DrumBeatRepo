@@ -1,6 +1,7 @@
 export interface SequencerState {
   readonly beat: string;
   readonly genre: string;
+  readonly tempo: number
   readonly historyLength: number;
   readonly futureLength: number;
 }

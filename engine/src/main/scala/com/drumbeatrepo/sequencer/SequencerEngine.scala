@@ -24,6 +24,7 @@ object SequencerEngine:
     js.Dynamic.literal(
       genre = state.genre,
       beat = state.beat,
+      tempo = state.tempo,
       historyLength = state.history.length,
       futureLength = state.future.length
     )
