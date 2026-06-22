@@ -3,7 +3,7 @@ name: Tests
 on:
   pull_request:
     branches: [ "main" ]
-    paths: [ 'frontend/**', '.github/**' ]
+    paths: [ 'frontend/**', 'engine/**', '.github/**' ]
 
 permissions:
   contents: read

@@ -1,38 +1,24 @@
 package scala.com.drumbeatrepo.sequencer
 
-case class SequencerState(genre: String, beat: String, tempo: Int, history: List[Command], future: List[Command]):
+case class SequencerState(genre: String, beat: String, tempo: Int, history: List[SequencerState], future: List[SequencerState]):
 
   def dispatch(command: Command): SequencerState = command match
     case Command.SelectGenre(newGenre) =>
-      SequencerState(newGenre, beat, tempo, history :+ command, future)
+      SequencerState(newGenre, beat, tempo, history :+ this, future)
     case Command.SelectBeat(newBeat) =>
-      SequencerState(genre, newBeat, tempo, history :+ command, future)
+      SequencerState(genre, newBeat, tempo, history :+ this, future)
     case Command.SetTempo(newTempo) =>
-      val updatedHistory = mergeSetTempoCommands(history, command)
-      SequencerState(genre, beat, newTempo, updatedHistory, future)
+      SequencerState(genre, beat, newTempo, history :+ this, future)
     case Command.Undo =>
       history match
-        case Nil => this
-        case _ =>
-          val undone = history.last
-          val remaining = history.init
-          remaining.foldLeft(
-            SequencerState(SequencerState.initial.genre, SequencerState.initial.beat, SequencerState.initial.tempo, Nil, undone :: future)
-          ) { (s, cmd) =>
-            s.dispatch(cmd)
-          }
+        case init :+ last => last.copy(history = init, future = this :: future)
+        case _ => this
     case Command.Redo =>
       future match
         case Nil => this
         case next :: rest =>
           val prevHistory = history
-          dispatch(next).copy(history = prevHistory :+ next, future = rest)
-
-  private def mergeSetTempoCommands(history: List[Command], cmd: Command): List[Command] =
-    history match {
-      case init :+ Command.SetTempo(_) => init :+ cmd
-      case _ => history :+ cmd
-    }
+          next.copy(history = prevHistory :+ next, future = rest)
     
 end SequencerState
 
