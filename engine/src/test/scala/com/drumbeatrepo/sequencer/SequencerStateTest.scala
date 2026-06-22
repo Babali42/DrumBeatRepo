@@ -32,13 +32,13 @@ class SequencerStateTest extends AnyFunSuite {
     state.beat shouldBe "4 on the floor"
   }
 
-  test("consecutive setTempo commands are merged into a single undo step") {
+  test("undo after multiple setTempo reverts to previous snapshot") {
     val state = SequencerState("Hypnotic Techno", "Tresillo", 128, Nil, Nil)
       .dispatch(Command.SetTempo(129))
       .dispatch(Command.SetTempo(130))
       .dispatch(Command.SetTempo(134))
       .dispatch(Command.Undo)
-    state.tempo shouldBe 128
+    state.tempo shouldBe 129
   }
 
   test("redo should do nothing with empty future") {
