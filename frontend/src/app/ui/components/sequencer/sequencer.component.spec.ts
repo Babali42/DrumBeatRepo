@@ -233,6 +233,7 @@ describe('SequencerComponent', () => {
 
     service.dispatch({ type: 'UNDO' });
     service.dispatch({ type: 'UNDO' });
+    service.dispatch({ type: 'UNDO' });
     fixture.detectChanges();
 
     expect(component.selectedGenreLabel).toBe("Hypnotic Techno");

@@ -40,4 +40,9 @@ describe('SequencerService undo', () => {
     expect(currentState().genre).toBe('Hypnotic Techno');
     expect(currentState().futureLength).toBe(1);
   });
+
+  it('should apply a setTempo command', () => {
+    service.dispatch({type: 'SET_TEMPO', payload: { tempo: 129 }});
+    expect(currentState().tempo).toBe(129)
+  });
 });

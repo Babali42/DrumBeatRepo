@@ -5,6 +5,7 @@ import scala.scalajs.js
 enum Command:
   case SelectGenre(genre: String)
   case SelectBeat(beat: String)
+  case SetTempo(tempo: Int)
   case Undo
   case Redo
 
@@ -24,6 +25,13 @@ object Command:
             .selectDynamic("payload")
             .selectDynamic("beat")
             .asInstanceOf[String]
+        )
+      case "SET_TEMPO" =>
+        SetTempo(
+          cmd
+            .selectDynamic("payload")
+            .selectDynamic("tempo")
+            .asInstanceOf[Int]
         )
       case "UNDO"      => Undo
       case "REDO"      => Redo

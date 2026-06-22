@@ -84,6 +84,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
           this.historyLength = state.historyLength;
           this.futureLength = state.futureLength;
 
+
+          if (state.tempo) {
+            this.tempoService.setBpm(BPM(state.tempo));
+          }
+
           if (state.genre) {
             this.selectedGenreLabel = state.genre;
             this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
@@ -107,7 +112,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.beatBehaviourSubject.pipe(
       tap(beat => {
         this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
-        this.tempoService.setBpm(beat.bpm);
         this.soundService.setTracks(beat.tracks);
       }),
       takeUntil(this.destroy$)
@@ -129,6 +133,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       const firstBeat = beats[0];
       if (firstBeat) {
         this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
+        this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat.bpm } });
         this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
         this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       }
@@ -153,9 +158,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   selectGenre(genre: string): void {
     this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre } });
+    const firstBeat = this.genres.get(genre)?.[0];
+    if (firstBeat) {
+      this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat.bpm } });
+    }
   }
 
   selectBeat(beatToSelect: Beat): void {
+    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: beatToSelect.bpm } });
     this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: beatToSelect.label } });
   }
 
@@ -185,7 +195,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   changeBeatBpm($event: number) {
     this.soundService.pause();
-    this.tempoService.setBpm(BPM($event));
+    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
     this.beat = {
       ...this.beat,
       bpm: BPM($event),
