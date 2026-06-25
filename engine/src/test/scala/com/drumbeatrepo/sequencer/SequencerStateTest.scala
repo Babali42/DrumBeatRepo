@@ -1,4 +1,4 @@
-package scala.com.drumbeatrepo.sequencer
+package com.drumbeatrepo.sequencer
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe

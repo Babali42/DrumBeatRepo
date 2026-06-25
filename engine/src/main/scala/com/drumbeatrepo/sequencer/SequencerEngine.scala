@@ -1,6 +1,4 @@
-package scala.com.drumbeatrepo.sequencer
-
-import scala.com.drumbeatrepo.sequencer.{Command, SequencerState}
+package com.drumbeatrepo.sequencer
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
 

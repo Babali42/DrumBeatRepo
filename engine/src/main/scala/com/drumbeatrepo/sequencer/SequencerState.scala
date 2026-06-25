@@ -1,4 +1,4 @@
-package scala.com.drumbeatrepo.sequencer
+package com.drumbeatrepo.sequencer
 
 case class SequencerState(genre: String, beat: String, tempo: Int, history: List[SequencerState], future: List[SequencerState]):
 
