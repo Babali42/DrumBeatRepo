@@ -1,4 +1,9 @@
-.idea/
+.idea/*
+!.idea/codeStyles/
+!.idea/runConfigurations/
+!.idea/scala_compiler.xml
+!.idea/sbt.xml
+!.idea/vcs.xml
 dist/
 .DS_Store
 .metals/
