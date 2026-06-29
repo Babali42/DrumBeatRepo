@@ -1,6 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
-import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
 import {ExportMidiModalComponent} from "./export-midi-modal.component";
 
@@ -10,7 +9,7 @@ describe('ExportMidiModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExportMidiModalComponent, TranslateModule.forRoot()],
+      imports: [ExportMidiModalComponent],
       providers: [provideTranslateService({
         lang: 'en',
         fallbackLang: 'en'

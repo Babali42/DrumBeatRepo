@@ -2,15 +2,18 @@ import {Component, HostListener} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {ModeToggleService} from "./services/light-dark-mode/mode-toggle.service";
 import {Mode} from './services/light-dark-mode/mode-toggle.model';
-import {Router} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
+import {TranslatePipe} from "@ngx-translate/core";
+import {LoadingBarModule} from "@ngx-loading-bar/core";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [RouterOutlet, TranslatePipe, LoadingBarModule]
 })
 export class AppComponent {
   isPortrait: boolean = false;

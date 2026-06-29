@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ExportAudioModalComponent} from './export-audio-modal.component';
 import {By} from '@angular/platform-browser';
-import {TranslateModule} from '@ngx-translate/core';
 import {provideTranslateService} from '@ngx-translate/core';
 import {toWavFilename} from "../../../../domain/filenames/wav.filepath";
 
@@ -11,7 +10,7 @@ describe('ExportAudioModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExportAudioModalComponent, TranslateModule.forRoot()],
+      imports: [ExportAudioModalComponent],
       providers: [provideTranslateService({
         lang: 'en',
         fallbackLang: 'en'

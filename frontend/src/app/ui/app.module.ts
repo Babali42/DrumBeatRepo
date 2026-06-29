@@ -15,7 +15,7 @@ import {AudioEngineAdapter} from "../infrastructure/adapters/audio-engine/audio-
 import {JsonFileReader} from "../infrastructure/adapters/beat-source/json-files-reader.service";
 import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
 import {jsonFileReaderToken} from "../infrastructure/injection-tokens/json-file-reader.token";
-import {provideTranslateService, TranslateModule} from "@ngx-translate/core";
+import {provideTranslateService} from "@ngx-translate/core";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {getBrowserLanguage} from "./i18n/i18n.utils";
 import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
@@ -29,13 +29,11 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
     LoadingBarModule,
     FormsModule,
-    RouterOutlet,
-    TranslateModule
+    RouterOutlet
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
