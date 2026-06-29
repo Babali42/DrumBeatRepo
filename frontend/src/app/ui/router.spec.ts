@@ -34,11 +34,9 @@ describe('Router', () => {
   beforeEach(() => {
     SequencerEngine.reset();
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
       imports: [
         RouterTestingModule.withRoutes(routes),
+        AppComponent,
         SequencerComponent,
         LoadingBarModule,
         HttpClientTestingModule

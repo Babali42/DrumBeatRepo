@@ -13,7 +13,6 @@ import {TempoAdapterService} from "../../../infrastructure/adapters/tempo-contro
 import {PlayerEventsService} from "../../services/player.events.service";
 import {BPM} from "../../../domain/bpm";
 import {StepIndex} from "../../../domain/step-index";
-import {TranslateModule} from "@ngx-translate/core";
 import {Steps} from "../../../domain/steps";
 import {ExportAudioModalComponent} from "../modals/export-audio-modal/export-audio-modal.component";
 import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
@@ -28,6 +27,7 @@ import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engin
 import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
 import {IAudioExport} from "../../../domain/ports/i-audio-export";
 import {NgOptimizedImage} from "@angular/common";
+import {TranslatePipe} from "@ngx-translate/core";
 import {DrumImagePipe} from "../../pipes/drum-image.pipe";
 import {IconDarkModePipe} from "../../pipes/icon-dark-mode.pipe";
 import {SequencerService} from "./sequencer.service";
@@ -37,7 +37,7 @@ import {SequencerService} from "./sequencer.service";
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslateModule, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
