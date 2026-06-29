@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Scala Tests (sbt)" type="SbtRunConfiguration" factoryName="sbt">
+    <setting name="tasks" value="test" />
+    <setting name="vmparams" value="" />
+    <setting name="programparams" value="" />
+    <setting name="workingDir" value="file://$PROJECT_DIR$/engine" />
+    <option name="useFileSystemDefault" value="true" />
+    <method v="2" />
+  </configuration>
+</component>

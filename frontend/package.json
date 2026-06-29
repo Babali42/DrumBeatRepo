@@ -26,7 +26,7 @@
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "@ngx-loading-bar/core": "^7.0.0",
     "@ngx-translate/core": "^18.0.0",
-    "@ngx-translate/http-loader": "^17.0.0",
+    "@ngx-translate/http-loader": "^18.0.0",
     "@types/waaclock": "^0.5.2",
     "arch-unit-ts": "^1.0.8",
     "effect": "^3.19.9",

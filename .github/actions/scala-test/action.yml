@@ -1,0 +1,48 @@
+name: ScalaTest
+description: Build and test scala and upload
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Setup Java 23 (Temurin)
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 23
+
+    - name: Install sbt
+      shell: bash
+      run: |
+        curl -fL https://github.com/sbt/sbt/releases/download/v1.12.11/sbt-1.12.11.tgz -o /tmp/sbt.tgz
+        tar xzf /tmp/sbt.tgz -C /tmp
+        echo "/tmp/sbt/bin" >> $GITHUB_PATH
+
+    - name: Cache sbt and coursier
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.sbt
+          ~/.cache/coursier
+        key: sbt-${{ hashFiles('engine/build.sbt', 'engine/project/*.sbt', 'engine/project/*.properties') }}
+        restore-keys: |
+          sbt-
+
+    - name: Build Scala.js
+      run: sbt fastLinkJS
+      working-directory: engine
+      shell: bash
+
+    - name: Post-process Scala.js output
+      run: echo 'globalThis.SequencerEngine = SequencerEngine;' >> ../frontend/engine/main.js
+      working-directory: engine
+      shell: bash
+
+    - name: Upload Scala.js artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: scalajs-artifact
+        path: frontend/engine/
+        if-no-files-found: error

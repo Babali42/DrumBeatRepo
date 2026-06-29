@@ -9,17 +9,25 @@ on:
       - main
 
 jobs:
-  validate:
+  validate-scala:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
-      - uses: ./.github/actions/test/
+      - uses: ./.github/actions/scala-test/
+
+  validate-angular:
+    needs: [validate-scala]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   build:
-    needs: validate
+    needs: [validate-angular]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -28,7 +36,13 @@ jobs:
         with:
           node-version: '26'
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Download Scala.js artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: scalajs-artifact
+          path: frontend/engine/
 
       - run: npm ci
         working-directory: frontend/
@@ -44,7 +58,7 @@ jobs:
           path: dist/browser/
 
   deploy:
-    needs: [validate, build]
+    needs: [validate-angular, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v8

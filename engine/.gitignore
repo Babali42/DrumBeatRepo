@@ -1,0 +1,33 @@
+# Fundamental to the build
+target/
+/.bsp/
+/scalalib/fetchedSources/
+/partest/fetchedSources/
+/linker-interface/**/scalajs-logging-src/
+/linker-interface/**/scalajs-logging-src-jars/
+/node_modules/
+
+# IDE specific
+.cache
+.classpath
+.project
+.settings/
+/.idea/*
+!/.idea/modules/
+!/.idea/modules/engine/
+!/.idea/scala_compiler.xml
+!/.idea/vcs.xml
+/.idea_modules/
+bin/
+/.bloop/
+/.metals/
+/project/**/metals.sbt
+/.vscode/
+
+# User specific
+/.jvmopts
+/.sbtopts
+
+# misc
+project/.bloop
+project/project

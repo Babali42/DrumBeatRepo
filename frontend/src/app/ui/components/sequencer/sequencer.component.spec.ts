@@ -22,11 +22,13 @@ import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-expor
 import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
 import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
 import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
+import {SequencerService} from "./sequencer.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
   let component: SequencerComponent;
   let beatsMock: IManageBeats;
+  let service: SequencerService;
 
   beforeEach(async () => {
     beatsMock = {
@@ -64,6 +66,8 @@ describe('SequencerComponent', () => {
       }
     };
 
+    SequencerEngine.reset();
+
     await TestBed.configureTestingModule({
       imports: [
         SequencerComponent,
@@ -78,17 +82,19 @@ describe('SequencerComponent', () => {
         }),
         provideHttpClient(),
         provideRouter([]),
-        { provide: IMIDI, useClass: MidiExportService }
+        { provide: IMIDI, useClass: MidiExportService },
+        SequencerService
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject(SequencerService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeDefined();
+    expect(component).toBeTruthy();
   });
 
   it("default genre and beat are selected", () => {
@@ -97,26 +103,33 @@ describe('SequencerComponent', () => {
     expect(component.beat.label).toBe("Techno1");
   });
 
-  it("should display a step button", () => {
+  it("should change the selected beat when a new beat is chosen via the app-select-input dropdown", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(component.beat.label).toBe("Techno1");
+
+    const beatSelect = fixture.debugElement.queryAll(By.css("app-select-input select"))[1];
+    beatSelect.nativeElement.value = "Techno2";
+    beatSelect.nativeElement.dispatchEvent(new Event("change"));
+    fixture.detectChanges();
+
+    expect(component.beat.label).toBe("Techno2");
+  });
+
+  it("should toggle a step when clicked", () => {
     fixture.detectChanges();
 
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-    const numberOfActiveStepsBeforeClick = stepButtons.filter(btn =>
-       
-      btn.nativeElement.classList.contains('active')
-    ).length;
+    const firstStepButton = stepButtons[0];
 
-     
-    stepButtons[0].nativeElement.click()
+    expect(firstStepButton.nativeElement.classList.contains('active')).toBeFalse();
 
+    firstStepButton.nativeElement.click();
     fixture.detectChanges();
 
-    const numberOfActiveStepsAfterClick = fixture.debugElement.queryAll(By.css('button.step')).filter(btn =>
-       
-      btn.nativeElement.classList.contains('active')
-    ).length;
-
-    expect(numberOfActiveStepsBeforeClick).not.toEqual(numberOfActiveStepsAfterClick);
+    expect(firstStepButton.nativeElement.classList.contains('active')).toBeTrue();
   });
 
   it("step change should not be kept in memory after selected beat change", async () => {
@@ -130,8 +143,7 @@ describe('SequencerComponent', () => {
 
     fixture.detectChanges();
 
-    const modifiedPatternNumberOfClicks = stepButtons.filter(btn =>
-       
+    const modifiedActiveCount = stepButtons.filter(btn =>
       btn.nativeElement.classList.contains('active')
     ).length;
 
@@ -150,37 +162,81 @@ describe('SequencerComponent', () => {
     fixture.detectChanges();
 
     const stepButtons2 = fixture.debugElement.queryAll(By.css('button.step'));
-    const numberOfStepsAfterBeatChangeAndReset = stepButtons2.filter(btn =>
-       
+    const resetActiveCount = stepButtons2.filter(btn =>
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    console.error(`${modifiedPatternNumberOfClicks} and ${numberOfStepsAfterBeatChangeAndReset}`)
-    expect(modifiedPatternNumberOfClicks).not.toEqual(numberOfStepsAfterBeatChangeAndReset);
+    expect(resetActiveCount).not.toEqual(modifiedActiveCount);
   });
 
   it("Should call export midi service on modal validation", async () => {
-    //Arrange
     spyOn(URL, 'createObjectURL').and.returnValue('blob:test');
     spyOn(URL, 'revokeObjectURL');
     const spy = spyOn(fixture.componentInstance.midiExportService, "exportBeat");
+
     await fixture.componentInstance.onMidiExport({} as MidiExportOptions)
 
-    //Assert
     expect(spy).toHaveBeenCalled();
   });
 
 
   it("Should call export audio adapter on modal validation", async () => {
-    //Arrange
     spyOn(URL, 'createObjectURL').and.returnValue('blob:test');
     spyOn(URL, 'revokeObjectURL');
     const spy = spyOn(fixture.componentInstance.audioExportAdapter, "exportBeat");
 
-    //Act
     await fixture.componentInstance.onAudioExport({} as AudioExportOptions)
 
-    //Assert
     expect(spy).toHaveBeenCalled();
+  });
+
+  it("Should not contain an undo button when there is no command history", () => {
+    fixture.componentInstance.historyLength = 0;
+    fixture.detectChanges();
+
+    const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
+
+    expect(undoButton.length).toBe(0);
+  });
+
+  it("Should contain an undo button when past command have been done", () => {
+    fixture.componentInstance.historyLength = 234;
+    fixture.detectChanges();
+
+    const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
+
+    expect(undoButton.length).not.toBe(0);
+  });
+
+  it("Should not contain a redo button when there are not future commands to apply", () => {
+    fixture.componentInstance.futureLength = 0;
+    fixture.detectChanges();
+
+    const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
+
+    expect(redoButton.length).toBe(0);
+  });
+
+  it("Should contain a redo button when there are future commands to apply", () => {
+    fixture.componentInstance.futureLength = 23;
+    fixture.detectChanges();
+
+    const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
+
+    expect(redoButton.length).not.toBe(0);
+  });
+
+  it("should not undo past the initial state commands", () => {
+    fixture.detectChanges();
+    expect(component.selectedGenreLabel).toBe("Techno");
+    expect(component.beat.label).toBe("Techno1");
+
+    service.dispatch({ type: 'UNDO' });
+    service.dispatch({ type: 'UNDO' });
+    service.dispatch({ type: 'UNDO' });
+    fixture.detectChanges();
+
+    expect(component.selectedGenreLabel).toBe("Hypnotic Techno");
+    expect(fixture.debugElement.queryAll(By.css("button.undo")).length).toBe(0);
   });
 })

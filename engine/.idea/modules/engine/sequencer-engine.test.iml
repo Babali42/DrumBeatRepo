@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="engine:test [file:///home/babali/Documents/Development/DrumBeatRepo/engine/]" external.linked.project.path="$MODULE_DIR$/../../.." external.root.project.path="$MODULE_DIR$/../../.." external.system.id="SBT" external.system.module.type="sbtSourceSet" type="JAVA_MODULE" version="4">
+  <component name="DisplayModuleName">
+    <option name="name" value="sequencer-engine.test" />
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_21">
+    <output-test url="file://$MODULE_DIR$/../../../target/scala-3.8.4/test-classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../../src/test/scala" isTestSource="true" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../target/scala-3.8.4/resource_managed/test" />
+    <content url="file://$MODULE_DIR$/../../../target/scala-3.8.4/src_managed/test" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sbt: scala-sdk-3.8.4" level="project" />
+    <orderEntry type="module" module-name="sequencer-engine.main" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala3-library_sjs1_3:3.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-library_2.13:1.21.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-test-bridge_2.13:1.21.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-scalalib_2.13:3.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:3.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-javalib:1.21.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-js:scalajs-test-interface_2.13:1.21.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-core_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-featurespec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-flatspec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-freespec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-funsuite_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-funspec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-propspec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-refspec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-wordspec_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-diagrams_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-matchers-core_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-shouldmatchers_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalatest:scalatest-mustmatchers_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala3-library_3:3.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalactic:scalactic_sjs1_3:3.2.19:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-xml_sjs1_3:2.1.0:jar" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="sequencer-engine.main" />
+</module>

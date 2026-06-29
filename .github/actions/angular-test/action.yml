@@ -1,4 +1,4 @@
-name: Test
+name: AngularTest
 description: Validate Angular project — ESLint, Karma, Vitest, coverage, and i18n
 
 inputs:
@@ -9,8 +9,16 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
+    - name: Download Scala.js artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: scalajs-artifact
+        path: frontend/engine/
+
+    - name: Post-process Scala.js output
+      run: echo 'globalThis.SequencerEngine = SequencerEngine;' >> frontend/engine/main.js
+      working-directory: .
+      shell: bash
 
     - name: Set up Node.js
       uses: actions/setup-node@v6

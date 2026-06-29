@@ -1,9 +1,9 @@
-name: Angular Tests
+name: Tests
 
 on:
   pull_request:
     branches: [ "main" ]
-    paths: [ 'frontend/**', '.github/**' ]
+    paths: [ 'frontend/**', 'engine/**', '.github/**' ]
 
 permissions:
   contents: read
@@ -15,7 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Validate
-        uses: ./.github/actions/test/
+      - name: Validate Scala
+        uses: ./.github/actions/scala-test/
+
+      - name: Validate Angular
+        uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}

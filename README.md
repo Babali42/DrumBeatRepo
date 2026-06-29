@@ -16,13 +16,100 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ---
 
+### ✅ Requirements
+
+* Angular : [Node.js](https://nodejs.org/fr) + npm
+* Scala : [sbt](https://www.scala-sbt.org/)
+
+## 🚀 Quick Start
+
+### 1. Engine (Scala)
+
+```bash
+cd engine/
+sbt compile
+sbt fastLinkJS
+```
+
+### 2. Frontend (Angular)
+
+```bash
+cd ../frontend/
+npm install
+npm start
+```
+
+➡️ App runs at: `http://localhost:4200`
+
+***
+
 ## 🤝 Contributing
 
-There is something for everyone here: code, music, design, or small improvements.
+Everyone is welcome — devs, musicians, designers.
 
-Don’t hesitate to join, even if it’s your first contribution.
+### 🔍 Find something to work on
 
-For more details see [CONTRIBUTING.MD](./CONTRIBUTING.md)
+* Browse issues: <https://github.com/Babali42/DrumBeatRepo/issues>
+* Start with: `good first issue`
+
+### 🥁 Add a drum beat
+
+* Pick a missing genre
+* Either:
+    * Comment on <https://github.com/Babali42/DrumBeatRepo/issues/270>
+    * Or implement it directly and open a PR
+
+***
+
+## 🛠 Setup
+
+```bash
+git clone https://github.com/Babali42/DrumBeatRepo.git
+cd frontend/
+npm install
+```
+
+***
+
+## 🧪 Testing
+
+Run all before submitting PRs:
+
+```bash
+npm test         # Angular (Karma)
+npm vitest       # TypeScript logic
+npm test-jest    # Architecture rules
+```
+
+### 📊 Coverage
+
+```bash
+ng test --code-coverage
+```
+
+***
+
+## 🏗 Architecture
+
+Uses **Hexagonal Architecture (Ports & Adapters)**
+
+✅ Domain = independent  
+❌ No framework or UI dependencies in domain
+
+Architecture tests enforce this (`npm test-jest`).
+
+***
+
+## ✅ Contribution Workflow
+
+1. Fork + create branch from `main`
+2. Make changes
+3. ✅ Pass all tests
+4. Open PR with clear description
+
+Be respectful and follow the Code of Conduct ❤️
+
+***
 
 ## Contributors
 

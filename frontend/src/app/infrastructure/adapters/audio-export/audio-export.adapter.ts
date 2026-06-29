@@ -74,14 +74,10 @@ export class AudioExportAdapter implements IAudioExport {
   }
 
   private getMaxBufferDuration(buffers: ReadonlyMap<string, ArrayBuffer>): number {
-    let maxDuration = 0;
-    buffers.forEach((arrayBuffer) => {
+    return Array.from(buffers.values()).reduce((max, arrayBuffer) => {
       const duration = arrayBuffer.byteLength / (44100 * 2 * 2);
-      if (duration > maxDuration) {
-        maxDuration = duration;
-      }
-    });
-    return maxDuration;
+      return Math.max(max, duration);
+    }, 0);
   }
 
   private async loadAllTracks(
@@ -140,7 +136,7 @@ export class AudioExportAdapter implements IAudioExport {
       channels.push(buffer.getChannelData(i));
     }
 
-    let offset = headerSize;
+    let offset = headerSize; // eslint-disable-line functional/no-let
     for (let i = 0; i < buffer.length; i++) {
       for (let channel = 0; channel < numChannels; channel++) {
         const sample = Math.max(-1, Math.min(1, channels[channel][i]));
