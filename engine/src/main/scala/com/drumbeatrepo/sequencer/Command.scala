@@ -33,6 +33,6 @@ object Command:
             .selectDynamic("tempo")
             .asInstanceOf[Int]
         )
-      case "UNDO"      => Undo
-      case "REDO"      => Redo
-      case t           => throw new RuntimeException(s"Unknown command: $t")
+      case "UNDO" => Undo
+      case "REDO" => Redo
+      case t      => throw new RuntimeException(s"Unknown command: $t")

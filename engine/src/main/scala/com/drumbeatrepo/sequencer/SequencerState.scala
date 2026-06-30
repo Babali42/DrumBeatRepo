@@ -1,6 +1,12 @@
 package com.drumbeatrepo.sequencer
 
-case class SequencerState(genre: String, beat: String, tempo: Int, history: List[SequencerState], future: List[SequencerState]):
+case class SequencerState(
+    genre: String,
+    beat: String,
+    tempo: Int,
+    history: List[SequencerState],
+    future: List[SequencerState]
+):
 
   def dispatch(command: Command): SequencerState = command match
     case Command.SelectGenre(newGenre) =>
@@ -12,15 +18,16 @@ case class SequencerState(genre: String, beat: String, tempo: Int, history: List
     case Command.Undo =>
       history match
         case init :+ last => last.copy(history = init, future = this :: future)
-        case _ => this
+        case _            => this
     case Command.Redo =>
       future match
-        case Nil => this
+        case Nil          => this
         case next :: rest =>
           val prevHistory = history
           next.copy(history = prevHistory :+ next, future = rest)
-    
+
 end SequencerState
 
 object SequencerState:
-  val initial: SequencerState = SequencerState("Hypnotic Techno", "Tresillo", 128, Nil, Nil)
+  val initial: SequencerState =
+    SequencerState("Hypnotic Techno", "Tresillo", 128, Nil, Nil)
