@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Setup Java 23 (Temurin)
       uses: actions/setup-java@v4
