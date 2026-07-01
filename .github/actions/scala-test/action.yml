@@ -16,7 +16,7 @@ runs:
     - name: Install sbt
       shell: bash
       run: |
-        curl -fL https://github.com/sbt/sbt/releases/download/v1.12.11/sbt-1.12.11.tgz -o /tmp/sbt.tgz
+        curl -fL https://github.com/sbt/sbt/releases/download/v2.0.1/sbt-2.0.1.tgz -o /tmp/sbt.tgz
         tar xzf /tmp/sbt.tgz -C /tmp
         echo "/tmp/sbt/bin" >> $GITHUB_PATH
 
