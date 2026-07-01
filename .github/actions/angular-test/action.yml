@@ -48,7 +48,7 @@ runs:
       working-directory: ./frontend
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v6
+      uses: codecov/codecov-action@v7
       with:
         token: ${{ inputs.codecov_token }}
         files: frontend/coverage/ng17-lib-test/lcov.info,frontend/coverage/vitest/lcov.info
