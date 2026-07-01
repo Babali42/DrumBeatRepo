@@ -7,28 +7,14 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v7
 
-    - name: Setup Java 23 (Temurin)
-      uses: actions/setup-java@v5
+    - name: Setup Java 25 (Temurin)
+      uses: actions/setup-java@v4
       with:
         distribution: temurin
-        java-version: 23
+        java-version: 25
 
-    - name: Install sbt
-      shell: bash
-      run: |
-        curl -fL https://github.com/sbt/sbt/releases/download/v2.0.1/sbt-2.0.1.tgz -o /tmp/sbt.tgz
-        tar xzf /tmp/sbt.tgz -C /tmp
-        echo "/tmp/sbt/bin" >> $GITHUB_PATH
-
-    - name: Cache sbt and coursier
-      uses: actions/cache@v6
-      with:
-        path: |
-          ~/.sbt
-          ~/.cache/coursier
-        key: sbt-${{ hashFiles('engine/build.sbt', 'engine/project/*.sbt', 'engine/project/*.properties') }}
-        restore-keys: |
-          sbt-
+    - name: Setup sbt launcher
+      uses: sbt/setup-sbt@v1
 
     - name: Test Scala
       run: sbt testFull
