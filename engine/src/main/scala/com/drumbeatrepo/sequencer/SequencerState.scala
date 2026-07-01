@@ -9,10 +9,8 @@ case class SequencerState(
 ):
 
   def dispatch(command: Command): SequencerState = command match
-    case Command.SelectGenre(newGenre) =>
-      SequencerState(newGenre, beat, tempo, history :+ this, future)
-    case Command.SelectBeat(newBeat) =>
-      SequencerState(genre, newBeat, tempo, history :+ this, future)
+    case Command.SelectBeat(newGenre, newBeat, newTempo) =>
+      SequencerState(newGenre, newBeat, newTempo, history :+ this, future)
     case Command.SetTempo(newTempo) =>
       SequencerState(genre, beat, newTempo, history :+ this, future)
     case Command.Undo =>

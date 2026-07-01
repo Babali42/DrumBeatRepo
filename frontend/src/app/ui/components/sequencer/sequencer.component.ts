@@ -132,9 +132,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.genresLabel = [...genreMap.keys()];
       const firstBeat = beats[0];
       if (firstBeat) {
-        this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
-        this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat.bpm } });
-        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
+        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
         this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       }
       this.cdr.markForCheck();
@@ -158,13 +156,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   selectGenre(genre: string): void {
     const firstBeat = this.genres.get(genre)?.[0];
-    this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre } });
-    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat!.bpm } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
   }
 
   selectBeat(beatToSelect: Beat): void {
-    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: beatToSelect.bpm } });
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: beatToSelect.label } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
   beatChange($event: string) {
