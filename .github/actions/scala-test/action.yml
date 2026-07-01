@@ -30,6 +30,11 @@ runs:
         restore-keys: |
           sbt-
 
+    - name: Test Scala
+      run: sbt testFull
+      working-directory: engine
+      shell: bash
+
     - name: Build Scala.js
       run: sbt fastLinkJS
       working-directory: engine
