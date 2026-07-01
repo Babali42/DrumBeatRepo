@@ -15,8 +15,9 @@ describe('SequencerService undo', () => {
   }
 
   it('undoes a SELECT_BEAT', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: 'Techno' } });
-    expect(currentState().beat).toBe('Techno');
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
+    expect(currentState().genre).toBe('Techno');
+    expect(currentState().beat).toBe('4 on the floor');
 
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
@@ -24,7 +25,7 @@ describe('SequencerService undo', () => {
   });
 
   it('reapplies SELECT_BEAT after undo then redo', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { beat: '4 on the floor' } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
 
@@ -32,17 +33,8 @@ describe('SequencerService undo', () => {
     expect(currentState().beat).toBe('4 on the floor');
   });
 
-  it('undoes a SELECT_GENRE', () => {
-    service.dispatch({ type: 'SELECT_GENRE', payload: { genre: 'Techno' } });
-    expect(currentState().genre).toBe('Techno');
-
-    service.dispatch({ type: 'UNDO' });
-    expect(currentState().genre).toBe('Hypnotic Techno');
-    expect(currentState().futureLength).toBe(1);
-  });
-
   it('should apply a setTempo command', () => {
-    service.dispatch({type: 'SET_TEMPO', payload: { tempo: 129 }});
+    service.dispatch({ type: 'SET_TEMPO', payload: { tempo: 129 } });
     expect(currentState().tempo).toBe(129)
   });
 });

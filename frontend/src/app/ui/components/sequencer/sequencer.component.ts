@@ -1,36 +1,36 @@
-import {Option} from "effect";
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Beat} from '../../../domain/beat';
-import {BehaviorSubject, Subject, takeUntil, tap} from "rxjs";
-import {BpmInputComponent} from "../bpm-input/bpm-input.component";
-import {SelectInputComponent} from "../select-input/select-input.component";
-import {Track} from "../../../domain/track";
+import { Option } from "effect";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Beat } from '../../../domain/beat';
+import { BehaviorSubject, Subject, takeUntil, tap } from "rxjs";
+import { BpmInputComponent } from "../bpm-input/bpm-input.component";
+import { SelectInputComponent } from "../select-input/select-input.component";
+import { Track } from "../../../domain/track";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
-import {FormsModule} from "@angular/forms";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {TempoAdapterService} from "../../../infrastructure/adapters/tempo-control/tempo-adapter.service";
-import {PlayerEventsService} from "../../services/player.events.service";
-import {BPM} from "../../../domain/bpm";
-import {StepIndex} from "../../../domain/step-index";
-import {Steps} from "../../../domain/steps";
-import {ExportAudioModalComponent} from "../modals/export-audio-modal/export-audio-modal.component";
-import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
-import {MaxMidiNote} from "../../../domain/midi-drum-type";
-import {ExportMidiModalComponent} from "../modals/export-midi-modal/export-midi-modal.component";
-import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
-import {downloadBlob} from "../../../infrastructure/adapters/utils/blob.utils";
-import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
-import {IMidi} from "../../../domain/ports/i-midi";
-import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
-import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
-import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
-import {IAudioExport} from "../../../domain/ports/i-audio-export";
-import {NgOptimizedImage} from "@angular/common";
-import {TranslatePipe} from "@ngx-translate/core";
-import {DrumImagePipe} from "../../pipes/drum-image.pipe";
-import {IconDarkModePipe} from "../../pipes/icon-dark-mode.pipe";
-import {SequencerService} from "./sequencer.service";
+import { IAudioEngine } from "../../../domain/ports/i-audio-engine";
+import { FormsModule } from "@angular/forms";
+import { NumberOfSteps } from "../../../domain/number-of-steps";
+import { TempoAdapterService } from "../../../infrastructure/adapters/tempo-control/tempo-adapter.service";
+import { PlayerEventsService } from "../../services/player.events.service";
+import { BPM } from "../../../domain/bpm";
+import { StepIndex } from "../../../domain/step-index";
+import { Steps } from "../../../domain/steps";
+import { ExportAudioModalComponent } from "../modals/export-audio-modal/export-audio-modal.component";
+import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
+import { MaxMidiNote } from "../../../domain/midi-drum-type";
+import { ExportMidiModalComponent } from "../modals/export-midi-modal/export-midi-modal.component";
+import { MidiExportOptions } from "../../../domain/export-options/midi-export-options";
+import { downloadBlob } from "../../../infrastructure/adapters/utils/blob.utils";
+import { IMIDI } from "../../../infrastructure/injection-tokens/i-midi.token";
+import { IMidi } from "../../../domain/ports/i-midi";
+import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
+import { AUDIO_ENGINE } from "../../../infrastructure/injection-tokens/audio-engine.token";
+import { AUDIO_EXPORT } from "../../../infrastructure/injection-tokens/audio-export.token";
+import { IAudioExport } from "../../../domain/ports/i-audio-export";
+import { NgOptimizedImage } from "@angular/common";
+import { TranslatePipe } from "@ngx-translate/core";
+import { DrumImagePipe } from "../../pipes/drum-image.pipe";
+import { IconDarkModePipe } from "../../pipes/icon-dark-mode.pipe";
+import { SequencerService } from "./sequencer.service";
 
 @Component({
   selector: 'sequencer',
@@ -63,13 +63,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
   minHistoryLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
-              @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
-              @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
-              protected readonly tempoService: TempoAdapterService,
-              private readonly playerEvents: PlayerEventsService,
-              @Inject(IMIDI) public readonly midiExportService: IMidi,
-              protected readonly sequencerService: SequencerService,
-              private readonly cdr: ChangeDetectorRef) {
+    @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+    @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
+    protected readonly tempoService: TempoAdapterService,
+    private readonly playerEvents: PlayerEventsService,
+    @Inject(IMIDI) public readonly midiExportService: IMidi,
+    protected readonly sequencerService: SequencerService,
+    private readonly cdr: ChangeDetectorRef) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
@@ -132,9 +132,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.genresLabel = [...genreMap.keys()];
       const firstBeat = beats[0];
       if (firstBeat) {
-        this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre: firstBeat.genre } });
-        this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat.bpm } });
-        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: firstBeat.label } });
+        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
         this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       }
       this.cdr.markForCheck();
@@ -157,16 +155,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   selectGenre(genre: string): void {
-    this.sequencerService.dispatch({ type: 'SELECT_GENRE', payload: { genre } });
     const firstBeat = this.genres.get(genre)?.[0];
-    if (firstBeat) {
-      this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: firstBeat.bpm } });
-    }
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
   }
 
   selectBeat(beatToSelect: Beat): void {
-    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: beatToSelect.bpm } });
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { beat: beatToSelect.label } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
   beatChange($event: string) {

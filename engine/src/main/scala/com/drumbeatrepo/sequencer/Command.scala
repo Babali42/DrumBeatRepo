@@ -3,8 +3,7 @@ package com.drumbeatrepo.sequencer
 import scala.scalajs.js
 
 enum Command:
-  case SelectGenre(genre: String)
-  case SelectBeat(beat: String)
+  case SelectBeat(genre: String, beat: String, tempo: Int)
   case SetTempo(tempo: Int)
   case Undo
   case Redo
@@ -12,19 +11,20 @@ enum Command:
 object Command:
   def fromJS(cmd: js.Dynamic): Command =
     cmd.selectDynamic("type").asInstanceOf[String] match
-      case "SELECT_GENRE" =>
-        SelectGenre(
-          cmd
-            .selectDynamic("payload")
-            .selectDynamic("genre")
-            .asInstanceOf[String]
-        )
       case "SELECT_BEAT" =>
         SelectBeat(
           cmd
             .selectDynamic("payload")
+            .selectDynamic("genre")
+            .asInstanceOf[String],
+          cmd
+            .selectDynamic("payload")
             .selectDynamic("beat")
-            .asInstanceOf[String]
+            .asInstanceOf[String],
+          cmd
+            .selectDynamic("payload")
+            .selectDynamic("tempo")
+            .asInstanceOf[Int]
         )
       case "SET_TEMPO" =>
         SetTempo(

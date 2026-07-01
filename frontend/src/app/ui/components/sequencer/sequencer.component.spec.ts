@@ -1,28 +1,28 @@
-import {SequencerComponent} from "./sequencer.component";
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {provideRouter} from "@angular/router";
-import {provideHttpClient} from "@angular/common/http";
-import {By} from "@angular/platform-browser";
-import {IManageBeatsToken} from "../../../infrastructure/injection-tokens/i-manage-beat.token";
-import {AUDIO_ENGINE} from "../../../infrastructure/injection-tokens/audio-engine.token";
+import { SequencerComponent } from "./sequencer.component";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
+import { provideHttpClient } from "@angular/common/http";
+import { By } from "@angular/platform-browser";
+import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
+import { AUDIO_ENGINE } from "../../../infrastructure/injection-tokens/audio-engine.token";
 import {
   AudioEngineAdapterFake
 } from "../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import {Beat} from "../../../domain/beat";
-import {Steps} from "../../../domain/steps";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {BPM} from "../../../domain/bpm";
-import {MidiDrumType} from "../../../domain/midi-drum-type";
-import {provideTranslateService} from "@ngx-translate/core";
-import {Option} from "effect";
-import {IMIDI} from "../../../infrastructure/injection-tokens/i-midi.token";
-import {MidiExportService} from "../../../infrastructure/adapters/midi-export/midi-exporter.service";
-import {AUDIO_EXPORT} from "../../../infrastructure/injection-tokens/audio-export.token";
-import {AudioExportAdapter} from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
-import {MidiExportOptions} from "../../../domain/export-options/midi-export-options";
-import {AudioExportOptions} from "../../../domain/export-options/audio-export-options";
-import {SequencerService} from "./sequencer.service";
+import { Beat } from "../../../domain/beat";
+import { Steps } from "../../../domain/steps";
+import { NumberOfSteps } from "../../../domain/number-of-steps";
+import { BPM } from "../../../domain/bpm";
+import { MidiDrumType } from "../../../domain/midi-drum-type";
+import { provideTranslateService } from "@ngx-translate/core";
+import { Option } from "effect";
+import { IMIDI } from "../../../infrastructure/injection-tokens/i-midi.token";
+import { MidiExportService } from "../../../infrastructure/adapters/midi-export/midi-exporter.service";
+import { AUDIO_EXPORT } from "../../../infrastructure/injection-tokens/audio-export.token";
+import { AudioExportAdapter } from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
+import { MidiExportOptions } from "../../../domain/export-options/midi-export-options";
+import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
+import { SequencerService } from "./sequencer.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
