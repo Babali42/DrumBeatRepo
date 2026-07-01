@@ -10,7 +10,7 @@ runs:
   using: composite
   steps:
     - name: Download Scala.js artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: scalajs-artifact
         path: frontend/engine/
