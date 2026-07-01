@@ -25,7 +25,7 @@ describe('SequencerService undo', () => {
   });
 
   it('reapplies SELECT_BEAT after undo then redo', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techo", beat: '4 on the floor', tempo: 128 } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
 

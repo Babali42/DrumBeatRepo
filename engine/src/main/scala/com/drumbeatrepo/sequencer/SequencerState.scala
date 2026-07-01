@@ -12,7 +12,11 @@ case class SequencerState(
     case Command.SelectBeat(newGenre, newBeat, newTempo) =>
       SequencerState(newGenre, newBeat, newTempo, history :+ this, future)
     case Command.SetTempo(newTempo) =>
-      SequencerState(genre, beat, newTempo, history :+ this, future)
+      history match
+        case _ :+ last if last.genre == genre && last.beat == beat =>
+          SequencerState(genre, beat, newTempo, history, future)
+        case _ =>
+          SequencerState(genre, beat, newTempo, history :+ this, future)
     case Command.Undo =>
       history match
         case init :+ last => last.copy(history = init, future = this :: future)
@@ -20,9 +24,7 @@ case class SequencerState(
     case Command.Redo =>
       future match
         case Nil          => this
-        case next :: rest =>
-          val prevHistory = history
-          next.copy(history = prevHistory :+ next, future = rest)
+        case next :: rest => next.copy(future = rest)
 
 end SequencerState
 
