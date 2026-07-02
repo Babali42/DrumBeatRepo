@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
+import { skip } from 'rxjs';
+import { BPM } from '../../../domain/bpm';
 
 describe('SequencerService undo', () => {
   let service: SequencerService;
@@ -36,5 +38,16 @@ describe('SequencerService undo', () => {
   it('should apply a setTempo command', () => {
     service.dispatch({ type: 'SET_TEMPO', payload: { tempo: 129 } });
     expect(currentState().tempo).toBe(129)
+  });
+
+  it('should update the viewmodel when state change', (done) => {
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
+    service.vm$
+      .subscribe(vm => {
+        expect(vm.genre).toBe("Techno");
+        expect(vm.beat).toBe("4 on the floor");
+        expect(vm.tempo).toBe(BPM(128));
+        done();
+      });
   });
 });

@@ -1,90 +1,79 @@
 <div id="main-container">
   <div class="play-button-container flex">
-    <button class="play-pause-button cursor-pointer app-button"
-            (click)="this.soundService.playPause()">
+    <button class="play-pause-button cursor-pointer app-button" (click)="this.soundService.playPause()">
       {{ this.soundService.isPlaying ? "⏸" : "▶" }}
     </button>
   </div>
   <div class="sequencer-header">
     <div class="label">
-      <app-select-input [elements]="genresLabel"
-                        [selectedElement]="selectedGenreLabel"
-                        (selectChange)="this.selectGenre($event)"
-                        placeHolder="{{ 'chooseGenre' | translate }}">
+      <app-select-input [elements]="genresLabel" [selectedElement]="sequencerService.vm$.getValue().genre"
+        (selectChange)="this.selectGenre($event)" placeHolder="{{ 'chooseGenre' | translate }}">
       </app-select-input>
     </div>
     <div class="label">
-      <app-select-input [elements]="beats"
-                        [selectedElement]="this.beat.label"
-                        (selectChange)="beatChange($event)"
-                        placeHolder="{{ 'chooseBeat' | translate : { genre : selectedGenreLabel } }}">
+      <app-select-input [elements]="beats" [selectedElement]="sequencerService.vm$.getValue().beat" (selectChange)="beatChange($event)"
+        placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
       </app-select-input>
     </div>
     <div class="flex label bpm-input-group">
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
-      @if (historyLength > minHistoryLength) {
-        <button class="button play-sample-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})">
-          <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28" width="28">
-        </button>
+      @if (sequencerService.vm$.getValue().historyLength > minHistoryLength) {
+      <button class="button play-sample-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})">
+        <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28"
+          width="28">
+      </button>
       }
-      @if (futureLength > 0) {
-        <button class="button play-sample-button redo" (click)="this.sequencerService.dispatch({ type: 'REDO'})">
-          <img alt="redo" aria-label="Redo" [ngSrc]="'assets/images/icons/redo.svg' | iconDarkMode" height="28" width="28">
-        </button>
+      @if (sequencerService.vm$.getValue().futureLength > 0) {
+      <button class="button play-sample-button redo" (click)="this.sequencerService.dispatch({ type: 'REDO'})">
+        <img alt="redo" aria-label="Redo" [ngSrc]="'assets/images/icons/redo.svg' | iconDarkMode" height="28"
+          width="28">
+      </button>
       }
     </div>
     <div>
-      <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate }}</button>
+      <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate
+        }}</button>
     </div>
     <div>
-      <button class="button export-button" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate }} (beta)</button>
+      <button class="button export-button" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate }}
+        (beta)</button>
     </div>
   </div>
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
-      <div class="tracks-name">
-        <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
-          <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
-        </button>
-        <div class="track-name user-select-none medium">
-          {{ track.name }}
-        </div>
+    <div class="tracks-name">
+      <button class="button play-sample-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
+        <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
+      </button>
+      <div class="track-name user-select-none medium">
+        {{ track.name }}
       </div>
+    </div>
     }
   </div>
   <section class="tracks-container">
     @for (track of beat.tracks; track $index) {
-      <article>
-        <div id="track"
-             [class.eight-steps]="track.numberOfSteps == NumberOfSteps.eight"
-             [class.sixteen-steps]="track.numberOfSteps == NumberOfSteps.sixteen"
-             [class.thirty-two-steps]="track.numberOfSteps == NumberOfSteps.thirty_two"
-             [class.sixty-four-steps]="track.numberOfSteps == NumberOfSteps.sixty_four">
-          @for (step of track.steps.steps; track $index){
-            <button class="step cursor-pointer"
-                    [class.active]="step"
-                    [class.current]="$index === soundService.index"
-                    [class.highlight]="Math.floor($index / 4) % 2 === 0"
-                    (click)="stepClick(track, StepIndex($index), step)">
-            </button>
-          }
-        </div>
-      </article>
+    <article>
+      <div id="track" [class.eight-steps]="track.numberOfSteps == NumberOfSteps.eight"
+        [class.sixteen-steps]="track.numberOfSteps == NumberOfSteps.sixteen"
+        [class.thirty-two-steps]="track.numberOfSteps == NumberOfSteps.thirty_two"
+        [class.sixty-four-steps]="track.numberOfSteps == NumberOfSteps.sixty_four">
+        @for (step of track.steps.steps; track $index){
+        <button class="step cursor-pointer" [class.active]="step" [class.current]="$index === soundService.index"
+          [class.highlight]="Math.floor($index / 4) % 2 === 0" (click)="stepClick(track, StepIndex($index), step)">
+        </button>
+        }
+      </div>
+    </article>
     }
   </section>
 </div>
 
-<app-export-modal
-  [isOpen]="isAudioExportModalOpen"
-  [beatName]="beat.label"
-  (close)="isAudioExportModalOpen = false"
+<app-export-modal [isOpen]="isAudioExportModalOpen" [beatName]="beat.label" (close)="isAudioExportModalOpen = false"
   (export)="onAudioExport($event)">
 </app-export-modal>
 
-<app-export-midi-modal
-  [isOpen]="isMidiExportModalOpen"
-  [beatName]="beat.label"
-  (close)="isMidiExportModalOpen = false"
+<app-export-midi-modal [isOpen]="isMidiExportModalOpen" [beatName]="beat.label" (close)="isMidiExportModalOpen = false"
   (export)="onMidiExport($event)">
 </app-export-midi-modal>

@@ -55,20 +55,17 @@ export class SequencerComponent implements OnInit, OnDestroy {
   genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
 
-  selectedGenreLabel: string = "";
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
-  historyLength: number = 0;
-  futureLength: number = 0;
   minHistoryLength: number = 0;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
     @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
+    @Inject(IMIDI) public readonly midiExportService: IMidi,
     protected readonly tempoService: TempoAdapterService,
     private readonly playerEvents: PlayerEventsService,
-    @Inject(IMIDI) public readonly midiExportService: IMidi,
-    protected readonly sequencerService: SequencerService,
+    public readonly sequencerService: SequencerService,
     private readonly cdr: ChangeDetectorRef) {
     this.beatBehaviourSubject = new Subject<Beat>();
 
@@ -81,16 +78,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.state$.pipe(
       tap(state => {
         if (state) {
-          this.historyLength = state.historyLength;
-          this.futureLength = state.futureLength;
-
-
           if (state.tempo) {
             this.tempoService.setBpm(BPM(state.tempo));
           }
 
           if (state.genre) {
-            this.selectedGenreLabel = state.genre;
             this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
 
             const beat = state.beat
@@ -164,7 +156,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   beatChange($event: string) {
-    const beatToSelect = this.genres.get(this.selectedGenreLabel)?.find(x => x.label === $event);
+    const beatToSelect = this.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === $event);
     if (beatToSelect) {
       this.selectBeat(beatToSelect);
     }

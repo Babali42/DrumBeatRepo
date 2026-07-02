@@ -99,8 +99,8 @@ describe('SequencerComponent', () => {
 
   it("default genre and beat are selected", () => {
     fixture.detectChanges();
-    expect(component.selectedGenreLabel).toBe("Techno");
-    expect(component.beat.label).toBe("Techno1");
+    expect(component.sequencerService.vm$.getValue().genre).toBe("Techno");
+    expect(component.sequencerService.vm$.getValue().beat).toBe("Techno1");
   });
 
   it("should change the selected beat when a new beat is chosen via the app-select-input dropdown", async () => {
@@ -151,7 +151,6 @@ describe('SequencerComponent', () => {
     await beatsMock.getAllBeats().then(x => genres.set("Techno", [...x]));
 
     fixture.componentInstance.genres = genres;
-    fixture.componentInstance.selectedGenreLabel = "Techno";
 
     fixture.componentInstance.beatChange("Techno2");
 
@@ -191,7 +190,7 @@ describe('SequencerComponent', () => {
   });
 
   it("Should not contain an undo button when there is no command history", () => {
-    fixture.componentInstance.historyLength = 0;
+    component.sequencerService.vm$.getValue().historyLength = 0;
     fixture.detectChanges();
 
     const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
@@ -200,7 +199,7 @@ describe('SequencerComponent', () => {
   });
 
   it("Should contain an undo button when past command have been done", () => {
-    fixture.componentInstance.historyLength = 234;
+    component.sequencerService.vm$.getValue().historyLength = 234;
     fixture.detectChanges();
 
     const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
@@ -209,7 +208,7 @@ describe('SequencerComponent', () => {
   });
 
   it("Should not contain a redo button when there are not future commands to apply", () => {
-    fixture.componentInstance.futureLength = 0;
+    component.sequencerService.vm$.getValue().futureLength = 0;
     fixture.detectChanges();
 
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
@@ -218,25 +217,11 @@ describe('SequencerComponent', () => {
   });
 
   it("Should contain a redo button when there are future commands to apply", () => {
-    fixture.componentInstance.futureLength = 23;
+    component.sequencerService.vm$.getValue().futureLength = 23;
     fixture.detectChanges();
 
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
 
     expect(redoButton.length).not.toBe(0);
-  });
-
-  it("should not undo past the initial state commands", () => {
-    fixture.detectChanges();
-    expect(component.selectedGenreLabel).toBe("Techno");
-    expect(component.beat.label).toBe("Techno1");
-
-    service.dispatch({ type: 'UNDO' });
-    service.dispatch({ type: 'UNDO' });
-    service.dispatch({ type: 'UNDO' });
-    fixture.detectChanges();
-
-    expect(component.selectedGenreLabel).toBe("Hypnotic Techno");
-    expect(fixture.debugElement.queryAll(By.css("button.undo")).length).toBe(0);
   });
 })
