@@ -15,17 +15,22 @@ export class SequencerService {
   state$ = new BehaviorSubject<SequencerState | null>(null);
   vm$ = new BehaviorSubject<SequencerViewModel>({} as SequencerViewModel);
 
+  constructor() {
+    this.state$.subscribe(x => {
+      if (x) {
+        this.vm$.next({
+          genre: x.genre,
+          beat: x.beat,
+          tempo: BPM(x.tempo),
+          historyLength: x.historyLength,
+          futureLength: x.futureLength,
+        });
+      }
+    });
+  }
+
   dispatch(cmd: Command) {
     SequencerEngine.dispatch(cmd);
     this.state$.next(SequencerEngine.getState());
-
-    this.state$.subscribe(x => this.vm$.next(
-      {
-        genre : x!.genre,
-        beat: x!.beat,
-        tempo: BPM(x!.tempo),
-        historyLength: x!.historyLength,
-        futureLength: x!.futureLength,
-      }));
   }
 }

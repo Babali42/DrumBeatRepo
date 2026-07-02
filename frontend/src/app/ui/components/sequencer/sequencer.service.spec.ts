@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
-import { skip } from 'rxjs';
 import { BPM } from '../../../domain/bpm';
 
 describe('SequencerService undo', () => {
