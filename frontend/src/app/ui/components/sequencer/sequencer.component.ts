@@ -100,6 +100,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe();
 
+    //TODO - init the state in sequencerService, store genre and genreLabel in sequencerService too
+
+    //readonly genres$: Observable<ReadonlyMap<string, readonly Beat[]>>;
+    //readonly genresLabel$: Observable<readonly string[]>;
+    //async initialize(): Promise<void>;
+    //
     this._beatsManager.getAllBeats().then(beats => {
       const genreMap = new Map<string, Beat[]>();
 
