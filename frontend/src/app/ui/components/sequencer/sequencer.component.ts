@@ -1,7 +1,7 @@
 import { Option } from "effect";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Beat } from '../../../domain/beat';
-import { BehaviorSubject, Subject, takeUntil, tap } from "rxjs";
+import { Subject, takeUntil, tap } from "rxjs";
 import { BpmInputComponent } from "../bpm-input/bpm-input.component";
 import { SelectInputComponent } from "../select-input/select-input.component";
 import { Track } from "../../../domain/track";
@@ -41,8 +41,7 @@ import { SequencerService } from "./sequencer.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
-  readonly customBeatSubject = new BehaviorSubject<Beat | null>(null);
-  private readonly beatBehaviourSubject: Subject<Beat>;
+  private readonly beatBehaviourSubject = new Subject<Beat>();
   private readonly destroy$ = new Subject<void>;
 
   protected readonly Math = Math;
@@ -67,7 +66,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     private readonly playerEvents: PlayerEventsService,
     public readonly sequencerService: SequencerService,
     private readonly cdr: ChangeDetectorRef) {
-    this.beatBehaviourSubject = new Subject<Beat>();
 
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
@@ -123,10 +121,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.genres = genreMap;
       this.genresLabel = [...genreMap.keys()];
       const firstBeat = beats[0];
-      if (firstBeat) {
-        this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
-        this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
-      }
+      this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
+      this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       this.cdr.markForCheck();
     }).catch(() => {
     });
@@ -143,7 +139,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       tracks: orderedTracks
     };
     this.beatBehaviourSubject.next(this.beat);
-    this.customBeatSubject.next(this.beat);
   }
 
   selectGenre(genre: string): void {
@@ -155,11 +150,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
-  beatChange($event: string) {
-    const beatToSelect = this.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === $event);
-    if (beatToSelect) {
-      this.selectBeat(beatToSelect);
-    }
+  beatChange(beat: string) {
+    const beatToSelect = this.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === beat);
+    this.selectBeat(beatToSelect!);
   }
 
   stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
@@ -175,8 +168,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       ...this.beat,
       tracks: this.beat.tracks
     };
-
-    this.customBeatSubject.next(this.beat);
   }
 
   changeBeatBpm($event: number) {
@@ -186,7 +177,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       ...this.beat,
       bpm: BPM($event),
     };
-    this.customBeatSubject.next(this.beat);
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
