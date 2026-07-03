@@ -55,7 +55,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
-  minHistoryLength: number = 0;
+
+  //do not undo the state init
+  minHistoryLength: number = 1;
 
   constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
     @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
@@ -113,7 +115,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       this.genresLabel = [...genreMap.keys()];
       const firstBeat = beats[0];
       this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
-      this.minHistoryLength = this.sequencerService.state$.getValue()?.historyLength ?? 0;
       this.cdr.markForCheck();
     }).catch(() => {
     });
