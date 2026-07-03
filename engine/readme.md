@@ -1,4 +1,8 @@
-We use sbt 2.0.X so : 
+# Scala engine
+
+This scala engine is the core of the application, with the command/state modelling in a functional programming way
+
+# How to use it
 
 - Run all tests
 `sbt testFull`
