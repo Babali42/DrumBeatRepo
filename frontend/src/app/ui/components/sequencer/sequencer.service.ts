@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { SequencerState } from '../../../../types/engine';
 import { SequencerViewModel } from './sequencer.viewmodel';
 import { BPM } from 'src/app/domain/bpm';
-import { Command } from './command';
+import { Command } from './sequencer.command';
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
