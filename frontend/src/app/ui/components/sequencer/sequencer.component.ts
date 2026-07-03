@@ -41,7 +41,6 @@ import { SequencerService } from "./sequencer.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
-  private readonly beatBehaviourSubject = new Subject<Beat>();
   private readonly destroy$ = new Subject<void>;
 
   protected readonly Math = Math;
@@ -99,14 +98,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe();
 
-    this.beatBehaviourSubject.pipe(
-      tap(beat => {
-        this.tempoService.setNumberOfSteps(beat.tracks[0].numberOfSteps);
-        this.soundService.setTracks(beat.tracks);
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
-
     this._beatsManager.getAllBeats().then(beats => {
       const genreMap = new Map<string, Beat[]>();
 
@@ -138,7 +129,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
       ...beatToSelect,
       tracks: orderedTracks
     };
-    this.beatBehaviourSubject.next(this.beat);
+
+    this.tempoService.setNumberOfSteps(this.beat.tracks[0].numberOfSteps);
+    this.soundService.setTracks(this.beat.tracks);
   }
 
   selectGenre(genre: string): void {
