@@ -14,36 +14,56 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 ![App Screenshot](./app.png)
 
----
+## Requirements
 
-### ✅ Requirements
-
-* Angular : [Node.js](https://nodejs.org/fr) + npm
 * Scala : [sbt](https://www.scala-sbt.org/)
+* Angular : [Node.js](https://nodejs.org/fr) + npm
+
+
+```bash
+git clone https://github.com/Babali42/DrumBeatRepo.git
+cd frontend/
+cd engine/
+```
 
 ## 🚀 Quick Start
 
 ### 1. Engine (Scala)
 
-```bash
-cd engine/
-sbt compile
-sbt fastLinkJS
-```
+#### Why ?
+
+This scala engine is the core of the application, with the command/state modelling in a functional programming way.
+
+> It's my first scala project, I'm open to feedbacks, and PR !
+
+#### Go into directory
+
+Open a terminal in folder : `cd engine/`
+
+#### How to test it
+
+- Run all tests : `sbt testFull`
+- Continously run tests : `sbt "~test"`
+
+#### How to link it to Angular
+
+- Build a js file in the frontend project directory :
+`sbt fastLinkJS`
 
 ### 2. Frontend (Angular)
 
-```bash
-cd ../frontend/
-npm install
-npm start
-```
+#### Go into directory
+
+Open a terminal in folder : `cd frontend/`
+
+#### How to test it
+
+- Run (angular) karma tests : `npm run test`
+- Run vitest tests : `npm run test-vitest`
 
 ➡️ App runs at: `http://localhost:4200`
 
-***
-
-## 🤝 Contributing
+## Contributing
 
 Everyone is welcome — devs, musicians, designers.
 
@@ -59,57 +79,12 @@ Everyone is welcome — devs, musicians, designers.
     * Comment on <https://github.com/Babali42/DrumBeatRepo/issues/270>
     * Or implement it directly and open a PR
 
-***
-
-## 🛠 Setup
-
-```bash
-git clone https://github.com/Babali42/DrumBeatRepo.git
-cd frontend/
-npm install
-```
-
-***
-
-## 🧪 Testing
-
-Run all before submitting PRs:
-
-```bash
-npm test         # Angular (Karma)
-npm vitest       # TypeScript logic
-npm test-jest    # Architecture rules
-```
-
-### 📊 Coverage
-
-```bash
-ng test --code-coverage
-```
-
-***
-
-## 🏗 Architecture
-
-Uses **Hexagonal Architecture (Ports & Adapters)**
-
-✅ Domain = independent  
-❌ No framework or UI dependencies in domain
-
-Architecture tests enforce this (`npm test-jest`).
-
-***
-
-## ✅ Contribution Workflow
+## Contribution Workflow
 
 1. Fork + create branch from `main`
 2. Make changes
 3. ✅ Pass all tests
-4. Open PR with clear description
-
-Be respectful and follow the Code of Conduct ❤️
-
-***
+4. Open a Pull Request
 
 ## Contributors
 
@@ -142,7 +117,7 @@ Be respectful and follow the Code of Conduct ❤️
 - **Etienne** for the testing and the dub beat pattern
 - **[Damien Musy](https://Damien-musy.fr)** for the blazing fast mobile ui sketch !
 
-## 📄 License
+## License
 
 - **Code**: Licensed under the [GNU General Public License](./LICENSE).  
 - **Non-code content** (UI concepts, beats, etc.): Licensed under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
