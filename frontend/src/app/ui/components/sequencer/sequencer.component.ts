@@ -121,6 +121,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
           tempo: firstBeat.bpm,
         },
       });
+    }).catch(() => {
+      console.error("Fail to init sequencer");
     });
   }
 
