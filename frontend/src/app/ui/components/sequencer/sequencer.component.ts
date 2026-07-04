@@ -67,7 +67,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.sequencerService.state$
       .pipe(
         tap(state => {
@@ -99,28 +99,28 @@ export class SequencerComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    await this.sequencerService.initialize();
+    this.sequencerService.initialize().then(() => {
+      const firstGenre = this.sequencerService.genresLabel[0];
 
-    const firstGenre = this.sequencerService.genresLabel[0];
+      if (!firstGenre) {
+        return;
+      }
 
-    if (!firstGenre) {
-      return;
-    }
+      const firstBeat =
+        this.sequencerService.genres.get(firstGenre)?.[0];
 
-    const firstBeat =
-      this.sequencerService.genres.get(firstGenre)?.[0];
+      if (!firstBeat) {
+        return;
+      }
 
-    if (!firstBeat) {
-      return;
-    }
-
-    this.sequencerService.dispatch({
-      type: 'SELECT_BEAT',
-      payload: {
-        genre: firstBeat.genre,
-        beat: firstBeat.label,
-        tempo: firstBeat.bpm,
-      },
+      this.sequencerService.dispatch({
+        type: 'SELECT_BEAT',
+        payload: {
+          genre: firstBeat.genre,
+          beat: firstBeat.label,
+          tempo: firstBeat.bpm,
+        },
+      });
     });
   }
 
