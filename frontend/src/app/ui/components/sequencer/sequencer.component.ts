@@ -5,7 +5,6 @@ import { Subject, takeUntil, tap } from "rxjs";
 import { BpmInputComponent } from "../bpm-input/bpm-input.component";
 import { SelectInputComponent } from "../select-input/select-input.component";
 import { Track } from "../../../domain/track";
-import IManageBeats from "../../../domain/ports/i-manage-beats";
 import { IAudioEngine } from "../../../domain/ports/i-audio-engine";
 import { FormsModule } from "@angular/forms";
 import { NumberOfSteps } from "../../../domain/number-of-steps";
@@ -22,7 +21,6 @@ import { MidiExportOptions } from "../../../domain/export-options/midi-export-op
 import { downloadBlob } from "../../../infrastructure/adapters/utils/blob.utils";
 import { IMIDI } from "../../../infrastructure/injection-tokens/i-midi.token";
 import { IMidi } from "../../../domain/ports/i-midi";
-import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 import { AUDIO_ENGINE } from "../../../infrastructure/injection-tokens/audio-engine.token";
 import { AUDIO_EXPORT } from "../../../infrastructure/injection-tokens/audio-export.token";
 import { IAudioExport } from "../../../domain/ports/i-audio-export";
@@ -48,9 +46,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly StepIndex = StepIndex;
 
   beat = {} as Beat;
-  genres: ReadonlyMap<string, readonly Beat[]> = new Map();
-
-  genresLabel: readonly string[] = [];
   beats: readonly string[] = [];
 
   isAudioExportModalOpen = false;
@@ -59,8 +54,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   //do not undo the state init
   minHistoryLength: number = 1;
 
-  constructor(@Inject(IManageBeatsToken) private readonly _beatsManager: IManageBeats,
-    @Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+  constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
     protected readonly tempoService: TempoAdapterService,
@@ -73,56 +67,60 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  ngOnInit() {
-    this.sequencerService.state$.pipe(
-      tap(state => {
-        if (state) {
+  async ngOnInit(): Promise<void> {
+    this.sequencerService.state$
+      .pipe(
+        tap(state => {
+          if (!state) {
+            return;
+          }
+
+          this.beats =
+            this.sequencerService.genres
+              .get(state.genre)
+              ?.map(x => x.label) ?? [];
+
           if (state.tempo) {
             this.tempoService.setBpm(BPM(state.tempo));
           }
 
-          if (state.genre) {
-            this.beats = this.genres.get(state.genre)?.map(b => b.label) ?? [];
+          const beat =
+            this.sequencerService.genres
+              .get(state.genre)
+              ?.find(x => x.label === state.beat);
 
-            const beat = state.beat
-              ? this.genres.get(state.genre)?.find(b => b.label === state.beat)
-              : undefined;
-            if (beat) {
-              this._applyBeat(beat);
-            } else {
-              const firstBeat = this.genres.get(state.genre)?.[0];
-              if (firstBeat) this._applyBeat(firstBeat);
-            }
+          if (beat) {
+            this._applyBeat(beat);
           }
+
           this.cdr.markForCheck();
-        }
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
 
-    //TODO - init the state in sequencerService, store genre and genreLabel in sequencerService too
+    await this.sequencerService.initialize();
 
-    //readonly genres$: Observable<ReadonlyMap<string, readonly Beat[]>>;
-    //readonly genresLabel$: Observable<readonly string[]>;
-    //async initialize(): Promise<void>;
-    //
-    this._beatsManager.getAllBeats().then(beats => {
-      const genreMap = new Map<string, Beat[]>();
+    const firstGenre = this.sequencerService.genresLabel[0];
 
-      for (const beat of beats) {
-        const existing = genreMap.get(beat.genre);
-        if (existing)
-          existing.push(beat);
-        else
-          genreMap.set(beat.genre, [beat]);
-      }
+    if (!firstGenre) {
+      return;
+    }
 
-      this.genres = genreMap;
-      this.genresLabel = [...genreMap.keys()];
-      const firstBeat = beats[0];
-      this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: firstBeat.genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
-      this.cdr.markForCheck();
-    }).catch(() => {
+    const firstBeat =
+      this.sequencerService.genres.get(firstGenre)?.[0];
+
+    if (!firstBeat) {
+      return;
+    }
+
+    this.sequencerService.dispatch({
+      type: 'SELECT_BEAT',
+      payload: {
+        genre: firstBeat.genre,
+        beat: firstBeat.label,
+        tempo: firstBeat.bpm,
+      },
     });
   }
 
@@ -142,7 +140,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   selectGenre(genre: string): void {
-    const firstBeat = this.genres.get(genre)?.[0];
+    const firstBeat = this.sequencerService.genres.get(genre)?.[0];
     this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
   }
 
@@ -151,7 +149,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   beatChange(beat: string) {
-    const beatToSelect = this.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === beat);
+    const beatToSelect = this.sequencerService.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === beat);
     this.selectBeat(beatToSelect!);
   }
 

@@ -6,12 +6,14 @@
   </div>
   <div class="sequencer-header">
     <div class="label">
-      <app-select-input [elements]="genresLabel" [selectedElement]="sequencerService.vm$.getValue().genre"
-        (selectChange)="this.selectGenre($event)" placeHolder="{{ 'chooseGenre' | translate }}">
+      <app-select-input [elements]="sequencerService.genresLabel"
+        [selectedElement]="sequencerService.vm$.getValue().genre" (selectChange)="this.selectGenre($event)"
+        placeHolder="{{ 'chooseGenre' | translate }}">
       </app-select-input>
     </div>
     <div class="label">
-      <app-select-input [elements]="beats" [selectedElement]="sequencerService.vm$.getValue().beat" (selectChange)="beatChange($event)"
+      <app-select-input [elements]="beats" [selectedElement]="sequencerService.vm$.getValue().beat"
+        (selectChange)="beatChange($event)"
         placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
       </app-select-input>
     </div>

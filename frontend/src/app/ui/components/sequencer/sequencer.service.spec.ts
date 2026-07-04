@@ -1,13 +1,57 @@
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
 import { BPM } from '../../../domain/bpm';
+import { IManageBeatsToken } from '../../../infrastructure/injection-tokens/i-manage-beat.token';
+import { Steps } from '../../../domain/steps';
+import { NumberOfSteps } from '../../../domain/number-of-steps';
+import { MidiDrumType } from '../../../domain/midi-drum-type';
+import { Option } from "effect";
 
 describe('SequencerService undo', () => {
   let service: SequencerService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     SequencerEngine.reset();
-    TestBed.configureTestingModule({ providers: [SequencerService] });
+
+    const beatsMock = {
+      getAllBeats: () => Promise.resolve([
+        {
+          label: "Techno1",
+          genre: "Techno",
+          bpm: BPM(128),
+          tracks: [
+            {
+              name: "Snare",
+              fileName: "metal/snare.mp3",
+              steps: new Steps([false, false, false, false]),
+              numberOfSteps: NumberOfSteps.sixteen,
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+            }
+          ]
+        },
+        {
+          label: "Techno2",
+          genre: "Techno",
+          bpm: BPM(128),
+          tracks: [
+            {
+              name: "Snare",
+              fileName: "metal/snare.mp3",
+              steps: new Steps([true, true, true, true]),
+              numberOfSteps: NumberOfSteps.sixteen,
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+            }
+          ]
+        }
+      ])
+    };
+
+    await TestBed.configureTestingModule({
+      providers: [
+        { provide: IManageBeatsToken, useValue: beatsMock },
+      ]
+    }).compileComponents();
+
     service = TestBed.inject(SequencerService);
   });
 

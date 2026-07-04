@@ -32,64 +32,62 @@ describe('SequencerComponent', () => {
 
   beforeEach(async () => {
     beatsMock = {
-      getAllBeats(): Promise<readonly Beat[]> {
-        return Promise.resolve([
-          {
-            "label": "Techno1",
-            "genre": "Techno",
-            "bpm": BPM(128),
-            "tracks": [
-              {
-                "name": "Snare",
-                "fileName": "metal/snare.mp3",
-                "steps": new Steps([false, false, false, false]),
-                "numberOfSteps": NumberOfSteps.sixteen,
-                "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
-              }
-            ]
-          },
-          {
-            "label": "Techno2",
-            "genre": "Techno",
-            "bpm": BPM(128),
-            "tracks": [
-              {
-                "name": "Snare",
-                "fileName": "metal/snare.mp3",
-                "steps": new Steps([true, true, true, true]),
-                "numberOfSteps": NumberOfSteps.sixteen,
-                "midiNote": Option.some(MidiDrumType.ACOUSTIC_SNARE)
-              }
-            ]
-          }
-        ]);
-      }
+      getAllBeats: () => Promise.resolve([
+        {
+          label: "Techno1",
+          genre: "Techno",
+          bpm: BPM(128),
+          tracks: [
+            {
+              name: "Snare",
+              fileName: "metal/snare.mp3",
+              steps: new Steps([false, false, false, false]),
+              numberOfSteps: NumberOfSteps.sixteen,
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+            }
+          ]
+        },
+        {
+          label: "Techno2",
+          genre: "Techno",
+          bpm: BPM(128),
+          tracks: [
+            {
+              name: "Snare",
+              fileName: "metal/snare.mp3",
+              steps: new Steps([true, true, true, true]),
+              numberOfSteps: NumberOfSteps.sixteen,
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+            }
+          ]
+        }
+      ])
     };
 
     SequencerEngine.reset();
 
     await TestBed.configureTestingModule({
-      imports: [
-        SequencerComponent,
-      ],
+      imports: [SequencerComponent],
       providers: [
         { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
         { provide: AUDIO_EXPORT, useClass: AudioExportAdapter },
+        { provide: IMIDI, useClass: MidiExportService },
         provideTranslateService({
           lang: 'en',
           fallbackLang: 'en'
         }),
         provideHttpClient(),
-        provideRouter([]),
-        { provide: IMIDI, useClass: MidiExportService },
-        SequencerService
+        provideRouter([])
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(SequencerService);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.detectChanges();
   });
 
@@ -147,11 +145,6 @@ describe('SequencerComponent', () => {
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    const genres = new Map<string, Beat[]>();
-    await beatsMock.getAllBeats().then(x => genres.set("Techno", [...x]));
-
-    fixture.componentInstance.genres = genres;
-
     fixture.componentInstance.beatChange("Techno2");
 
     fixture.detectChanges();
@@ -190,16 +183,13 @@ describe('SequencerComponent', () => {
   });
 
   it("Should not contain an undo button when there is no command history", () => {
-    component.sequencerService.vm$.getValue().historyLength = 0;
-    fixture.detectChanges();
-
     const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
 
     expect(undoButton.length).toBe(0);
   });
 
   it("Should contain an undo button when past command have been done", () => {
-    component.sequencerService.vm$.getValue().historyLength = 234;
+    fixture.componentInstance.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: "Techno", tempo: 128 } });
     fixture.detectChanges();
 
     const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
@@ -208,16 +198,14 @@ describe('SequencerComponent', () => {
   });
 
   it("Should not contain a redo button when there are not future commands to apply", () => {
-    component.sequencerService.vm$.getValue().futureLength = 0;
-    fixture.detectChanges();
-
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
 
     expect(redoButton.length).toBe(0);
   });
 
   it("Should contain a redo button when there are future commands to apply", () => {
-    component.sequencerService.vm$.getValue().futureLength = 23;
+    fixture.componentInstance.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: "Techno", tempo: 128 } });
+    fixture.componentInstance.sequencerService.dispatch({ type: 'UNDO' });
     fixture.detectChanges();
 
     const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
