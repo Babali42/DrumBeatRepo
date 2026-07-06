@@ -143,11 +143,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   selectGenre(genre: string): void {
     const firstBeat = this.sequencerService.genres.get(genre)?.[0];
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tracks: firstBeat?.tracks, tempo: firstBeat!.bpm } });
   }
 
   selectBeat(beatToSelect: Beat): void {
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tracks: beatToSelect.tracks, tempo: beatToSelect.bpm } });
   }
 
   beatChange(beat: string) {

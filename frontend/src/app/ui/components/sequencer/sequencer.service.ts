@@ -7,6 +7,9 @@ import { BehaviorSubject } from "rxjs";
 import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "./sequencer.viewmodel";
 import { Beat } from "src/app/domain/beat";
+import { Option } from "effect";
+import { Track } from "src/app/domain/track";
+import { MidiDrumType } from "src/app/domain/midi-drum-type";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -31,6 +34,7 @@ export class SequencerService {
       this.vm$.next({
         genre: state.genre,
         beat: state.beat,
+        tracks: state.tracks.map(x => new Track(x.name, x.fileName, x.steps, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM))),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
         futureLength: state.futureLength,
@@ -57,7 +61,33 @@ export class SequencerService {
   }
 
   dispatch(cmd: Command): void {
-    SequencerEngine.dispatch(cmd);
+    const enriched = this.enrichSelectBeat(cmd);
+    SequencerEngine.dispatch(enriched);
     this.state$.next(SequencerEngine.getState());
+  }
+
+  private enrichSelectBeat(cmd: Command): Command {
+    if (cmd.type !== 'SELECT_BEAT') return cmd;
+
+    const payload = cmd.payload as Record<string, unknown>;
+    if (payload['tracks']) return cmd;
+
+    const genre = payload['genre'] as string;
+    const beat = payload['beat'] as string;
+    const beatData = this.genres.get(genre)?.find(b => b.label === beat);
+    if (!beatData) return cmd;
+
+    return {
+      ...cmd,
+      payload: {
+        ...payload,
+        tracks: beatData.tracks.map(t => ({
+          name: t.name,
+          fileName: t.fileName,
+          steps: [...t.steps.steps],
+          midiNote: Option.isSome(t.midiNote) ? (t.midiNote.value as number) : null,
+        })),
+      },
+    };
   }
 }

@@ -1,5 +1,6 @@
 package com.drumbeatrepo.sequencer
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
 
 @JSExportTopLevel("SequencerEngine")
@@ -22,6 +23,7 @@ object SequencerEngine:
     js.Dynamic.literal(
       genre = state.genre,
       beat = state.beat,
+      tracks = state.tracks.map(Track.toJS).toJSArray,
       tempo = state.tempo,
       historyLength = state.history.length,
       futureLength = state.future.length

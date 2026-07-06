@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers.shouldBe
 class SequencerStateTest extends AnyFunSuite {
   test("dispatch SelectBeat sets the beat") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", 128));
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", Nil, 128));
 
     state.genre shouldBe "Techno";
     state.beat shouldBe "4 on the floor";
@@ -18,8 +18,15 @@ class SequencerStateTest extends AnyFunSuite {
   }
 
   test("undo restores initial beat") {
-    val state = SequencerState("Hypnotic Techno", "Tresillo", 128, Nil, Nil)
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", 128))
+    val state = SequencerState(
+      "Hypnotic Techno",
+      "Tresillo",
+      List.empty,
+      128,
+      Nil,
+      Nil
+    )
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", List.empty, 128))
       .dispatch(Command.Undo)
     state.genre shouldBe "Hypnotic Techno";
     state.beat shouldBe "Tresillo";
@@ -28,7 +35,7 @@ class SequencerStateTest extends AnyFunSuite {
 
   test("undo then redo restores the beat") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", 128))
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", List.empty, 128))
       .dispatch(Command.Undo)
       .dispatch(Command.Redo)
     state.beat shouldBe "4 on the floor";
