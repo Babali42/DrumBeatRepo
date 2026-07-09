@@ -5,6 +5,7 @@ import scala.scalajs.js
 enum Command:
   case SelectBeat(genre: String, beat: String, tracks: List[Track], tempo: Int)
   case SetTempo(tempo: Int)
+  case ToggleStep(trackName: String, stepIndex: Int)
   case Undo
   case Redo
 
@@ -32,6 +33,12 @@ object Command:
             .selectDynamic("payload")
             .selectDynamic("tempo")
             .asInstanceOf[Int]
+        )
+      case "TOGGLE_STEP" =>
+        val payload = cmd.selectDynamic("payload")
+        ToggleStep(
+          payload.selectDynamic("trackName").asInstanceOf[String],
+          payload.selectDynamic("stepIndex").asInstanceOf[Int]
         )
       case "UNDO" => Undo
       case "REDO" => Redo

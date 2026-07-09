@@ -63,4 +63,58 @@ class SequencerStateTest extends AnyFunSuite {
       .dispatch(Command.Undo)
       .tempo shouldBe SequencerState.initial.tempo
   }
+
+  val someTracks = List(
+    Track("Snare", "snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), List(true, false, true, false, true, false, true, false))
+  )
+
+  test("ToggleStep toggles a step from true to false") {
+    val state = SequencerState.initial
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(Command.ToggleStep("Snare", 0))
+    state.tracks.head.steps(0) shouldBe false
+  }
+
+  test("ToggleStep toggles a step from false to true") {
+    val state = SequencerState.initial
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(Command.ToggleStep("Snare", 1))
+    state.tracks.head.steps(1) shouldBe true
+  }
+
+  test("ToggleStep adds to history") {
+    val state = SequencerState.initial
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+    val toggled = state.dispatch(Command.ToggleStep("Snare", 0))
+    toggled.history.length shouldBe 2
+    toggled.history.last.tracks.head.steps(0) shouldBe true
+  }
+
+  test("ToggleStep clears future") {
+    val state = SequencerState.initial
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(Command.ToggleStep("Snare", 0))
+      .dispatch(Command.Undo)
+      .dispatch(Command.ToggleStep("Snare", 1))
+    state.future shouldBe Nil
+  }
+
+  test("ToggleStep can be undone") {
+    val state = SequencerState.initial
+      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(Command.ToggleStep("Snare", 0))
+      .dispatch(Command.Undo)
+    state.tracks.head.steps(0) shouldBe true
+  }
+
+  test("TOGGLE_STEP command is parsed from JS") {
+    val cmd = scala.scalajs.js.Dynamic.literal(
+      `type` = "TOGGLE_STEP",
+      payload = scala.scalajs.js.Dynamic.literal(
+        trackName = "Snare",
+        stepIndex = 2
+      )
+    )
+    Command.fromJS(cmd) shouldBe Command.ToggleStep("Snare", 2)
+  }
 }

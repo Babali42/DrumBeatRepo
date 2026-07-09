@@ -31,10 +31,19 @@ export class SequencerService {
         return;
       }
 
+      const validLengths = [8, 16, 32, 64];
       this.vm$.next({
         genre: state.genre,
         beat: state.beat,
-        tracks: state.tracks.map(x => new Track(x.name, x.fileName, x.steps, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM))),
+        tracks: state.tracks.map(x => {
+          const steps = validLengths.includes(x.steps.length)
+            ? [...x.steps]
+            : [...x.steps, ...Array(16 - x.steps.length).fill(false)];
+          const midiNote = x.midiNote !== null
+            ? Option.some(x.midiNote as MidiDrumType)
+            : Option.none();
+          return new Track(x.name, x.fileName, steps, midiNote);
+        }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
         futureLength: state.futureLength,
@@ -70,24 +79,28 @@ export class SequencerService {
     if (cmd.type !== 'SELECT_BEAT') return cmd;
 
     const payload = cmd.payload as Record<string, unknown>;
-    if (payload['tracks']) return cmd;
-
     const genre = payload['genre'] as string;
     const beat = payload['beat'] as string;
+    const tempo = payload['tempo'] as number;
     const beatData = this.genres.get(genre)?.find(b => b.label === beat);
-    if (!beatData) return cmd;
 
-    return {
-      ...cmd,
-      payload: {
-        ...payload,
-        tracks: beatData.tracks.map(t => ({
-          name: t.name,
-          fileName: t.fileName,
-          steps: [...t.steps.steps],
-          midiNote: Option.isSome(t.midiNote) ? (t.midiNote.value as number) : null,
-        })),
-      },
-    };
+    if (beatData) {
+      return {
+        ...cmd,
+        payload: {
+          genre,
+          beat,
+          tempo,
+          tracks: beatData.tracks.map(t => ({
+            name: t.name,
+            fileName: t.fileName,
+            steps: [...t.steps.steps],
+            midiNote: Option.isSome(t.midiNote) ? (t.midiNote.value as number) : null,
+          })),
+        },
+      };
+    }
+
+    return cmd;
   }
 }

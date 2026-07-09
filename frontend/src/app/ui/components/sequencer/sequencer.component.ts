@@ -12,7 +12,6 @@ import { TempoAdapterService } from "../../../infrastructure/adapters/tempo-cont
 import { PlayerEventsService } from "../../services/player.events.service";
 import { BPM } from "../../../domain/bpm";
 import { StepIndex } from "../../../domain/step-index";
-import { Steps } from "../../../domain/steps";
 import { ExportAudioModalComponent } from "../modals/export-audio-modal/export-audio-modal.component";
 import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
 import { MaxMidiNote } from "../../../domain/midi-drum-type";
@@ -127,27 +126,26 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   private _applyBeat(beatToSelect: Beat): void {
-    const orderedTracks: Track[] = beatToSelect.tracks.map(track => ({
-      ...track,
-      steps: new Steps(track.steps.steps)
-    })).sort((a: Track, b: Track) => Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
+    const vmTracks = this.sequencerService.vm$.getValue().tracks;
+    const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
+      Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
 
     this.beat = {
       ...beatToSelect,
       tracks: orderedTracks
     };
 
-    this.tempoService.setNumberOfSteps(this.beat.tracks[0].numberOfSteps);
+    this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
     this.soundService.setTracks(this.beat.tracks);
   }
 
   selectGenre(genre: string): void {
     const firstBeat = this.sequencerService.genres.get(genre)?.[0];
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tracks: firstBeat?.tracks, tempo: firstBeat!.bpm } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
   }
 
   selectBeat(beatToSelect: Beat): void {
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tracks: beatToSelect.tracks, tempo: beatToSelect.bpm } });
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
   beatChange(beat: string) {
@@ -156,18 +154,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
-    track.steps.setStepAtIndex(stepIndex, !value);
+    this.sequencerService.dispatch({
+      type: 'TOGGLE_STEP',
+      payload: { trackName: track.name, stepIndex },
+    });
 
-    if (!track.steps.getStepAtIndex(stepIndex)) {
+    if (value) {
       this.soundService.disableStep(track.name, stepIndex);
     } else {
       this.soundService.enableStep(track.name, stepIndex);
     }
-
-    this.beat = {
-      ...this.beat,
-      tracks: this.beat.tracks
-    };
   }
 
   changeBeatBpm($event: number) {
