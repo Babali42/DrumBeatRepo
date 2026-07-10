@@ -12,7 +12,6 @@ import { TempoAdapterService } from "../../../infrastructure/adapters/tempo-cont
 import { PlayerEventsService } from "../../services/player.events.service";
 import { BPM } from "../../../domain/bpm";
 import { StepIndex } from "../../../domain/step-index";
-import { Steps } from "../../../domain/steps";
 import { ExportAudioModalComponent } from "../modals/export-audio-modal/export-audio-modal.component";
 import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
 import { MaxMidiNote } from "../../../domain/midi-drum-type";
@@ -90,7 +89,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
               ?.find(x => x.label === state.beat);
 
           if (beat) {
-            this._applyBeat(beat);
+            if (this.beat.genre === state.genre && this.beat.label === state.beat) {
+              const vmTracks = this.sequencerService.vm$.getValue().tracks;
+              const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
+                Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
+              this.soundService.syncTracks(orderedTracks);
+              this.beat = { ...this.beat, tracks: orderedTracks };
+              this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
+            } else {
+              this._applyBeat(beat);
+            }
           }
 
           this.cdr.markForCheck();
@@ -127,17 +135,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   private _applyBeat(beatToSelect: Beat): void {
-    const orderedTracks: Track[] = beatToSelect.tracks.map(track => ({
-      ...track,
-      steps: new Steps(track.steps.steps)
-    })).sort((a: Track, b: Track) => Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
+    const vmTracks = this.sequencerService.vm$.getValue().tracks;
+    const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
+      Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
 
     this.beat = {
       ...beatToSelect,
       tracks: orderedTracks
     };
 
-    this.tempoService.setNumberOfSteps(this.beat.tracks[0].numberOfSteps);
+    this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
     this.soundService.setTracks(this.beat.tracks);
   }
 
@@ -155,19 +162,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatToSelect!);
   }
 
-  stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
-    track.steps.setStepAtIndex(stepIndex, !value);
-
-    if (!track.steps.getStepAtIndex(stepIndex)) {
-      this.soundService.disableStep(track.name, stepIndex);
-    } else {
-      this.soundService.enableStep(track.name, stepIndex);
-    }
-
-    this.beat = {
-      ...this.beat,
-      tracks: this.beat.tracks
-    };
+  stepClick = (track: Track, stepIndex: StepIndex): void => {
+    this.sequencerService.dispatch({
+      type: 'TOGGLE_STEP',
+      payload: { trackName: track.name, stepIndex },
+    });
   }
 
   changeBeatBpm($event: number) {

@@ -63,7 +63,7 @@
         [class.sixty-four-steps]="track.numberOfSteps == NumberOfSteps.sixty_four">
         @for (step of track.steps.steps; track $index){
         <button class="step cursor-pointer" [class.active]="step" [class.current]="$index === soundService.index"
-          [class.highlight]="Math.floor($index / 4) % 2 === 0" (click)="stepClick(track, StepIndex($index), step)">
+          [class.highlight]="Math.floor($index / 4) % 2 === 0" (click)="stepClick(track, StepIndex($index))">
         </button>
         }
       </div>

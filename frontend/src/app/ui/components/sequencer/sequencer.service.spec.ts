@@ -59,10 +59,20 @@ describe('SequencerService undo', () => {
     return service.state$.getValue()!;
   }
 
+  const trackPayload = [
+    { name: 'Snare', fileName: 'metal/snare.mp3', steps: [false, false, false, false], midiNote: 38 },
+  ];
+
   it('undoes a SELECT_BEAT', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: 'Techno', beat: '4 on the floor', tracks: trackPayload, tempo: 128 } });
     expect(currentState().genre).toBe('Techno');
     expect(currentState().beat).toBe('4 on the floor');
+
+    expect(currentState().tracks.length).toBe(1);
+    expect(currentState().tracks[0].name).toBe('Snare');
+    expect(currentState().tracks[0].fileName).toBe('metal/snare.mp3');
+    expect(currentState().tracks[0].steps).toEqual([false, false, false, false]);
+    expect(currentState().tracks[0].midiNote).toBe(38);
 
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
@@ -70,7 +80,7 @@ describe('SequencerService undo', () => {
   });
 
   it('reapplies SELECT_BEAT after undo then redo', () => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: 'Techno', beat: '4 on the floor', tracks: trackPayload, tempo: 128 } });
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
 
@@ -84,11 +94,11 @@ describe('SequencerService undo', () => {
   });
 
   it('should update the viewmodel when state change', (done) => {
-    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: '4 on the floor', tempo: 128 } });
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: 'Techno', beat: '4 on the floor', tracks: trackPayload, tempo: 128 } });
     service.vm$
       .subscribe(vm => {
-        expect(vm.genre).toBe("Techno");
-        expect(vm.beat).toBe("4 on the floor");
+        expect(vm.genre).toBe('Techno');
+        expect(vm.beat).toBe('4 on the floor');
         expect(vm.tempo).toBe(BPM(128));
         done();
       });

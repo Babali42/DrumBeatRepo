@@ -13,6 +13,10 @@ export class AudioEngineAdapterFake implements IAudioEngine {
     void _stepIndex;
   }
 
+  syncTracks(_tracks: readonly Track[]): void {
+    void _tracks;
+  }
+
   index: StepIndex = StepIndex(0);
   isPlaying: boolean = false;
 
