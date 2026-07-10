@@ -89,7 +89,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
               ?.find(x => x.label === state.beat);
 
           if (beat) {
-            this._applyBeat(beat);
+            if (this.beat.genre === state.genre && this.beat.label === state.beat) {
+              const vmTracks = this.sequencerService.vm$.getValue().tracks;
+              const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
+                Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
+              this.soundService.syncTracks(orderedTracks);
+              this.beat = { ...this.beat, tracks: orderedTracks };
+              this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
+            } else {
+              this._applyBeat(beat);
+            }
           }
 
           this.cdr.markForCheck();
@@ -158,12 +167,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
       type: 'TOGGLE_STEP',
       payload: { trackName: track.name, stepIndex },
     });
-
-    if (value) {
-      this.soundService.disableStep(track.name, stepIndex);
-    } else {
-      this.soundService.enableStep(track.name, stepIndex);
-    }
   }
 
   changeBeatBpm($event: number) {

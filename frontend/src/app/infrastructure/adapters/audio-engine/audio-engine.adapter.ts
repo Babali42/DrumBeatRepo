@@ -151,6 +151,28 @@ export class AudioEngineAdapter implements IAudioEngine {
     (map.get(beatInd)!).clear()
   }
 
+  syncTracks(tracks: readonly Track[]): void {
+    const oldTracks = this.tracks;
+    this.tracks = tracks;
+
+    if (!this.isPlaying) return;
+
+    tracks.forEach(newTrack => {
+      const oldTrack = oldTracks.find(t => t.name === newTrack.name);
+      if (!oldTrack) return;
+
+      newTrack.steps.steps.forEach((enabled, stepIdx) => {
+        if (oldTrack.steps.getStepAtIndex(stepIdx) === enabled) return;
+
+        if (enabled) {
+          this.enableStep(newTrack.name, StepIndex(stepIdx));
+        } else {
+          this.disableStep(newTrack.name, stepIdx);
+        }
+      });
+    });
+  }
+
   playTrack(trackName: string) {
     const builder = this.trackSampleBuilderMap.get(trackName);
 

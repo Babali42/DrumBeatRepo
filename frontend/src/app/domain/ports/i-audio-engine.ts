@@ -9,6 +9,7 @@ export interface IAudioEngineCommands {
 
   readonly enableStep: (trackName: string, stepIndex: StepIndex) => void;
   readonly disableStep: (trackName: string, stepIndex: StepIndex) => void;
+  readonly syncTracks: (tracks: readonly Track[]) => void;
 
   readonly playTrack: (trackName: string) => void;
 }
