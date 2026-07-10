@@ -162,7 +162,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatToSelect!);
   }
 
-  stepClick = (track: Track, stepIndex: StepIndex, value: boolean): void => {
+  stepClick = (track: Track, stepIndex: StepIndex): void => {
     this.sequencerService.dispatch({
       type: 'TOGGLE_STEP',
       payload: { trackName: track.name, stepIndex },

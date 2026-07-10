@@ -9,7 +9,6 @@ import { SequencerViewModel } from "./sequencer.viewmodel";
 import { Beat } from "src/app/domain/beat";
 import { Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { MidiDrumType } from "src/app/domain/midi-drum-type";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -38,9 +37,9 @@ export class SequencerService {
         tracks: state.tracks.map(x => {
           const steps = validLengths.includes(x.steps.length)
             ? [...x.steps]
-            : [...x.steps, ...Array(16 - x.steps.length).fill(false)];
+            : [...x.steps, ...Array<boolean>(16 - x.steps.length).fill(false)];
           const midiNote = x.midiNote !== null
-            ? Option.some(x.midiNote as MidiDrumType)
+            ? Option.some(x.midiNote)
             : Option.none();
           return new Track(x.name, x.fileName, steps, midiNote);
         }),
@@ -95,7 +94,7 @@ export class SequencerService {
             name: t.name,
             fileName: t.fileName,
             steps: [...t.steps.steps],
-            midiNote: Option.isSome(t.midiNote) ? (t.midiNote.value as number) : null,
+            midiNote: Option.isSome(t.midiNote) ? t.midiNote.value : null,
           })),
         },
       };
