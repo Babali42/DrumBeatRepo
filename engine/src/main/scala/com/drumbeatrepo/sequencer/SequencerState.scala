@@ -21,12 +21,17 @@ case class SequencerState(
         future = Nil
       )
     case Command.ToggleStep(trackName, stepIndex) =>
-      val newTracks = tracks.map(t =>
-        if t.name == trackName then
-          t.copy(steps = t.steps.updated(stepIndex, !t.steps(stepIndex)))
-        else t
-      )
-      copy(tracks = newTracks, history = history :+ this, future = Nil)
+      tracks.find(_.name == trackName) match
+        case None => this
+        case Some(track) =>
+          if stepIndex < 0 || stepIndex >= track.steps.length then this
+          else
+            val newTracks = tracks.map(t =>
+              if t.name == trackName then
+                t.copy(steps = t.steps.updated(stepIndex, !t.steps(stepIndex)))
+              else t
+            )
+            copy(tracks = newTracks, history = history :+ this, future = Nil)
     case Command.SetTempo(newTempo) =>
       history match
         case _ :+ last if last.genre == genre && last.beat == beat =>
