@@ -39,20 +39,18 @@ import { SequencerService } from "./sequencer.service";
 })
 export class SequencerComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>;
-
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly StepIndex = StepIndex;
 
+  //do not undo the state inits
+  readonly minHistoryLength = 1;
+
   beat = {} as Beat;
-  beats: readonly string[] = [];
 
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
-
-  //do not undo the state init
-  minHistoryLength: number = 1;
-
+  
   constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
@@ -74,11 +72,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.beats =
-            this.sequencerService.genres
-              .get(state.genre)
-              ?.map(x => x.label) ?? [];
-
           if (state.tempo) {
             this.tempoService.setBpm(BPM(state.tempo));
           }
@@ -95,7 +88,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
                 Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
               this.soundService.syncTracks(orderedTracks);
               this.beat = { ...this.beat, tracks: orderedTracks };
-              this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
+              this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
             } else {
               this._applyBeat(beat);
             }
@@ -126,7 +119,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       tracks: orderedTracks
     };
 
-    this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps ?? 16);
+    this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
     this.soundService.setTracks(this.beat.tracks);
   }
 

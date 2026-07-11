@@ -12,7 +12,7 @@
       </app-select-input>
     </div>
     <div class="label">
-      <app-select-input [elements]="beats" [selectedElement]="sequencerService.vm$.getValue().beat"
+      <app-select-input [elements]="sequencerService.vm$.getValue().beats" [selectedElement]="sequencerService.vm$.getValue().beat"
         (selectChange)="beatChange($event)"
         placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
       </app-select-input>

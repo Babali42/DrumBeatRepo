@@ -33,6 +33,7 @@ export class SequencerService {
       const validLengths = [8, 16, 32, 64];
       this.vm$.next({
         genre: state.genre,
+        beats: this.genres.get(state.genre)?.map(x => x.label) ?? [],
         beat: state.beat,
         tracks: state.tracks.map(x => {
           const steps = validLengths.includes(x.steps.length)
@@ -45,7 +46,7 @@ export class SequencerService {
         }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
-        futureLength: state.futureLength,
+        futureLength: state.futureLength
       });
     });
   }
