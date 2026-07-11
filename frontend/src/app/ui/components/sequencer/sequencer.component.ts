@@ -109,26 +109,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
     this.sequencerService.initialize().then(() => {
       const firstGenre = this.sequencerService.genresLabel[0];
-
-      if (!firstGenre) {
-        return;
-      }
-
-      const firstBeat =
-        this.sequencerService.genres.get(firstGenre)?.[0];
-
-      if (!firstBeat) {
-        return;
-      }
-
-      this.sequencerService.dispatch({
-        type: 'SELECT_BEAT',
-        payload: {
-          genre: firstBeat.genre,
-          beat: firstBeat.label,
-          tempo: firstBeat.bpm,
-        },
-      });
+      const firstBeat = this.sequencerService.genres.get(firstGenre!)![0];
+      this.selectBeat(firstBeat);
     }).catch(() => {
       console.error("Fail to init sequencer");
     });
@@ -149,8 +131,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   selectGenre(genre: string): void {
-    const firstBeat = this.sequencerService.genres.get(genre)?.[0];
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat!.label, tempo: firstBeat!.bpm } });
+    const firstBeat = this.sequencerService.genres.get(genre)?.[0]!;
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
   }
 
   selectBeat(beatToSelect: Beat): void {
@@ -172,10 +154,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   changeBeatBpm($event: number) {
     this.soundService.pause();
     this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
-    this.beat = {
-      ...this.beat,
-      bpm: BPM($event),
-    };
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
