@@ -82,12 +82,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
           if (beat) {
             if (this.beat.genre === state.genre && this.beat.label === state.beat) {
-              const vmTracks = this.sequencerService.vm$.getValue().tracks;
-              const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
-                Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
-              this.soundService.syncTracks(orderedTracks);
-              this.beat = { ...this.beat, tracks: orderedTracks };
-              this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
+              this._applySteps();
             } else {
               this._applyBeat(beat);
             }
@@ -121,6 +116,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.soundService.setTracks(this.beat.tracks);
   }
 
+  private _applySteps(): void {
+    const vmTracks = this.sequencerService.vm$.getValue().tracks;
+    const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
+      Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
+    this.soundService.syncTracks(orderedTracks);
+    this.beat = { ...this.beat, tracks: orderedTracks };
+  }
+
   genreChange(genre: string): void {
     const beatsFromGenre = this.sequencerService.genres.get(genre);
 
@@ -130,7 +133,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatsFromGenre[0]);
   }
 
-  beatChange(beat: string) {
+  beatChange(beat: string): void {
     const beatsFromGenre = this.sequencerService.genres.get(this.sequencerService.vm$.getValue().genre);
     
     if(!beatsFromGenre)
@@ -155,7 +158,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeBeatBpm($event: number) {
+  changeBeatBpm($event: number): void {
     this.soundService.pause();
     this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
   }
@@ -175,7 +178,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     }
   }
 
-  async onMidiExport(options: MidiExportOptions) {
+  async onMidiExport(options: MidiExportOptions): Promise<void> {
     this.isMidiExportModalOpen = false;
 
     try {
