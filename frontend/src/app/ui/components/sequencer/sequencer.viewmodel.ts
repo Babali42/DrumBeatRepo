@@ -3,7 +3,7 @@ import { BPM } from "../../../domain/bpm";
 
 export class SequencerViewModel {
   genre: string = "Techno";
-  beats: string[] = [];
+  beats: readonly string[] = [];
   beat: string = "4 on the floor";
   tracks: readonly Track[] = [];
   tempo: BPM = BPM(129);

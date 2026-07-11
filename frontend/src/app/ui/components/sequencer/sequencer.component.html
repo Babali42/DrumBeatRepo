@@ -7,7 +7,7 @@
   <div class="sequencer-header">
     <div class="label">
       <app-select-input [elements]="sequencerService.genresLabel"
-        [selectedElement]="sequencerService.vm$.getValue().genre" (selectChange)="this.selectGenre($event)"
+        [selectedElement]="sequencerService.vm$.getValue().genre" (selectChange)="this.genreChange($event)"
         placeHolder="{{ 'chooseGenre' | translate }}">
       </app-select-input>
     </div>

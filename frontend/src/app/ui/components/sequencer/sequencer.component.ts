@@ -68,10 +68,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.state$
       .pipe(
         tap(state => {
-          if (!state) {
+          if (!state)
             return;
-          }
-
+          
           if (state.tempo) {
             this.tempoService.setBpm(BPM(state.tempo));
           }
@@ -102,8 +101,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
     this.sequencerService.initialize().then(() => {
       const firstGenre = this.sequencerService.genresLabel[0];
-      const firstBeat = this.sequencerService.genres.get(firstGenre!)![0];
-      this.selectBeat(firstBeat);
+      this.genreChange(firstGenre);
     }).catch(() => {
       console.error("Fail to init sequencer");
     });
@@ -123,18 +121,31 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.soundService.setTracks(this.beat.tracks);
   }
 
-  selectGenre(genre: string): void {
-    const firstBeat = this.sequencerService.genres.get(genre)?.[0]!;
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre, beat: firstBeat.label, tempo: firstBeat.bpm } });
-  }
+  genreChange(genre: string): void {
+    const beatsFromGenre = this.sequencerService.genres.get(genre);
 
-  selectBeat(beatToSelect: Beat): void {
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
+    if (!beatsFromGenre)
+      return;
+
+    this.selectBeat(beatsFromGenre[0]);
   }
 
   beatChange(beat: string) {
-    const beatToSelect = this.sequencerService.genres.get(this.sequencerService.vm$.getValue().genre)?.find(x => x.label === beat);
-    this.selectBeat(beatToSelect!);
+    const beatsFromGenre = this.sequencerService.genres.get(this.sequencerService.vm$.getValue().genre);
+    
+    if(!beatsFromGenre)
+      return;
+
+    const beatToSelect = beatsFromGenre.find(x => x.label === beat);
+
+    this.selectBeat(beatToSelect);
+  }
+
+  selectBeat(beatToSelect: Beat | undefined): void {
+    if(!beatToSelect)
+      return;
+
+    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
   stepClick = (track: Track, stepIndex: StepIndex): void => {
