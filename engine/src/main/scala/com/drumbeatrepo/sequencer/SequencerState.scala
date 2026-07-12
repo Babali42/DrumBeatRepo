@@ -28,7 +28,7 @@ case class SequencerState(
           else
             val newTracks = tracks.map(t =>
               if t.name == trackName then
-                t.copy(steps = t.steps.updated(stepIndex, !t.steps(stepIndex)))
+                t.copy(steps = t.steps.updated(stepIndex, Velocity.invert(t.steps(stepIndex))))
               else t
             )
             copy(tracks = newTracks, history = history :+ this, future = Nil)
