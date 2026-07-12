@@ -14,6 +14,8 @@ object Velocity:
     case 66  => Velocity.Medium
     case 100 => Velocity.Normal
     case 127 => Velocity.Maximum
+    case value if value < 0 =>
+        throw new IllegalArgumentException(s"Invalid MIDI velocity: $value")
 
   def fromBoolean(value: Boolean): Velocity = value match
     case false => Velocity.None
