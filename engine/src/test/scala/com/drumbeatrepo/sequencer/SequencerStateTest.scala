@@ -65,21 +65,21 @@ class SequencerStateTest extends AnyFunSuite {
   }
 
   val someTracks = List(
-    Track("Snare", "snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), List(true, false, true, false, true, false, true, false))
+    Track("Snare", "snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), List(Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None))
   )
 
   test("ToggleStep toggles a step from true to false") {
     val state = SequencerState.initial
       .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
       .dispatch(Command.ToggleStep("Snare", 0))
-    state.tracks.head.steps(0) shouldBe false
+    state.tracks.head.steps(0) shouldBe Velocity.None
   }
 
   test("ToggleStep toggles a step from false to true") {
     val state = SequencerState.initial
       .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
       .dispatch(Command.ToggleStep("Snare", 1))
-    state.tracks.head.steps(1) shouldBe true
+    state.tracks.head.steps(1) shouldBe Velocity.Normal
   }
 
   test("ToggleStep adds to history") {
@@ -87,7 +87,7 @@ class SequencerStateTest extends AnyFunSuite {
       .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
     val toggled = state.dispatch(Command.ToggleStep("Snare", 0))
     toggled.history.length shouldBe 2
-    toggled.history.last.tracks.head.steps(0) shouldBe true
+    toggled.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
   }
 
   test("ToggleStep clears future") {
@@ -104,7 +104,7 @@ class SequencerStateTest extends AnyFunSuite {
       .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
       .dispatch(Command.ToggleStep("Snare", 0))
       .dispatch(Command.Undo)
-    state.tracks.head.steps(0) shouldBe true
+    state.tracks.head.steps(0) shouldBe Velocity.Normal
   }
 
   test("TOGGLE_STEP command is parsed from JS") {
