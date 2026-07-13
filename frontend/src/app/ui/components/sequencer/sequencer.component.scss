@@ -29,22 +29,19 @@ $gap: 4px;
   }
 
   .current {
-    background: repeating-linear-gradient(
-        -45deg,
+    background: repeating-linear-gradient(-45deg,
         var(--backgroundColor), var(--backgroundColor) 10px,
-        var(--textColor) 5px, var(--textColor) 15px
-    );
+        var(--textColor) 5px, var(--textColor) 15px);
   }
 
-  .active, .active.highlight {
+  .active,
+  .active.highlight {
     background-color: utils.$color3_purple;
 
     &.current {
-      background: repeating-linear-gradient(
-          -45deg,
+      background: repeating-linear-gradient(-45deg,
           utils.$color3_purple, utils.$color3_purple 10px,
-          var(--backgroundColor) 5px, var(--backgroundColor) 15px
-      );
+          var(--backgroundColor) 5px, var(--backgroundColor) 15px);
     }
   }
 
@@ -53,11 +50,9 @@ $gap: 4px;
   }
 
   .current.highlight {
-    background: repeating-linear-gradient(
-        -45deg,
+    background: repeating-linear-gradient(-45deg,
         var(--gridHighLightColor), var(--gridHighLightColor) 10px,
-        var(--textColor) 5px, var(--textColor) 15px
-    );
+        var(--textColor) 5px, var(--textColor) 15px);
   }
 }
 
@@ -124,7 +119,7 @@ $gap: 4px;
     }
   }
 
-  div + div {
+  div+div {
     margin-top: 8px;
   }
 
@@ -162,7 +157,7 @@ $gap: 4px;
   }
 }
 
-.custom-url-text{
+.custom-url-text {
   background-color: var(--backgroundColor);
   color: var(--textColor);
 }
@@ -178,6 +173,12 @@ $gap: 4px;
   height: 32px;
   width: 32px;
   padding: 0;
+}
+
+.play-sample-button:disabled {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
 }
 
 .export-button {

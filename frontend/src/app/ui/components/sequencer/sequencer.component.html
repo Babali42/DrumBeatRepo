@@ -12,26 +12,24 @@
       </app-select-input>
     </div>
     <div class="label">
-      <app-select-input [elements]="sequencerService.vm$.getValue().beats" [selectedElement]="sequencerService.vm$.getValue().beat"
-        (selectChange)="beatChange($event)"
+      <app-select-input [elements]="sequencerService.vm$.getValue().beats"
+        [selectedElement]="sequencerService.vm$.getValue().beat" (selectChange)="beatChange($event)"
         placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
       </app-select-input>
     </div>
     <div class="flex label bpm-input-group">
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <span class="large user-select-none"> bpm</span>
-      @if (sequencerService.vm$.getValue().historyLength > minHistoryLength) {
-      <button class="button play-sample-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})">
+      <button class="button play-sample-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})"
+        [disabled]="sequencerService.vm$.getValue().historyLength <= minHistoryLength">
         <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28"
           width="28">
       </button>
-      }
-      @if (sequencerService.vm$.getValue().futureLength > 0) {
-      <button class="button play-sample-button redo" (click)="this.sequencerService.dispatch({ type: 'REDO'})">
+      <button class="button play-sample-button redo" (click)="this.sequencerService.dispatch({ type: 'REDO'})"
+        [disabled]="sequencerService.vm$.getValue().futureLength <= 0">
         <img alt="redo" aria-label="Redo" [ngSrc]="'assets/images/icons/redo.svg' | iconDarkMode" height="28"
           width="28">
       </button>
-      }
     </div>
     <div>
       <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate

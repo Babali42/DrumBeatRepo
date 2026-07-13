@@ -182,34 +182,48 @@ describe('SequencerComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it("Should not contain an undo button when there is no command history", () => {
-    const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
-
-    expect(undoButton.length).toBe(0);
-  });
-
-  it("Should contain an undo button when past command have been done", () => {
-    fixture.componentInstance.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: "Techno", tempo: 128 } });
+  it("Should disable the undo button when there is no command history", () => {
     fixture.detectChanges();
 
-    const undoButton = fixture.debugElement.queryAll(By.css("button.undo"));
+    const undoButton = fixture.debugElement.query(By.css("button.undo"));
 
-    expect(undoButton.length).not.toBe(0);
+    expect(undoButton).toBeTruthy();
+    expect(undoButton.nativeElement.disabled).toBeTrue();
   });
 
-  it("Should not contain a redo button when there are not future commands to apply", () => {
-    const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
-
-    expect(redoButton.length).toBe(0);
-  });
-
-  it("Should contain a redo button when there are future commands to apply", () => {
-    fixture.componentInstance.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: "Techno", beat: "Techno", tempo: 128 } });
-    fixture.componentInstance.sequencerService.dispatch({ type: 'UNDO' });
+  it("Should enable the undo button when past commands have been done", () => {
+    fixture.componentInstance.sequencerService.dispatch({
+      type: "SELECT_BEAT",
+      payload: { genre: "Techno", beat: "Techno", tempo: 128 },
+    });
     fixture.detectChanges();
 
-    const redoButton = fixture.debugElement.queryAll(By.css("button.redo"));
+    const undoButton = fixture.debugElement.query(By.css("button.undo"));
 
-    expect(redoButton.length).not.toBe(0);
+    expect(undoButton).toBeTruthy();
+    expect(undoButton.nativeElement.disabled).toBeFalse();
+  });
+
+  it("Should disable the redo button when there are no future commands to apply", () => {
+    fixture.detectChanges();
+
+    const redoButton = fixture.debugElement.query(By.css("button.redo"));
+
+    expect(redoButton).toBeTruthy();
+    expect(redoButton.nativeElement.disabled).toBeTrue();
+  });
+
+  it("Should enable the redo button when there are future commands to apply", () => {
+    fixture.componentInstance.sequencerService.dispatch({
+      type: "SELECT_BEAT",
+      payload: { genre: "Techno", beat: "Techno", tempo: 128 },
+    });
+    fixture.componentInstance.sequencerService.dispatch({ type: "UNDO" });
+    fixture.detectChanges();
+
+    const redoButton = fixture.debugElement.query(By.css("button.redo"));
+
+    expect(redoButton).toBeTruthy();
+    expect(redoButton.nativeElement.disabled).toBeFalse();
   });
 })
