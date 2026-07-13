@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Option } from 'effect';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -9,7 +8,7 @@ import { BPM } from '../../../domain/bpm';
 import { Beat } from '../../../domain/beat';
 import { AudioExportOptions } from '../../../domain/export-options/audio-export-options';
 import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';
-import { MaxMidiNote } from '../../../domain/midi-drum-type';
+
 import { NumberOfSteps } from '../../../domain/number-of-steps';
 import { StepIndex } from '../../../domain/step-index';
 import { Track } from '../../../domain/track';
@@ -109,24 +108,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   private _applyBeat(beatToSelect: Beat): void {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
-    const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
-      Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
-
-    this.beat = {
-      ...beatToSelect,
-      tracks: orderedTracks
-    };
-
+    this.beat = { ...beatToSelect, tracks: vmTracks };
     this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
     this.soundService.setTracks(this.beat.tracks);
   }
 
   private _applySteps(): void {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
-    const orderedTracks = [...vmTracks].sort((a: Track, b: Track) =>
-      Option.getOrElse(b.midiNote, () => MaxMidiNote) - Option.getOrElse(a.midiNote, () => MaxMidiNote));
-    this.soundService.syncTracks(orderedTracks);
-    this.beat = { ...this.beat, tracks: orderedTracks };
+    this.soundService.syncTracks(vmTracks);
+    this.beat = { ...this.beat, tracks: vmTracks };
   }
 
   genreChange(genre: string): void {

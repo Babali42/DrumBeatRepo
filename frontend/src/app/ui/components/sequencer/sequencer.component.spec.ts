@@ -9,7 +9,6 @@ import {
   AudioEngineAdapterFake
 } from "../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import { Beat } from "../../../domain/beat";
 import { Steps } from "../../../domain/steps";
 import { NumberOfSteps } from "../../../domain/number-of-steps";
 import { BPM } from "../../../domain/bpm";
