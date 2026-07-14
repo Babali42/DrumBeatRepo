@@ -17,7 +17,7 @@ runs:
       uses: sbt/setup-sbt@v1
 
     - name: Test Scala
-      run: sbt testFull
+      run: sbt coverage testFull coverageReport
       working-directory: engine
       shell: bash
 

@@ -18,6 +18,11 @@ jobs:
       - name: Validate Scala
         uses: ./.github/actions/scala-test/
 
+      - name: Upload Scala coverage to Codecov
+          uses: codecov/codecov-action@v4
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Validate Angular
         uses: ./.github/actions/angular-test/
         with:
