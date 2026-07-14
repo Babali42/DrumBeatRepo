@@ -4,6 +4,7 @@ on:
   pull_request:
     branches: [ "main" ]
     paths: [ 'frontend/**', 'engine/**', '.github/**' ]
+  workflow_dispatch:
 
 permissions:
   contents: read
