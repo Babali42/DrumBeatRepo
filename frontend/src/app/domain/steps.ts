@@ -12,9 +12,4 @@ export class Steps {
   get steps(): readonly boolean[] {
     return this._steps;
   }
-
-  setStepAtIndex(stepIndex: number, value: boolean): void {
-    //immutable update, returns a new array
-    this._steps = this._steps.map((s, i) => i === stepIndex ? value : s);
-  }
 }
