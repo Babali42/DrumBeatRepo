@@ -7,12 +7,16 @@ import scala.scalajs.js.annotation.*
 object SequencerEngine:
   private var state: SequencerState = SequencerState.initial
 
+  def dispatch(command: Command): Unit =
+    command match
+      case Command.Undo | Command.Redo =>
+        state = state.dispatch(command)
+      case _ =>
+        state = state.dispatch(command).copy(future = Nil)
+
   @JSExport
   def dispatch(cmd: js.Dynamic): Unit =
-    val command = Command.fromJS(cmd)
-    command match
-      case Command.Undo | Command.Redo => state = state.dispatch(command)
-      case _ => state = state.dispatch(command).copy(future = Nil)
+    dispatch(Command.fromJS(cmd))
 
   @JSExport
   def reset(): Unit =
@@ -23,7 +27,7 @@ object SequencerEngine:
     js.Dynamic.literal(
       genre = state.genre,
       beat = state.beat,
-      tracks = state.tracks.map(Track.toJS).toJSArray,
+      tracks = state.tracks.sorted.reverse.map(Track.toJS).toJSArray,
       tempo = state.tempo,
       historyLength = state.history.length,
       futureLength = state.future.length

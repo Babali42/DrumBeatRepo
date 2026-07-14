@@ -47,5 +47,3 @@ export enum MidiDrumType {
   MUTE_TRIANGLE = 80,
   OPEN_TRIANGLE = 81
 }
-
-export const MaxMidiNote = MidiDrumType.OPEN_TRIANGLE + 1;

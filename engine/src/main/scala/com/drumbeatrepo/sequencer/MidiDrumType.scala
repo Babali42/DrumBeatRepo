@@ -54,3 +54,6 @@ object MidiDrumType:
 
   def fromMidiNote(note: Int): Option[MidiDrumType] =
     byMidiNote.get(note)
+
+  def toInt(midi: MidiDrumType): Int =
+    midi.midiNote

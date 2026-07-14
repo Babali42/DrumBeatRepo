@@ -8,7 +8,14 @@ case class Track(
     fileName: String,
     midiNote: Option[MidiDrumType],
     steps: List[Velocity]
-)
+) extends Ordered[Track] {
+  override def compare(that: Track): Int =
+    java.lang.Integer
+      .compare(
+        MidiDrumType.toInt(midiNote.getOrElse(MidiDrumType.OPEN_TRIANGLE)),
+        MidiDrumType.toInt(that.midiNote.getOrElse(MidiDrumType.OPEN_TRIANGLE))
+      )
+}
 
 object Track:
   def fromJS(track: js.Dynamic): Track =
@@ -21,7 +28,11 @@ object Track:
       track.selectDynamic("name").asInstanceOf[String],
       track.selectDynamic("fileName").asInstanceOf[String],
       midiNote,
-      track.selectDynamic("steps").asInstanceOf[js.Array[Boolean]].map(Velocity.fromBoolean).toList
+      track
+        .selectDynamic("steps")
+        .asInstanceOf[js.Array[Boolean]]
+        .map(Velocity.fromBoolean)
+        .toList
     )
 
   def toJS(track: Track): js.Object =

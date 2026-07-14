@@ -9,7 +9,6 @@ import { SequencerViewModel } from "./sequencer.viewmodel";
 import { Beat } from "src/app/domain/beat";
 import { Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { MaxMidiNote } from '../../../domain/midi-drum-type';
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -44,7 +43,7 @@ export class SequencerService {
             ? Option.some(x.midiNote)
             : Option.none();
           return new Track(x.name, x.fileName, steps, midiNote);
-        }).sort(this.verticalOrderMidiTrack),
+        }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
         futureLength: state.futureLength
@@ -104,8 +103,4 @@ export class SequencerService {
 
     return cmd;
   }
-
-  private verticalOrderMidiTrack = (a: Track, b: Track): number =>
-    Option.getOrElse(b.midiNote, () => MaxMidiNote) -
-    Option.getOrElse(a.midiNote, () => MaxMidiNote);
 }
