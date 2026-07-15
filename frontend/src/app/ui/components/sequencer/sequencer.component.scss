@@ -54,6 +54,11 @@ $gap: 4px;
         var(--gridHighLightColor), var(--gridHighLightColor) 10px,
         var(--textColor) 5px, var(--textColor) 15px);
   }
+
+  .drag-range {
+    outline: 2px solid utils.$color3_purple;
+    outline-offset: -2px;
+  }
 }
 
 @mixin step-grid($columns) {

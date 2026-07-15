@@ -123,7 +123,8 @@ describe('SequencerComponent', () => {
 
     expect(firstStepButton.nativeElement.classList.contains('active')).toBeFalse();
 
-    firstStepButton.nativeElement.click();
+    firstStepButton.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    firstStepButton.nativeElement.dispatchEvent(new MouseEvent('mouseup'));
     fixture.detectChanges();
 
     expect(firstStepButton.nativeElement.classList.contains('active')).toBeTrue();
@@ -133,10 +134,14 @@ describe('SequencerComponent', () => {
     fixture.detectChanges();
 
     const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-    stepButtons[0].nativeElement.click();
-    stepButtons[1].nativeElement.click();
-    stepButtons[2].nativeElement.click();
-    stepButtons[3].nativeElement.click();
+    stepButtons[0].nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    stepButtons[0].nativeElement.dispatchEvent(new MouseEvent('mouseup'));
+    stepButtons[1].nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    stepButtons[1].nativeElement.dispatchEvent(new MouseEvent('mouseup'));
+    stepButtons[2].nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    stepButtons[2].nativeElement.dispatchEvent(new MouseEvent('mouseup'));
+    stepButtons[3].nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    stepButtons[3].nativeElement.dispatchEvent(new MouseEvent('mouseup'));
 
     fixture.detectChanges();
 
@@ -158,6 +163,39 @@ describe('SequencerComponent', () => {
     ).length;
 
     expect(resetActiveCount).not.toEqual(modifiedActiveCount);
+  });
+
+  it("should apply the step change when mouseup happens outside the grid (document)", () => {
+    fixture.detectChanges();
+
+    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
+    const firstStepButton = stepButtons[0];
+
+    expect(firstStepButton.nativeElement.classList.contains('active')).toBeFalse();
+
+    firstStepButton.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+    document.dispatchEvent(new MouseEvent('mouseup'));
+    fixture.detectChanges();
+
+    expect(firstStepButton.nativeElement.classList.contains('active')).toBeTrue();
+  });
+
+  it("should apply the range change when mouseup happens outside the grid (document)", () => {
+    fixture.detectChanges();
+
+    const track = component.beat.tracks[0];
+    component.onStepMouseDown(track, 0);
+    component.onStepMouseEnter(track.name, 1);
+    component.onStepMouseEnter(track.name, 2);
+    component.onStepMouseEnter(track.name, 3);
+    document.dispatchEvent(new MouseEvent('mouseup'));
+    fixture.detectChanges();
+
+    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
+    expect(stepButtons[0].nativeElement.classList.contains('active')).toBeTrue();
+    expect(stepButtons[1].nativeElement.classList.contains('active')).toBeTrue();
+    expect(stepButtons[2].nativeElement.classList.contains('active')).toBeTrue();
+    expect(stepButtons[3].nativeElement.classList.contains('active')).toBeTrue();
   });
 
   it("Should call export midi service on modal validation", async () => {
