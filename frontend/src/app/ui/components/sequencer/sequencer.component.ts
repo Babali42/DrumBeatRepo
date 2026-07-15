@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -10,7 +10,6 @@ import { AudioExportOptions } from '../../../domain/export-options/audio-export-
 import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';
 
 import { NumberOfSteps } from '../../../domain/number-of-steps';
-import { StepIndex } from '../../../domain/step-index';
 import { Track } from '../../../domain/track';
 import { IAudioEngine } from '../../../domain/ports/i-audio-engine';
 import { IAudioExport } from '../../../domain/ports/i-audio-export';
@@ -45,7 +44,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>;
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
-  protected readonly StepIndex = StepIndex;
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
@@ -146,11 +144,71 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
   }
 
-  stepClick = (track: Track, stepIndex: StepIndex): void => {
-    this.sequencerService.dispatch({
-      type: 'TOGGLE_STEP',
-      payload: { trackName: track.name, stepIndex },
-    });
+  dragState: { trackName: string; from: number; to: number; value: boolean } | null = null;
+
+  onStepMouseDown(track: Track, stepIndex: number): void {
+    this.dragState = {
+      trackName: track.name,
+      from: stepIndex,
+      to: stepIndex,
+      value: track.steps.getStepAtIndex(stepIndex),
+    };
+  }
+
+  onStepMouseEnter(trackName: string, stepIndex: number): void {
+    if (!this.dragState || this.dragState.trackName !== trackName) return;
+    this.dragState = { ...this.dragState, to: stepIndex };
+    this.cdr.markForCheck();
+  }
+
+  onStepMouseUp(_trackName: string, stepIndex: number): void {
+    if (!this.dragState) return;
+
+    const from = Math.min(this.dragState.from, stepIndex);
+    const to = Math.max(this.dragState.from, stepIndex);
+    this._dispatchDrag(from, to, this.dragState.trackName);
+    this.dragState = null;
+    this.cdr.markForCheck();
+  }
+
+  @HostListener('document:mouseup')
+  private onDocumentMouseUp(): void {
+    if (!this.dragState) return;
+    const from = Math.min(this.dragState.from, this.dragState.to);
+    const to = Math.max(this.dragState.from, this.dragState.to);
+    this._dispatchDrag(from, to, this.dragState.trackName);
+    this.dragState = null;
+    this.cdr.markForCheck();
+  }
+
+  private _dispatchDrag(from: number, to: number, trackName: string): void {
+    if (from === to) {
+      this.sequencerService.dispatch({
+        type: 'TOGGLE_STEP',
+        payload: { trackName, stepIndex: from },
+      });
+    } else {
+      this.sequencerService.dispatch({
+        type: 'SET_STEPS',
+        payload: { trackName, fromStepIndex: from, toStepIndex: to, velocity: !this.dragState!.value },
+      });
+    }
+  }
+
+  private _isInDragRange(trackName: string, stepIndex: number): boolean {
+    if (!this.dragState || this.dragState.trackName !== trackName) return false;
+    const from = Math.min(this.dragState.from, this.dragState.to);
+    const to = Math.max(this.dragState.from, this.dragState.to);
+    return stepIndex >= from && stepIndex <= to;
+  }
+
+  isInDragRange(trackName: string, stepIndex: number): boolean {
+    return this._isInDragRange(trackName, stepIndex);
+  }
+
+  getStepActive(trackName: string, stepIndex: number, actualValue: boolean): boolean {
+    if (!this._isInDragRange(trackName, stepIndex)) return actualValue;
+    return !this.dragState!.value;
   }
 
   changeBeatBpm($event: number): void {
