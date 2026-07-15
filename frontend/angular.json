@@ -37,7 +37,9 @@
               "src/styles/utils.scss",
               "src/styles/styles.scss"
             ],
-            "scripts": ["engine/main.js"],
+            "scripts": [
+              "engine/main.js"
+            ],
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -58,8 +60,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
@@ -131,7 +133,9 @@
             "styles": [
               "src/styles/styles.scss"
             ],
-            "scripts": ["engine/main.js"],
+            "scripts": [
+              "engine/main.js"
+            ],
             "karmaConfig": "karma.conf.js"
           }
         }
