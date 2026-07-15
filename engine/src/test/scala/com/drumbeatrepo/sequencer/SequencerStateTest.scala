@@ -65,7 +65,21 @@ class SequencerStateTest extends AnyFunSuite {
   }
 
   val someTracks = List(
-    Track("Snare", "snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), List(Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None, Velocity.Normal, Velocity.None))
+    Track(
+      "Snare",
+      "snare.wav",
+      Some(MidiDrumType.ACOUSTIC_SNARE),
+      List(
+        Velocity.Normal,
+        Velocity.None,
+        Velocity.Normal,
+        Velocity.None,
+        Velocity.Normal,
+        Velocity.None,
+        Velocity.Normal,
+        Velocity.None
+      )
+    )
   )
 
   test("ToggleStep toggles a step from true to false") {
@@ -116,5 +130,60 @@ class SequencerStateTest extends AnyFunSuite {
       )
     )
     Command.fromJS(cmd) shouldBe Command.ToggleStep("Snare", 2)
+  }
+
+  test("dispatch SetSteps sets multiples steps in a row") {
+    val state = SequencerState.initial
+      .dispatch(
+        Command.SelectBeat(
+          "Techno",
+          "4 on the floor",
+          List(
+            Track(
+              "kick",
+              "kick.mp3",
+              Some(MidiDrumType.BASS_DRUM_1),
+              List(
+                Velocity.Normal,
+                Velocity.None,
+                Velocity.None,
+                Velocity.None,
+                Velocity.Normal,
+                Velocity.None,
+                Velocity.None,
+                Velocity.None,
+                Velocity.Normal,
+                Velocity.None,
+                Velocity.None,
+                Velocity.None,
+                Velocity.Normal,
+                Velocity.None,
+                Velocity.None,
+                Velocity.None
+              )
+            )
+          ),
+          128
+        )
+      )
+      .dispatch(Command.SetSteps("kick", 1, 3, Velocity.Normal));
+
+    state.tracks.head.steps(0) shouldBe Velocity.Normal
+    state.tracks.head.steps(1) shouldBe Velocity.Normal
+    state.tracks.head.steps(2) shouldBe Velocity.Normal
+    state.tracks.head.steps(3) shouldBe Velocity.Normal
+  }
+
+  test("SET_STEPS command is parsed from JS") {
+    val cmd = scala.scalajs.js.Dynamic.literal(
+      `type` = "SET_STEPS",
+      payload = scala.scalajs.js.Dynamic.literal(
+        trackName = "Kick",
+        fromStepIndex = 2,
+        toStepIndex = 4,
+        velocity = false
+      )
+    )
+    Command.fromJS(cmd) shouldBe Command.SetSteps("Kick", 2, 4, Velocity.None)
   }
 }
