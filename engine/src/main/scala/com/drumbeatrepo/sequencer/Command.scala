@@ -12,6 +12,7 @@ enum Command:
       toStepIndex: Int,
       velocity: Velocity
   )
+  case AddTrack(track: Track)
   case Undo
   case Redo
 

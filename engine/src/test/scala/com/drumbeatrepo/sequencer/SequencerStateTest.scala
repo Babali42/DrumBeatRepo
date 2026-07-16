@@ -186,4 +186,37 @@ class SequencerStateTest extends AnyFunSuite {
     )
     Command.fromJS(cmd) shouldBe Command.SetSteps("Kick", 2, 4, Velocity.None)
   }
+
+  test("dispatch AddTrack add a track to a beat") {
+    val state = SequencerState.initial
+      .dispatch(
+        Command.AddTrack(
+          Track(
+            "kick",
+            "kick.mp3",
+            Some(MidiDrumType.BASS_DRUM_1),
+            List(
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None
+            )
+          )
+        )
+      );
+
+    state.tracks.length shouldBe 1
+  }
 }
