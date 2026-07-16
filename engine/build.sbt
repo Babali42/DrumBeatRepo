@@ -11,5 +11,5 @@ Compile / fastLinkJS / scalaJSLinkerOutputDirectory := baseDirectory.value /
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.20" % Test,
   "org.scalatestplus" %% "scalacheck-1-18" % "3.2.19.0" % Test,
-  "org.scalacheck" %% "scalacheck" % "1.18.0" % Test
+  "org.scalacheck" %% "scalacheck" % "1.19.0" % Test
 )
