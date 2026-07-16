@@ -12,18 +12,23 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 👉 **Try it now:** [www.drumbeatrepo.com](https://www.drumbeatrepo.com/#/)
 ![DrumBeat Demo](./demo.gif)
-![App Screenshot](./app.png)
 
 ## Requirements
 
-* Scala : [sbt](https://www.scala-sbt.org/)
-* Angular : [Node.js](https://nodejs.org/fr) + npm
+1. Scala Engine `./engine` : [Scala](https://www.scala-lang.org/) and its build tool [sbt](https://www.scala-sbt.org/)
+2. Angular Application `./frontend`: [Node.js](https://nodejs.org/fr)
 
 
 ```bash
 git clone https://github.com/Babali42/DrumBeatRepo.git
-cd frontend/
+
+cd DrumBeatRepo/
+
 cd engine/
+sbt fastLinkJS
+
+cd ../frontend/
+npm run start
 ```
 
 ## 🚀 Quick Start
