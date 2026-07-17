@@ -1,39 +1,41 @@
 @if(isOpen){
-  <div class="modal-overlay" (click)="onOverlayClick($event)">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportMidiDialogTitle">
-      <div class="modal-header">
-        <h2 id="exportMidiDialogTitle">{{ 'exportMidi.title' | translate }}</h2>
-        <button class="close-btn" aria-label="Close MIDI export dialog" (click)="onClose()">×</button>
-      </div>
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportMidiDialogTitle">
+    <div class="modal-header">
+      <h2 id="exportMidiDialogTitle">{{ 'exportMidi.title' | translate }}</h2>
+      <button class="close-btn" aria-label="Close MIDI export dialog" (click)="onClose()">×</button>
+    </div>
 
-      <div class="modal-body" [formGroup]="form">
-        <div class="form-group">
-          @let fileName = form.controls.fileName;
+    <div class="modal-body" [formGroup]="form">
+      <div class="form-group">
+        @let fileName = form.controls.fileName;
 
-          <label for="midiFileName">{{ 'exportMidi.fileName' | translate }}</label>
-          <input id="midiFileName" type="text" [formControl]="fileName" class="beat-name-input" />
+        <label for="midiFileName">{{ 'exportMidi.fileName' | translate }}</label>
+        <input id="midiFileName" type="text" [formControl]="fileName" class="beat-name-input" />
 
-          @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
-            <div>
-              @if (fileName.errors?.['required']) {
-                <small>{{ 'exportMidi.validation.required' | translate }}</small>
-              }
-              @if (fileName.errors?.['pattern']) {
-                <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
-              }
-            </div>
+        @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
+        <div>
+          @if (fileName.errors?.['required']) {
+          <small>{{ 'exportMidi.validation.required' | translate }}</small>
+          }
+          @if (fileName.errors?.['pattern']) {
+          <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
           }
         </div>
-        <div class="flex align-center">
-          <img [ngSrc]="'assets/images/icons/warning.svg' | iconDarkMode" height="28" width="28" class="mr-10" aria-hidden="true" alt="warning-icon"/>
-          <small class="warning-label">{{ 'exportMidi.warning' | translate }}</small>
-        </div>
+        }
       </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="onClose()">{{ 'exportMidi.cancel' | translate }}</button>
-        <button class="btn btn-primary" (click)="onExport()" [disabled]="!this.form.valid">{{ 'exportMidi.export' | translate }}</button>
+      <div class="flex align-center">
+        <img [ngSrc]="'assets/images/icons/warning.svg' | iconDarkMode" height="28" width="28" class="mr-10"
+          aria-hidden="true" alt="warning-icon" />
+        <small class="warning-label">{{ 'exportMidi.warning' | translate }}</small>
       </div>
     </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onClose()">{{ 'exportMidi.cancel' | translate }}</button>
+      <button class="btn btn-primary" (click)="onValidate()" [disabled]="!this.form.valid">{{ 'exportMidi.export' |
+        translate }}</button>
+    </div>
   </div>
+</div>
 }

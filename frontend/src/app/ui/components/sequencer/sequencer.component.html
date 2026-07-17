@@ -73,9 +73,9 @@
 </div>
 
 <app-export-modal [isOpen]="isAudioExportModalOpen" [beatName]="beat.label" (close)="isAudioExportModalOpen = false"
-  (export)="onAudioExport($event)">
+  (validate)="onAudioExport($event)">
 </app-export-modal>
 
 <app-export-midi-modal [isOpen]="isMidiExportModalOpen" [beatName]="beat.label" (close)="isMidiExportModalOpen = false"
-  (export)="onMidiExport($event)">
+  (validate)="onMidiExport($event)">
 </app-export-midi-modal>
