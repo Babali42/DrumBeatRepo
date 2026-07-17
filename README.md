@@ -11,12 +11,8 @@
 Welcome to **Drum Beat Repository**, a web-based project for musicians to explore and create drum patterns. Built with **Angular** and the **Web Audio API**, this interactive tool delivers a smooth, in-browser drum sequencing experience.
 
 👉 **Try it now:** [www.drumbeatrepo.com](https://www.drumbeatrepo.com/#/)
-<<<<<<< HEAD
-![DrumBeat Demo](./demo.gif)
-=======
 
 ![App Screenshot](./app.png)
->>>>>>> parent of b618778 (Merge pull request #485 from ambitiouss22/add-readme-gif)
 
 ## Requirements
 
