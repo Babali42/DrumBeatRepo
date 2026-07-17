@@ -11,13 +11,17 @@
     <section class="flex content">
       <router-outlet></router-outlet>
     </section>
-  </main>
+  <a href="https://github.com/Babali42/DrumBeatRepo/issues/270" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 15px; right: 20px; color: white; text-decoration: underline; font-weight: bold; z-index: 50;">
+  {{ 'contribute.button' | translate }}
+</a></main>
 } @else if (isMobile() && isLandscape) {
   <main class="app-container">
     <section class="flex content">
       <router-outlet></router-outlet>
     </section>
-  </main>
+  <a href="https://github.com/Babali42/DrumBeatRepo/issues/270" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 15px; right: 20px; color: white; text-decoration: underline; font-weight: bold; z-index: 50;">
+  {{ 'contribute.button' | translate }}
+</a></main>
 } @else if (isMobile() && isPortrait) {
   <header class="header-mobile mt-40 mb-40">
     <img

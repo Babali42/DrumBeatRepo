@@ -28,5 +28,8 @@
       "pattern": "Doit être un nom de fichier .mid valide (ex. \"track.mid\")"
     },
     "warning": "En fonction de votre DAW, le mapping MIDI peut différer et les percussions peuvent ne pas correspondre après l'export."
+  },
+  "contribute": {
+  "button": "Contribuez à la bibliothèque de rythmes !"
   }
 }
