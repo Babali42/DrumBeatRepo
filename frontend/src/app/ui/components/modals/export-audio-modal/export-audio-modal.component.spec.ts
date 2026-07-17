@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {ExportAudioModalComponent} from './export-audio-modal.component';
-import {By} from '@angular/platform-browser';
-import {provideTranslateService} from '@ngx-translate/core';
-import {toWavFilename} from "../../../../domain/filenames/wav.filepath";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ExportAudioModalComponent } from './export-audio-modal.component';
+import { By } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
+import { toWavFilename } from "../../../../domain/filenames/wav.filepath";
 
 describe('ExportAudioModalComponent', () => {
   let component: ExportAudioModalComponent;
@@ -73,15 +73,15 @@ describe('ExportAudioModalComponent', () => {
     expect(component.close.emit).toHaveBeenCalled();
   });
 
-  it('should emit export event with options when export button is clicked', () => {
-    spyOn(component.export, 'emit');
+  it('should emit validate event with options when export button is clicked', () => {
+    spyOn(component.validate, 'emit');
     component.isOpen = true;
     fixture.detectChanges();
 
-    const exportBtn = fixture.debugElement.query(By.css('.btn-primary'));
-    exportBtn.nativeElement.click();
+    const validateBtn = fixture.debugElement.query(By.css('.btn-primary'));
+    validateBtn.nativeElement.click();
 
-    expect(component.export.emit).toHaveBeenCalled();
+    expect(component.validate.emit).toHaveBeenCalled();
   });
 
   it('should emit close event when cancel button is clicked', () => {
@@ -127,32 +127,32 @@ describe('ExportAudioModalComponent', () => {
     expect(component.options.loopCount).toBe(2);
   });
 
-  it('should emit export with updated options', () => {
-    spyOn(component.export, 'emit');
+  it('should emit validate with updated options', () => {
+    spyOn(component.validate, 'emit');
     component.isOpen = true;
     fixture.detectChanges();
 
     component.form.controls.loopCount.setValue(4);
     fixture.detectChanges();
 
-    const exportBtn = fixture.debugElement.query(By.css('.btn-primary'));
-    exportBtn.nativeElement.click();
+    const validateBtn = fixture.debugElement.query(By.css('.btn-primary'));
+    validateBtn.nativeElement.click();
 
-    expect(component.export.emit).toHaveBeenCalledWith({
+    expect(component.validate.emit).toHaveBeenCalledWith({
       fileName: toWavFilename('file.wav'),
       loopCount: 4,
       exportWithTail: true,
     });
   });
 
-  it('should not emit export event if form is invalid', () => {
-    spyOn(component.export, 'emit');
+  it('should not emit validate event if form is invalid', () => {
+    spyOn(component.validate, 'emit');
     component.isOpen = true;
     fixture.detectChanges();
 
     component.form.controls.fileName.setValue("test.mp3" as any);
-    component.onExport();
+    component.onValidate();
 
-    expect(component.export.emit).not.toHaveBeenCalled();
+    expect(component.validate.emit).not.toHaveBeenCalled();
   });
 });

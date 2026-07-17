@@ -1,17 +1,17 @@
-import {Input, Output, EventEmitter, Directive} from '@angular/core';
+import { Input, Output, EventEmitter, Directive } from '@angular/core';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface BaseExportOptions {
+export interface BaseModalOptions {
 
 }
 
 @Directive()
-export class BaseExportModalComponent<T extends BaseExportOptions> {
+export class BaseModalComponent<T extends BaseModalOptions> {
   @Input() isOpen: boolean = false;
   @Input() beatName: string = '';
 
   @Output() close = new EventEmitter<void>();
-  @Output() export = new EventEmitter<T>();
+  @Output() validate = new EventEmitter<T>();
 
   options!: T;
 
@@ -19,8 +19,8 @@ export class BaseExportModalComponent<T extends BaseExportOptions> {
     this.close.emit();
   }
 
-  onExport(): void {
-    this.export.emit(this.options);
+  onValidate(): void {
+    this.validate.emit(this.options);
   }
 
   onOverlayClick(event: MouseEvent): void {

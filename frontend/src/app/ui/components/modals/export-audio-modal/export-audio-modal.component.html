@@ -1,53 +1,55 @@
 @if(isOpen){
-  <div class="modal-overlay" (click)="onOverlayClick($event)">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
-      <div class="modal-header">
-        <h2 id="exportDialogTitle">{{ 'export.title' | translate }}</h2>
-        <button class="close-btn" aria-label="Close export dialog" (click)="onClose()">×</button>
-      </div>
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
+    <div class="modal-header">
+      <h2 id="exportDialogTitle">{{ 'export.title' | translate }}</h2>
+      <button class="close-btn" aria-label="Close export dialog" (click)="onClose()">×</button>
+    </div>
 
-      <div class="modal-body" [formGroup]="form">
-        <div class="form-group">
-          @let fileName = form.controls.fileName;
+    <div class="modal-body" [formGroup]="form">
+      <div class="form-group">
+        @let fileName = form.controls.fileName;
 
-          <label for="beatName">{{ 'exportMidi.fileName' | translate }}</label>
-          <input id="beatName" type="text" [formControl]="fileName" class="beat-name-input" />
+        <label for="beatName">{{ 'exportMidi.fileName' | translate }}</label>
+        <input id="beatName" type="text" [formControl]="fileName" class="beat-name-input" />
 
-          @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
-            <div>
-              @if (fileName.errors?.['required']) {
-                <small>{{ 'exportMidi.validation.required' | translate }}</small>
-              }
-              @if (fileName.errors?.['pattern']) {
-                <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
-              }
-            </div>
+        @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
+        <div>
+          @if (fileName.errors?.['required']) {
+          <small>{{ 'exportMidi.validation.required' | translate }}</small>
+          }
+          @if (fileName.errors?.['pattern']) {
+          <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
           }
         </div>
-
-        <div class="form-group">
-          @let loopCount = form.controls.loopCount;
-
-          <label for="loopCount">{{ 'export.duration' | translate }}</label>
-          <select id="loopCount" [formControl]="loopCount" class="form-select">
-            @for (count of loopCounts; track count) {
-              <option [value]="count">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate) }}</option>
-            }
-          </select>
-        </div>
-
-        <span>
-          @let exportWithTail = form.controls.exportWithTail;
-
-          <label for="exportWithTail">{{ 'export.exportWithTail' | translate }}</label>
-          <input id="exportWithTail" type="checkbox" [formControl]="exportWithTail" class="ml-10"/>
-        </span>
+        }
       </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="onClose()">{{ 'export.cancel' | translate }}</button>
-        <button class="btn btn-primary" (click)="onExport()" [disabled]="!this.form.valid">{{ 'export.export' | translate }}</button>
+      <div class="form-group">
+        @let loopCount = form.controls.loopCount;
+
+        <label for="loopCount">{{ 'export.duration' | translate }}</label>
+        <select id="loopCount" [formControl]="loopCount" class="form-select">
+          @for (count of loopCounts; track count) {
+          <option [value]="count">{{ count }} {{ count > 1 ? ('export.loops' | translate) : ('export.loop' | translate)
+            }}</option>
+          }
+        </select>
       </div>
+
+      <span>
+        @let exportWithTail = form.controls.exportWithTail;
+
+        <label for="exportWithTail">{{ 'export.exportWithTail' | translate }}</label>
+        <input id="exportWithTail" type="checkbox" [formControl]="exportWithTail" class="ml-10" />
+      </span>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onClose()">{{ 'export.cancel' | translate }}</button>
+      <button class="btn btn-primary" (click)="onValidate()" [disabled]="!this.form.valid">{{ 'export.export' |
+        translate }}</button>
     </div>
   </div>
+</div>
 }
