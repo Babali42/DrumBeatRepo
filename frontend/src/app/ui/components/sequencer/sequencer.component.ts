@@ -32,6 +32,9 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from './sequencer.service';
+import { MidiDrumType } from 'src/app/domain/midi-drum-type';
+
+import { Option } from 'effect';
 
 @Component({
   selector: 'sequencer',
@@ -45,6 +48,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>;
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
+  protected readonly AddTrackFeatureToggle = false;
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
@@ -217,6 +221,26 @@ export class SequencerComponent implements OnInit, OnDestroy {
   changeBeatBpm($event: number): void {
     this.soundService.pause();
     this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
+  }
+
+  addTrack(): void {
+    const firstTrack = this.sequencerService.vm$.getValue().tracks[0];
+    //TODO : Choose file in a selection
+    //TODO : Map the selected midinote in corresponding param
+    //TODO : load the track file in the sound engine
+    //TODO : avoid duplicated names, cause names are the id huh
+
+    this.sequencerService.dispatch(
+      {
+        type: 'ADD_TRACK', payload: {
+          track: {
+            name: firstTrack.name,
+            fileName: firstTrack.fileName,
+            steps: Array(firstTrack.steps.steps.length).fill(false),
+            midiNote: Option.getOrElse(firstTrack.midiNote, () => MidiDrumType.ACOUSTIC_BASS_DRUM)
+          }
+        }
+      });
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {

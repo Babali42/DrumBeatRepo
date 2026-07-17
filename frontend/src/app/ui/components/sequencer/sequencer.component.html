@@ -70,6 +70,20 @@
     </article>
     }
   </section>
+  @if(AddTrackFeatureToggle){
+  <section>
+    <div class="flex align-center">
+      <button class="button play-sample-button" title="Play sample" (mousedown)="this.addTrack()">
+        <!-- TODO add a + image -->
+        <img alt="drum" [ngSrc]=" 'e' | iconDarkMode" height="28" width="28">
+      </button>
+      <div class="track-name user-select-none medium ml-10">
+        <!-- TODO translation -->
+        Add a track
+      </div>
+    </div>
+  </section>
+  }
 </div>
 
 <app-export-modal [isOpen]="isAudioExportModalOpen" [beatName]="beat.label" (close)="isAudioExportModalOpen = false"
