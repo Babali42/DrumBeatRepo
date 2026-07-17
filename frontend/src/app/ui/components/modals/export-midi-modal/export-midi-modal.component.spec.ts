@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {provideTranslateService} from '@ngx-translate/core';
-import {ExportMidiModalComponent} from "./export-midi-modal.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
+import { ExportMidiModalComponent } from "./export-midi-modal.component";
 
 describe('ExportMidiModalComponent', () => {
   let component: ExportMidiModalComponent;
@@ -102,13 +102,13 @@ describe('ExportMidiModalComponent', () => {
   });
 
   it('should not emit export event if form is invalid', () => {
-    spyOn(component.export, 'emit');
+    spyOn(component.validate, 'emit');
     component.isOpen = true;
     fixture.detectChanges();
 
     component.form.controls.fileName.setValue("test.mp3" as any);
-    component.onExport();
+    component.onValidate();
 
-    expect(component.export.emit).not.toHaveBeenCalled();
+    expect(component.validate.emit).not.toHaveBeenCalled();
   });
 });
