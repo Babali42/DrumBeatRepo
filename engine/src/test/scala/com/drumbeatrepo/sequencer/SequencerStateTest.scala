@@ -219,4 +219,32 @@ class SequencerStateTest extends AnyFunSuite {
 
     state.tracks.length shouldBe 1
   }
+
+  test("ADD_TRACK command is parsed from JS") {
+    val cmd = scala.scalajs.js.Dynamic.literal(
+      "type" -> "ADD_TRACK",
+      "payload" -> scala.scalajs.js.Dynamic.literal(
+        "track" -> scala.scalajs.js.Dynamic.literal(
+          "name" -> "Kick",
+          "fileName" -> "Kick.mp3",
+          "midiNote" -> 35,
+          "steps" -> scala.scalajs.js
+            .Array[Boolean](true, false, false, false)
+        )
+      )
+    )
+    Command.fromJS(cmd) shouldBe Command.AddTrack(
+      Track(
+        "Kick",
+        "Kick.mp3",
+        Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
+        List(
+          Velocity.Normal,
+          Velocity.None,
+          Velocity.None,
+          Velocity.None
+        )
+      )
+    )
+  }
 }

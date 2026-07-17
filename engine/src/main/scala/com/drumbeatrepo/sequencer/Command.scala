@@ -58,6 +58,11 @@ object Command:
               .asInstanceOf[Boolean]
           )
         )
+      case "ADD_TRACK" =>
+        val payload = cmd.selectDynamic("payload")
+        val trackJS = payload.selectDynamic("track")
+        val track = Track.fromJS(trackJS);
+        AddTrack(track)
       case "UNDO" => Undo
       case "REDO" => Redo
       case t      => throw new RuntimeException(s"Unknown command: $t")
