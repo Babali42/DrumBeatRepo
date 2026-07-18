@@ -18,7 +18,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     @Output() override close = new EventEmitter<void>();
     @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
 
     }
 
