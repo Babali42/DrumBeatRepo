@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { JsonFilesReaderInterface } from "./json-files-reader.interface";
@@ -25,23 +25,20 @@ export class JsonFileReader implements JsonFilesReaderInterface {
     return this.loadAllBeats(files);
   }
 
-  loadAllBeats = (
-    files: readonly string[]
-  ): Effect.Effect<Option.Option<CompactBeat>[], never> =>
+  loadAllBeats = (files: readonly string[]) =>
     Effect.all(
-      files.map((file) =>
-        this.fromObservable(() =>
-          this.http.get<CompactBeat>(`/assets/beats/${file}.json`)
-        ).pipe(
-          Effect.map(Option.some),
-          Effect.catchAll(() => Effect.succeed(Option.none()))
+      files.map(file =>
+        Effect.option(
+          this.fromObservable(() =>
+            this.http.get<CompactBeat>(`/assets/beats/${file}.json`)
+          )
         )
       )
     );
 
-  fromObservable = <A>(obs: () => Observable<A>): Effect.Effect<A, HttpErrorResponse> =>
+  fromObservable = <A>(obs: () => Observable<A>) =>
     Effect.tryPromise({
       try: () => firstValueFrom(obs()),
-      catch: (err) => err as HttpErrorResponse
+      catch: () => new Error()
     });
 }

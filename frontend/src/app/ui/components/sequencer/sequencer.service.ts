@@ -52,13 +52,9 @@ export class SequencerService {
   }
 
   async initialize(): Promise<void> {
-    console.log("BEGIN")
-
     const beats = await Effect.runPromise(
       this.beatsManager.getAllBeats()
     );
-
-    console.error(beats)
 
     this.genres.clear();
 
