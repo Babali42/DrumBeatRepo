@@ -1,8 +1,7 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { CompactBeat } from "./compact-beat";
-import { Effect } from "effect";
+import { Effect, Option } from "effect";
 
 export interface JsonFilesReaderInterface {
-  loadAllJson(): Effect.Effect<readonly (CompactBeat | null)[], HttpErrorResponse>
+  loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never>
 }
 

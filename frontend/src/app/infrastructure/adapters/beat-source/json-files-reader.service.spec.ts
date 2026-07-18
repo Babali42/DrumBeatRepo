@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JsonFileReader } from "./json-files-reader.service";
-import { Effect } from "effect";
+import { Effect, Option } from "effect";
 
 describe('JsonLoaderService', () => {
   let service: JsonFileReader;
@@ -56,6 +56,6 @@ describe('JsonLoaderService', () => {
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['missing.json']));
-    expect(result[0]).toBeNull();
+    expect(Option.isNone(result[0]));
   });
 });

@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { JsonFilesReaderInterface } from "./json-files-reader.interface";
 import { CompactBeat } from "./compact-beat";
-import { Effect } from "effect";
+import { Effect, Option } from "effect";
 
 @Injectable({ providedIn: 'root' })
 export class JsonFileReader implements JsonFilesReaderInterface {
   constructor(private readonly http: HttpClient) {
   }
 
-  loadAllJson(): Effect.Effect<readonly (CompactBeat | null)[], HttpErrorResponse> {
+  loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
     const files = ['hypnotic-techno/tresillo', 'hypnotic-techno/son-clave']
       .concat('techno/techno', 'techno/off-beat-clap')
       .concat('hardcore-techno/gabber')
@@ -25,12 +25,17 @@ export class JsonFileReader implements JsonFilesReaderInterface {
     return this.loadAllBeats(files);
   }
 
-  loadAllBeats = (files: readonly string[]): Effect.Effect<readonly (CompactBeat | null)[], HttpErrorResponse> =>
+  loadAllBeats = (
+    files: readonly string[]
+  ): Effect.Effect<Option.Option<CompactBeat>[], never> =>
     Effect.all(
-      files.map(file =>
+      files.map((file) =>
         this.fromObservable(() =>
           this.http.get<CompactBeat>(`/assets/beats/${file}.json`)
-        ).pipe(Effect.catchAll(() => Effect.succeed(null)))
+        ).pipe(
+          Effect.map(Option.some),
+          Effect.catchAll(() => Effect.succeed(Option.none()))
+        )
       )
     );
 

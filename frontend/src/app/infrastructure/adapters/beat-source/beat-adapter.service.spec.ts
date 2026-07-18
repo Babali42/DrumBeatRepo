@@ -5,13 +5,13 @@ import { TestBed } from "@angular/core/testing";
 import { CompactBeat } from "./compact-beat";
 import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
 import { toMp3FilePath } from "../../../domain/filenames/mp3.filepath";
-import { Effect } from "effect";
+import { Effect, Option } from "effect";
 
 describe("Beat adapter service", () => {
 
   const mock: JsonFilesReaderInterface = {
-    loadAllJson(): Effect.Effect<CompactBeat[]> {
-      return Effect.succeed([{
+    loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[]> {
+      return Effect.succeed([Option.some({
         "label": "Metal",
         "genre": "Metal",
         "bpm": 180,
@@ -32,7 +32,7 @@ describe("Beat adapter service", () => {
             "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
-      }]);
+      })]);
     }
   }
 
