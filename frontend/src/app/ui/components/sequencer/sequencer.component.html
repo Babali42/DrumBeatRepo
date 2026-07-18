@@ -79,3 +79,7 @@
 <app-export-midi-modal [isOpen]="isMidiExportModalOpen" [beatName]="beat.label" (close)="isMidiExportModalOpen = false"
   (validate)="onMidiExport($event)">
 </app-export-midi-modal>
+
+<app-browse-audio-samples-modal [isOpen]="isBrowseAudioSamplesModalOpen"
+  (close)="isBrowseAudioSamplesModalOpen = false">
+</app-browse-audio-samples-modal>

@@ -28,5 +28,8 @@
       "pattern": "必须为有效的.mid文件名（例如 \"track.mid\"）"
     },
     "warning": "根据您的DAW，MIDI映射可能有所不同，导出后打击乐器可能不匹配。"
+  },
+  "browse-samples-modal": {
+    "title": "选择音频样本"
   }
 }

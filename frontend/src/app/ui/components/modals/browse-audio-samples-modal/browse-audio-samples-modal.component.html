@@ -1,0 +1,14 @@
+@if(isOpen){
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="browseSampleDialogTitle">
+        <div class="modal-header">
+            <h2 id="browseSampleDialogTitle">{{ 'browse-samples-modal.title' | translate }}</h2>
+            <button class="close-btn" aria-label="Close browse sample dialog" (click)="onClose()">×</button>
+        </div>
+
+        <div class="modal-body">
+
+        </div>
+    </div>
+</div>
+}

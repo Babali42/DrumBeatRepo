@@ -29,6 +29,7 @@ import { BpmInputComponent } from '../bpm-input/bpm-input.component';
 import { SelectInputComponent } from '../select-input/select-input.component';
 import { ExportAudioModalComponent } from '../modals/export-audio-modal/export-audio-modal.component';
 import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-midi-modal.component';
+import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from './sequencer.service';
 
@@ -37,7 +38,7 @@ import { SequencerService } from './sequencer.service';
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -52,6 +53,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   isAudioExportModalOpen = false;
   isMidiExportModalOpen = false;
+  isBrowseAudioSamplesModalOpen = false;
 
   constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,

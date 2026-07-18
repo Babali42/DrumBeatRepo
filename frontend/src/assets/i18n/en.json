@@ -28,5 +28,8 @@
       "pattern": "Must be a valid .mid file name (e.g. \"track.mid\")"
     },
     "warning": "Depending on your DAW, MIDI drum mapping may differ and percussion may not match after export."
+  },
+  "browse-samples-modal": {
+    "title": "Select an audio sample"
   }
 }

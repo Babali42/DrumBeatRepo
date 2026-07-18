@@ -1,10 +1,10 @@
 {
-  "portraitMode" : {
-    "onlyAvailableInLandscapeMode" : "Seulement disponible en mode paysage",
-    "turnYourDevice" : "Tourne ton écran !"
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "Seulement disponible en mode paysage",
+    "turnYourDevice": "Tourne ton écran !"
   },
-  "chooseGenre" : "Choisis un genre musical",
-  "chooseBeat" : "Choisis un rythme {{ genre }}",
+  "chooseGenre": "Choisis un genre musical",
+  "chooseBeat": "Choisis un rythme {{ genre }}",
   "export": {
     "title": "Exporter le rythme en fichier audio",
     "beat": "Rythme",
@@ -28,5 +28,8 @@
       "pattern": "Doit être un nom de fichier .mid valide (ex. \"track.mid\")"
     },
     "warning": "En fonction de votre DAW, le mapping MIDI peut différer et les percussions peuvent ne pas correspondre après l'export."
+  },
+  "browse-samples-modal": {
+    "title": "Sélectionner un sample audio"
   }
 }

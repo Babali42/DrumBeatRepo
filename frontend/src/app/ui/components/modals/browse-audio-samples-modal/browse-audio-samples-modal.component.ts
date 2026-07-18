@@ -1,0 +1,30 @@
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from "@ngx-translate/core";
+import { BaseModalComponent } from "../base-modal.component";
+import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
+
+@Component({
+    selector: 'app-browse-audio-samples-modal',
+    standalone: true,
+    imports: [FormsModule, CommonModule, TranslatePipe, ReactiveFormsModule],
+    templateUrl: "./browse-audio-samples-modal.component.html",
+    styleUrl: "../../../../../styles/modals/modal.base.scss"
+})
+export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseAudioSamplesModalResult> implements OnChanges {
+    @Input() override isOpen: boolean = false;
+
+    @Output() override close = new EventEmitter<void>();
+    @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
+
+    ngOnChanges(changes: SimpleChanges): void {
+
+    }
+
+    override options: BrowseAudioSamplesModalResult = DefaultBrowseAudioSamplesModalResult;
+
+    override onValidate(): void {
+        this.validate.emit(undefined);
+    }
+}
