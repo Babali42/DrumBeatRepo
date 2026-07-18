@@ -1,5 +1,7 @@
-import {Beat} from "../beat";
+import { Effect } from "effect";
+import { Beat } from "../beat";
+import { HttpErrorResponse } from "@angular/common/http";
 
 export default interface IManageBeats {
-  readonly getAllBeats:() => Promise<readonly Beat[]>
+  readonly getAllBeats: () => Effect.Effect<Beat[], HttpErrorResponse | Error>
 }

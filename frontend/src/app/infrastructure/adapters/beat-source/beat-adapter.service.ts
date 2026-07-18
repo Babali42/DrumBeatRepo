@@ -1,27 +1,27 @@
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import {firstValueFrom, map} from "rxjs";
-import {Beat} from "../../../domain/beat";
-import {Inject, Injectable} from "@angular/core";
-import {JsonFilesReaderInterface} from "./json-files-reader.interface";
-import {CompactBeatMapper} from "./compact-beat.mapper";
-import {jsonFileReaderToken} from "../../injection-tokens/json-file-reader.token";
-import {Effect} from "effect";
+import { Beat } from "../../../domain/beat";
+import { Inject, Injectable } from "@angular/core";
+import { JsonFilesReaderInterface } from "./json-files-reader.interface";
+import { CompactBeatMapper } from "./compact-beat.mapper";
+import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
+import { Effect } from "effect";
+import { HttpErrorResponse } from "@angular/common/http";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class BeatAdapter implements IManageBeats {
   constructor(@Inject(jsonFileReaderToken) private readonly jsonFileReader: JsonFilesReaderInterface) {
 
   }
 
-  getAllBeats(): Promise<readonly Beat[]> {
-    return firstValueFrom(this.jsonFileReader.loadAllJson()
-      .pipe(
-        map(beats => beats.filter(x => x != null)),
-        map(beats => Effect.all(
-          beats.map(b => CompactBeatMapper.toBeatEffect(b)),
-          { discard: false, mode: 'either' }
-        )),
-        map(effect => Effect.runSync(effect).filter(x => x._tag === 'Right').map(x => x.right))
-      ))
+  getAllBeats(): Effect.Effect<Beat[], HttpErrorResponse | Error> {
+    return Effect.flatMap(
+      this.jsonFileReader.loadAllJson(),
+      beats =>
+        Effect.all(
+          beats!
+            .filter(x => x != null)
+            .map(CompactBeatMapper.toBeatEffect)
+        )
+    )
   }
 }

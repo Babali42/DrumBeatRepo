@@ -1,16 +1,16 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {firstValueFrom, from, Observable} from 'rxjs';
-import {JsonFilesReaderInterface} from "./json-files-reader.interface";
-import {CompactBeat} from "./compact-beat";
-import {Effect} from "effect";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { firstValueFrom, from, Observable } from 'rxjs';
+import { JsonFilesReaderInterface } from "./json-files-reader.interface";
+import { CompactBeat } from "./compact-beat";
+import { Effect } from "effect";
 
 @Injectable({ providedIn: 'root' })
 export class JsonFileReader implements JsonFilesReaderInterface {
   constructor(private readonly http: HttpClient) {
   }
 
-  loadAllJson(): Observable<readonly (CompactBeat | null)[]> {
+  loadAllJson(): Effect.Effect<readonly (CompactBeat | null)[], HttpErrorResponse> {
     const files = ['hypnotic-techno/tresillo', 'hypnotic-techno/son-clave']
       .concat('techno/techno', 'techno/off-beat-clap')
       .concat('hardcore-techno/gabber')
@@ -22,15 +22,16 @@ export class JsonFileReader implements JsonFilesReaderInterface {
       .concat('rock/rock', 'rock/variation')
       .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
       .concat('ebm/ebm')
-    return from(Effect.runPromise(this.loadAllBeats(files)));
+    return this.loadAllBeats(files);
   }
 
-  loadAllBeats = (files: readonly string[]) =>
+  loadAllBeats = (files: readonly string[]): Effect.Effect<readonly (CompactBeat | null)[], HttpErrorResponse> =>
     Effect.all(
-      files.map(file => this.fromObservable(() => this.http.get<CompactBeat>(`/assets/beats/${file}.json`)).pipe(
-        Effect.catchAll(() => Effect.succeed(null))
-      )),
-      { discard: false }
+      files.map(file =>
+        this.fromObservable(() =>
+          this.http.get<CompactBeat>(`/assets/beats/${file}.json`)
+        ).pipe(Effect.catchAll(() => Effect.succeed(null)))
+      )
     );
 
   fromObservable = <A>(obs: () => Observable<A>): Effect.Effect<A, HttpErrorResponse> =>
