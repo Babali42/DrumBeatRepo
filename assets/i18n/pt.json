@@ -28,5 +28,8 @@
       "pattern": "Deve ser um nome .mid válido (ex. \"track.mid\")"
     },
     "warning": "Dependendo da sua DAW, o mapeamento MIDI pode diferir e as percussões podem não corresponder após a exportação."
+  },
+  "browse-samples-modal": {
+    "title": "Selecionar uma amostra de áudio"
   }
 }
