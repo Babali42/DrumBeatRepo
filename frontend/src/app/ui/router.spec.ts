@@ -1,26 +1,27 @@
-import {ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {SequencerComponent} from "./components/sequencer/sequencer.component";
-import {By} from "@angular/platform-browser";
-import {AppComponent} from "./app.component";
+import { SequencerComponent } from "./components/sequencer/sequencer.component";
+import { By } from "@angular/platform-browser";
+import { AppComponent } from "./app.component";
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-import {IManageBeatsToken} from "../infrastructure/injection-tokens/i-manage-beat.token";
-import {BeatAdapter} from "../infrastructure/adapters/beat-source/beat-adapter.service";
-import {routes} from "./app.module";
-import {AUDIO_ENGINE} from "../infrastructure/injection-tokens/audio-engine.token";
-import {AudioEngineAdapter} from "../infrastructure/adapters/audio-engine/audio-engine.adapter";
-import {Track} from "../domain/track";
-import {BPM} from "../domain/bpm";
-import {provideTranslateService} from "@ngx-translate/core";
-import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
-import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
-import {AUDIO_EXPORT} from "../infrastructure/injection-tokens/audio-export.token";
-import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-export.adapter";
-import {toMp3FilePath} from "../domain/filenames/mp3.filepath";
-import {SequencerService} from "./components/sequencer/sequencer.service";
+import { IManageBeatsToken } from "../infrastructure/injection-tokens/i-manage-beat.token";
+import { BeatAdapter } from "../infrastructure/adapters/beat-source/beat-adapter.service";
+import { routes } from "./app.module";
+import { AUDIO_ENGINE } from "../infrastructure/injection-tokens/audio-engine.token";
+import { AudioEngineAdapter } from "../infrastructure/adapters/audio-engine/audio-engine.adapter";
+import { Track } from "../domain/track";
+import { BPM } from "../domain/bpm";
+import { provideTranslateService } from "@ngx-translate/core";
+import { provideTranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { IMIDI } from "../infrastructure/injection-tokens/i-midi.token";
+import { MidiExportService } from "../infrastructure/adapters/midi-export/midi-exporter.service";
+import { AUDIO_EXPORT } from "../infrastructure/injection-tokens/audio-export.token";
+import { AudioExportAdapter } from "../infrastructure/adapters/audio-export/audio-export.adapter";
+import { toMp3FilePath } from "../domain/filenames/mp3.filepath";
+import { SequencerService } from "./components/sequencer/sequencer.service";
+import { Effect } from "effect";
 
 const beatsProvider = {
   provide: IManageBeatsToken,
@@ -57,13 +58,13 @@ describe('Router', () => {
         {
           provide: IManageBeatsToken,
           useValue: {
-            getAllBeats: () => Promise.resolve([
+            getAllBeats: () => Effect.succeed([
               {
                 label: 'Classic',
                 genre: 'Classic',
                 bpm: BPM(128),
                 tracks: [
-                  new Track("",toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
+                  new Track("", toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
                 ]
               }
             ])
@@ -82,7 +83,7 @@ describe('Router', () => {
     app.isPortrait = false; // optional, just for clarity
   });
 
-  it('should render the main page', fakeAsync (() => {
+  it('should render the main page', fakeAsync(() => {
     router.initialNavigation();
     tick();
 

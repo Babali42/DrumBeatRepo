@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {JsonFileReader} from "./json-files-reader.service";
-import {Effect} from "effect";
+import { JsonFileReader } from "./json-files-reader.service";
+import { Effect } from "effect";
 
 describe('JsonLoaderService', () => {
   let service: JsonFileReader;

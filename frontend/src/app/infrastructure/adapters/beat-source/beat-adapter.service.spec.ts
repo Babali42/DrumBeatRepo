@@ -1,17 +1,17 @@
-import {BeatAdapter} from "./beat-adapter.service";
-import {Beat} from "../../../domain/beat";
-import {JsonFilesReaderInterface} from "./json-files-reader.interface";
-import {Observable, of} from "rxjs";
-import {TestBed} from "@angular/core/testing";
-import {CompactBeat} from "./compact-beat";
-import {jsonFileReaderToken} from "../../injection-tokens/json-file-reader.token";
-import {toMp3FilePath} from "../../../domain/filenames/mp3.filepath";
+import { BeatAdapter } from "./beat-adapter.service";
+import { Beat } from "../../../domain/beat";
+import { JsonFilesReaderInterface } from "./json-files-reader.interface";
+import { TestBed } from "@angular/core/testing";
+import { CompactBeat } from "./compact-beat";
+import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
+import { toMp3FilePath } from "../../../domain/filenames/mp3.filepath";
+import { Effect } from "effect";
 
 describe("Beat adapter service", () => {
 
   const mock: JsonFilesReaderInterface = {
-    loadAllJson(): Observable<CompactBeat[]> {
-      return of([{
+    loadAllJson(): Effect.Effect<CompactBeat[]> {
+      return Effect.succeed([{
         "label": "Metal",
         "genre": "Metal",
         "bpm": 180,
@@ -28,7 +28,7 @@ describe("Beat adapter service", () => {
           },
           {
             "name": "Kick",
-            "fileName":  toMp3FilePath("metal/kick.mp3"),
+            "fileName": toMp3FilePath("metal/kick.mp3"),
             "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
@@ -44,12 +44,12 @@ describe("Beat adapter service", () => {
     }).compileComponents();
   });
 
-  it("should return compact beats",() => {
+  it("should return compact beats", () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
     //Act
-    systemUnderTest.getAllBeats().then((beats: readonly Beat[]) => {
+    Effect.runPromise(systemUnderTest.getAllBeats()).then((beats: readonly Beat[]) => {
       //Assert
       expect(beats.length).toBeGreaterThan(0);
     })

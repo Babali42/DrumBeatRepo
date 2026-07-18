@@ -7,7 +7,7 @@ import { BehaviorSubject } from "rxjs";
 import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "./sequencer.viewmodel";
 import { Beat } from "src/app/domain/beat";
-import { Option } from "effect";
+import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
 
 @Injectable({ providedIn: 'root' })
@@ -52,7 +52,13 @@ export class SequencerService {
   }
 
   async initialize(): Promise<void> {
-    const beats = await this.beatsManager.getAllBeats();
+    console.log("BEGIN")
+
+    const beats = await Effect.runPromise(
+      this.beatsManager.getAllBeats()
+    );
+
+    console.error(beats)
 
     this.genres.clear();
 

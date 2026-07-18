@@ -14,7 +14,7 @@ import { NumberOfSteps } from "../../../domain/number-of-steps";
 import { BPM } from "../../../domain/bpm";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { provideTranslateService } from "@ngx-translate/core";
-import { Option } from "effect";
+import { Effect, Option } from "effect";
 import { IMIDI } from "../../../infrastructure/injection-tokens/i-midi.token";
 import { MidiExportService } from "../../../infrastructure/adapters/midi-export/midi-exporter.service";
 import { AUDIO_EXPORT } from "../../../infrastructure/injection-tokens/audio-export.token";
@@ -31,7 +31,7 @@ describe('SequencerComponent', () => {
 
   beforeEach(async () => {
     beatsMock = {
-      getAllBeats: () => Promise.resolve([
+      getAllBeats: () => Effect.succeed([
         {
           label: "Techno1",
           genre: "Techno",
