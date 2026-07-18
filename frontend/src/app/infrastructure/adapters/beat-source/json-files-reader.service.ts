@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, from, Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { JsonFilesReaderInterface } from "./json-files-reader.interface";
 import { CompactBeat } from "./compact-beat";
 import { Effect } from "effect";

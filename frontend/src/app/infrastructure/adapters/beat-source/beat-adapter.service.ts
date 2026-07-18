@@ -18,9 +18,8 @@ export class BeatAdapter implements IManageBeats {
       this.jsonFileReader.loadAllJson(),
       beats =>
         Effect.all(
-          beats!
-            .filter(x => x != null)
-            .map(CompactBeatMapper.toBeatEffect)
+          beats.filter(x => x != null)
+            .map(beat => CompactBeatMapper.toBeatEffect(beat))
         )
     )
   }
