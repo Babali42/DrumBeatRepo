@@ -37,8 +37,7 @@ describe('JsonLoaderService', () => {
             "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
-      }
-    ];
+      }];
 
     spyOn(service, 'fromObservable').and.callFake(() =>
       //@ts-expect-error: fromObservable type mismatch

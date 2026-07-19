@@ -60,7 +60,8 @@ describe('SequencerComponent', () => {
             }
           ]
         }
-      ])
+      ]),
+      getAllTracks: () => Effect.succeed([])
     };
 
     SequencerEngine.reset();

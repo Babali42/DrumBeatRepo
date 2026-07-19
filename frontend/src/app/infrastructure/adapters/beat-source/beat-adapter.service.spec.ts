@@ -32,7 +32,27 @@ describe("Beat adapter service", () => {
             "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
-      })]);
+      }),
+      Option.some(
+        {
+          "label": "MetalWithDoubleKick",
+          "genre": "Metal",
+          "bpm": 180,
+          "tracks": [
+            {
+              "name": "Snare2",
+              "fileName": "metal/snare2.mp3",
+              "steps": "____X_______X___"
+            },
+            {
+              "name": "Kick",
+              "fileName": "metal/kick.mp3",
+              "steps": "XXXXXXXXXXXXXXXX"
+            }
+          ]
+        }
+      )
+      ]);
     }
   }
 
@@ -44,7 +64,7 @@ describe("Beat adapter service", () => {
     }).compileComponents();
   });
 
-  it("should return compact beats", () => {
+  it("should return beats", () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
@@ -52,6 +72,17 @@ describe("Beat adapter service", () => {
     Effect.runPromise(systemUnderTest.getAllBeats()).then((beats: readonly Beat[]) => {
       //Assert
       expect(beats.length).toBeGreaterThan(0);
+    })
+  })
+
+  it("should return all tracks distinct by filename", () => {
+    //Arrange
+    const systemUnderTest = TestBed.inject(BeatAdapter);
+
+    //Act
+    Effect.runPromise(systemUnderTest.getAllTracks()).then((tracks) => {
+      //Assert
+      expect(tracks.map(x => x.name)).toEqual(['Snare', 'Hats', 'Kick', 'Snare2']);
     })
   })
 })
