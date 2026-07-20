@@ -105,7 +105,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.initialize().then(() => {
       const firstGenre = this.sequencerService.genresLabel[0];
       this.genreChange(firstGenre);
-      //this.isBrowseAudioSamplesModalOpen = true;
     }).catch(() => {
       console.error("Fail to init sequencer");
     });
@@ -224,23 +223,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   addTrack(): void {
-    const firstTrack = this.sequencerService.vm$.getValue().tracks[0];
-    //TODO : Choose file in a selection
-    //TODO : Map the selected midinote in corresponding param
-    //TODO : load the track file in the sound engine
-    //TODO : avoid duplicated names, cause names are the id huh
-
-    this.sequencerService.dispatch(
-      {
-        type: 'ADD_TRACK', payload: {
-          track: {
-            name: firstTrack.name,
-            fileName: firstTrack.fileName,
-            steps: Array(firstTrack.steps.steps.length).fill(false),
-            midiNote: Option.getOrElse(firstTrack.midiNote, () => MidiDrumType.ACOUSTIC_BASS_DRUM)
-          }
-        }
-      });
+    this.isBrowseAudioSamplesModalOpen = true;
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
