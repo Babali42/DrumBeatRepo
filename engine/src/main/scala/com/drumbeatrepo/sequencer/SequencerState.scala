@@ -69,6 +69,12 @@ case class SequencerState(
             history :+ this,
             future = Nil
           )
+    case Command.AddTrack(track) =>
+      copy(
+        tracks = tracks :+ track,
+        history = history :+ this,
+        future = Nil
+      )
     case Command.Undo =>
       history match
         case init :+ last => last.copy(history = init, future = this :: future)

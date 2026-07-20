@@ -45,6 +45,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>;
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
+  protected readonly AddTrackFeatureToggle = false;
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
@@ -101,7 +102,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.initialize().then(() => {
       const firstGenre = this.sequencerService.genresLabel[0];
       this.genreChange(firstGenre);
-      //this.isBrowseAudioSamplesModalOpen = true;
     }).catch(() => {
       console.error("Fail to init sequencer");
     });
@@ -217,6 +217,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
   changeBeatBpm($event: number): void {
     this.soundService.pause();
     this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
+  }
+
+  addTrack(): void {
+    this.isBrowseAudioSamplesModalOpen = true;
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
