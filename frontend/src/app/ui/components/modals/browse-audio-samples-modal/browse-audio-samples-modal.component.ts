@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
 import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
+import { SequencerService } from '../../sequencer/sequencer.service';
 
 @Component({
     selector: 'app-browse-audio-samples-modal',
@@ -17,6 +18,10 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
 
     @Output() override close = new EventEmitter<void>();
     @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
+
+    constructor(protected sequencerService: SequencerService) {
+        super();
+    }
 
     ngOnChanges(): void {
 

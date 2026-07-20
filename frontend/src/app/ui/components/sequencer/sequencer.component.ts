@@ -101,6 +101,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.sequencerService.initialize().then(() => {
       const firstGenre = this.sequencerService.genresLabel[0];
       this.genreChange(firstGenre);
+      //this.isBrowseAudioSamplesModalOpen = true;
     }).catch(() => {
       console.error("Fail to init sequencer");
     });
