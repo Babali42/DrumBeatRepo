@@ -32,9 +32,6 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from './sequencer.service';
-import { MidiDrumType } from 'src/app/domain/midi-drum-type';
-
-import { Option } from 'effect';
 
 @Component({
   selector: 'sequencer',
