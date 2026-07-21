@@ -5,7 +5,7 @@ import { MidiDrumType } from "src/app/domain/midi-drum-type";
 
 @Injectable({ providedIn: 'root' })
 export class MidiDrumTypeToTextService {
-    private translateService = inject(TranslateService);
+    private readonly translateService = inject(TranslateService);
 
     async getMidiDrumTypeText(value: MidiDrumType): Promise<string> {
         return firstValueFrom<string>(
