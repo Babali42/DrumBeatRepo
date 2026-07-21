@@ -8,7 +8,7 @@ export class MidiDrumTypeToTextService {
     private translateService = inject(TranslateService);
 
     async getMidiDrumTypeText(value: MidiDrumType): Promise<string> {
-        return firstValueFrom(
+        return firstValueFrom<string>(
             this.translateService.get(`MidiDrumType.${value}`)
         );
     }
