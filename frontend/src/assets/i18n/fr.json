@@ -11,7 +11,6 @@
     "duration": "Durée (boucles)",
     "loop": "boucle",
     "loops": "boucles",
-    "cancel": "Annuler",
     "export": "Exporter",
     "wavButton": "Exporter en .wav",
     "exportWithTail": "Exporter avec le dernier sample en entier"
@@ -80,5 +79,12 @@
     "79": "Cuíca ouvert",
     "80": "Triangle muet",
     "81": "Triangle ouvert"
+  },
+  "misc": {
+    "cancel": "Annuler",
+    "validate": "Valider"
+  },
+  "add-track": {
+    "title": "Sélectionner un sample audio"
   }
 }

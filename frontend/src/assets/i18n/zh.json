@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "选择音频样本"
   },
+  "add-track": {
+    "title": "选择音频样本"
+  },
+  "misc": {
+    "cancel": "取消",
+    "validate": "确认"
+  },
   "MidiDrumType": {
     "35": "原声低音鼓",
     "36": "低音鼓",

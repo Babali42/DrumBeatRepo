@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "オーディオサンプルを選択"
   },
+  "add-track": {
+    "title": "オーディオサンプルを選択"
+  },
+  "misc": {
+    "cancel": "キャンセル",
+    "validate": "確認"
+  },
   "MidiDrumType": {
     "35": "アコースティックバスドラム",
     "36": "バスドラム",

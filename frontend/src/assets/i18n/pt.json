@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "Selecionar uma amostra de áudio"
   },
+  "add-track": {
+    "title": "Selecionar uma amostra de áudio"
+  },
+  "misc": {
+    "cancel": "Cancelar",
+    "validate": "Validar"
+  },
   "MidiDrumType": {
     "35": "Bumbo acústico",
     "36": "Bumbo",

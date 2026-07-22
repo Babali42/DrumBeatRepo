@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "Selezionare un campione audio"
   },
+  "add-track": {
+    "title": "Selezionare un campione audio"
+  },
+  "misc": {
+    "cancel": "Annulla",
+    "validate": "Conferma"
+  },
   "MidiDrumType": {
     "35": "Cassa acustica",
     "36": "Cassa",

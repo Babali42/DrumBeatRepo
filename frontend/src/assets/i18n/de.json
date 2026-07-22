@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "Audiobeispiel auswählen"
   },
+  "add-track": {
+    "title": "Audiobeispiel auswählen"
+  },
+  "misc": {
+    "cancel": "Abbrechen",
+    "validate": "Bestätigen"
+  },
   "MidiDrumType": {
     "35": "Akustische Bassdrum",
     "36": "Bassdrum",

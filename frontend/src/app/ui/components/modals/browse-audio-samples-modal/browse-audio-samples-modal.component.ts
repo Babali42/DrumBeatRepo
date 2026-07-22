@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
+import { Form, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
@@ -14,10 +14,16 @@ import { SequencerService } from '../../sequencer/sequencer.service';
     styleUrl: "../../../../../styles/modals/modal.base.scss"
 })
 export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseAudioSamplesModalResult> implements OnChanges {
+    private readonly fb = inject(FormBuilder);
+
     @Input() override isOpen: boolean = false;
 
     @Output() override close = new EventEmitter<void>();
     @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
+
+    form = this.fb.nonNullable.group({
+
+    })
 
     constructor(protected sequencerService: SequencerService) {
         super();

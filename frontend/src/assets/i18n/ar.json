@@ -32,6 +32,13 @@
   "browse-samples-modal": {
     "title": "اختر عينة صوتية"
   },
+  "add-track": {
+    "title": "اختر عينة صوتية"
+  },
+  "misc": {
+    "cancel": "إلغاء",
+    "validate": "تأكيد"
+  },
   "MidiDrumType": {
     "35": "طبسط صوتي",
     "36": "طبسط رئيسي",
