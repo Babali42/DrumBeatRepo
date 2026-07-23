@@ -1,10 +1,12 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
-import { Form, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
 import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
 import { SequencerService } from '../../sequencer/sequencer.service';
+import { Track } from 'src/app/domain/track';
+import { MidiDrumTypeToTextService } from 'src/app/ui/services/mididrumtype-to-text.service';
 
 @Component({
     selector: 'app-browse-audio-samples-modal',
@@ -13,7 +15,7 @@ import { SequencerService } from '../../sequencer/sequencer.service';
     templateUrl: "./browse-audio-samples-modal.component.html",
     styleUrl: "../../../../../styles/modals/modal.base.scss"
 })
-export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseAudioSamplesModalResult> implements OnChanges {
+export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseAudioSamplesModalResult> implements OnChanges, OnInit {
     private readonly fb = inject(FormBuilder);
 
     @Input() override isOpen: boolean = false;
@@ -21,12 +23,20 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     @Output() override close = new EventEmitter<void>();
     @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
 
+    tracks: Track[] = [];
+
     form = this.fb.nonNullable.group({
 
     })
 
-    constructor(protected sequencerService: SequencerService) {
+    constructor(protected sequencerService: SequencerService, protected midiDrumTypeToTextService: MidiDrumTypeToTextService) {
         super();
+    }
+
+    ngOnInit(): void {
+        this.sequencerService.getTracks().then(x => {
+            this.tracks = x;
+        });
     }
 
     ngOnChanges(): void {
