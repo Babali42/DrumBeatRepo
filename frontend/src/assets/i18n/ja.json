@@ -11,7 +11,6 @@
     "duration": "長さ（ループ数）",
     "loop": "ループ",
     "loops": "ループ",
-    "cancel": "キャンセル",
     "export": "エクスポート",
     "wavButton": ".wavにエクスポート",
     "exportWithTail": "Export with tail"

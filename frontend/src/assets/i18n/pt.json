@@ -11,7 +11,6 @@
     "duration": "Duração (loops)",
     "loop": "loop",
     "loops": "loops",
-    "cancel": "Cancelar",
     "export": "Exportar",
     "wavButton": "Exportar para .wav",
     "exportWithTail": "Export with tail"

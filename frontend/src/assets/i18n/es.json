@@ -11,7 +11,6 @@
     "duration": "Duración (bucles)",
     "loop": "bucle",
     "loops": "bucles",
-    "cancel": "Cancelar",
     "export": "Exportar",
     "wavButton": "Exportar a .wav",
     "exportWithTail": "Export with tail"

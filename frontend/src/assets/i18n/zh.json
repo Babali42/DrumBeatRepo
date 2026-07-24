@@ -11,7 +11,6 @@
     "duration": "时长（循环次数）",
     "loop": "循环",
     "loops": "循环",
-    "cancel": "取消",
     "export": "导出",
     "wavButton": "导出为 .wav",
     "exportWithTail": "Export with tail"
