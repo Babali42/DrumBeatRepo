@@ -11,7 +11,8 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
-    const files = ['hypnotic-techno/tresillo', 'hypnotic-techno/son-clave']
+    const files = ['dnb/dnb']
+      .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')
       .concat('techno/techno', 'techno/off-beat-clap')
       .concat('hardcore-techno/gabber')
       .concat('psytrance/psytrance')
