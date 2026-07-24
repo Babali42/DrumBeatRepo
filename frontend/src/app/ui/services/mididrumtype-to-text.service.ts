@@ -13,6 +13,6 @@ export class MidiDrumTypeToTextService {
 
         return this.translateService.instant(
             `MidiDrumType.${Option.getOrThrow(value)}`
-        );
+        ) as string;
     }
 }

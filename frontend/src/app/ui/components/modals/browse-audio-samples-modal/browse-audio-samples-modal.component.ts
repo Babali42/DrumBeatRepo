@@ -23,18 +23,18 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     @Output() override close = new EventEmitter<void>();
     @Output() override validate = new EventEmitter<BrowseAudioSamplesModalResult>();
 
-    tracks: Track[] = [];
+    tracks: readonly Track[] = [];
 
     form = this.fb.nonNullable.group({
 
     })
 
-    constructor(protected sequencerService: SequencerService, protected midiDrumTypeToTextService: MidiDrumTypeToTextService) {
+    constructor(protected readonly sequencerService: SequencerService, protected readonly midiDrumTypeToTextService: MidiDrumTypeToTextService) {
         super();
     }
 
     ngOnInit(): void {
-        this.sequencerService.getTracks().then(x => {
+        void this.sequencerService.getTracks().then(x => {
             this.tracks = x;
         });
     }

@@ -67,7 +67,8 @@ describe('Router', () => {
                   new Track("", toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
                 ]
               }
-            ])
+            ]),
+            getAllTracks: () => Effect.succeed([])
           }
         },
         { provide: IMIDI, useClass: MidiExportService },
