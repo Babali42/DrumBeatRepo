@@ -23,3 +23,13 @@ jobs:
         uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
+  
+  check-i18n-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Verify i18n translations consistency
+        run: bash ./verify_i18n_json.sh
+        shell: bash
+        working-directory: ./frontend
