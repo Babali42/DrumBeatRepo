@@ -33,8 +33,19 @@ module.exports = function (config) {
         lines: 80
       }
     },
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--headless',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage'
+        ]
+      }
+    },
     reporters: ['progress', 'kjhtml', 'coverage'],
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
     restartOnFileChange: true,
     autoWatch: true,
     singleRun: false
