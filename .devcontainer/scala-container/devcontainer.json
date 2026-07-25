@@ -1,0 +1,6 @@
+{
+  "name": "Scala Engine",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "scala-backend",
+  "workspaceFolder": "/workspace/engine"
+}
