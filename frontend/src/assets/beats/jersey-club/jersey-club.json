@@ -1,0 +1,23 @@
+{
+  "label": "Jersey club",
+  "genre": "Club",
+  "bpm": 150,
+  "tracks": [
+    {
+      "name": "Bed squeak (low)",
+      "fileName": "jersey-club/squeak_low.mp3",
+      "steps": "X   X   X   X   "
+    },
+    {
+      "name": "Bed squeak (high)",
+      "fileName": "jersey-club/squeak_high.mp3",
+      "steps": "  X   X   X   X "
+    },
+    {
+      "name": "Kick",
+      "fileName": "jersey-club/kick.mp3",
+      "steps": "X   X   X  X  XX",
+      "midiNote": 36
+    }
+  ]
+}

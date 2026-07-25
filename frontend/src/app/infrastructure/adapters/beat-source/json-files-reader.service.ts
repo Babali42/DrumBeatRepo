@@ -23,6 +23,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
       .concat('rock/rock', 'rock/variation')
       .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
       .concat('ebm/ebm')
+      .concat('jersey-club/jersey-club')
     return this.loadAllBeats(files);
   }
 
