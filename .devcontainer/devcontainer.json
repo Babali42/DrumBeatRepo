@@ -1,6 +1,6 @@
 {
   "name": "Angular Frontend",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "./docker-compose.yml",
   "service": "angular-frontend",
   "features": {
     "ghcr.io/devcontainers-extra/features/angular-cli:2": {}
