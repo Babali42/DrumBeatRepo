@@ -1,0 +1,13 @@
+services:
+  angular-frontend:
+    image: mcr.microsoft.com/devcontainers/typescript-node:4-24-trixie
+    volumes:
+      # Mount the repo root (compose file is in .devcontainer/, so .. = repo root)
+      - ..:/workspace
+    command: sleep infinity
+
+  scala-backend:
+    image: sbtscala/scala-sbt:eclipse-temurin-21_1.x
+    volumes:
+      - ..:/workspace
+    command: sleep infinity

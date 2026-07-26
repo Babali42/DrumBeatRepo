@@ -1,0 +1,11 @@
+{
+  "name": "Scala Engine",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "scala-backend",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    }
+  },
+  "workspaceFolder": "/workspace/engine"
+}
