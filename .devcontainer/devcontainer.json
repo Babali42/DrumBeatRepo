@@ -1,0 +1,15 @@
+{
+  "name": "Angular Frontend",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "angular-frontend",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/angular-cli:2": {}
+  },
+  "postCreateCommand": "sudo bash /workspace/.devcontainer/install-chrome.sh",
+  "remoteEnv": {
+    "CHROME_BIN": "/usr/bin/chromium"
+  },
+  "shutdownAction": "none",
+  "forwardPorts": [4200],
+  "workspaceFolder": "/workspace/frontend"
+}
