@@ -12,5 +12,6 @@
     "CHROME_BIN": "/usr/bin/chromium"
   },
   "shutdownAction": "none",
+  "forwardPorts": [4200],
   "workspaceFolder": "/workspace/frontend"
 }
