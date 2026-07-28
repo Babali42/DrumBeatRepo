@@ -1,40 +1,33 @@
 <ngx-loading-bar></ngx-loading-bar>
 @if (!isMobile()) {
-  <main class="flex app-container">
-    <img
-      src="../../assets/images/title.svg"
-      id="title-image"
-      alt="Website Title"
-      class="top-left-corner cursor-pointer"
-      (click)="goToMainPage()"
-    />
-    <section class="flex content">
-      <router-outlet></router-outlet>
-    </section>
-  </main>
+<main class="flex app-container">
+  <img src="../../assets/images/title.svg" id="title-image" alt="Website Title" class="top-left-corner cursor-pointer"
+    (click)="goToMainPage()" />
+  <section class="flex content">
+    <router-outlet></router-outlet>
+  </section>
+</main>
+<footer class="flex justify-center">
+  <a href="https://github.com/Babali42/DrumBeatRepo/issues/270" class="cursor-pointer">Contribute to the beat
+    library</a>
+</footer>
 } @else if (isMobile() && isLandscape) {
-  <main class="app-container">
-    <section class="flex content">
-      <router-outlet></router-outlet>
-    </section>
-  </main>
+<main class="app-container">
+  <section class="flex content">
+    <router-outlet></router-outlet>
+  </section>
+</main>
 } @else if (isMobile() && isPortrait) {
-  <header class="header-mobile mt-40 mb-40">
-    <img
-      src="../../assets/images/title-mobile.svg"
-      class="title-image-mobile"
-      alt="Website Title"
-    />
-  </header>
-  <div class="portrait-to-landscape">
-    <img
-      [src]="mode == Mode.LIGHT ? '../../assets/images/light/orientation.png' : `../../assets/images/dark/orientation.png`"
-      class="portrait-to-landscape-image"
-      alt="Portrait to landscape image"
-    />
-  </div>
-  <div class="ml-10">
-    <h1>{{ 'portraitMode.onlyAvailableInLandscapeMode' | translate }}</h1>
-    <h3>{{ 'portraitMode.turnYourDevice' | translate }}</h3>
-  </div>
+<header class="header-mobile mt-40 mb-40">
+  <img src="../../assets/images/title-mobile.svg" class="title-image-mobile" alt="Website Title" />
+</header>
+<div class="portrait-to-landscape">
+  <img
+    [src]="mode == Mode.LIGHT ? '../../assets/images/light/orientation.png' : `../../assets/images/dark/orientation.png`"
+    class="portrait-to-landscape-image" alt="Portrait to landscape image" />
+</div>
+<div class="ml-10">
+  <h1>{{ 'portraitMode.onlyAvailableInLandscapeMode' | translate }}</h1>
+  <h3>{{ 'portraitMode.turnYourDevice' | translate }}</h3>
+</div>
 }
