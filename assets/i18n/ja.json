@@ -5,6 +5,7 @@
   },
   "chooseGenre": "音楽ジャンルを選ぶ",
   "chooseBeat": "{{ genre }}リズムを選ぶ",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "リズムをオーディオファイルにエクスポート",
     "beat": "リズム",
