@@ -5,6 +5,7 @@
   },
   "chooseGenre": "اختر نوع الموسيقى",
   "chooseBeat": "اختر إيقاع {{ genre }}",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "تصدير الإيقاع إلى ملف صوتي",
     "beat": "الإيقاع",

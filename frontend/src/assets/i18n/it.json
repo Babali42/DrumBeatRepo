@@ -5,6 +5,7 @@
   },
   "chooseGenre": "Scegli un genere musicale",
   "chooseBeat": "Scegli un ritmo {{ genre }}",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "Esporta ritmo in file audio",
     "beat": "Ritmo",

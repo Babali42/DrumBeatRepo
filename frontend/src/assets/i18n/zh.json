@@ -5,6 +5,7 @@
   },
   "chooseGenre": "选择音乐类型",
   "chooseBeat": "选择{{ genre }}节奏",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "导出节奏到音频文件",
     "beat": "节奏",

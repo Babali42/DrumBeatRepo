@@ -5,6 +5,7 @@
   },
   "chooseGenre": "Выберите музыкальный жанр",
   "chooseBeat": "Выберите ритм {{ genre }}",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "Экспорт ритма в аудиофайл",
     "beat": "Ритм",

@@ -1,10 +1,11 @@
 {
-  "portraitMode" : {
-    "onlyAvailableInLandscapeMode" : "Only available in landscape mode",
-    "turnYourDevice" : "Turn your device !"
+  "portraitMode": {
+    "onlyAvailableInLandscapeMode": "Only available in landscape mode",
+    "turnYourDevice": "Turn your device !"
   },
-  "chooseGenre" : "Choose a musical genre",
-  "chooseBeat" : "Choose a {{ genre }} beat",
+  "chooseGenre": "Choose a musical genre",
+  "chooseBeat": "Choose a {{ genre }} beat",
+  "contribute": "Contribute to the beat library !",
   "export": {
     "title": "Export Beat to audio file",
     "beat": "Beat",
