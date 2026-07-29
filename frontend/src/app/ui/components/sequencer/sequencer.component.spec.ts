@@ -61,7 +61,7 @@ describe('SequencerComponent', () => {
           ]
         }
       ]),
-      getAllTracks: () => Effect.succeed([])
+      getAllDrumsTracks: () => Effect.succeed([])
     };
 
     SequencerEngine.reset();

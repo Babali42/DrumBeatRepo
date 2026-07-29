@@ -4,7 +4,7 @@ import { Inject, Injectable } from "@angular/core";
 import { JsonFilesReaderInterface } from "./json-files-reader.interface";
 import { CompactBeatMapper } from "./compact-beat.mapper";
 import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
-import { Effect, Option } from "effect";
+import { Array, Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
 
 @Injectable({ providedIn: 'root' })
@@ -24,14 +24,14 @@ export class BeatAdapter implements IManageBeats {
     )
   }
 
-  getAllTracks(): Effect.Effect<Track[], Error> {
+  getAllDrumsTracks(): Effect.Effect<Track[], Error> {
     const distinctByFileName = (tracks: Track[]) =>
-      Array.from(
-        new Map(tracks.map(track => [track.fileName, track])).values()
-      );
+      Array.dedupeWith(tracks, (a, b) => a.fileName === b.fileName);
 
     return this.getAllBeats().pipe(
-      Effect.map(beats => beats.flatMap(beat => beat.tracks)),
+      Effect.map(beats => beats
+        .flatMap(beat => beat.tracks)
+        .filter(x => Option.isSome(x.midiNote))),
       Effect.map(distinctByFileName)
     );
   }

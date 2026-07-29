@@ -1,5 +1,4 @@
 import { BeatAdapter } from "./beat-adapter.service";
-import { Beat } from "../../../domain/beat";
 import { JsonFilesReaderInterface } from "./json-files-reader.interface";
 import { TestBed } from "@angular/core/testing";
 import { CompactBeat } from "./compact-beat";
@@ -18,17 +17,26 @@ describe("Beat adapter service", () => {
         "tracks": [
           {
             "name": "Snare",
+            "midiNote": 38,
             "fileName": toMp3FilePath("metal/snare.mp3"),
             "steps": "____X_______X___"
           },
           {
             "name": "Hats",
+            "midiNote": 38,
             "fileName": toMp3FilePath("metal/carsh.mp3"),
             "steps": "X___X___X___X___"
           },
           {
             "name": "Kick",
+            "midiNote": 38,
             "fileName": toMp3FilePath("metal/kick.mp3"),
+            "steps": "XXXXXXXXXXXXXXXX"
+          },
+          {
+            "name": "Bass",
+            "midiNote": undefined,
+            "fileName": toMp3FilePath("metal/bass.mp3"),
             "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
@@ -41,12 +49,20 @@ describe("Beat adapter service", () => {
           "tracks": [
             {
               "name": "Snare2",
+              "midiNote": 38,
               "fileName": "metal/snare2.mp3",
               "steps": "____X_______X___"
             },
             {
               "name": "Kick",
+              "midiNote": 38,
               "fileName": "metal/kick.mp3",
+              "steps": "XXXXXXXXXXXXXXXX"
+            },
+            {
+              "name": "Synth",
+              "midiNote": undefined,
+              "fileName": toMp3FilePath("metal/bass2.mp3"),
               "steps": "XXXXXXXXXXXXXXXX"
             }
           ]
@@ -64,25 +80,25 @@ describe("Beat adapter service", () => {
     }).compileComponents();
   });
 
-  it("should return beats", () => {
+  it("should return beats", async () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
     //Act
-    Effect.runPromise(systemUnderTest.getAllBeats()).then((beats: readonly Beat[]) => {
-      //Assert
-      expect(beats.length).toBeGreaterThan(0);
-    })
+    const beats = await Effect.runPromise(systemUnderTest.getAllBeats());
+
+    //Assert
+    expect(beats.length).toBeGreaterThan(0);
   })
 
-  it("should return all tracks distinct by filename", () => {
+  it("should return all drums tracks distinct by filename", async () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
     //Act
-    Effect.runPromise(systemUnderTest.getAllTracks()).then((tracks) => {
-      //Assert
-      expect(tracks.map(x => x.name)).toEqual(['Snare', 'Hats', 'Kick', 'Snare2']);
-    })
+    const tracks = await Effect.runPromise(systemUnderTest.getAllDrumsTracks());
+
+    //Assert
+    expect(tracks.map(x => x.name)).toEqual(['Snare', 'Hats', 'Kick', 'Snare2']);
   })
 })

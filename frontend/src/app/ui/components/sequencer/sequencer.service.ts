@@ -107,6 +107,6 @@ export class SequencerService {
   }
 
   async getTracks(): Promise<Track[]> {
-    return Effect.runPromise(this.beatsManager.getAllTracks())
+    return Effect.runPromise(this.beatsManager.getAllDrumsTracks())
   }
 }

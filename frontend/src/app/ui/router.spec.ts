@@ -68,7 +68,7 @@ describe('Router', () => {
                 ]
               }
             ]),
-            getAllTracks: () => Effect.succeed([])
+            getAllDrumsTracks: () => Effect.succeed([])
           }
         },
         { provide: IMIDI, useClass: MidiExportService },
