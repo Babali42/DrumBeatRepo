@@ -172,16 +172,17 @@ $gap: 4px;
   border-radius: utils.$little-radius;
   background-color: var(--backgroundColor);
   color: var(--textColor);
+  cursor: pointer;
 }
 
-.play-sample-button {
+.square-button {
   height: 32px;
   width: 32px;
   padding: 0;
 }
 
-.play-sample-button:disabled {
-  background-color: dimgrey;
+.square-button:disabled {
+  background-color: var(--disabledColor);
   color: linen;
   opacity: 1;
 }
