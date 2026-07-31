@@ -7,7 +7,7 @@ $gap: 4px;
 #main-container {
   display: grid;
   grid-template-columns: max-content auto;
-  gap: 24px;
+  gap: 32px;
   margin: 0 utils.$main-app-margin-size;
 }
 
@@ -130,36 +130,30 @@ $gap: 4px;
 
   .bpm-input-group {
     align-items: center;
-    gap: 5px;
+    gap: 16px;
+    margin-bottom: 16px;
   }
 }
 
-.play-button-container {
-  grid-column-start: 1;
-  grid-row-start: 1;
-  justify-content: center;
-  align-items: center;
+.play-pause-button {
+  height: 64px;
+  width: 64px;
+  min-width: 64px;
+  font-size: 20px;
+  border-radius: utils.$big-radius;
+  border-color: var(--textColor);
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
+}
 
-  .play-pause-button {
-    height: 64px;
-    width: 64px;
-    min-width: 64px;
-    font-size: 20px;
-    border-radius: utils.$big-radius;
-    border-color: var(--textColor);
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
-  }
+.play-pause-button:active {
+  transform: scale(0.9);
+}
 
-  .play-pause-button:active {
-    transform: scale(0.9);
-  }
-
-  .play-pause-button:hover {
-    background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
-    color: var(--backgroundColor);
-    border-radius: 10px;
-    border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
-  }
+.play-pause-button:hover {
+  background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+  color: var(--backgroundColor);
+  border-radius: 10px;
+  border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
 }
 
 .custom-url-text {
