@@ -4,13 +4,60 @@
 $step-size: 40px;
 $gap: 4px;
 
-#main-container {
+// MAIN
+.main-container {
   display: grid;
   grid-template-columns: max-content auto;
-  gap: 32px;
+  gap: utils.$main-app-margin-size;
   margin: 0 utils.$main-app-margin-size;
 }
 
+//HEADER
+.sequencer-header {
+  grid-column-start: 2;
+  grid-row-start: 1;
+
+  .play-pause-button {
+    height: 64px;
+    width: 64px;
+    min-width: 64px;
+    font-size: 20px;
+    border-radius: utils.$big-radius;
+    border-color: var(--textColor);
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
+  }
+
+  .play-pause-button:active {
+    transform: scale(0.9);
+  }
+
+  .play-pause-button:hover {
+    background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+    color: var(--backgroundColor);
+    border-radius: 10px;
+    border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
+  }
+
+  .label {
+    vertical-align: bottom;
+
+    .small {
+      font-size: small;
+    }
+  }
+
+  div+div {
+    margin-top: 8px;
+  }
+
+  .bpm-input-group {
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+//SEQUENCER
 .sequencer-grid {
   flex-direction: column;
 }
@@ -112,50 +159,19 @@ $gap: 4px;
   }
 }
 
-.sequencer-header {
+//Export Buttons
+.export-button-container{
   grid-column-start: 2;
-  grid-row-start: 1;
+  grid-row-start: 3;
+  justify-content: end;
+  font-size: medium;
 
-  .label {
-    vertical-align: bottom;
-
-    .small {
-      font-size: small;
-    }
-  }
-
-  div+div {
-    margin-top: 8px;
-  }
-
-  .bpm-input-group {
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+  .button {
+    min-width: 100px;
   }
 }
 
-.play-pause-button {
-  height: 64px;
-  width: 64px;
-  min-width: 64px;
-  font-size: 20px;
-  border-radius: utils.$big-radius;
-  border-color: var(--textColor);
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
-}
-
-.play-pause-button:active {
-  transform: scale(0.9);
-}
-
-.play-pause-button:hover {
-  background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
-  color: var(--backgroundColor);
-  border-radius: 10px;
-  border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
-}
-
+//MISC
 .custom-url-text {
   background-color: var(--backgroundColor);
   color: var(--textColor);
@@ -179,8 +195,4 @@ $gap: 4px;
   background-color: var(--disabledColor);
   color: linen;
   opacity: 1;
-}
-
-.export-button {
-  font-size: large;
 }
