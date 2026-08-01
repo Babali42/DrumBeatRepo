@@ -1,4 +1,4 @@
-<div id="main-container">
+<div class="main-container">
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
       <button class="play-pause-button cursor-pointer app-button" (click)="this.soundService.playPause()">
@@ -30,14 +30,6 @@
         placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
       </app-select-input>
     </div>
-    <div>
-      <button class="button export-button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate
-        }}</button>
-    </div>
-    <div>
-      <button class="button export-button" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate
-        }}</button>
-    </div>
   </div>
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
@@ -68,6 +60,12 @@
       </div>
     </article>
     }
+  </section>
+  <section class="export-button-container flex">
+    <button class="button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate
+      }}</button>
+    <button class="button ml-8" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate
+      }}</button>
   </section>
   @if(AddTrackFeatureToggle){
   <section>

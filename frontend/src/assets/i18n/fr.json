@@ -13,7 +13,7 @@
     "loop": "boucle",
     "loops": "boucles",
     "export": "Exporter",
-    "wavButton": "Exporter en .wav",
+    "wavButton": "Export .wav",
     "exportWithTail": "Exporter avec le dernier sample en entier"
   },
   "exportMidi": {
@@ -22,7 +22,7 @@
     "duration": "Durée (boucles)",
     "cancel": "Annuler",
     "export": "Exporter MIDI",
-    "button": "Exporter en .mid (MIDI)",
+    "button": "Export .mid",
     "validation": {
       "required": "Le nom du fichier est requis",
       "pattern": "Doit être un nom de fichier .mid valide (ex. \"track.mid\")"
