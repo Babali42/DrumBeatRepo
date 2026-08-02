@@ -6,19 +6,19 @@
     {
       "name": "Clap",
       "fileName": "gabber/clap.wav",
-      "steps": "    X      XX       X      XX   ",
+      "steps": "    X      XX   ",
       "midiNote": 39
     },
     {
       "name": "Hats",
       "fileName": "techno/hat.wav",
-      "steps": "  X   X   X   X   X   X   X   X ",
+      "steps": "  X   X   X   X ",
       "midiNote": 42
     },
     {
       "name": "Kick",
       "fileName": "techno/kick.wav",
-      "steps": "X   X   X   X   X   X   X   X   ",
+      "steps": "X   X   X   X   ",
       "midiNote": 36
     }
   ]

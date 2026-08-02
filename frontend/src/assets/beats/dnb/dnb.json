@@ -1,5 +1,5 @@
 {
-  "label": "(new) Basic Dnb Drum Pattern",
+  "label": "(new) Basic Dnb",
   "genre": "(new) Drum and Bass",
   "bpm": 180,
   "source": "https://www.studiobrootle.com/drum-and-bass-drum-patterns/",
@@ -8,7 +8,7 @@
       "name": "Ghost snare",
       "fileName": "techno/snare.wav",
       "steps": "       X               X X      ",
-      "midiNote": 40
+      "midiNote": 38
     },
     {
       "name": "Main snare",
