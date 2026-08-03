@@ -7,6 +7,7 @@ import { toWavFilePath, WavFilePath } from "./filenames/wav.filepath";
 import { BeatsPerBar } from "./beatsPerBar";
 import { SubdivisionsPerBeat } from "./subdivisionsPerBeat";
 
+
 export class Track {
   readonly name: string;
   readonly fileName: Mp3FilePath | WavFilePath;

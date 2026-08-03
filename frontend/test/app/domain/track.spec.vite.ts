@@ -23,3 +23,9 @@ test("Should be created with ternary step number", () => {
   expect(track.beatsPerBar).toBe(4);
   expect(track.subdivisionsPerBeat).toBe(3);
 });
+
+test("Should be created with ternary step number", () => {
+  const track = new Track("Kick", toMp3FilePath("test-ternary.mp3"), [true, false, false, true, false, false, true, false, false, true, false, false], Option.some(MidiDrumType.BASS_DRUM_1));
+  expect(track).toBeDefined();
+});
+
