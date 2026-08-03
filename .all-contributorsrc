@@ -85,6 +85,15 @@
         "ideas",
         "audio"
       ]
+    },
+    {
+      "login": "thomasbarbier1",
+      "name": "Thomas Barbier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/119683525?v=4",
+      "profile": "https://github.com/thomasbarbier1",
+      "contributions": [
+        "example"
+      ]
     }
   ]
 }
