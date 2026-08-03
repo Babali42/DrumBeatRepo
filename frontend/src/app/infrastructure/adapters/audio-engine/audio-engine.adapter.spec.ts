@@ -1,12 +1,12 @@
-import {AudioEngineAdapter} from "./audio-engine.adapter";
-import {Track} from "../../../domain/track";
-import {Steps} from "../../../domain/steps";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {BPM} from "../../../domain/bpm";
-import {MidiDrumType} from "../../../domain/midi-drum-type";
-import {StepIndex} from "../../../domain/step-index";
-import {Option} from "effect";
-import {Seconds} from "../../../domain/seconds";
+import { AudioEngineAdapter } from "./audio-engine.adapter";
+import { Track } from "../../../domain/track";
+import { Steps } from "../../../domain/steps";
+import { NumberOfSteps } from "../../../domain/number-of-steps";
+import { BPM } from "../../../domain/bpm";
+import { MidiDrumType } from "../../../domain/midi-drum-type";
+import { StepIndex } from "../../../domain/step-index";
+import { Option } from "effect";
+import { Seconds } from "../../../domain/seconds";
 
 describe('AudioEngineAdapter', () => {
   let mockContext: jasmine.SpyObj<AudioContext>;
@@ -46,7 +46,9 @@ describe('AudioEngineAdapter', () => {
       fileName: 'techno/kick.wav',
       steps: new Steps([true]),
       numberOfSteps: NumberOfSteps.sixteen,
-      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
+      beatsPerBar: 4,
+      subdivisionsPerBeat: 4
     };
 
     spyOn<any>(adapter['audioFilesService'], 'getAudioBuffer').and.resolveTo(
@@ -71,7 +73,7 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should update index step by step during playback as AudioContext time advances', () => {
-    let intervalCallback: () => void = () => {};
+    let intervalCallback: () => void = () => { };
     let intervalId = 0;
     spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
       intervalCallback = args[0] as () => void;
@@ -101,7 +103,7 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should not update index when paused even if time advances', () => {
-    let intervalCallback: () => void = () => {};
+    let intervalCallback: () => void = () => { };
     let intervalId = 0;
     spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
       intervalCallback = args[0] as () => void;
@@ -127,7 +129,7 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should wrap index around when reaching total number of steps', () => {
-    let intervalCallback: () => void = () => {};
+    let intervalCallback: () => void = () => { };
     let intervalId = 0;
     spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
       intervalCallback = args[0] as () => void;
@@ -166,7 +168,7 @@ describe('AudioEngineAdapter', () => {
   });
 
   it('should advance index relative to playStartTime, not absolute time', () => {
-    let intervalCallback: () => void = () => {};
+    let intervalCallback: () => void = () => { };
     let intervalId = 0;
     spyOn(window, 'setInterval').and.callFake((...args: any[]) => {
       intervalCallback = args[0] as () => void;

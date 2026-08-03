@@ -42,7 +42,9 @@ describe('SequencerComponent', () => {
               fileName: "metal/snare.mp3",
               steps: new Steps([false, false, false, false]),
               numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE),
+              beatsPerBar: 4,
+              subdivisionsPerBeat: 4
             }
           ]
         },
@@ -56,7 +58,9 @@ describe('SequencerComponent', () => {
               fileName: "metal/snare.mp3",
               steps: new Steps([true, true, true, true]),
               numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE),
+              beatsPerBar: 4,
+              subdivisionsPerBeat: 4
             }
           ]
         }
