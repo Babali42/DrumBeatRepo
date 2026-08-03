@@ -15,7 +15,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
       .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')
       .concat('techno/techno', 'techno/off-beat-clap')
       .concat('hardcore-techno/gabber')
-      .concat('psytrance/psytrance')
+      .concat('psytrance/psytrance', 'psytrance/psytrance-variation')
       .concat('dub/dub')
       .concat('dancehall/reggaeton', 'dancehall/standard', 'dancehall/modern')
       .concat('hip-hop/trap', 'hip-hop/jul')
