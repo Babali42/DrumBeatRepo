@@ -2,15 +2,16 @@ import {CompactBeatMapper} from "./compact-beat.mapper";
 import {Beat} from "../../../domain/beat";
 import {Track} from "../../../domain/track";
 import {BPM} from "../../../domain/bpm";
-import {Effect} from "effect";
+import { Effect, Option } from "effect";
 import {toMp3FilePath} from "../../../domain/filenames/mp3.filepath";
+import { MidiDrumType } from "../../../domain/midi-drum-type";
 
 describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
     const beat : Beat = {
       genre: "test", label: "", bpm: BPM(150), tracks: [
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true]),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),8, 3),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM), 8, 3),
       ]
     };
 
@@ -25,6 +26,8 @@ describe('Compact beat mapper tests', () => {
     expect(mappedBeat.bpm).toEqual(beat.bpm);
     expect(mappedBeat.tracks.length).toEqual(beat.tracks.length);
     expect(mappedBeat.tracks[0].name).toEqual(beat.tracks[0].name);
+    expect(mappedBeat.tracks[0].beatsPerBar).toEqual(beat.tracks[0].beatsPerBar);
+    expect(mappedBeat.tracks[0].subdivisionsPerBeat).toEqual(beat.tracks[0].subdivisionsPerBeat);
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(0)).toEqual(beat.tracks[0].steps.getStepAtIndex(0));
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(3)).toEqual(beat.tracks[0].steps.getStepAtIndex(3));
   });
@@ -38,17 +41,23 @@ describe('Compact beat mapper tests', () => {
         {
           "name": "Snare",
           "fileName": "metal/snare.mp3",
-          "steps": "____X_______X___"
+          "steps": "____X_______X___",
+          "beatsPerBar": 4,
+          "subdivisionsPerBeat": 4
         },
         {
           "name": "Hats",
           "fileName": "metal/crash.mp3",
-          "steps": "X___X___X___X___"
+          "steps": "X___X___X___X___",
+          "beatsPerBar": 4,
+          "subdivisionsPerBeat": 4
         },
         {
           "name": "Kick",
           "fileName": "metal/kick.mp3",
-          "steps": "XXXXXXXXXXXXXXXX"
+          "steps": "XXXXXXXXXXXXXXXX",
+          "beatsPerBar": 4,
+          "subdivisionsPerBeat": 4
         }
       ]
     };
@@ -74,7 +83,9 @@ describe('Compact beat mapper tests', () => {
         {
           "name": "Track with invalid steps",
           "fileName": "test/kick.wav",
-          "steps": "X_X__"
+          "steps": "X_X__",
+          "beatsPerBar": 4,
+          "subdivisionsPerBeat": 4
         }
       ]
     };

@@ -22,7 +22,9 @@ export class CompactBeatMapper {
           track.name,
           track.fileName,
           [...track.steps].map(char => char === 'X'),
-          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none()
+          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none(),
+          track.beatsPerBar,
+          track.subdivisionsPerBeat
         ))
       }),
       catch: (e) => {
@@ -40,7 +42,9 @@ export class CompactBeatMapper {
         name: track.name,
         fileName: track.fileName,
         steps: track.steps.steps.map(x => x? "X":" ").join(''),
-        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
+        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value,
+        beatsPerBar: track.beatsPerBar,
+        subdivisionsPerBeat: track.subdivisionsPerBeat
       }))
     }
   }

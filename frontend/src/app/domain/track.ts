@@ -17,7 +17,7 @@ export class Track {
   readonly beatsPerBar: BeatsPerBar = 4;
   readonly subdivisionsPerBeat: SubdivisionsPerBeat = 4;
 
-  constructor(name: string, fileName: string, steps: readonly boolean[], midiNote: Option.Option<MidiDrumType> = Option.none()) {
+  constructor(name: string, fileName: string, steps: readonly boolean[], midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number = 4, subdivisionsPerBeat: number = 4) {
     if (fileName.toLowerCase().endsWith('.mp3')) {
       this.fileName = toMp3FilePath(fileName);
     } else if (fileName.toLowerCase().endsWith('.wav')) {
@@ -29,6 +29,9 @@ export class Track {
     if (![8, 12, 16, 32, 64].includes(steps.length)) {
       throw new Error(`Step ${steps.length} is invalid`);
     }
+
+    this.beatsPerBar = beatsPerBar as BeatsPerBar;
+    this.subdivisionsPerBeat = subdivisionsPerBeat as SubdivisionsPerBeat;
 
     if (steps.length == 12) {
       this.subdivisionsPerBeat = 3;

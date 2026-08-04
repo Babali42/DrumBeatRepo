@@ -3,4 +3,6 @@ export type CompactTrack = {
   readonly fileName: string;
   readonly steps: string; // like "100010001000..." or even base64 encoded binary
   readonly midiNote?: number;
+  readonly beatsPerBar: number;
+  readonly subdivisionsPerBeat: number;
 };
