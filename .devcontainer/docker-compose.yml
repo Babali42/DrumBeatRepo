@@ -10,6 +10,5 @@ services:
     image: sbtscala/scala-sbt:eclipse-temurin-21_1.x
     volumes:
       - ..:/workspace
-    command: sleep infinity
     working_dir: /workspace/engine
     command: bash -c "sbt fastLinkJS && sleep infinity"
