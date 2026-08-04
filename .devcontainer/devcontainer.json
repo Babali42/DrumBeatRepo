@@ -5,7 +5,7 @@
   "features": {
     "ghcr.io/devcontainers-extra/features/angular-cli:2": {}
   },
-  "postCreateCommand": "sudo bash /workspace/.devcontainer/install-chrome.sh",
+  "postCreateCommand": "bash /workspace/.devcontainer/install-chrome.sh && docker compose exec -T scala-backend sbt fastLinkJS",
   "remoteEnv": {
     "CHROME_BIN": "/usr/bin/chromium"
   },
