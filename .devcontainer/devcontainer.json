@@ -5,11 +5,17 @@
   "features": {
     "ghcr.io/devcontainers-extra/features/angular-cli:2": {}
   },
-  "postCreateCommand": "bash /workspace/.devcontainer/install-chrome.sh",
+  "postCreateCommand": "npm install && bash /workspace/.devcontainer/install-chrome.sh",
   "remoteEnv": {
     "CHROME_BIN": "/usr/bin/chromium"
   },
   "shutdownAction": "none",
   "forwardPorts": [4200],
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular dev server",
+      "onAutoForward": "notify"
+    }
+  },
   "workspaceFolder": "/workspace/frontend"
 }
