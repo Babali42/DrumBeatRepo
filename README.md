@@ -32,6 +32,19 @@ cd ../frontend/
 npm run start
 ```
 
+## Open in codespace
+
+1. On the repo page, click the **Code** button → **Codespaces** tab → **Create codespace on main**.
+2. A Codespace starts automatically. First creation takes a few minutes.
+
+## What happens on startup
+
+- `angular-frontend`: runs `npm install` and installs Chromium (needed for Karma tests).
+- `scala-backend`: runs `sbt fastLinkJS` and stays alive.
+- The Angular dev server is forwarded on port **4200**.
+
+> First `sbt fastLinkJS` run downloads dependencies and can take a while. The Angular app needs `frontend/engine/main.js` to exist before it runs.
+
 ## 🚀 Quick Start
 
 ### 1. Engine (Scala)
