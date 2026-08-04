@@ -7,9 +7,5 @@
       "version": "22"
     }
   },
-  "postCreateCommand": "sudo bash /workspace/.devcontainer/install-chrome.sh",
-  "remoteEnv": {
-    "CHROME_BIN": "/usr/bin/chromium"
-  },
   "workspaceFolder": "/workspace/"
 }
