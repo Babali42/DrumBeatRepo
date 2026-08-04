@@ -1,0 +1,30 @@
+{
+  "label": "Psytrance ternary",
+  "genre": "Psytrance",
+  "bpm": 100,
+  "tracks": [
+    {
+      "name": "Closed hats",
+      "fileName": "psytrance/closed-hat.wav",
+      "steps": "X  X  X  X  ",
+      "midiNote": 42
+    },
+    {
+      "name": "Snare",
+      "fileName": "psytrance/snare.wav",
+      "steps": "   X     X  ",
+      "midiNote": 38
+    },
+    {
+      "name": "Kick",
+      "fileName": "psytrance/kick.wav",
+      "steps": "X  X  X  X  ",
+      "midiNote": 36
+    },
+    {
+      "name": "Bass",
+      "fileName": "psytrance/bass.wav",
+      "steps": " XX XX XX XX"
+    }
+  ]
+}
