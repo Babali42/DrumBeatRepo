@@ -11,3 +11,5 @@ services:
     volumes:
       - ..:/workspace
     command: sleep infinity
+    working_dir: /workspace/engine
+    command: bash -c "sbt fastLinkJS && sleep infinity"
