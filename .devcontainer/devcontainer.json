@@ -9,13 +9,5 @@
   "remoteEnv": {
     "CHROME_BIN": "/usr/bin/chromium"
   },
-  "shutdownAction": "none",
-  "forwardPorts": [4200],
-  "portsAttributes": {
-    "4200": {
-      "label": "Angular dev server",
-      "onAutoForward": "notify"
-    }
-  },
   "workspaceFolder": "/workspace/frontend"
 }
