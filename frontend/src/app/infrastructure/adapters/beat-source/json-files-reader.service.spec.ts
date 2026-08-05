@@ -24,29 +24,37 @@ describe('JsonLoaderService', () => {
           {
             "name": "Snare",
             "fileName": "metal/snare.mp3",
-            "steps": "____X_______X___"
+            "steps": "____X_______X___",
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 3
           },
           {
             "name": "Hats",
             "fileName": "metal/crash.mp3",
-            "steps": "X___X___X___X___"
+            "steps": "X___X___X___X___",
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 3
           },
           {
             "name": "Kick",
             "fileName": "metal/kick.mp3",
-            "steps": "XXXXXXXXXXXXXXXX"
+            "steps": "XXXXXXXXXXXXXXXX",
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 3
           }
         ]
       }];
 
     spyOn(service, 'fromObservable').and.callFake(() =>
       //@ts-expect-error: fromObservable type mismatch
-      Effect.tryPromise({ try: () => Promise.resolve(mockResponses) })
+      Effect.tryPromise({ try: () => Promise.resolve(mockResponses[0]) })
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['techno.json']));
     expect(Option.isSome(result[0])).toBeTrue();
     expect((Option.getOrThrow(result[0])).tracks).toBeDefined();
+    expect((Option.getOrThrow(result[0])).tracks[0].beatsPerBar).toEqual(4);
+    expect((Option.getOrThrow(result[0])).tracks[0].subdivisionsPerBeat).toEqual(3);
   });
 
   it('should handle missing files gracefully', async () => {
@@ -56,6 +64,6 @@ describe('JsonLoaderService', () => {
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['missing.json']));
-    expect(Option.isNone(result[0]));
+    expect(Option.isNone(result[0])).toBeTrue();
   });
 });
