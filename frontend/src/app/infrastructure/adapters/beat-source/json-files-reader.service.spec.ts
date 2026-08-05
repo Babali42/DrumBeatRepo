@@ -45,7 +45,8 @@ describe('JsonLoaderService', () => {
     );
 
     const result = await Effect.runPromise(service.loadAllBeats(['techno.json']));
-    expect(result[0]).toBeDefined();
+    expect(Option.isSome(result[0])).toBeTrue();
+    expect((Option.getOrThrow(result[0])).tracks).toBeDefined();
   });
 
   it('should handle missing files gracefully', async () => {
