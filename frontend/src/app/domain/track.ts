@@ -14,10 +14,10 @@ export class Track {
   readonly steps: Steps;
   readonly numberOfSteps: NumberOfSteps;
   readonly midiNote: Option.Option<MidiDrumType>;
-  readonly beatsPerBar: BeatsPerBar = 4;
-  readonly subdivisionsPerBeat: SubdivisionsPerBeat = 4;
+  readonly beatsPerBar: BeatsPerBar;
+  readonly subdivisionsPerBeat: SubdivisionsPerBeat;
 
-  constructor(name: string, fileName: string, steps: readonly boolean[], midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number = 4, subdivisionsPerBeat: number = 4) {
+  constructor(name: string, fileName: string, steps: readonly boolean[], midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number, subdivisionsPerBeat: number) {
     if (fileName.toLowerCase().endsWith('.mp3')) {
       this.fileName = toMp3FilePath(fileName);
     } else if (fileName.toLowerCase().endsWith('.wav')) {
