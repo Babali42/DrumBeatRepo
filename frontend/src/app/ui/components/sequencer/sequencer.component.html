@@ -59,6 +59,7 @@
     <article>
       <div id="track" [class.eight-steps]="track.numberOfSteps == NumberOfSteps.eight"
         [class.sixteen-steps]="track.numberOfSteps == NumberOfSteps.sixteen"
+        [class.twelve-steps]="track.numberOfSteps == NumberOfSteps.twelve"
         [class.thirty-two-steps]="track.numberOfSteps == NumberOfSteps.thirty_two"
         [class.sixty-four-steps]="track.numberOfSteps == NumberOfSteps.sixty_four">
         @for (step of track.steps.steps; track $index){

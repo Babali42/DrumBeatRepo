@@ -73,6 +73,8 @@ describe('Compact beat mapper tests', () => {
     expect(beat.bpm.valueOf()).toEqual(Number(compactBeat.bpm));
     expect(beat.tracks.length).toEqual(compactBeat.tracks.length);
     expect(beat.tracks[0].name).toEqual(compactBeat.tracks[0].name);
+    expect(beat.tracks[0].beatsPerBar).toEqual(compactBeat.tracks[0].beatsPerBar);
+    expect(beat.tracks[0].subdivisionsPerBeat).toEqual(compactBeat.tracks[0].subdivisionsPerBeat);
     expect(beat.tracks[0].isMuted).toBe(false);
   });
 

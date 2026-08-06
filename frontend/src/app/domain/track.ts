@@ -14,15 +14,15 @@ export class Track {
   readonly steps: Steps;
   readonly numberOfSteps: NumberOfSteps;
   readonly midiNote: Option.Option<MidiDrumType>;
-  readonly beatsPerBar: BeatsPerBar = 4;
-  readonly subdivisionsPerBeat: SubdivisionsPerBeat = 4;
+  readonly beatsPerBar: BeatsPerBar;
+  readonly subdivisionsPerBeat: SubdivisionsPerBeat;
   readonly isMuted: boolean;
 
-  constructor(name: string, filename: string, steps: readonly boolean[], isMuted: boolean, midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number = 4, subdivisionsPerBeat: number = 4) {
-    if (filename.toLowerCase().endsWith('.mp3')) {
-      this.filename = toMp3FilePath(filename);
-    } else if (filename.toLowerCase().endsWith('.wav')) {
-      this.filename = toWavFilePath(filename);
+  constructor(name: string, fileName: string, steps: readonly boolean[], isMuted: boolean, midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number, subdivisionsPerBeat: number) {
+    if (fileName.toLowerCase().endsWith('.mp3')) {
+      this.fileName = toMp3FilePath(fileName);
+    } else if (fileName.toLowerCase().endsWith('.wav')) {
+      this.fileName = toWavFilePath(fileName);
     } else {
       throw new Error(`Unsupported audio format: ${filename}`);
     }
