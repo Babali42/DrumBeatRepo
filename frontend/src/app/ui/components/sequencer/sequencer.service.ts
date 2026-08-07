@@ -42,7 +42,8 @@ export class SequencerService {
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.fileName, steps, midiNote);
+            //TODO: Handle beatsPerBar and subdivisionsPerBeat properly, currently defaulting to 4 and 4
+          return new Track(x.name, x.fileName, steps, midiNote, 4, 4);
         }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
