@@ -42,6 +42,16 @@
       </div>
     </div>
     }
+    @if(AddTrackFeatureToggle) {
+    <div class="tracks-name">
+      <button class="button square-button" title="Play sample" (mousedown)="this.addTrack()">
+        <img alt="drum" [ngSrc]="`assets/images/icons/add.svg` | iconDarkMode" height="28" width="28">
+      </button>
+      <div class="track-name user-select-none medium">
+        Add a track
+      </div>
+    </div>
+    }
   </div>
   <section class="tracks-container">
     @for (track of beat.tracks; track $index) {
@@ -60,6 +70,13 @@
       </div>
     </article>
     }
+    @if(AddTrackFeatureToggle) {
+    <article>
+      <div id="track">
+        empty
+      </div>
+    </article>
+    }
   </section>
   <section class="export-button-container flex">
     <button class="button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate
@@ -67,19 +84,6 @@
     <button class="button ml-8" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate
       }}</button>
   </section>
-  @if(AddTrackFeatureToggle){
-  <section>
-    <div class="flex align-center">
-      <button class="button square-button" title="Play sample" (mousedown)="this.addTrack()">
-        <img alt="drum" [ngSrc]="`assets/images/icons/add.svg` | iconDarkMode" height="32" width="32">
-      </button>
-      <div class="track-name user-select-none medium ml-10">
-        <!-- TODO translation -->
-        Add a track
-      </div>
-    </div>
-  </section>
-  }
 </div>
 
 <app-export-modal [isOpen]="isAudioExportModalOpen" [beatName]="beat.label" (close)="isAudioExportModalOpen = false"
