@@ -103,4 +103,9 @@ describe('SequencerService undo', () => {
         done();
       });
   });
+
+  it('should apply a toggle mute command', () => {
+    service.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName: "Kick.mp3" } });
+    //TODO : add assertion
+  });
 });
