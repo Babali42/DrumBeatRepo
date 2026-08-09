@@ -83,9 +83,10 @@ case class SequencerState(
       future match
         case Nil          => this
         case next :: rest => next.copy(future = rest)
+    case Command.ToggleMuteTrack(trackName: String) =>
+      this
 
 end SequencerState
-
 object SequencerState:
   val initial: SequencerState =
     SequencerState("Hypnotic Techno", "Tresillo", List.empty, 128, Nil, Nil)

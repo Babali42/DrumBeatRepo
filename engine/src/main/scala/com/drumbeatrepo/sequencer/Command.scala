@@ -61,14 +61,14 @@ object Command:
         )
       case "ADD_TRACK" =>
         val payload = cmd.selectDynamic("payload")
-        ToggleMuteTrack(
-          payload.selectDynamic("trackName").asInstanceOf[String]
-        )
-      case "TOGGLE_MUTE_TRACK" =>
-        val payload = cmd.selectDynamic("payload")
         val trackJS = payload.selectDynamic("track")
         val track = Track.fromJS(trackJS);
         AddTrack(track)
+      case "TOGGLE_MUTE_TRACK" =>
+        val payload = cmd.selectDynamic("payload")
+        ToggleMuteTrack(
+          payload.selectDynamic("trackName").asInstanceOf[String]
+        )
       case "UNDO" => Undo
       case "REDO" => Redo
       case t      => throw new RuntimeException(s"Unknown command: $t")
