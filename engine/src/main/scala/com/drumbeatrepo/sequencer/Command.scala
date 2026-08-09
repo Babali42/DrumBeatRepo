@@ -13,6 +13,7 @@ enum Command:
       velocity: Velocity
   )
   case AddTrack(track: Track)
+  case ToggleMuteTrack(trackName: String)
   case Undo
   case Redo
 
@@ -59,6 +60,11 @@ object Command:
           )
         )
       case "ADD_TRACK" =>
+        val payload = cmd.selectDynamic("payload")
+        ToggleMuteTrack(
+          payload.selectDynamic("trackName").asInstanceOf[String]
+        )
+      case "TOGGLE_MUTE_TRACK" =>
         val payload = cmd.selectDynamic("payload")
         val trackJS = payload.selectDynamic("track")
         val track = Track.fromJS(trackJS);

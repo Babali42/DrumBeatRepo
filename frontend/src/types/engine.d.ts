@@ -3,6 +3,7 @@ export interface EngineTrack {
   readonly fileName: string;
   readonly steps: readonly boolean[];
   readonly midiNote: number | null;
+  readonly isMute: boolean;
 }
 
 export interface SequencerState {

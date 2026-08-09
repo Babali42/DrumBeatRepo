@@ -40,6 +40,9 @@
       <div class="track-name user-select-none medium">
         {{ track.name }}
       </div>
+      @if(MuteTrackFeatureToggle) {
+      <button (click)="toggleMuteTrack(track.name)">M</button>
+      }
     </div>
     }
     @if(AddTrackFeatureToggle) {

@@ -46,6 +46,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly AddTrackFeatureToggle = false;
+  protected readonly MuteTrackFeatureToggle = true;
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
@@ -221,6 +222,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   addTrack(): void {
     this.isBrowseAudioSamplesModalOpen = true;
+  }
+
+  toggleMuteTrack = (trackName: string) : void => {
+    this.sequencerService.dispatch({ type: 'TOGGLE_MUTE', payload: { trackName } });
   }
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
