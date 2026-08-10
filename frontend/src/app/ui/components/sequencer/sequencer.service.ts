@@ -42,7 +42,7 @@ export class SequencerService {
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.fileName, steps, x.isMute, midiNote);
+          return new Track(x.name, x.fileName, steps, x.isMuted, midiNote);
         }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,
@@ -98,7 +98,7 @@ export class SequencerService {
             fileName: t.fileName,
             steps: [...t.steps.steps],
             midiNote: Option.isSome(t.midiNote) ? t.midiNote.value : null,
-            isMute: t.isMute
+            isMuted: t.isMuted
           })),
         },
       };

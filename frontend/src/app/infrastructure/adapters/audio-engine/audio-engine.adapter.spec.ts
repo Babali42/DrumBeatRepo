@@ -45,7 +45,7 @@ describe('AudioEngineAdapter', () => {
       name: 'Kick',
       fileName: 'techno/kick.wav',
       steps: new Steps([true]),
-      isMute: false,
+      isMuted: false,
       numberOfSteps: NumberOfSteps.sixteen,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
       beatsPerBar: 4,

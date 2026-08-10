@@ -1,9 +1,9 @@
-import {Beat} from "../../../domain/beat";
-import {CompactBeat} from "./compact-beat";
-import {Track} from "../../../domain/track";
-import {BPM} from "../../../domain/bpm";
-import {MidiDrumType} from "../../../domain/midi-drum-type";
-import {Effect, Option} from "effect";
+import { Beat } from "../../../domain/beat";
+import { CompactBeat } from "./compact-beat";
+import { Track } from "../../../domain/track";
+import { BPM } from "../../../domain/bpm";
+import { MidiDrumType } from "../../../domain/midi-drum-type";
+import { Effect, Option } from "effect";
 
 const MIDI_DRUM_TYPE_VALUES = Object.values(MidiDrumType).filter(v => typeof v === 'number') as readonly number[];
 
@@ -22,7 +22,7 @@ export class CompactBeatMapper {
           track.name,
           track.fileName,
           [...track.steps].map(char => char === 'X'),
-          false,
+          track.isMuted ?? false,
           isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none(),
           track.beatsPerBar,
           track.subdivisionsPerBeat
@@ -42,7 +42,8 @@ export class CompactBeatMapper {
       tracks: beat.tracks.map(track => ({
         name: track.name,
         fileName: track.fileName,
-        steps: track.steps.steps.map(x => x? "X":" ").join(''),
+        steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
+        isMuted: track.isMuted,
         midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value,
         beatsPerBar: track.beatsPerBar,
         subdivisionsPerBeat: track.subdivisionsPerBeat
