@@ -47,5 +47,6 @@ object Track:
       name = track.name,
       fileName = track.fileName,
       steps = stepsArr,
-      midiNote = midiNoteVal
+      midiNote = midiNoteVal,
+      isMuted = track.isMuted
     )
