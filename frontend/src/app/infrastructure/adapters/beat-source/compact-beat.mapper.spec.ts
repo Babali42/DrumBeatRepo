@@ -10,8 +10,8 @@ describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
     const beat : Beat = {
       genre: "test", label: "", bpm: BPM(150), tracks: [
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),8, 3),
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM), 8, 3),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),8, 3),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM), 8, 3),
       ]
     };
 
@@ -30,6 +30,7 @@ describe('Compact beat mapper tests', () => {
     expect(mappedBeat.tracks[0].subdivisionsPerBeat).toEqual(beat.tracks[0].subdivisionsPerBeat);
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(0)).toEqual(beat.tracks[0].steps.getStepAtIndex(0));
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(3)).toEqual(beat.tracks[0].steps.getStepAtIndex(3));
+    expect(mappedBeat.tracks[0].isMute).toEqual(beat.tracks[0].isMute);
   });
 
   it("Should map compact beat to beat", async () => {
@@ -72,6 +73,7 @@ describe('Compact beat mapper tests', () => {
     expect(beat.bpm.valueOf()).toEqual(Number(compactBeat.bpm));
     expect(beat.tracks.length).toEqual(compactBeat.tracks.length);
     expect(beat.tracks[0].name).toEqual(compactBeat.tracks[0].name);
+    expect(beat.tracks[0].isMute).toEqual(compactBeat.tracks[0].isMute);
   });
 
   it("Should return Left when track format is incorrect", async () => {

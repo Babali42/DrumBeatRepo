@@ -22,6 +22,7 @@ export class CompactBeatMapper {
           track.name,
           track.fileName,
           [...track.steps].map(char => char === 'X'),
+          false,
           isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none(),
           track.beatsPerBar,
           track.subdivisionsPerBeat
