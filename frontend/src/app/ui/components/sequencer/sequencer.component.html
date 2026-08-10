@@ -40,9 +40,7 @@
       <div class="track-name user-select-none medium">
         {{ track.name }}
       </div>
-      @if(MuteTrackFeatureToggle) {
       <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
-      }
     </div>
     }
     @if(AddTrackFeatureToggle) {
