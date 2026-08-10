@@ -198,7 +198,8 @@ class SequencerStateTest extends AnyFunSuite {
       true
     )
 
-    val roundTripped = Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
+    val roundTripped =
+      Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
 
     roundTripped.isMuted shouldBe true
     roundTripped.steps.head shouldBe Velocity.Normal
@@ -266,5 +267,44 @@ class SequencerStateTest extends AnyFunSuite {
         true
       )
     )
+  }
+
+  test("dispatch ToggleMuteTrack mute a track") {
+    // arrange
+    val state = SequencerState.initial
+      .dispatch(
+        Command.AddTrack(
+          Track(
+            "kick",
+            "kick.mp3",
+            Some(MidiDrumType.BASS_DRUM_1),
+            List(
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None
+            ),
+            false
+          )
+        )
+      );
+
+    // act
+    val stateWithMutedTrack = state.dispatch(Command.ToggleMuteTrack("kick"))
+
+    // assert
+    stateWithMutedTrack.tracks.head.isMuted shouldBe true
   }
 }

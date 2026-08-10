@@ -73,7 +73,7 @@ describe('SequencerService undo', () => {
     expect(currentState().tracks[0].fileName).toBe('metal/snare.mp3');
     expect(currentState().tracks[0].steps).toEqual([false, false, false, false]);
     expect(currentState().tracks[0].midiNote).toBe(38);
-    expect(currentState().tracks[0].isMuted).toBe(false);
+    expect(currentState().tracks[0].isMuted).toBeFalse();
 
     service.dispatch({ type: 'UNDO' });
     expect(currentState().beat).toBe('Tresillo');
@@ -106,7 +106,11 @@ describe('SequencerService undo', () => {
   });
 
   it('should apply a toggle mute command', () => {
-    service.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName: "Kick.mp3" } });
-    //TODO : add assertion
+    service.dispatch({ type: 'SELECT_BEAT', payload: { genre: 'Techno', beat: '4 on the floor', tracks: trackPayload, tempo: 128 } });
+    service.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName: "Snare" } });
+
+    expect(currentState().tracks.length).toBe(1);
+    expect(currentState().tracks[0].name).toBe('Snare');
+    expect(currentState().tracks[0].isMuted).toBeTrue();
   });
 });

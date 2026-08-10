@@ -7,14 +7,14 @@
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
         <button class="button square-button undo" (click)="sequencerService.dispatch({ type: 'UNDO'})"
-                [disabled]="sequencerService.vm$.getValue().historyLength <= minHistoryLength">
+          [disabled]="sequencerService.vm$.getValue().historyLength <= minHistoryLength">
           <img alt="undo" aria-label="Undo" [ngSrc]="'assets/images/icons/undo.svg' | iconDarkMode" height="28"
-               width="28">
+            width="28">
         </button>
         <button class="button square-button redo ml-8" (click)="this.sequencerService.dispatch({ type: 'REDO'})"
-                [disabled]="sequencerService.vm$.getValue().futureLength <= 0">
+          [disabled]="sequencerService.vm$.getValue().futureLength <= 0">
           <img alt="redo" aria-label="Redo" [ngSrc]="'assets/images/icons/redo.svg' | iconDarkMode" height="28"
-               width="28">
+            width="28">
         </button>
       </div>
     </div>
@@ -41,7 +41,7 @@
         {{ track.name }}
       </div>
       @if(MuteTrackFeatureToggle) {
-      <button (click)="toggleMuteTrack(track.name)">M</button>
+      <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
       }
     </div>
     }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, In
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { NgOptimizedImage } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 
 import { BPM } from '../../../domain/bpm';
 import { Beat } from '../../../domain/beat';
@@ -32,13 +32,14 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from './sequencer.service';
+import { track } from "effect/Supervisor";
 
 @Component({
   selector: 'sequencer',
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe],
+  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -224,9 +225,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.isBrowseAudioSamplesModalOpen = true;
   }
 
-  toggleMuteTrack = (trackName: string) : void => {
-    this.sequencerService.dispatch({ type: 'TOGGLE_MUTE', payload: { trackName } });
-  }
+  toggleMuteTrack = (trackName: string) => this.sequencerService.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName } });
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;
@@ -259,4 +258,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  protected readonly track = track;
 }
