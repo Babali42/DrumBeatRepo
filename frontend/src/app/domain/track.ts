@@ -16,9 +16,9 @@ export class Track {
   readonly midiNote: Option.Option<MidiDrumType>;
   readonly beatsPerBar: BeatsPerBar = 4;
   readonly subdivisionsPerBeat: SubdivisionsPerBeat = 4;
-  readonly isMute: Boolean;
+  readonly isMute: boolean;
 
-  constructor(name: string, fileName: string, steps: readonly boolean[], isMute: Boolean, midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number = 4, subdivisionsPerBeat: number = 4) {
+  constructor(name: string, fileName: string, steps: readonly boolean[], isMute: boolean, midiNote: Option.Option<MidiDrumType> = Option.none(), beatsPerBar: number = 4, subdivisionsPerBeat: number = 4) {
     if (fileName.toLowerCase().endsWith('.mp3')) {
       this.fileName = toMp3FilePath(fileName);
     } else if (fileName.toLowerCase().endsWith('.wav')) {
