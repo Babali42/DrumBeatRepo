@@ -78,7 +78,8 @@ class SequencerStateTest extends AnyFunSuite {
         Velocity.None,
         Velocity.Normal,
         Velocity.None
-      )
+      ),
+      false
     )
   )
 
@@ -160,7 +161,8 @@ class SequencerStateTest extends AnyFunSuite {
                 Velocity.None,
                 Velocity.None,
                 Velocity.None
-              )
+              ),
+              false
             )
           ),
           128
@@ -212,7 +214,8 @@ class SequencerStateTest extends AnyFunSuite {
               Velocity.None,
               Velocity.None,
               Velocity.None
-            )
+            ),
+            false
           )
         )
       );
@@ -229,7 +232,8 @@ class SequencerStateTest extends AnyFunSuite {
           "fileName" -> "Kick.mp3",
           "midiNote" -> 35,
           "steps" -> scala.scalajs.js
-            .Array[Boolean](true, false, false, false)
+            .Array[Boolean](true, false, false, false),
+          "isMuted" -> true
         )
       )
     )
@@ -243,7 +247,8 @@ class SequencerStateTest extends AnyFunSuite {
           Velocity.None,
           Velocity.None,
           Velocity.None
-        )
+        ),
+        true
       )
     )
   }
