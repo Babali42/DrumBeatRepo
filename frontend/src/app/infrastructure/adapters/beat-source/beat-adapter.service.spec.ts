@@ -20,6 +20,7 @@ describe("Beat adapter service", () => {
             "midiNote": 38,
             "fileName": toMp3FilePath("metal/snare.mp3"),
             "steps": "____X_______X___",
+            "isMuted": false,
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 4
           },
@@ -28,6 +29,7 @@ describe("Beat adapter service", () => {
             "midiNote": 38,
             "fileName": toMp3FilePath("metal/carsh.mp3"),
             "steps": "X___X___X___X___",
+            "isMuted": false,
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 4
           },
@@ -36,6 +38,7 @@ describe("Beat adapter service", () => {
             "midiNote": 38,
             "fileName": toMp3FilePath("metal/kick.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
+            "isMuted": false,
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 4
           },
@@ -44,6 +47,7 @@ describe("Beat adapter service", () => {
             "midiNote": undefined,
             "fileName": toMp3FilePath("metal/bass.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
+            "isMuted": false,
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 4
           }
@@ -60,6 +64,7 @@ describe("Beat adapter service", () => {
               "midiNote": 38,
               "fileName": "metal/snare2.mp3",
               "steps": "____X_______X___",
+              "isMuted": false,
               "beatsPerBar": 4,
               "subdivisionsPerBeat": 4
             },
@@ -68,6 +73,7 @@ describe("Beat adapter service", () => {
               "midiNote": 38,
               "fileName": "metal/kick.mp3",
               "steps": "XXXXXXXXXXXXXXXX",
+              "isMuted": false,
               "beatsPerBar": 4,
               "subdivisionsPerBeat": 4
             },
@@ -76,6 +82,7 @@ describe("Beat adapter service", () => {
               "midiNote": undefined,
               "fileName": toMp3FilePath("metal/bass2.mp3"),
               "steps": "XXXXXXXXXXXXXXXX",
+              "isMuted": false,
               "beatsPerBar": 4,
               "subdivisionsPerBeat": 4
             }

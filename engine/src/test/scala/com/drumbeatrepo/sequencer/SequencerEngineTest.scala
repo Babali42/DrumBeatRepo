@@ -7,12 +7,12 @@ import scala.scalajs.js
 class SequencerEngineTest extends AnyFunSuite {
   test("getState should return tracks sorted by midi.track") {
     val trackKick =
-      Track("Kick", "Kick.wav", Some(MidiDrumType.ACOUSTIC_BASS_DRUM), Nil);
+      Track("Kick", "Kick.wav", Some(MidiDrumType.ACOUSTIC_BASS_DRUM), Nil, false);
     val trackSnare =
-      Track("Snare", "Snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), Nil);
+      Track("Snare", "Snare.wav", Some(MidiDrumType.ACOUSTIC_SNARE), Nil, false);
     val trackHat =
-      Track("Hat", "Hat.wav", Some(MidiDrumType.OPEN_HI_HAT), Nil);
-    val trackBass = Track("Bass", "Bass.wav", None, Nil);
+      Track("Hat", "Hat.wav", Some(MidiDrumType.OPEN_HI_HAT), Nil, false);
+    val trackBass = Track("Bass", "Bass.wav", None, Nil, false);
 
     SequencerEngine.reset()
 

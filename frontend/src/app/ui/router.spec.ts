@@ -64,7 +64,7 @@ describe('Router', () => {
                 genre: 'Classic',
                 bpm: BPM(128),
                 tracks: [
-                  new Track("", toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false])
+                  new Track("", toMp3FilePath("kick.mp3"), [true, false, true, false, true, false, true, false], false)
                 ]
               }
             ]),

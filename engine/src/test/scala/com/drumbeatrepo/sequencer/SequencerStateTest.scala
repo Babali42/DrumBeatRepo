@@ -78,7 +78,8 @@ class SequencerStateTest extends AnyFunSuite {
         Velocity.None,
         Velocity.Normal,
         Velocity.None
-      )
+      ),
+      false
     )
   )
 
@@ -160,7 +161,8 @@ class SequencerStateTest extends AnyFunSuite {
                 Velocity.None,
                 Velocity.None,
                 Velocity.None
-              )
+              ),
+              false
             )
           ),
           128
@@ -185,6 +187,21 @@ class SequencerStateTest extends AnyFunSuite {
       )
     )
     Command.fromJS(cmd) shouldBe Command.SetSteps("Kick", 2, 4, Velocity.None)
+  }
+
+  test("Track serialization preserves the mute flag") {
+    val original = Track(
+      "Kick",
+      "kick.mp3",
+      Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
+      List(Velocity.Normal, Velocity.None),
+      true
+    )
+
+    val roundTripped = Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
+
+    roundTripped.isMuted shouldBe true
+    roundTripped.steps.head shouldBe Velocity.Normal
   }
 
   test("dispatch AddTrack add a track to a beat") {
@@ -212,7 +229,8 @@ class SequencerStateTest extends AnyFunSuite {
               Velocity.None,
               Velocity.None,
               Velocity.None
-            )
+            ),
+            false
           )
         )
       );
@@ -229,7 +247,8 @@ class SequencerStateTest extends AnyFunSuite {
           "fileName" -> "Kick.mp3",
           "midiNote" -> 35,
           "steps" -> scala.scalajs.js
-            .Array[Boolean](true, false, false, false)
+            .Array[Boolean](true, false, false, false),
+          "isMuted" -> true
         )
       )
     )
@@ -243,7 +262,8 @@ class SequencerStateTest extends AnyFunSuite {
           Velocity.None,
           Velocity.None,
           Velocity.None
-        )
+        ),
+        true
       )
     )
   }
