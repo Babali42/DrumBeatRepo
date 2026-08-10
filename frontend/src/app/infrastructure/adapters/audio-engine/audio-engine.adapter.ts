@@ -1,12 +1,12 @@
-import {Injectable, signal} from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import WAAClock from "waaclock";
-import {AudioFilesService} from "./files/audio-files.service";
-import {Track} from "src/app/domain/track";
-import {IAudioEngine} from "../../../domain/ports/i-audio-engine";
-import {TempoAdapterService} from "../tempo-control/tempo-adapter.service";
-import {Option} from "effect";
-import {Seconds} from "../../../domain/seconds";
-import {StepIndex} from "../../../domain/step-index";
+import { AudioFilesService } from "./files/audio-files.service";
+import { Track } from "src/app/domain/track";
+import { IAudioEngine } from "../../../domain/ports/i-audio-engine";
+import { TempoAdapterService } from "../tempo-control/tempo-adapter.service";
+import { Option } from "effect";
+import { Seconds } from "../../../domain/seconds";
+import { StepIndex } from "../../../domain/step-index";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import {StepIndex} from "../../../domain/step-index";
 export class AudioEngineAdapter implements IAudioEngine {
   constructor(private readonly tempoService: TempoAdapterService) {
     this.context = new AudioContext();
-    document.addEventListener('click', this.resumeAudioContext.bind(this), {once: true});
+    document.addEventListener('click', this.resumeAudioContext.bind(this), { once: true });
   }
 
   private readonly audioFilesService = new AudioFilesService(fetch.bind(globalThis), () => this.context);
@@ -73,7 +73,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     this.clock = Option.some(clockInstance);
     clockInstance.start();
 
-    const {stepDuration, numberOfSteps} = this.tempoService;
+    const { stepDuration, numberOfSteps } = this.tempoService;
     this.timerId = setInterval(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       (clockInstance as any).tick();
@@ -84,7 +84,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     }, 25);
 
     this.tracks.forEach(t => t.steps.steps.forEach((s, i) => {
-      if (s) this.enableStep(t.name, StepIndex(i));
+      if (s && !t.isMuted) this.enableStep(t.name, StepIndex(i));
     }));
   }
 
@@ -133,7 +133,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     const event = Option.getOrThrow(this.clock).callbackAtTime((event: WAAClock.Event) => {
       const builder = this.trackSampleBuilderMap.get(trackName);
 
-      if(builder == undefined)
+      if (builder == undefined)
         return;
 
       const bufferNode = builder();
@@ -151,6 +151,17 @@ export class AudioEngineAdapter implements IAudioEngine {
     (map.get(beatInd)!).clear()
   }
 
+  playTrack(trackName: string) {
+    const builder = this.trackSampleBuilderMap.get(trackName);
+
+    if (builder == undefined)
+      return;
+
+    const bufferNode = builder();
+    bufferNode.connect(this.context.destination);
+    bufferNode.start();
+  }
+
   syncTracks(tracks: readonly Track[]): void {
     const oldTracks = this.tracks;
     this.tracks = tracks;
@@ -161,26 +172,44 @@ export class AudioEngineAdapter implements IAudioEngine {
       const oldTrack = oldTracks.find(t => t.name === newTrack.name);
       if (!oldTrack) return;
 
-      newTrack.steps.steps.forEach((enabled, stepIdx) => {
-        if (oldTrack.steps.getStepAtIndex(stepIdx) === enabled) return;
+      this.mute(newTrack, oldTrack);
 
-        if (enabled) {
-          this.enableStep(newTrack.name, StepIndex(stepIdx));
-        } else {
-          this.disableStep(newTrack.name, stepIdx);
-        }
-      });
+      this.unMute(newTrack, oldTrack);
+
+      this.toggleStep(newTrack, oldTrack);
     });
   }
 
-  playTrack(trackName: string) {
-    const builder = this.trackSampleBuilderMap.get(trackName);
-
-    if(builder == undefined)
+  private toggleStep(newTrack: Track, oldTrack: Track) {
+    if(newTrack.isMuted)
       return;
 
-    const bufferNode = builder();
-    bufferNode.connect(this.context.destination);
-    bufferNode.start();
+    newTrack.steps.steps.forEach((enabled, stepIdx) => {
+      if (oldTrack.steps.getStepAtIndex(stepIdx) === enabled) return;
+
+      if (enabled) {
+        this.enableStep(newTrack.name, StepIndex(stepIdx));
+      } else {
+        this.disableStep(newTrack.name, stepIdx);
+      }
+    });
+  }
+
+  private unMute(newTrack: Track, oldTrack: Track) {
+    if (!newTrack.isMuted && oldTrack.isMuted)
+      newTrack.steps.steps.forEach((enabled, stepIdx) => {
+        if (enabled) {
+          this.enableStep(newTrack.name, StepIndex(stepIdx));
+        }
+      });
+  }
+
+  private mute(newTrack: Track, oldTrack: Track) {
+    if (newTrack.isMuted && !oldTrack.isMuted)
+      newTrack.steps.steps.forEach((enabled, stepIdx) => {
+        if (enabled) {
+          this.disableStep(newTrack.name, stepIdx);
+        }
+      });
   }
 }

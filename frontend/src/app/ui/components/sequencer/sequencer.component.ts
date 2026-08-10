@@ -47,7 +47,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly AddTrackFeatureToggle = false;
-  protected readonly MuteTrackFeatureToggle = false;
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
