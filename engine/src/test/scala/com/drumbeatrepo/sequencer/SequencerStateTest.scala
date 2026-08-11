@@ -245,7 +245,7 @@ class SequencerStateTest extends AnyFunSuite {
       "payload" -> scala.scalajs.js.Dynamic.literal(
         "track" -> scala.scalajs.js.Dynamic.literal(
           "name" -> "Kick",
-          "fileName" -> "Kick.mp3",
+          "filename" -> "Kick.mp3",
           "midiNote" -> 35,
           "steps" -> scala.scalajs.js
             .Array[Boolean](true, false, false, false),

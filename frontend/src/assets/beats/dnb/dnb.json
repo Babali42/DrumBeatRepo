@@ -6,31 +6,31 @@
   "tracks": [
     {
       "name": "Ghost snare",
-      "fileName": "techno/snare.wav",
+      "filename": "techno/snare.wav",
       "steps": "       X               X X      ",
       "midiNote": 38
     },
     {
       "name": "Main snare",
-      "fileName": "drum-n-bass/snare.wav",
+      "filename": "drum-n-bass/snare.wav",
       "steps": "    X       X       X       X   ",
       "midiNote": 38
     },
     {
       "name": "Open hats",
-      "fileName": "psytrance/open-hat.wav",
+      "filename": "psytrance/open-hat.wav",
       "steps": "                          X   X ",
       "midiNote": 42
     },
     {
       "name": "Closed hats",
-      "fileName": "techno/hat.wav",
+      "filename": "techno/hat.wav",
       "steps": "X X X X X X X X X X X X X   X   ",
       "midiNote": 42
     },
     {
       "name": "Kick",
-      "fileName": "drum-n-bass/kick.wav",
+      "filename": "drum-n-bass/kick.wav",
       "steps": "X         X     X         X     ",
       "midiNote": 36
     }

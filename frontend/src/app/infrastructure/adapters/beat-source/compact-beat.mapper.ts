@@ -20,7 +20,7 @@ export class CompactBeatMapper {
         bpm: parseBPM(compact.bpm),
         tracks: compact.tracks.map(track => new Track(
           track.name,
-          track.fileName,
+          track.filename,
           [...track.steps].map(char => char === 'X'),
           track.isMuted ?? false,
           isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none(),
@@ -41,7 +41,7 @@ export class CompactBeatMapper {
       bpm: beat.bpm,
       tracks: beat.tracks.map(track => ({
         name: track.name,
-        fileName: track.fileName,
+        filename: track.filename,
         steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
         isMuted: track.isMuted,
         midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value,

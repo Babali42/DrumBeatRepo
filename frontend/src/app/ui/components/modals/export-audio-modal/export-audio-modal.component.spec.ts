@@ -139,7 +139,7 @@ describe('ExportAudioModalComponent', () => {
     validateBtn.nativeElement.click();
 
     expect(component.validate.emit).toHaveBeenCalledWith({
-      fileName: toWavFilename('file.wav'),
+      filename: toWavFilename('file.wav'),
       loopCount: 4,
       exportWithTail: true,
     });
@@ -150,7 +150,7 @@ describe('ExportAudioModalComponent', () => {
     component.isOpen = true;
     fixture.detectChanges();
 
-    component.form.controls.fileName.setValue("test.mp3" as any);
+    component.form.controls.filename.setValue("test.mp3" as any);
     component.onValidate();
 
     expect(component.validate.emit).not.toHaveBeenCalled();

@@ -5,40 +5,40 @@
   "tracks": [
     {
       "name": "Kick",
-      "fileName": "dub/kick.wav",
+      "filename": "dub/kick.wav",
       "steps": "X_______X_______X_______X_______X_______X_______X_______X_______",
       "midiNote": 36
     },
     {
       "name": "Sub Bass",
-      "fileName": "dub/sub.wav",
+      "filename": "dub/sub.wav",
       "steps": "X               X               X               X       X       "
     },
     {
       "name": "Skank",
-      "fileName": "dub/skank.wav",
+      "filename": "dub/skank.wav",
       "steps": "____X_______X_______X_______X_______X_______X_______X_______X___"
     },
     {
       "name": "Snare",
-      "fileName": "dub/snare.wav",
+      "filename": "dub/snare.wav",
       "steps": "        X               X               X               X X     ",
       "midiNote": 38
     },
     {
       "name": "Arpeggio",
-      "fileName": "dub/arpeggio_si.wav",
+      "filename": "dub/arpeggio_si.wav",
       "steps": "____X_______X_______X_______X_______X_______X_______X_______X___"
     },
     {
       "name": "Closed Hat",
-      "fileName": "dub/closed-hat.wav",
+      "filename": "dub/closed-hat.wav",
       "steps": "    X X     X       XXX     X       X X     XX      X X     X XX",
       "midiNote": 42
     },
     {
       "name": "Bass",
-      "fileName": "dub/bass.wav",
+      "filename": "dub/bass.wav",
       "steps": "X                                         X                     "
     }
   ]

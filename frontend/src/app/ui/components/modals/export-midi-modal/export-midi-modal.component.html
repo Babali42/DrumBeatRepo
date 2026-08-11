@@ -8,17 +8,17 @@
 
     <div class="modal-body" [formGroup]="form">
       <div class="form-group">
-        @let fileName = form.controls.fileName;
+        @let filename = form.controls.filename;
 
-        <label for="midiFileName">{{ 'exportMidi.fileName' | translate }}</label>
-        <input id="midiFileName" type="text" [formControl]="fileName" class="beat-name-input" />
+        <label for="midiFileName">{{ 'exportMidi.filename' | translate }}</label>
+        <input id="midiFileName" type="text" [formControl]="filename" class="beat-name-input" />
 
-        @if (fileName.invalid && (fileName.dirty || fileName.touched)) {
+        @if (filename.invalid && (filename.dirty || filename.touched)) {
         <div>
-          @if (fileName.errors?.['required']) {
+          @if (filename.errors?.['required']) {
           <small>{{ 'exportMidi.validation.required' | translate }}</small>
           }
-          @if (fileName.errors?.['pattern']) {
+          @if (filename.errors?.['pattern']) {
           <small>{{ 'exportMidi.validation.pattern' | translate }}</small>
           }
         </div>

@@ -235,7 +235,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
         options
       );
 
-      downloadBlob(blob, options.fileName);
+      downloadBlob(blob, options.filename);
     } catch (error) {
       console.error('Export failed:', error);
     }
@@ -247,7 +247,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     try {
       const blob = await this.midiExportService.exportBeat(this.beat);
 
-      downloadBlob(blob, options.fileName);
+      downloadBlob(blob, options.filename);
     } catch (error) {
       console.error('Midi export failed:', error);
     }

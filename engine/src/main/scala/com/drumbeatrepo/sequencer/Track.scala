@@ -5,7 +5,7 @@ import scala.scalajs.js.JSConverters.*
 
 case class Track(
     name: String,
-    fileName: String,
+    filename: String,
     midiNote: Option[MidiDrumType],
     steps: List[Velocity],
     isMuted: Boolean
@@ -27,7 +27,7 @@ object Track:
       else MidiDrumType.fromMidiNote(midiNoteValue.asInstanceOf[Int])
     Track(
       track.selectDynamic("name").asInstanceOf[String],
-      track.selectDynamic("fileName").asInstanceOf[String],
+      track.selectDynamic("filename").asInstanceOf[String],
       midiNote,
       track
         .selectDynamic("steps")
@@ -45,7 +45,7 @@ object Track:
       case None       => null
     js.Dynamic.literal(
       name = track.name,
-      fileName = track.fileName,
+      filename = track.filename,
       steps = stepsArr,
       midiNote = midiNoteVal,
       isMuted = track.isMuted

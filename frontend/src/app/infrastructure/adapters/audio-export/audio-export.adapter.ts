@@ -29,7 +29,7 @@ export class AudioExportAdapter implements IAudioExport {
     const audioBuffers = await this.loadAllTracks(tracks, offlineContext);
 
     for (const track of tracks) {
-      const audioBuffer = audioBuffers.get(track.fileName);
+      const audioBuffer = audioBuffers.get(track.filename);
       if (!audioBuffer) continue;
 
       for (let loop = 0; loop < options.loopCount; loop++) {
@@ -59,13 +59,13 @@ export class AudioExportAdapter implements IAudioExport {
 
     const loadPromises = tracks.map(async (track) => {
       try {
-        const response = await fetch(`/assets/sounds/${track.fileName}`);
+        const response = await fetch(`/assets/sounds/${track.filename}`);
         if (response.ok) {
           const arrayBuffer = await response.arrayBuffer();
-          buffers.set(track.fileName, arrayBuffer);
+          buffers.set(track.filename, arrayBuffer);
         }
       } catch (error) {
-        console.warn(`Failed to load ${track.fileName}:`, error);
+        console.warn(`Failed to load ${track.filename}:`, error);
       }
     });
 
@@ -88,14 +88,14 @@ export class AudioExportAdapter implements IAudioExport {
 
     const loadPromises = tracks.map(async (track) => {
       try {
-        const response = await fetch(`/assets/sounds/${track.fileName}`);
+        const response = await fetch(`/assets/sounds/${track.filename}`);
         if (response.ok) {
           const arrayBuffer = await response.arrayBuffer();
           const audioBuffer = await context.decodeAudioData(arrayBuffer);
-          buffers.set(track.fileName, audioBuffer);
+          buffers.set(track.filename, audioBuffer);
         }
       } catch (error) {
-        console.warn(`Failed to load ${track.fileName}:`, error);
+        console.warn(`Failed to load ${track.filename}:`, error);
       }
     });
 

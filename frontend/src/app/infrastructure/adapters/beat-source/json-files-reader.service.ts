@@ -10,6 +10,10 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   constructor(private readonly http: HttpClient) {
   }
 
+  loadJsonByFileName(filename: string): Effect.Effect<Option.Option<CompactBeat>, never> {
+    throw new Error('Method not implemented.' + filename);
+  }
+
   loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
     const files = ['dnb/dnb']
       .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')

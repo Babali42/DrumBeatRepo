@@ -43,7 +43,7 @@ describe('AudioEngineAdapter', () => {
 
     const track: Track = {
       name: 'Kick',
-      fileName: 'techno/kick.wav',
+      filename: 'techno/kick.wav',
       steps: new Steps([true]),
       isMuted: false,
       numberOfSteps: NumberOfSteps.sixteen,

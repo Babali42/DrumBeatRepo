@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "Экспорт ритма в MIDI-файл",
-    "fileName": "Имя файла",
+    "filename": "Имя файла",
     "duration": "Длительность (циклы)",
     "cancel": "Отмена",
     "export": "Экспорт MIDI",

@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "Export Beat to MIDI file",
-    "fileName": "File name",
+    "filename": "File name",
     "duration": "Duration (loops)",
     "cancel": "Cancel",
     "export": "Export MIDI",

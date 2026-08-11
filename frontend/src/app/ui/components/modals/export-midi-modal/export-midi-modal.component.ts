@@ -25,11 +25,11 @@ export class ExportMidiModalComponent extends BaseModalComponent<MidiExportOptio
   @Output() override validate = new EventEmitter<MidiExportOptions>();
 
   override options: MidiExportOptions = {
-    fileName: toMidiFilename('file.mid')
+    filename: toMidiFilename('file.mid')
   };
 
   form = this.fb.nonNullable.group({
-    fileName: new FormControl<MidiFilename>(toMidiFilename(this.beatName + ".mid"), [
+    filename: new FormControl<MidiFilename>(toMidiFilename(this.beatName + ".mid"), [
       // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
       Validators.pattern(/^[^.].+\.mid$/i)
@@ -45,14 +45,14 @@ export class ExportMidiModalComponent extends BaseModalComponent<MidiExportOptio
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['beatName']) {
-      this.form.controls.fileName.setValue(toMidiFilename(this.beatName + ".mid"));
+      this.form.controls.filename.setValue(toMidiFilename(this.beatName + ".mid"));
     }
   }
 
   override onValidate(): void {
     if (this.form.valid) {
       this.validate.emit({
-        fileName: this.form.controls.fileName.value!,
+        filename: this.form.controls.filename.value!,
       });
     }
   }
