@@ -5,7 +5,7 @@ import IManageBeats from "src/app/domain/ports/i-manage-beats";
 import { IManageBeatsToken } from "src/app/infrastructure/injection-tokens/i-manage-beat.token";
 import { BehaviorSubject } from "rxjs";
 import { SequencerState } from "src/types/engine";
-import { SequencerViewModel } from "./sequencer.viewmodel";
+import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
 import { Beat } from "src/app/domain/beat";
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";

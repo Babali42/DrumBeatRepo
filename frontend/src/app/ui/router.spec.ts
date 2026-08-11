@@ -20,7 +20,7 @@ import { MidiExportService } from "../infrastructure/adapters/midi-export/midi-e
 import { AUDIO_EXPORT } from "../infrastructure/injection-tokens/audio-export.token";
 import { AudioExportAdapter } from "../infrastructure/adapters/audio-export/audio-export.adapter";
 import { toMp3FilePath } from "../domain/filenames/mp3.filepath";
-import { SequencerService } from "./components/sequencer/sequencer.service";
+import { SequencerService } from "./services/sequencer/sequencer.service";
 import { Effect } from "effect";
 
 const beatsProvider = {

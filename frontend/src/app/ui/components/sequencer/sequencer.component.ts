@@ -21,7 +21,7 @@ import { IMIDI } from '../../../infrastructure/injection-tokens/i-midi.token';
 import { downloadBlob } from '../../../infrastructure/adapters/utils/blob.utils';
 import { TempoAdapterService } from '../../../infrastructure/adapters/tempo-control/tempo-adapter.service';
 
-import { PlayerEventsService } from '../../services/player.events.service';
+import { PlayerEventsService } from '../../services/space-bar-behaviour/player.events.service';
 import { DrumImagePipe } from '../../pipes/drum-image.pipe';
 import { IconDarkModePipe } from '../../pipes/icon-dark-mode.pipe';
 
@@ -31,7 +31,7 @@ import { ExportAudioModalComponent } from '../modals/export-audio-modal/export-a
 import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-midi-modal.component';
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
-import { SequencerService } from './sequencer.service';
+import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { track } from "effect/Supervisor";
 
 @Component({

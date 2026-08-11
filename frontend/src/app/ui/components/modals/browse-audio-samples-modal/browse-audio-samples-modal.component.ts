@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
 import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
-import { SequencerService } from '../../sequencer/sequencer.service';
+import { SequencerService } from '../../../services/sequencer/sequencer.service';
 import { Track } from 'src/app/domain/track';
 import { MidiDrumTypeToTextService } from 'src/app/ui/services/mididrumtype-to-text.service';
 

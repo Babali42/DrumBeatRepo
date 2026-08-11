@@ -21,7 +21,7 @@ import { AUDIO_EXPORT } from "../../../infrastructure/injection-tokens/audio-exp
 import { AudioExportAdapter } from "../../../infrastructure/adapters/audio-export/audio-export.adapter";
 import { MidiExportOptions } from "../../../domain/export-options/midi-export-options";
 import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
-import { SequencerService } from "./sequencer.service";
+import { SequencerService } from "../../services/sequencer/sequencer.service";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
