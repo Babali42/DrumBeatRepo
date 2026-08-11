@@ -11,7 +11,7 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadJsonByFileName(filename: string): Effect.Effect<Option.Option<CompactBeat>, never> {
-    throw new Error('Method not implemented.');
+    throw new Error('Method not implemented.' + filename);
   }
 
   loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
