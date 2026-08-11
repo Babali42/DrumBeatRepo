@@ -12,7 +12,8 @@ Welcome to **Drum Beat Repository**, a web-based project for musicians to explor
 
 👉 **Try it now:** [www.drumbeatrepo.com](https://www.drumbeatrepo.com/#/)
 
-![App Screenshot](./app.png)
+<img width="1166" height="591" alt="App Screenshot" src="https://github.com/user-attachments/assets/f205e3a2-d259-44c4-b86b-01c5a5e784e3" />
+
 
 ## Requirements
 
