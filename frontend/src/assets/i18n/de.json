@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "Rhythmus als MIDI-Datei exportieren",
-    "fileName": "Dateiname",
+    "filename": "Dateiname",
     "duration": "Dauer (Schleifen)",
     "cancel": "Abbrechen",
     "export": "MIDI exportieren",

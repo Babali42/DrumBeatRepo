@@ -41,21 +41,21 @@ describe('Compact beat mapper tests', () => {
       "tracks": [
         {
           "name": "Snare",
-          "fileName": "metal/snare.mp3",
+          "filename": "metal/snare.mp3",
           "steps": "____X_______X___",
           "beatsPerBar": 4,
           "subdivisionsPerBeat": 4
         },
         {
           "name": "Hats",
-          "fileName": "metal/crash.mp3",
+          "filename": "metal/crash.mp3",
           "steps": "X___X___X___X___",
           "beatsPerBar": 4,
           "subdivisionsPerBeat": 4
         },
         {
           "name": "Kick",
-          "fileName": "metal/kick.mp3",
+          "filename": "metal/kick.mp3",
           "steps": "XXXXXXXXXXXXXXXX",
           "beatsPerBar": 4,
           "subdivisionsPerBeat": 4
@@ -84,7 +84,7 @@ describe('Compact beat mapper tests', () => {
       "tracks": [
         {
           "name": "Track with invalid steps",
-          "fileName": "test/kick.wav",
+          "filename": "test/kick.wav",
           "steps": "X_X__",
           "isMuted": false,
           "beatsPerBar": 4,

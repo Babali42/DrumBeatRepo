@@ -22,6 +22,7 @@ import { AudioExportAdapter } from "../../../infrastructure/adapters/audio-expor
 import { MidiExportOptions } from "../../../domain/export-options/midi-export-options";
 import { AudioExportOptions } from "../../../domain/export-options/audio-export-options";
 import { SequencerService } from "../../services/sequencer/sequencer.service";
+import { Beat } from "../../../domain/beat";
 
 describe('SequencerComponent', () => {
   let fixture: ComponentFixture<SequencerComponent>;
@@ -39,7 +40,7 @@ describe('SequencerComponent', () => {
           tracks: [
             {
               name: "Snare",
-              fileName: "metal/snare.mp3",
+              filename: "metal/snare.mp3",
               steps: new Steps([false, false, false, false]),
               isMuted: false,
               numberOfSteps: NumberOfSteps.sixteen,
@@ -56,7 +57,7 @@ describe('SequencerComponent', () => {
           tracks: [
             {
               name: "Snare",
-              fileName: "metal/snare.mp3",
+              filename: "metal/snare.mp3",
               steps: new Steps([true, true, true, true]),
               isMuted: false,
               numberOfSteps: NumberOfSteps.sixteen,
@@ -67,6 +68,7 @@ describe('SequencerComponent', () => {
           ]
         }
       ]),
+      getBeatByFileName: () => Effect.succeed({} as Beat),
       getAllDrumsTracks: () => Effect.succeed([])
     };
 

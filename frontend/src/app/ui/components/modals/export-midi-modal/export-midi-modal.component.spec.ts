@@ -53,7 +53,7 @@ describe('ExportMidiModalComponent', () => {
     });
     fixture.detectChanges();
 
-    expect(component.form.controls.fileName.value)
+    expect(component.form.controls.filename.value)
       .toBe('My Awesome Beat.mid');
   });
 
@@ -106,7 +106,7 @@ describe('ExportMidiModalComponent', () => {
     component.isOpen = true;
     fixture.detectChanges();
 
-    component.form.controls.fileName.setValue("test.mp3" as any);
+    component.form.controls.filename.setValue("test.mp3" as any);
     component.onValidate();
 
     expect(component.validate.emit).not.toHaveBeenCalled();

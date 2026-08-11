@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "リズムをMIDIファイルにエクスポート",
-    "fileName": "ファイル名",
+    "filename": "ファイル名",
     "duration": "長さ（ループ数）",
     "cancel": "キャンセル",
     "export": "MIDIをエクスポート",

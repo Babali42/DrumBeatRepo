@@ -24,7 +24,7 @@ export class ExportAudioModalComponent extends BaseModalComponent<AudioExportOpt
   @Output() override close = new EventEmitter<void>();
   @Output() override validate = new EventEmitter<AudioExportOptions>();
   form = this.fb.nonNullable.group({
-    fileName: new FormControl<WavFilename>(toWavFilename(this.beatName + ".wav"), [
+    filename: new FormControl<WavFilename>(toWavFilename(this.beatName + ".wav"), [
       // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
       Validators.pattern(/^[^.].+\.wav$/i)
@@ -35,7 +35,7 @@ export class ExportAudioModalComponent extends BaseModalComponent<AudioExportOpt
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['beatName']) {
-      this.form.controls.fileName.setValue(toWavFilename(this.beatName + ".wav"));
+      this.form.controls.filename.setValue(toWavFilename(this.beatName + ".wav"));
     }
   }
 
@@ -44,7 +44,7 @@ export class ExportAudioModalComponent extends BaseModalComponent<AudioExportOpt
   override onValidate(): void {
     if (this.form.valid) {
       this.validate.emit({
-        fileName: this.form.controls.fileName.value!,
+        filename: this.form.controls.filename.value!,
         loopCount: this.form.controls.loopCount.value!,
         exportWithTail: this.form.controls.exportWithTail.value!,
       });

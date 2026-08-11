@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "تصدير الإيقاع إلى ملف MIDI",
-    "fileName": "اسم الملف",
+    "filename": "اسم الملف",
     "duration": "المدة (الحلقات)",
     "cancel": "إلغاء",
     "export": "تصدير MIDI",

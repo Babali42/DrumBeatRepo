@@ -9,6 +9,51 @@ import { Effect, Option } from "effect";
 describe("Beat adapter service", () => {
 
   const mock: JsonFilesReaderInterface = {
+    loadJsonByFileName(fileName: string): Effect.Effect<Option.Option<CompactBeat>> {
+      return Effect.succeed(Option.some({
+        "label": "Metal",
+        "genre": "Metal",
+        "bpm": 180,
+        "tracks": [
+          {
+            "name": "Snare",
+            "midiNote": 38,
+            "filename": toMp3FilePath("metal/snare.mp3"),
+            "steps": "____X_______X___",
+            "isMuted": false,
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 4
+          },
+          {
+            "name": "Hats",
+            "midiNote": 38,
+            "filename": toMp3FilePath("metal/carsh.mp3"),
+            "steps": "X___X___X___X___",
+            "isMuted": false,
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 4
+          },
+          {
+            "name": "Kick",
+            "midiNote": 38,
+            "filename": toMp3FilePath("metal/kick.mp3"),
+            "steps": "XXXXXXXXXXXXXXXX",
+            "isMuted": false,
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 4
+          },
+          {
+            "name": "Bass",
+            "midiNote": undefined,
+            "filename": toMp3FilePath("metal/bass.mp3"),
+            "steps": "XXXXXXXXXXXXXXXX",
+            "isMuted": false,
+            "beatsPerBar": 4,
+            "subdivisionsPerBeat": 4
+          }
+        ]
+      }));
+    },
     loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[]> {
       return Effect.succeed([Option.some({
         "label": "Metal",
@@ -18,7 +63,7 @@ describe("Beat adapter service", () => {
           {
             "name": "Snare",
             "midiNote": 38,
-            "fileName": toMp3FilePath("metal/snare.mp3"),
+            "filename": toMp3FilePath("metal/snare.mp3"),
             "steps": "____X_______X___",
             "isMuted": false,
             "beatsPerBar": 4,
@@ -27,7 +72,7 @@ describe("Beat adapter service", () => {
           {
             "name": "Hats",
             "midiNote": 38,
-            "fileName": toMp3FilePath("metal/carsh.mp3"),
+            "filename": toMp3FilePath("metal/carsh.mp3"),
             "steps": "X___X___X___X___",
             "isMuted": false,
             "beatsPerBar": 4,
@@ -36,7 +81,7 @@ describe("Beat adapter service", () => {
           {
             "name": "Kick",
             "midiNote": 38,
-            "fileName": toMp3FilePath("metal/kick.mp3"),
+            "filename": toMp3FilePath("metal/kick.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
             "isMuted": false,
             "beatsPerBar": 4,
@@ -45,7 +90,7 @@ describe("Beat adapter service", () => {
           {
             "name": "Bass",
             "midiNote": undefined,
-            "fileName": toMp3FilePath("metal/bass.mp3"),
+            "filename": toMp3FilePath("metal/bass.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
             "isMuted": false,
             "beatsPerBar": 4,
@@ -62,7 +107,7 @@ describe("Beat adapter service", () => {
             {
               "name": "Snare2",
               "midiNote": 38,
-              "fileName": "metal/snare2.mp3",
+              "filename": "metal/snare2.mp3",
               "steps": "____X_______X___",
               "isMuted": false,
               "beatsPerBar": 4,
@@ -71,7 +116,7 @@ describe("Beat adapter service", () => {
             {
               "name": "Kick",
               "midiNote": 38,
-              "fileName": "metal/kick.mp3",
+              "filename": "metal/kick.mp3",
               "steps": "XXXXXXXXXXXXXXXX",
               "isMuted": false,
               "beatsPerBar": 4,
@@ -80,7 +125,7 @@ describe("Beat adapter service", () => {
             {
               "name": "Synth",
               "midiNote": undefined,
-              "fileName": toMp3FilePath("metal/bass2.mp3"),
+              "filename": toMp3FilePath("metal/bass2.mp3"),
               "steps": "XXXXXXXXXXXXXXXX",
               "isMuted": false,
               "beatsPerBar": 4,

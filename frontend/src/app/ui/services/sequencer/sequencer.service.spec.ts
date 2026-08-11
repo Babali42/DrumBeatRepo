@@ -22,7 +22,7 @@ describe('SequencerService undo', () => {
           tracks: [
             {
               name: "Snare",
-              fileName: "metal/snare.mp3",
+              filename: "metal/snare.mp3",
               steps: new Steps([false, false, false, false]),
               numberOfSteps: NumberOfSteps.sixteen,
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
@@ -36,7 +36,7 @@ describe('SequencerService undo', () => {
           tracks: [
             {
               name: "Snare",
-              fileName: "metal/snare.mp3",
+              filename: "metal/snare.mp3",
               steps: new Steps([true, true, true, true]),
               numberOfSteps: NumberOfSteps.sixteen,
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
@@ -60,7 +60,7 @@ describe('SequencerService undo', () => {
   }
 
   const trackPayload = [
-    { name: 'Snare', fileName: 'metal/snare.mp3', steps: [false, false, false, false], isMuted: false, midiNote: 38 },
+    { name: 'Snare', filename: 'metal/snare.mp3', steps: [false, false, false, false], isMuted: false, midiNote: 38 },
   ];
 
   it('undoes a SELECT_BEAT', () => {
@@ -70,7 +70,7 @@ describe('SequencerService undo', () => {
 
     expect(currentState().tracks.length).toBe(1);
     expect(currentState().tracks[0].name).toBe('Snare');
-    expect(currentState().tracks[0].fileName).toBe('metal/snare.mp3');
+    expect(currentState().tracks[0].filename).toBe('metal/snare.mp3');
     expect(currentState().tracks[0].steps).toEqual([false, false, false, false]);
     expect(currentState().tracks[0].midiNote).toBe(38);
     expect(currentState().tracks[0].isMuted).toBeFalse();

@@ -23,21 +23,21 @@ describe('JsonLoaderService', () => {
         "tracks": [
           {
             "name": "Snare",
-            "fileName": "metal/snare.mp3",
+            "filename": "metal/snare.mp3",
             "steps": "____X_______X___",
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 3
           },
           {
             "name": "Hats",
-            "fileName": "metal/crash.mp3",
+            "filename": "metal/crash.mp3",
             "steps": "X___X___X___X___",
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 3
           },
           {
             "name": "Kick",
-            "fileName": "metal/kick.mp3",
+            "filename": "metal/kick.mp3",
             "steps": "XXXXXXXXXXXXXXXX",
             "beatsPerBar": 4,
             "subdivisionsPerBeat": 3

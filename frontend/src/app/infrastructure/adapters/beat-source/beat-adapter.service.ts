@@ -12,6 +12,13 @@ export class BeatAdapter implements IManageBeats {
   constructor(@Inject(jsonFileReaderToken) private readonly jsonFileReader: JsonFilesReaderInterface) {
 
   }
+  
+  getBeatByFileName(name: string): Effect.Effect<Beat, Error> {
+    return Effect.flatMap(
+      this.jsonFileReader.loadJsonByFileName(name),
+      beat => CompactBeatMapper.toBeatEffect(Option.getOrThrow(beat))
+    )
+  }
 
   getAllBeats(): Effect.Effect<Beat[], Error> {
     return Effect.flatMap(
@@ -26,7 +33,7 @@ export class BeatAdapter implements IManageBeats {
 
   getAllDrumsTracks(): Effect.Effect<Track[], Error> {
     const distinctByFileName = (tracks: Track[]) =>
-      Array.dedupeWith(tracks, (a, b) => a.fileName === b.fileName);
+      Array.dedupeWith(tracks, (a, b) => a.filename === b.filename);
 
     return this.getAllBeats().pipe(
       Effect.map(beats => beats

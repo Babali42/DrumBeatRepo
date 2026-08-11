@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "导出节奏到MIDI文件",
-    "fileName": "文件名",
+    "filename": "文件名",
     "duration": "时长（循环次数）",
     "cancel": "取消",
     "export": "导出MIDI",

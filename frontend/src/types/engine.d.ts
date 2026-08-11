@@ -1,6 +1,6 @@
 export interface EngineTrack {
   readonly name: string;
-  readonly fileName: string;
+  readonly filename: string;
   readonly steps: readonly boolean[];
   readonly midiNote: number | null;
   readonly isMuted: boolean;
