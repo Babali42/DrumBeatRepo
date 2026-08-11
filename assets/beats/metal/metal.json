@@ -5,19 +5,19 @@
   "tracks": [
     {
       "name": "Snare",
-      "fileName": "metal/snare.mp3",
+      "filename": "metal/snare.mp3",
       "steps": "____X_______X___",
       "midiNote": 38
     },
     {
       "name": "Hats",
-      "fileName": "metal/hat.mp3",
+      "filename": "metal/hat.mp3",
       "steps": "X___X___X___X___",
       "midiNote": 42
     },
     {
       "name": "Kick",
-      "fileName": "metal/kick.mp3",
+      "filename": "metal/kick.mp3",
       "steps": "XXXXXXXXXXXXXXXX",
       "midiNote": 36
     }

@@ -18,7 +18,7 @@
   },
   "exportMidi": {
     "title": "Exporter le rythme en fichier MIDI",
-    "fileName": "Nom du fichier",
+    "filename": "Nom du fichier",
     "duration": "Durée (boucles)",
     "cancel": "Annuler",
     "export": "Exporter MIDI",

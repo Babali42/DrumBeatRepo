@@ -6,17 +6,17 @@
   "tracks": [
     {
       "name": "Synth in son clave",
-      "fileName": "hypnotic-techno/synth.mp3",
+      "filename": "hypnotic-techno/synth.mp3",
       "steps": "X__X__X___X_X___"
     },
     {
       "name": "Bass",
-      "fileName": "hypnotic-techno/bass.mp3",
+      "filename": "hypnotic-techno/bass.mp3",
       "steps": "X_X_X_X_X_X_X_X_"
     },
     {
       "name": "Kick",
-      "fileName": "hypnotic-techno/kick.mp3",
+      "filename": "hypnotic-techno/kick.mp3",
       "steps": "X   X   X   X   ",
       "midiNote": 36
     }
