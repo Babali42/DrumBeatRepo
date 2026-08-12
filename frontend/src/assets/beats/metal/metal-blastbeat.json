@@ -2,6 +2,8 @@
   "label": "Blast beat",
   "genre": "Metal",
   "bpm": 180,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Snare",

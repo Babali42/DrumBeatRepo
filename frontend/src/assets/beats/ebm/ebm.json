@@ -2,6 +2,9 @@
   "label": "EBM",
   "genre": "EBM",
   "bpm": 120,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "numberOfBar": 2,
   "tracks": [
     {
       "name": "Clap",

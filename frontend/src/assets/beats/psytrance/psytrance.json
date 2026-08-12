@@ -2,6 +2,8 @@
   "label": "Psytrance",
   "genre": "Psytrance",
   "bpm": 135,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Closed hats",

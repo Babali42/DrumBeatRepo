@@ -47,9 +47,7 @@ describe('AudioEngineAdapter', () => {
       steps: new Steps([true]),
       isMuted: false,
       numberOfSteps: NumberOfSteps.sixteen,
-      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      beatsPerBar: 4,
-      subdivisionsPerBeat: 4
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
 
     spyOn<any>(adapter['audioFilesService'], 'getAudioBuffer').and.resolveTo(
@@ -209,5 +207,77 @@ describe('AudioEngineAdapter', () => {
     adapter.play();
 
     expect(spy).toHaveBeenCalledWith(Seconds(0), StepIndex(0));
+  });
+
+  it('should clear all scheduled events when a track is muted while its steps change', () => {
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => 100,
+      configurable: true
+    });
+    spyOn(window, 'setInterval').and.returnValue(1);
+    spyOn(window, 'clearInterval');
+
+    const playingTrack: Track = {
+      name: 'Kick',
+      filename: 'techno/kick.wav',
+      steps: new Steps([true, true, false]),
+      isMuted: false,
+      numberOfSteps: NumberOfSteps.sixteen,
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
+    };
+    adapter.setTracks([playingTrack]);
+    adapter.play();
+
+    const stepMapAfterPlay = adapter['trackStepMap'].get('Kick');
+    expect(stepMapAfterPlay?.get(0)).toBeDefined();
+    expect(stepMapAfterPlay?.get(1)).toBeDefined();
+
+    const mutedChangedTrack: Track = {
+      ...playingTrack,
+      steps: new Steps([false, true, true]),
+      isMuted: true
+    };
+    adapter.syncTracks([mutedChangedTrack]);
+
+    expect(adapter['trackStepMap'].get('Kick')).toBeUndefined();
+
+    adapter.pause();
+  });
+
+  it('should schedule enabled steps exactly once when a track is unmuted while its steps change', () => {
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => 100,
+      configurable: true
+    });
+    spyOn(window, 'setInterval').and.returnValue(1);
+    spyOn(window, 'clearInterval');
+
+    const mutedTrack: Track = {
+      name: 'Kick',
+      filename: 'techno/kick.wav',
+      steps: new Steps([true, false, true]),
+      isMuted: true,
+      numberOfSteps: NumberOfSteps.sixteen,
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
+    };
+    adapter.setTracks([mutedTrack]);
+    adapter.play();
+
+    expect(adapter['trackStepMap'].get('Kick')).toBeUndefined();
+
+    const unmutedChangedTrack: Track = {
+      ...mutedTrack,
+      steps: new Steps([true, false, false]),
+      isMuted: false
+    };
+    adapter.syncTracks([unmutedChangedTrack]);
+
+    const stepMapAfterUnmute = adapter['trackStepMap'].get('Kick');
+    expect(stepMapAfterUnmute).toBeDefined();
+    expect(stepMapAfterUnmute!.get(0)).toBeDefined();
+    expect(stepMapAfterUnmute!.get(1)).toBeUndefined();
+    expect(stepMapAfterUnmute!.get(2)).toBeUndefined();
+
+    adapter.pause();
   });
 });

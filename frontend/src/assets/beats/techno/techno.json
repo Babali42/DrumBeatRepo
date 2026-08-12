@@ -2,6 +2,8 @@
   "label": "4 on the floor",
   "genre": "Techno",
   "bpm": 128,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Snare",

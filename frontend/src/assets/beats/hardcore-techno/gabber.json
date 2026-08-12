@@ -2,6 +2,9 @@
   "label": "Gabber",
   "genre": "Hardcore Techno",
   "bpm": 200,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "numberOfBar": 2,
   "tracks": [
     {
       "name": "Crash Cymbal",
