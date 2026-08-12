@@ -2,6 +2,8 @@
   "label": "Quarter note groove",
   "genre": "Punk",
   "bpm": 170,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Hats",

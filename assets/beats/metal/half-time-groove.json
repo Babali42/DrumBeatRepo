@@ -2,6 +2,8 @@
   "label": "Half time groove",
   "genre": "Metal",
   "bpm": 145,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Snare",
