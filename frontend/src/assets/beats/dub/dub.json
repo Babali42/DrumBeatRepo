@@ -2,6 +2,9 @@
   "label": "Dub",
   "genre": "Dub",
   "bpm": 140,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "numberOfBar": 4,
   "tracks": [
     {
       "name": "Kick",

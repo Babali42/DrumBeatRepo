@@ -2,6 +2,8 @@
   "label": "Standard dancehall",
   "genre": "Dancehall",
   "bpm": 105,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Hats",

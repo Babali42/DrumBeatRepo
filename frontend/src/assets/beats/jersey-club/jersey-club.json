@@ -2,6 +2,8 @@
   "label": "Jersey club",
   "genre": "Club",
   "bpm": 150,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
   "tracks": [
     {
       "name": "Bed squeak (low)",
