@@ -20,27 +20,23 @@ describe('JsonLoaderService', () => {
         "label": "Metal",
         "genre": "Metal",
         "bpm": 180,
+        "beatsPerBar": 4,
+        "subdivisionsPerBeat": 3,
         "tracks": [
           {
             "name": "Snare",
             "filename": "metal/snare.mp3",
-            "steps": "____X_______X___",
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 3
+            "steps": "____X_______X___"
           },
           {
             "name": "Hats",
             "filename": "metal/crash.mp3",
-            "steps": "X___X___X___X___",
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 3
+            "steps": "X___X___X___X___"
           },
           {
             "name": "Kick",
             "filename": "metal/kick.mp3",
-            "steps": "XXXXXXXXXXXXXXXX",
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 3
+            "steps": "XXXXXXXXXXXXXXXX"
           }
         ]
       }];
@@ -53,8 +49,8 @@ describe('JsonLoaderService', () => {
     const result = await Effect.runPromise(service.loadAllBeats(['techno.json']));
     expect(Option.isSome(result[0])).toBeTrue();
     expect((Option.getOrThrow(result[0])).tracks).toBeDefined();
-    expect((Option.getOrThrow(result[0])).tracks[0].beatsPerBar).toEqual(4);
-    expect((Option.getOrThrow(result[0])).tracks[0].subdivisionsPerBeat).toEqual(3);
+    expect((Option.getOrThrow(result[0])).beatsPerBar).toEqual(4);
+    expect((Option.getOrThrow(result[0])).subdivisionsPerBeat).toEqual(3);
   });
 
   it('should handle missing files gracefully', async () => {

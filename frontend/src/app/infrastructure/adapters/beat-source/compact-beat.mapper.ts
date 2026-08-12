@@ -2,6 +2,8 @@ import { Beat } from "../../../domain/beat";
 import { CompactBeat } from "./compact-beat";
 import { Track } from "../../../domain/track";
 import { BPM } from "../../../domain/bpm";
+import { BeatsPerBar } from "../../../domain/beatsPerBar";
+import { SubdivisionsPerBeat } from "../../../domain/subdivisionsPerBeat";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { Effect, Option } from "effect";
 
@@ -18,14 +20,14 @@ export class CompactBeatMapper {
         label: compact.label,
         genre: compact.genre,
         bpm: parseBPM(compact.bpm),
+        beatsPerBar: (compact.beatsPerBar ?? 4) as BeatsPerBar,
+        subdivisionsPerBeat: (compact.subdivisionsPerBeat ?? 4) as SubdivisionsPerBeat,
         tracks: compact.tracks.map(track => new Track(
           track.name,
           track.filename,
           [...track.steps].map(char => char === 'X'),
           track.isMuted ?? false,
-          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none(),
-          track.beatsPerBar,
-          track.subdivisionsPerBeat
+          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none()
         ))
       }),
       catch: (e) => {
@@ -39,14 +41,14 @@ export class CompactBeatMapper {
       label: beat.label,
       genre: beat.genre,
       bpm: beat.bpm,
+      beatsPerBar: beat.beatsPerBar,
+      subdivisionsPerBeat: beat.subdivisionsPerBeat,
       tracks: beat.tracks.map(track => ({
         name: track.name,
         filename: track.filename,
         steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
         isMuted: track.isMuted,
-        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value,
-        beatsPerBar: track.beatsPerBar,
-        subdivisionsPerBeat: track.subdivisionsPerBeat
+        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
       }))
     }
   }

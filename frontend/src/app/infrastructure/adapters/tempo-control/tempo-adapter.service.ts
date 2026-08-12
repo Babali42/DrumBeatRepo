@@ -30,6 +30,8 @@ export class TempoAdapterService {
   setSubdivisionsPerBeat(subdivisionsPerBeat: SubdivisionsPerBeat) {
     this.subdivisionsPerBeat = subdivisionsPerBeat;
     this.numberOfSteps = this.mapNumberOfSteps(this.beatsPerBar * this.subdivisionsPerBeat);
+    console.log(this.subdivisionsPerBeat);
+    console.log(this.beatsPerBar);
   }
 
   private mapNumberOfSteps(product: number): NumberOfSteps {

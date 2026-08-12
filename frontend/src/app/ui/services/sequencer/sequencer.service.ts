@@ -42,7 +42,7 @@ export class SequencerService {
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.filename, steps, x.isMuted, midiNote, 4, 4);
+          return new Track(x.name, x.filename, steps, x.isMuted, midiNote);
         }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,

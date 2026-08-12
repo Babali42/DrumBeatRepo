@@ -47,9 +47,7 @@ describe('AudioEngineAdapter', () => {
       steps: new Steps([true]),
       isMuted: false,
       numberOfSteps: NumberOfSteps.sixteen,
-      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      beatsPerBar: 4,
-      subdivisionsPerBeat: 4
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
 
     spyOn<any>(adapter['audioFilesService'], 'getAudioBuffer').and.resolveTo(
@@ -225,9 +223,7 @@ describe('AudioEngineAdapter', () => {
       steps: new Steps([true, true, false]),
       isMuted: false,
       numberOfSteps: NumberOfSteps.sixteen,
-      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      beatsPerBar: 4,
-      subdivisionsPerBeat: 4
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([playingTrack]);
     adapter.play();
@@ -262,9 +258,7 @@ describe('AudioEngineAdapter', () => {
       steps: new Steps([true, false, true]),
       isMuted: true,
       numberOfSteps: NumberOfSteps.sixteen,
-      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      beatsPerBar: 4,
-      subdivisionsPerBeat: 4
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([mutedTrack]);
     adapter.play();

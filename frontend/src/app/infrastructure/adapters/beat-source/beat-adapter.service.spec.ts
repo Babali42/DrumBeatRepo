@@ -14,42 +14,36 @@ describe("Beat adapter service", () => {
         "label": "Metal",
         "genre": "Metal",
         "bpm": 180,
+        "beatsPerBar": 4,
+        "subdivisionsPerBeat": 4,
         "tracks": [
           {
             "name": "Snare",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/snare.mp3"),
             "steps": "____X_______X___",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Hats",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/carsh.mp3"),
             "steps": "X___X___X___X___",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Kick",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/kick.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Bass",
             "midiNote": undefined,
             "filename": toMp3FilePath("metal/bass.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           }
         ]
       }));
@@ -59,42 +53,36 @@ describe("Beat adapter service", () => {
         "label": "Metal",
         "genre": "Metal",
         "bpm": 180,
+        "beatsPerBar": 4,
+        "subdivisionsPerBeat": 4,
         "tracks": [
           {
             "name": "Snare",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/snare.mp3"),
             "steps": "____X_______X___",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Hats",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/carsh.mp3"),
             "steps": "X___X___X___X___",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Kick",
             "midiNote": 38,
             "filename": toMp3FilePath("metal/kick.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           },
           {
             "name": "Bass",
             "midiNote": undefined,
             "filename": toMp3FilePath("metal/bass.mp3"),
             "steps": "XXXXXXXXXXXXXXXX",
-            "isMuted": false,
-            "beatsPerBar": 4,
-            "subdivisionsPerBeat": 4
+            "isMuted": false
           }
         ]
       }),
@@ -103,33 +91,29 @@ describe("Beat adapter service", () => {
           "label": "MetalWithDoubleKick",
           "genre": "Metal",
           "bpm": 180,
+          "beatsPerBar": 4,
+          "subdivisionsPerBeat": 4,
           "tracks": [
             {
               "name": "Snare2",
               "midiNote": 38,
               "filename": "metal/snare2.mp3",
               "steps": "____X_______X___",
-              "isMuted": false,
-              "beatsPerBar": 4,
-              "subdivisionsPerBeat": 4
+              "isMuted": false
             },
             {
               "name": "Kick",
               "midiNote": 38,
               "filename": "metal/kick.mp3",
               "steps": "XXXXXXXXXXXXXXXX",
-              "isMuted": false,
-              "beatsPerBar": 4,
-              "subdivisionsPerBeat": 4
+              "isMuted": false
             },
             {
               "name": "Synth",
               "midiNote": undefined,
               "filename": toMp3FilePath("metal/bass2.mp3"),
               "steps": "XXXXXXXXXXXXXXXX",
-              "isMuted": false,
-              "beatsPerBar": 4,
-              "subdivisionsPerBeat": 4
+              "isMuted": false
             }
           ]
         }

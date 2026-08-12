@@ -19,6 +19,8 @@ describe('SequencerService undo', () => {
           label: "Techno1",
           genre: "Techno",
           bpm: BPM(128),
+          beatsPerBar: 4,
+          subdivisionsPerBeat: 4,
           tracks: [
             {
               name: "Snare",
@@ -33,6 +35,8 @@ describe('SequencerService undo', () => {
           label: "Techno2",
           genre: "Techno",
           bpm: BPM(128),
+          beatsPerBar: 4,
+          subdivisionsPerBeat: 4,
           tracks: [
             {
               name: "Snare",
