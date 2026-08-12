@@ -1,8 +1,11 @@
 {
-  "label": "(new) Basic Dnb",
+  "label": "(new) Basic DnB",
   "genre": "(new) Drum and Bass",
   "bpm": 180,
   "source": "https://www.studiobrootle.com/drum-and-bass-drum-patterns/",
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "numberOfBar": 2,
   "tracks": [
     {
       "name": "Ghost snare",
