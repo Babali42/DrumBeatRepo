@@ -113,6 +113,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.beat = { ...beatToSelect, tracks: vmTracks };
     this.tempoService.setBeatsPerBar(this.beat.beatsPerBar);
     this.tempoService.setSubdivisionsPerBeat(this.beat.subdivisionsPerBeat);
+    this.tempoService.setNumberOfBar(this.beat.numberOfBar);
     this.soundService.setTracks(this.beat.tracks);
   }
 

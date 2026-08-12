@@ -9,7 +9,7 @@ import { MidiDrumType } from "../../../domain/midi-drum-type";
 describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
     const beat: Beat = {
-      genre: "test", label: "", bpm: BPM(150), beatsPerBar: 8, subdivisionsPerBeat: 3, tracks: [
+      genre: "test", label: "", bpm: BPM(150), beatsPerBar: 8, subdivisionsPerBeat: 3, numberOfBar: 2, tracks: [
         new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
         new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
       ]
@@ -26,6 +26,7 @@ describe('Compact beat mapper tests', () => {
     expect(mappedBeat.bpm).toEqual(beat.bpm);
     expect(mappedBeat.beatsPerBar).toEqual(beat.beatsPerBar);
     expect(mappedBeat.subdivisionsPerBeat).toEqual(beat.subdivisionsPerBeat);
+    expect(mappedBeat.numberOfBar).toEqual(beat.numberOfBar);
     expect(mappedBeat.tracks.length).toEqual(beat.tracks.length);
     expect(mappedBeat.tracks[0].name).toEqual(beat.tracks[0].name);
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(0)).toEqual(beat.tracks[0].steps.getStepAtIndex(0));
@@ -40,6 +41,7 @@ describe('Compact beat mapper tests', () => {
       "bpm": "180",
       "beatsPerBar": 4,
       "subdivisionsPerBeat": 4,
+      "numberOfBar": 2,
       "tracks": [
         {
           "name": "Snare",
@@ -69,6 +71,7 @@ describe('Compact beat mapper tests', () => {
     expect(beat.bpm.valueOf()).toEqual(Number(compactBeat.bpm));
     expect(beat.beatsPerBar).toEqual(compactBeat.beatsPerBar);
     expect(beat.subdivisionsPerBeat).toEqual(compactBeat.subdivisionsPerBeat);
+    expect(beat.numberOfBar).toEqual(compactBeat.numberOfBar);
     expect(beat.tracks.length).toEqual(compactBeat.tracks.length);
     expect(beat.tracks[0].name).toEqual(compactBeat.tracks[0].name);
     expect(beat.tracks[0].isMuted).toBe(false);
@@ -81,6 +84,7 @@ describe('Compact beat mapper tests', () => {
       "bpm": 120,
       "beatsPerBar": 4,
       "subdivisionsPerBeat": 4,
+      "numberOfBar": 1,
       "tracks": [
         {
           "name": "Track with invalid steps",

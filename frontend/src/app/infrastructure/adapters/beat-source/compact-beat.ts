@@ -6,5 +6,6 @@ export type CompactBeat = {
   readonly bpm: number;
   readonly beatsPerBar: number;
   readonly subdivisionsPerBeat: number;
+  readonly numberOfBar: number;
   readonly tracks: readonly CompactTrack[];
 }

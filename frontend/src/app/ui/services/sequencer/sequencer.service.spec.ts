@@ -21,6 +21,7 @@ describe('SequencerService undo', () => {
           bpm: BPM(128),
           beatsPerBar: 4,
           subdivisionsPerBeat: 4,
+          numberOfBar: 1,
           tracks: [
             {
               name: "Snare",
@@ -37,6 +38,7 @@ describe('SequencerService undo', () => {
           bpm: BPM(128),
           beatsPerBar: 4,
           subdivisionsPerBeat: 4,
+          numberOfBar: 1,
           tracks: [
             {
               name: "Snare",

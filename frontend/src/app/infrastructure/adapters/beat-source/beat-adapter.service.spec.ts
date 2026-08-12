@@ -16,6 +16,7 @@ describe("Beat adapter service", () => {
         "bpm": 180,
         "beatsPerBar": 4,
         "subdivisionsPerBeat": 4,
+        "numberOfBar": 1,
         "tracks": [
           {
             "name": "Snare",
@@ -55,6 +56,7 @@ describe("Beat adapter service", () => {
         "bpm": 180,
         "beatsPerBar": 4,
         "subdivisionsPerBeat": 4,
+        "numberOfBar": 1,
         "tracks": [
           {
             "name": "Snare",
@@ -93,6 +95,7 @@ describe("Beat adapter service", () => {
           "bpm": 180,
           "beatsPerBar": 4,
           "subdivisionsPerBeat": 4,
+          "numberOfBar": 1,
           "tracks": [
             {
               "name": "Snare2",

@@ -22,6 +22,7 @@ describe('JsonLoaderService', () => {
         "bpm": 180,
         "beatsPerBar": 4,
         "subdivisionsPerBeat": 3,
+        "numberOfBar": 1,
         "tracks": [
           {
             "name": "Snare",

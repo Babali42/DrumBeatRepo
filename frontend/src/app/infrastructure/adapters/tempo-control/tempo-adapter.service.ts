@@ -5,6 +5,7 @@ import {Seconds} from "../../../domain/seconds";
 import {StepIndex} from "../../../domain/step-index";
 import { BeatsPerBar } from "src/app/domain/beatsPerBar";
 import { SubdivisionsPerBeat } from "src/app/domain/subdivisionsPerBeat";
+import { NumberOfBar } from "src/app/domain/numberOfBar";
 
 const numberOfSecondsInOneMinute = 60;
 const signature = 4;
@@ -17,6 +18,7 @@ export class TempoAdapterService {
   public numberOfSteps: NumberOfSteps = NumberOfSteps.sixteen;
   public beatsPerBar:BeatsPerBar = 4;
   public subdivisionsPerBeat: SubdivisionsPerBeat = 4;
+  public numberOfBar: NumberOfBar = 1;
 
   setBpm(bpm: BPM) {
     this.bpm = bpm;
@@ -24,14 +26,21 @@ export class TempoAdapterService {
 
   setBeatsPerBar(beatsPerBar: BeatsPerBar) {
     this.beatsPerBar = beatsPerBar;
-    this.numberOfSteps = this.mapNumberOfSteps(this.beatsPerBar * this.subdivisionsPerBeat);
+    this.recalculateNumberOfSteps();
   }
 
   setSubdivisionsPerBeat(subdivisionsPerBeat: SubdivisionsPerBeat) {
     this.subdivisionsPerBeat = subdivisionsPerBeat;
-    this.numberOfSteps = this.mapNumberOfSteps(this.beatsPerBar * this.subdivisionsPerBeat);
-    console.log(this.subdivisionsPerBeat);
-    console.log(this.beatsPerBar);
+    this.recalculateNumberOfSteps();
+  }
+
+  setNumberOfBar(numberOfBar: NumberOfBar) {
+    this.numberOfBar = numberOfBar;
+    this.recalculateNumberOfSteps();
+  }
+
+  private recalculateNumberOfSteps() {
+    this.numberOfSteps = this.mapNumberOfSteps(this.beatsPerBar * this.subdivisionsPerBeat * this.numberOfBar);
   }
 
   private mapNumberOfSteps(product: number): NumberOfSteps {

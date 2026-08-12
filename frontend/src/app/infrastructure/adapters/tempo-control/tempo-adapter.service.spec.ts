@@ -41,4 +41,28 @@ describe('Tempo service', () => {
     service.setSubdivisionsPerBeat(4);
     expect(service.numberOfSteps).toBe(NumberOfSteps.sixty_four);
   });
+
+  it('supports 32-step patterns with two bars', () => {
+    const service = new TempoAdapterService();
+    service.setBeatsPerBar(4);
+    service.setSubdivisionsPerBeat(4);
+    service.setNumberOfBar(2);
+    expect(service.numberOfSteps).toBe(NumberOfSteps.thirty_two);
+  });
+
+  it('supports 64-step patterns with four bars', () => {
+    const service = new TempoAdapterService();
+    service.setBeatsPerBar(4);
+    service.setSubdivisionsPerBeat(4);
+    service.setNumberOfBar(4);
+    expect(service.numberOfSteps).toBe(NumberOfSteps.sixty_four);
+  });
+
+  it('keeps a single bar as 16 steps by default', () => {
+    const service = new TempoAdapterService();
+    service.setBeatsPerBar(4);
+    service.setSubdivisionsPerBeat(4);
+    service.setNumberOfBar(1);
+    expect(service.numberOfSteps).toBe(NumberOfSteps.sixteen);
+  });
 });
