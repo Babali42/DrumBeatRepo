@@ -6,6 +6,7 @@ import { CompactBeatMapper } from "./compact-beat.mapper";
 import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
 import { Array, Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
+import { BEATS_MANIFEST } from "../../../ui/services/sequencer/beats-manifest";
 
 @Injectable({ providedIn: 'root' })
 export class BeatAdapter implements IManageBeats {
@@ -21,14 +22,10 @@ export class BeatAdapter implements IManageBeats {
   }
 
   getAllBeats(): Effect.Effect<Beat[], Error> {
-    return Effect.flatMap(
-      this.jsonFileReader.loadAllJson(),
-      beats =>
-        Effect.all(
-          beats.filter(Option.isSome)
-            .map(beat => CompactBeatMapper.toBeatEffect(Option.getOrThrow(beat)))
-        )
-    )
+    // Dynamically fetch all beats using our lightweight manifest
+    return Effect.all(
+      BEATS_MANIFEST.map(meta => this.getBeatByFileName(meta.filename))
+    );
   }
 
   getAllDrumsTracks(): Effect.Effect<Track[], Error> {

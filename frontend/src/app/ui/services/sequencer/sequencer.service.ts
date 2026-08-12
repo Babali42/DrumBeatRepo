@@ -6,9 +6,9 @@ import { IManageBeatsToken } from "src/app/infrastructure/injection-tokens/i-man
 import { BehaviorSubject } from "rxjs";
 import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
-import { Beat } from "src/app/domain/beat";
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
+import { BEATS_MANIFEST } from './beats-manifest';
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -18,7 +18,8 @@ export class SequencerService {
     {} as SequencerViewModel
   );
 
-  genres = new Map<string, Beat[]>();
+  // Replace: genres = new Map<string, Beat[]>();
+genres = new Map<string, { label: string, filename: string }[]>();
   genresLabel: readonly string[] = [];
 
   constructor(
@@ -51,47 +52,50 @@ export class SequencerService {
     });
   }
 
-  async initialize(): Promise<void> {
-    const beats = await Effect.runPromise(
-      this.beatsManager.getAllBeats()
-    );
-
+  initialize(): void {
     this.genres.clear();
 
-    for (const beat of beats) {
-      const list = this.genres.get(beat.genre);
+    for (const beatMeta of BEATS_MANIFEST) {
+      const list = this.genres.get(beatMeta.genre);
 
       if (list) {
-        list.push(beat);
+        list.push(beatMeta);
       } else {
-        this.genres.set(beat.genre, [beat]);
+        this.genres.set(beatMeta.genre, [beatMeta]);
       }
     }
 
     this.genresLabel = [...this.genres.keys()];
   }
 
-  dispatch(cmd: Command): void {
-    const enriched = this.enrichSelectBeat(cmd);
+  async dispatch(cmd: Command): Promise<void> {
+    const enriched = await this.enrichSelectBeat(cmd);
     SequencerEngine.dispatch(enriched);
     this.state$.next(SequencerEngine.getState());
   }
 
-  private enrichSelectBeat(cmd: Command): Command {
+  private async enrichSelectBeat(cmd: Command): Promise<Command> {
     if (cmd.type !== 'SELECT_BEAT') return cmd;
 
     const payload = cmd.payload as Record<string, unknown>;
     const genre = payload['genre'] as string;
-    const beat = payload['beat'] as string;
+    const beatLabel = payload['beat'] as string;
     const tempo = payload['tempo'] as number;
-    const beatData = this.genres.get(genre)?.find(b => b.label === beat);
+    
+    // 1. Find the metadata (which now just has label and filename)
+    const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
 
-    if (beatData) {
+    if (beatMeta) {
+      // 2. LAZY LOAD: Fetch the heavy data ONLY when a beat is selected!
+      const beatData = await Effect.runPromise(
+        this.beatsManager.getBeatByFileName(beatMeta.filename)
+      );
+
       return {
         ...cmd,
         payload: {
           genre,
-          beat,
+          beat: beatLabel,
           tempo,
           tracks: beatData.tracks.map(t => ({
             name: t.name,
