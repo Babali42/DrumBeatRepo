@@ -16,6 +16,7 @@ describe('Tempo service', () => {
   const cases: TempoDataSet[] = [
     { tempo: BPM(128), beatsPerBar: 4, subdivisionsPerBeat: 4, expectedStepDuration: Seconds(0.1171875) },
     { tempo: BPM(128), beatsPerBar: 8, subdivisionsPerBeat: 4, expectedStepDuration: Seconds(0.1171875) },
+    { tempo: BPM(135), beatsPerBar: 4, subdivisionsPerBeat: 3, expectedStepDuration: Seconds(0.14814814814814814) },
   ];
 
   cases.forEach(({ tempo, beatsPerBar, subdivisionsPerBeat, expectedStepDuration }) => {

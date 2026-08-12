@@ -8,7 +8,6 @@ import { SubdivisionsPerBeat } from "src/app/domain/subdivisionsPerBeat";
 import { NumberOfBar } from "src/app/domain/numberOfBar";
 
 const numberOfSecondsInOneMinute = 60;
-const signature = 4;
 
 @Injectable({
   providedIn: "root"
@@ -65,7 +64,7 @@ export class TempoAdapterService {
   }
 
   get stepDuration(): Seconds {
-    return Seconds(numberOfSecondsInOneMinute / this.bpm / signature);
+    return Seconds(numberOfSecondsInOneMinute / this.bpm / this.subdivisionsPerBeat);
   }
 
   get barDuration(): Seconds {
