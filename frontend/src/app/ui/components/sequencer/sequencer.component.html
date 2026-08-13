@@ -64,7 +64,7 @@
         [class.sixty-four-steps]="track.steps.steps.length == NumberOfSteps.sixty_four">
         @for (step of track.steps.steps; track $index){
         <button class="step cursor-pointer" [class.active]="getStepActive(track.name, $index, step)"
-          [class.current]="$index === soundService.index" [class.highlight]="Math.floor($index / 4) % 2 === 0"
+          [class.current]="$index === soundService.index" [class.highlight]="Math.floor($index / (track.steps.steps.length == NumberOfSteps.twelve ? 3 : 4)) % 2 === 0"
           [class.drag-range]="isInDragRange(track.name, $index)" (mousedown)="onStepMouseDown(track, $index)"
           (mouseenter)="onStepMouseEnter(track.name, $index)" (mouseup)="onStepMouseUp(track.name, $index)">
         </button>
