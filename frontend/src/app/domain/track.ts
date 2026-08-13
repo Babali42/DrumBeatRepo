@@ -1,5 +1,4 @@
 import { Steps } from "./steps";
-import { NumberOfSteps } from "./number-of-steps";
 import { MidiDrumType } from "./midi-drum-type";
 import { Option } from "effect";
 import { Mp3FilePath, toMp3FilePath } from "./filenames/mp3.filepath";
@@ -10,7 +9,6 @@ export class Track {
   readonly name: string;
   readonly filename: Mp3FilePath | WavFilePath;
   readonly steps: Steps;
-  readonly numberOfSteps: NumberOfSteps;
   readonly midiNote: Option.Option<MidiDrumType>;
   readonly isMuted: boolean;
 
@@ -30,7 +28,6 @@ export class Track {
     this.name = name;
 
     this.steps = new Steps(steps);
-    this.numberOfSteps = this.steps.steps.length;
     this.midiNote = midiNote;
     this.isMuted = isMuted;
   }
