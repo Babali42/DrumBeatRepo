@@ -1,3 +1,11 @@
+export type BeatMetadata = {
+  readonly genre: string;
+  readonly label: string;
+  readonly filename: string;
+  readonly bpm?: number;
+};
+
+
 export const BEATS_MANIFEST = [
   {
     "filename": "dnb/dnb",

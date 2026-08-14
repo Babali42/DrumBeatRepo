@@ -5,7 +5,7 @@ import { Track } from "../track";
 export default interface IManageBeats {
   readonly getBeatByFileName: (filename: string) => Effect.Effect<Beat, Error>
 
-  readonly getAllBeats: () => Effect.Effect<Beat[], Error>
+  readonly getAllBeats: () => Effect.Effect<readonly Beat[], Error>
 
-  readonly getAllDrumsTracks: () => Effect.Effect<Track[], Error>
+  readonly getAllDrumsTracks: () => Effect.Effect<readonly Track[], Error>
 }

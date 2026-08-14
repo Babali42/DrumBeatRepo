@@ -8,7 +8,7 @@ import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { BEATS_MANIFEST } from './beats-manifest';
+import { BEATS_MANIFEST, BeatMetadata } from './beats-manifest';
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -18,8 +18,8 @@ export class SequencerService {
     {} as SequencerViewModel
   );
 
-  // Replace: genres = new Map<string, Beat[]>();
-genres = new Map<string, { label: string, filename: string }[]>();
+  // eslint-disable-next-line functional/prefer-readonly-type
+  genres = new Map<string, BeatMetadata[]>();
   genresLabel: readonly string[] = [];
 
   constructor(
@@ -68,10 +68,20 @@ genres = new Map<string, { label: string, filename: string }[]>();
     this.genresLabel = [...this.genres.keys()];
   }
 
-  async dispatch(cmd: Command): Promise<void> {
-    const enriched = await this.enrichSelectBeat(cmd);
-    SequencerEngine.dispatch(enriched);
-    this.state$.next(SequencerEngine.getState());
+  private dispatchQueue: Promise<void> = Promise.resolve();
+
+  dispatch(cmd: Command): Promise<void> {
+    this.dispatchQueue = this.dispatchQueue.then(async () => {
+      const enriched = await this.enrichSelectBeat(cmd);
+      
+      /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
+      SequencerEngine.dispatch(enriched);
+      this.state$.next(SequencerEngine.getState());
+      /* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
+      
+    }).catch(err => console.error('Dispatch error:', err));
+    
+    return this.dispatchQueue;
   }
 
   private async enrichSelectBeat(cmd: Command): Promise<Command> {
@@ -111,7 +121,7 @@ genres = new Map<string, { label: string, filename: string }[]>();
     return cmd;
   }
 
-  async getTracks(): Promise<Track[]> {
+  async getTracks(): Promise<readonly Track[]> {
     return Effect.runPromise(this.beatsManager.getAllDrumsTracks())
   }
 }

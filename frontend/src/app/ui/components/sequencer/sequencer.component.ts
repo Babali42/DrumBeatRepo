@@ -32,6 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
+import { BeatMetadata } from '../../services/sequencer/beats-manifest';
 
 @Component({
   selector: 'sequencer',
@@ -106,14 +107,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _applyBeat(beatMeta: { label: string; filename: string; genre: string; bpm?: number }, stateGenre: string, stateTempo: number): void {
+  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number): void {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
     this.beat = {
       genre: stateGenre,
       label: beatMeta.label,
       bpm: BPM(beatMeta.bpm ?? stateTempo),
       tracks: vmTracks
-    } as Beat;
+    };
     this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
     this.soundService.setTracks(this.beat.tracks);
   }
@@ -145,7 +146,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatToSelect);
   }
 
-  selectBeat(beatToSelect: { label: string; filename: string; genre: string; bpm?: number } | undefined): void {
+  selectBeat(beatToSelect: BeatMetadata | undefined): void {
     if (!beatToSelect)
       return;
 
@@ -160,7 +161,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     });
   }
 
-  dragState: { trackName: string; from: number; to: number; value: boolean } | null = null;
+  dragState: { readonly trackName: string; readonly from: number; readonly to: number; readonly value: boolean } | null = null;
 
   onStepMouseDown(track: Track, stepIndex: number): void {
     this.dragState = {
