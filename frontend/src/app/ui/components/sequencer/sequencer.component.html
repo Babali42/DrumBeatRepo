@@ -2,7 +2,11 @@
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
       <button class="play-pause-button cursor-pointer app-button" (click)="this.soundService.playPause()">
-        {{ this.soundService.isPlaying ? "⏸" : "▶" }}
+        @if (!this.soundService.isPlaying) {
+        <img alt="play" aria-label="Play" [ngSrc]="'assets/images/icons/play.svg' | iconDarkMode" height="28" width="28">
+        } @else {
+        <img alt="pause" aria-label="Pause" [ngSrc]="'assets/images/icons/pause.svg' | iconDarkMode" height="28" width="28">
+        }
       </button>
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
