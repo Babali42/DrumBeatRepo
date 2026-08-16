@@ -2,6 +2,9 @@
   "label": "Trap",
   "genre": "Hip-Hop",
   "bpm": 140,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "numberOfBar": 2,
   "tracks": [
     {
       "name": "Hats",

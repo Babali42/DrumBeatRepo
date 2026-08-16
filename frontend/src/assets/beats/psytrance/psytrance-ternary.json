@@ -1,7 +1,9 @@
 {
   "label": "Psytrance ternary",
   "genre": "Psytrance",
-  "bpm": 100,
+  "bpm": 135,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 3,
   "tracks": [
     {
       "name": "Closed hats",
@@ -23,8 +25,8 @@
     },
     {
       "name": "Bass",
-      "filename": "psytrance/bass.wav",
-      "steps": " XX XX XX XX"
+      "steps": " XX XX XX XX",
+      "filename": "psytrance/bass.wav"
     }
   ]
 }

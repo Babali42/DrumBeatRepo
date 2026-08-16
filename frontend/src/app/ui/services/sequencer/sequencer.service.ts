@@ -31,19 +31,15 @@ export class SequencerService {
         return;
       }
 
-      const validLengths = [8, 16, 32, 64];
       this.vm$.next({
         genre: state.genre,
         beats: this.genres.get(state.genre)?.map(x => x.label) ?? [],
         beat: state.beat,
         tracks: state.tracks.map(x => {
-          const steps = validLengths.includes(x.steps.length)
-            ? [...x.steps]
-            : [...x.steps, ...Array<boolean>(16 - x.steps.length).fill(false)];
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.filename, steps, x.isMuted, midiNote);
+          return new Track(x.name, x.filename, [...x.steps], x.isMuted, midiNote);
         }),
         tempo: BPM(state.tempo),
         historyLength: state.historyLength,

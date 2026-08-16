@@ -37,6 +37,9 @@ describe('SequencerComponent', () => {
           label: "Techno1",
           genre: "Techno",
           bpm: BPM(128),
+          beatsPerBar: 4,
+          subdivisionsPerBeat: 4,
+          numberOfBar: 1,
           tracks: [
             {
               name: "Snare",
@@ -44,9 +47,7 @@ describe('SequencerComponent', () => {
               steps: new Steps([false, false, false, false]),
               isMuted: false,
               numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE),
-              beatsPerBar: 4,
-              subdivisionsPerBeat: 4
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]
         },
@@ -54,6 +55,9 @@ describe('SequencerComponent', () => {
           label: "Techno2",
           genre: "Techno",
           bpm: BPM(128),
+          beatsPerBar: 4,
+          subdivisionsPerBeat: 4,
+          numberOfBar: 1,
           tracks: [
             {
               name: "Snare",
@@ -61,9 +65,7 @@ describe('SequencerComponent', () => {
               steps: new Steps([true, true, true, true]),
               isMuted: false,
               numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE),
-              beatsPerBar: 4,
-              subdivisionsPerBeat: 4
+              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]
         }
