@@ -87,49 +87,100 @@ export class SequencerService {
     const payload = cmd.payload as Record<string, unknown>;
     const genre = payload['genre'] as string;
     const beatLabel = payload['beat'] as string;
-    const tempo = payload['tempo'] as number;
-    
+    const tempo = (payload['tempo'] as number) ?? undefined;
+
     const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
 
     if (!beatMeta) {
-      return cmd; // If we don't know this beat, return original command
+      return cmd; // unknown beat
     }
 
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument , @typescript-eslint/no-unsafe-return*/
+    // helper to normalize a single track entry from either beatData or beatMeta
+    const normalizeTracks = (rawTracks: any[] | undefined) => {
+      if (!Array.isArray(rawTracks)) return [];
+      return rawTracks.map((t: any) => {
+        // Normalize steps: support Steps object with .steps or plain array
+        const stepsArr = Array.isArray(t.steps)
+          ? [...t.steps]
+          : Array.isArray(t.steps?.steps)
+          ? [...t.steps.steps]
+          : [];
+
+        // Normalize midiNote: support number or Option
+        // Normalize midiNote: support number or Option
+        const midiNoteVal = (() => {
+          try {
+            if (t.midiNote != null) {
+              // Option-like (has .value) or raw number
+              return (typeof t.midiNote === 'object' && 'value' in t.midiNote) ? t.midiNote.value : t.midiNote;
+            }
+            return null;
+          } catch {
+            return null;
+          }
+        })();
+
+        return {
+          name: t.name,
+          filename: t.filename,
+          steps: stepsArr,
+          midiNote: midiNoteVal,
+          isMuted: !!t.isMuted
+        };
+      });
+    };
+
     try {
-      /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
       const loader = (this.beatsManager as any).getBeatByFileName;
       if (typeof loader !== 'function') {
         console.warn('beatsManager.getBeatByFileName not available; skipping enrichment');
-        return cmd;
+        // fall back to beatMeta if available
+        const metaTracks = normalizeTracks((beatMeta as any).tracks);
+        return {
+          ...cmd,
+          payload: {
+            genre,
+            beat: beatLabel,
+            tempo: tempo ?? (beatMeta.bpm ?? 120),
+            tracks: metaTracks
+          }
+        };
       }
 
       const result = loader.call(this.beatsManager, beatMeta.filename);
 
-      // Support tests that return Promises AND production code that returns Effects
       const beatData = typeof result?.then === 'function'
         ? await result
         : await Effect.runPromise(result);
+
+      // If fetched data doesn't contain tracks, fallback to beatMeta
+      const finalTracksSource = Array.isArray(beatData?.tracks) ? beatData.tracks : (beatMeta as any).tracks ?? [];
 
       return {
         ...cmd,
         payload: {
           genre,
           beat: beatLabel,
-          tempo,
-          tracks: beatData.tracks.map((t: any) => ({
-            name: t.name,
-            filename: t.filename,
-            steps: [...t.steps.steps],
-            midiNote: Option.isSome(t.midiNote) ? t.midiNote.value : null,
-            isMuted: t.isMuted
-          })),
-        },
+          tempo: tempo ?? (beatData?.tempo ?? beatMeta.bpm ?? 120),
+          tracks: normalizeTracks(finalTracksSource)
+        }
       };
-      /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
     } catch (err) {
       console.error('Error loading beat data for', beatMeta.filename, err);
-      return cmd; // Fail-safe: return original command so dispatch continues
+      // fail-safe: return cmd enriched from beatMeta
+      const metaTracks = normalizeTracks((beatMeta as any).tracks);
+      return {
+        ...cmd,
+        payload: {
+          genre,
+          beat: beatLabel,
+          tempo: tempo ?? (beatMeta.bpm ?? 120),
+          tracks: metaTracks
+        }
+      };
     }
+    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
   }
 
   async getTracks(): Promise<readonly Track[]> {

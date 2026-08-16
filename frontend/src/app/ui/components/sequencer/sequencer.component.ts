@@ -108,8 +108,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number): void {
-    const vmTracks = this.sequencerService.vm$.getValue().tracks;
-    
+    // guard if vm$.getValue().tracks is not yet set
+    const vmTracks = this.sequencerService.vm$.getValue().tracks ?? [];
+
     this.beat = {
       genre: stateGenre,
       label: beatMeta.label,
@@ -121,12 +122,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
     };
 
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-    const firstTrack = this.beat.tracks[0] as any;
-    // Pull the exact length from the track's step array, fallback to 16
-    const steps = firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
+    const firstTrack = vmTracks[0] as any; // use vmTracks not this.beat.tracks
+    const steps = firstTrack?.steps?.length ?? firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
     this.tempoService.numberOfSteps = steps;
     /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-    
+
     this.soundService.setTracks(this.beat.tracks);
   }
 
