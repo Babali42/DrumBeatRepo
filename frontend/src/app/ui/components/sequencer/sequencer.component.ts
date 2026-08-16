@@ -115,6 +115,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       bpm: BPM(beatMeta.bpm ?? stateTempo),
       tracks: vmTracks
     };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
     this.soundService.setTracks(this.beat.tracks);
   }
