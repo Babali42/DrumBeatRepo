@@ -1,3 +1,4 @@
+/// <reference types="jasmine" />
 import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
 import { BPM } from '../../../domain/bpm';
@@ -6,7 +7,7 @@ import { Steps } from '../../../domain/steps';
 import { NumberOfSteps } from '../../../domain/number-of-steps';
 import { MidiDrumType } from '../../../domain/midi-drum-type';
 import { Option } from "effect";
-
+declare let SequencerEngine: any;
 describe('SequencerService undo', () => {
   let service: SequencerService;
 

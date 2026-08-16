@@ -32,7 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import { track } from "effect/Supervisor";
+import { BeatMetadata } from '../../services/sequencer/beats-manifest';
 
 @Component({
   selector: 'sequencer',
@@ -43,7 +43,7 @@ import { track } from "effect/Supervisor";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
-  private readonly destroy$ = new Subject<void>;
+  private readonly destroy$ = new Subject<void>();
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly AddTrackFeatureToggle = false;
@@ -81,16 +81,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
             this.tempoService.setBpm(BPM(state.tempo));
           }
 
-          const beat =
+          const beatMeta =
             this.sequencerService.genres
               .get(state.genre)
               ?.find(x => x.label === state.beat);
 
-          if (beat) {
+          if (beatMeta) {
             if (this.beat.genre === state.genre && this.beat.label === state.beat) {
               this._applySteps();
             } else {
-              this._applyBeat(beat);
+              this._applyBeat(beatMeta, state.genre, state.tempo);
             }
           }
 
@@ -100,20 +100,33 @@ export class SequencerComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.sequencerService.initialize().then(() => {
-      const firstGenre = this.sequencerService.genresLabel[0];
+    void this.sequencerService.initialize();
+    const firstGenre = this.sequencerService.genresLabel[0];
+    if (firstGenre) {
       this.genreChange(firstGenre);
-    }).catch(() => {
-      console.error("Fail to init sequencer");
-    });
+    }
   }
 
-  private _applyBeat(beatToSelect: Beat): void {
-    const vmTracks = this.sequencerService.vm$.getValue().tracks;
-    this.beat = { ...beatToSelect, tracks: vmTracks };
-    this.tempoService.setBeatsPerBar(this.beat.beatsPerBar);
-    this.tempoService.setSubdivisionsPerBeat(this.beat.subdivisionsPerBeat);
-    this.tempoService.setNumberOfBar(this.beat.numberOfBar);
+  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number): void {
+    // guard if vm$.getValue().tracks is not yet set
+    const vmTracks = this.sequencerService.vm$.getValue().tracks ?? [];
+
+    this.beat = {
+      genre: stateGenre,
+      label: beatMeta.label,
+      bpm: BPM(beatMeta.bpm ?? stateTempo),
+      tracks: vmTracks,
+      beatsPerBar: 4,
+      subdivisionsPerBeat: 4,
+      numberOfBar: 1
+    };
+
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+    const firstTrack = vmTracks[0] as any; // use vmTracks not this.beat.tracks
+    const steps = firstTrack?.steps?.length ?? firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
+    this.tempoService.numberOfSteps = steps;
+    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+
     this.soundService.setTracks(this.beat.tracks);
   }
 
@@ -126,14 +139,15 @@ export class SequencerComponent implements OnInit, OnDestroy {
   genreChange(genre: string): void {
     const beatsFromGenre = this.sequencerService.genres.get(genre);
 
-    if (!beatsFromGenre)
+    if (!beatsFromGenre || beatsFromGenre.length === 0)
       return;
 
     this.selectBeat(beatsFromGenre[0]);
   }
 
   beatChange(beat: string): void {
-    const beatsFromGenre = this.sequencerService.genres.get(this.sequencerService.vm$.getValue().genre);
+    const currentGenre = this.sequencerService.vm$.getValue().genre;
+    const beatsFromGenre = this.sequencerService.genres.get(currentGenre);
 
     if (!beatsFromGenre)
       return;
@@ -143,14 +157,22 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.selectBeat(beatToSelect);
   }
 
-  selectBeat(beatToSelect: Beat | undefined): void {
+  selectBeat(beatToSelect: BeatMetadata | undefined): void {
     if (!beatToSelect)
       return;
 
-    this.sequencerService.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatToSelect.genre, beat: beatToSelect.label, tempo: beatToSelect.bpm } });
+    const currentTempo = this.sequencerService.vm$.getValue().tempo || beatToSelect.bpm || 120;
+    void this.sequencerService.dispatch({ 
+      type: 'SELECT_BEAT', 
+      payload: { 
+        genre: beatToSelect.genre, 
+        beat: beatToSelect.label, 
+        tempo: currentTempo 
+      } 
+    });
   }
 
-  dragState: { trackName: string; from: number; to: number; value: boolean } | null = null;
+  dragState: { readonly trackName: string; readonly from: number; readonly to: number; readonly value: boolean } | null = null;
 
   onStepMouseDown(track: Track, stepIndex: number): void {
     this.dragState = {
@@ -189,12 +211,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   private _dispatchDrag(from: number, to: number, trackName: string): void {
     if (from === to) {
-      this.sequencerService.dispatch({
+      void this.sequencerService.dispatch({
         type: 'TOGGLE_STEP',
         payload: { trackName, stepIndex: from },
       });
     } else {
-      this.sequencerService.dispatch({
+      void this.sequencerService.dispatch({
         type: 'SET_STEPS',
         payload: { trackName, fromStepIndex: from, toStepIndex: to, velocity: !this.dragState!.value },
       });
@@ -219,14 +241,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   changeBeatBpm($event: number): void {
     this.soundService.pause();
-    this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
+    void this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
   }
 
   addTrack(): void {
     this.isBrowseAudioSamplesModalOpen = true;
   }
 
-  toggleMuteTrack = (trackName: string) => this.sequencerService.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName } });
+  toggleMuteTrack = (trackName: string) => void this.sequencerService.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName } });
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;
@@ -259,6 +281,4 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  protected readonly track = track;
 }

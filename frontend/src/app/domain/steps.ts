@@ -1,5 +1,5 @@
 export class Steps {
-  private _steps: readonly boolean[];
+  private readonly _steps: readonly boolean[];
 
   constructor(steps: readonly boolean[]) {
     this._steps = [...steps];

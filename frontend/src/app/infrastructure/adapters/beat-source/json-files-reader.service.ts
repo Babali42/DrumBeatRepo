@@ -11,7 +11,11 @@ export class JsonFileReader implements JsonFilesReaderInterface {
   }
 
   loadJsonByFileName(filename: string): Effect.Effect<Option.Option<CompactBeat>, never> {
-    throw new Error('Method not implemented.' + filename);
+    return Effect.option(
+      this.fromObservable(() =>
+        this.http.get<CompactBeat>(`/assets/beats/${filename}.json`)
+      )
+    );
   }
 
   loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
