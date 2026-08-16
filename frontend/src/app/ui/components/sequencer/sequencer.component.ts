@@ -115,14 +115,13 @@ export class SequencerComponent implements OnInit, OnDestroy {
       label: beatMeta.label,
       bpm: BPM(beatMeta.bpm ?? stateTempo),
       tracks: vmTracks,
-      // Add standard 4/4 time defaults to satisfy the Beat interface
       beatsPerBar: 4,
       subdivisionsPerBeat: 4,
       numberOfBar: 1
     };
 
-    // Safely assign numberOfSteps using the property instead of a missing function
-    const firstTrack = this.beat.tracks[0] as any;
+    // Safely determine steps without using the forbidden 'any' keyword
+    const firstTrack = this.beat.tracks[0] as Track & { numberOfSteps?: typeof NumberOfSteps.sixteen };
     const steps = firstTrack?.numberOfSteps ?? NumberOfSteps.sixteen;
     
     this.tempoService.numberOfSteps = steps;
