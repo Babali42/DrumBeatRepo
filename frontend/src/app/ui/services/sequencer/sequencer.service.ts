@@ -95,24 +95,19 @@ export class SequencerService {
       return cmd; // unknown beat
     }
 
-    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument , @typescript-eslint/no-unsafe-return*/
-    // helper to normalize a single track entry from either beatData or beatMeta
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
     const normalizeTracks = (rawTracks: any[] | undefined) => {
       if (!Array.isArray(rawTracks)) return [];
       return rawTracks.map((t: any) => {
-        // Normalize steps: support Steps object with .steps or plain array
         const stepsArr = Array.isArray(t.steps)
           ? [...t.steps]
           : Array.isArray(t.steps?.steps)
           ? [...t.steps.steps]
           : [];
 
-        // Normalize midiNote: support number or Option
-        // Normalize midiNote: support number or Option
         const midiNoteVal = (() => {
           try {
             if (t.midiNote != null) {
-              // Option-like (has .value) or raw number
               return (typeof t.midiNote === 'object' && 'value' in t.midiNote) ? t.midiNote.value : t.midiNote;
             }
             return null;
@@ -133,29 +128,20 @@ export class SequencerService {
 
     try {
       const loader = (this.beatsManager as any).getBeatByFileName;
-      if (typeof loader !== 'function') {
-        console.warn('beatsManager.getBeatByFileName not available; skipping enrichment');
-        // fall back to beatMeta if available
-        const metaTracks = normalizeTracks((beatMeta as any).tracks);
-        return {
-          ...cmd,
-          payload: {
-            genre,
-            beat: beatLabel,
-            tempo: tempo ?? (beatMeta.bpm ?? 120),
-            tracks: metaTracks
-          }
-        };
+      let beatData: any = null;
+
+      if (typeof loader === 'function') {
+        const result = loader.call(this.beatsManager, beatMeta.filename);
+        beatData = typeof result?.then === 'function'
+          ? await result
+          : await Effect.runPromise(result);
       }
 
-      const result = loader.call(this.beatsManager, beatMeta.filename);
-
-      const beatData = typeof result?.then === 'function'
-        ? await result
-        : await Effect.runPromise(result);
-
-      // If fetched data doesn't contain tracks, fallback to beatMeta
-      const finalTracksSource = Array.isArray(beatData?.tracks) ? beatData.tracks : (beatMeta as any).tracks ?? [];
+      // If beatData was successfully fetched and has tracks, use them. Otherwise fallback to payload or beatMeta tracks.
+      const rawPayloadTracks = payload['tracks'] as any[];
+      const finalTracksSource = Array.isArray(beatData?.tracks) 
+        ? beatData.tracks 
+        : (Array.isArray(rawPayloadTracks) && rawPayloadTracks.length > 0 ? rawPayloadTracks : (beatMeta as any).tracks ?? []);
 
       return {
         ...cmd,
@@ -168,15 +154,14 @@ export class SequencerService {
       };
     } catch (err) {
       console.error('Error loading beat data for', beatMeta.filename, err);
-      // fail-safe: return cmd enriched from beatMeta
-      const metaTracks = normalizeTracks((beatMeta as any).tracks);
+      const fallbackTracks = (payload['tracks'] as any[]) ?? (beatMeta as any).tracks ?? [];
       return {
         ...cmd,
         payload: {
           genre,
           beat: beatLabel,
           tempo: tempo ?? (beatMeta.bpm ?? 120),
-          tracks: metaTracks
+          tracks: normalizeTracks(fallbackTracks)
         }
       };
     }
