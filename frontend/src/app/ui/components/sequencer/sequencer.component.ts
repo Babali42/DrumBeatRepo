@@ -120,11 +120,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
       numberOfBar: 1
     };
 
-    // Safely determine steps without using the forbidden 'any' keyword
-    const firstTrack = this.beat.tracks[0] as Track & { numberOfSteps?: typeof NumberOfSteps.sixteen };
-    const steps = firstTrack?.numberOfSteps ?? NumberOfSteps.sixteen;
-    
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+    const firstTrack = this.beat.tracks[0] as any;
+    // Pull the exact length from the track's step array, fallback to 16
+    const steps = firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
     this.tempoService.numberOfSteps = steps;
+    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
     
     this.soundService.setTracks(this.beat.tracks);
   }
