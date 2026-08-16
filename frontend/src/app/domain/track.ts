@@ -21,7 +21,7 @@ export class Track {
       throw new Error(`Unsupported audio format: ${filename}`);
     }
 
-    if (![8, 12, 16, 32, 64].includes(steps.length)) {
+    if (![4, 8, 12, 16, 32, 64].includes(steps.length)) {
       throw new Error(`Step ${steps.length} is invalid`);
     }
 

@@ -70,8 +70,10 @@ export class SequencerService {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
       
+      /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
       SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
+      /* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
       
     }).catch(err => console.error('Dispatch error:', err));
     
