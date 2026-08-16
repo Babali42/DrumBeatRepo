@@ -116,6 +116,10 @@ $gap: 4px;
   @include step-grid(8);
 }
 
+.twelve-steps {
+  @include step-grid(12);
+}
+
 .sixteen-steps {
   @include step-grid(16);
 }

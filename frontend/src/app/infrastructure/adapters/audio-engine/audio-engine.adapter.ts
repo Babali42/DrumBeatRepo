@@ -172,11 +172,13 @@ export class AudioEngineAdapter implements IAudioEngine {
       const oldTrack = oldTracks.find(t => t.name === newTrack.name);
       if (!oldTrack) return;
 
-      this.mute(newTrack, oldTrack);
-
-      this.unMute(newTrack, oldTrack);
-
-      this.toggleStep(newTrack, oldTrack);
+      if (newTrack.isMuted && !oldTrack.isMuted) {
+        this.mute(newTrack);
+      } else if (!newTrack.isMuted && oldTrack.isMuted) {
+        this.unMute(newTrack);
+      } else {
+        this.toggleStep(newTrack, oldTrack);
+      }
     });
   }
 
@@ -195,21 +197,20 @@ export class AudioEngineAdapter implements IAudioEngine {
     });
   }
 
-  private unMute(newTrack: Track, oldTrack: Track) {
-    if (!newTrack.isMuted && oldTrack.isMuted)
-      newTrack.steps.steps.forEach((enabled, stepIdx) => {
-        if (enabled) {
-          this.enableStep(newTrack.name, StepIndex(stepIdx));
-        }
-      });
+  private unMute(newTrack: Track) {
+    newTrack.steps.steps.forEach((enabled, stepIdx) => {
+      if (enabled) {
+        this.enableStep(newTrack.name, StepIndex(stepIdx));
+      }
+    });
   }
 
-  private mute(newTrack: Track, oldTrack: Track) {
-    if (newTrack.isMuted && !oldTrack.isMuted)
-      newTrack.steps.steps.forEach((enabled, stepIdx) => {
-        if (enabled) {
-          this.disableStep(newTrack.name, stepIdx);
-        }
-      });
+  private mute(newTrack: Track) {
+    const map = this.trackStepMap.get(newTrack.name);
+    if (!map) return;
+    for (const [, event] of map) {
+      event.clear();
+    }
+    this.trackStepMap.delete(newTrack.name);
   }
 }

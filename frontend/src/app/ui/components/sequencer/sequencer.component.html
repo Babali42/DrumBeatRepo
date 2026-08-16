@@ -2,7 +2,11 @@
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
       <button class="play-pause-button cursor-pointer app-button" (click)="this.soundService.playPause()">
-        {{ this.soundService.isPlaying ? "⏸" : "▶" }}
+        @if (!this.soundService.isPlaying) {
+        <img alt="play" aria-label="Play" [ngSrc]="'assets/images/icons/play.svg' | iconDarkMode" height="28" width="28">
+        } @else {
+        <img alt="pause" aria-label="Pause" [ngSrc]="'assets/images/icons/pause.svg' | iconDarkMode" height="28" width="28">
+        }
       </button>
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
@@ -57,13 +61,14 @@
   <section class="tracks-container">
     @for (track of beat.tracks; track $index) {
     <article>
-      <div id="track" [class.eight-steps]="track.numberOfSteps == NumberOfSteps.eight"
-        [class.sixteen-steps]="track.numberOfSteps == NumberOfSteps.sixteen"
-        [class.thirty-two-steps]="track.numberOfSteps == NumberOfSteps.thirty_two"
-        [class.sixty-four-steps]="track.numberOfSteps == NumberOfSteps.sixty_four">
+      <div id="track" [class.eight-steps]="track.steps.steps.length == NumberOfSteps.eight"
+        [class.twelve-steps]="track.steps.steps.length == NumberOfSteps.twelve"
+        [class.sixteen-steps]="track.steps.steps.length == NumberOfSteps.sixteen"
+        [class.thirty-two-steps]="track.steps.steps.length == NumberOfSteps.thirty_two"
+        [class.sixty-four-steps]="track.steps.steps.length == NumberOfSteps.sixty_four">
         @for (step of track.steps.steps; track $index){
         <button class="step cursor-pointer" [class.active]="getStepActive(track.name, $index, step)"
-          [class.current]="$index === soundService.index" [class.highlight]="Math.floor($index / 4) % 2 === 0"
+          [class.current]="$index === soundService.index" [class.highlight]="Math.floor($index / (track.steps.steps.length == NumberOfSteps.twelve ? 3 : 4)) % 2 === 0"
           [class.drag-range]="isInDragRange(track.name, $index)" (mousedown)="onStepMouseDown(track, $index)"
           (mouseenter)="onStepMouseEnter(track.name, $index)" (mouseup)="onStepMouseUp(track.name, $index)">
         </button>
