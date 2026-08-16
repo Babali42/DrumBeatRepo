@@ -109,14 +109,24 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number): void {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
+    
     this.beat = {
       genre: stateGenre,
       label: beatMeta.label,
       bpm: BPM(beatMeta.bpm ?? stateTempo),
-      tracks: vmTracks
+      tracks: vmTracks,
+      // Add standard 4/4 time defaults to satisfy the Beat interface
+      beatsPerBar: 4,
+      subdivisionsPerBeat: 4,
+      numberOfBar: 1
     };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    this.tempoService.setNumberOfSteps(this.beat.tracks[0]?.numberOfSteps);
+
+    // Safely assign numberOfSteps using the property instead of a missing function
+    const firstTrack = this.beat.tracks[0] as any;
+    const steps = firstTrack?.numberOfSteps ?? NumberOfSteps.sixteen;
+    
+    this.tempoService.numberOfSteps = steps;
+    
     this.soundService.setTracks(this.beat.tracks);
   }
 
