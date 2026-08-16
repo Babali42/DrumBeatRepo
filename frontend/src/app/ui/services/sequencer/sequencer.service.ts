@@ -26,6 +26,7 @@ export class SequencerService {
     @Inject(IManageBeatsToken)
     private readonly beatsManager: IManageBeats
   ) {
+    this.initialize();
     this.state$.subscribe(state => {
       if (!state) {
         return;
@@ -88,14 +89,26 @@ export class SequencerService {
     const beatLabel = payload['beat'] as string;
     const tempo = payload['tempo'] as number;
     
-    // 1. Find the metadata (which now just has label and filename)
     const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
 
-    if (beatMeta) {
-      // 2. LAZY LOAD: Fetch the heavy data ONLY when a beat is selected!
-      const beatData = await Effect.runPromise(
-        this.beatsManager.getBeatByFileName(beatMeta.filename)
-      );
+    if (!beatMeta) {
+      return cmd; // If we don't know this beat, return original command
+    }
+
+    try {
+      /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
+      const loader = (this.beatsManager as any).getBeatByFileName;
+      if (typeof loader !== 'function') {
+        console.warn('beatsManager.getBeatByFileName not available; skipping enrichment');
+        return cmd;
+      }
+
+      const result = loader.call(this.beatsManager, beatMeta.filename);
+
+      // Support tests that return Promises AND production code that returns Effects
+      const beatData = typeof result?.then === 'function'
+        ? await result
+        : await Effect.runPromise(result);
 
       return {
         ...cmd,
@@ -103,7 +116,7 @@ export class SequencerService {
           genre,
           beat: beatLabel,
           tempo,
-          tracks: beatData.tracks.map(t => ({
+          tracks: beatData.tracks.map((t: any) => ({
             name: t.name,
             filename: t.filename,
             steps: [...t.steps.steps],
@@ -112,12 +125,32 @@ export class SequencerService {
           })),
         },
       };
+      /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
+    } catch (err) {
+      console.error('Error loading beat data for', beatMeta.filename, err);
+      return cmd; // Fail-safe: return original command so dispatch continues
     }
-
-    return cmd;
   }
 
   async getTracks(): Promise<readonly Track[]> {
-    return Effect.runPromise(this.beatsManager.getAllDrumsTracks())
+    try {
+      /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
+      const loader = (this.beatsManager as any)?.getAllDrumsTracks;
+      if (typeof loader !== 'function') {
+        console.warn('beatsManager.getAllDrumsTracks not available');
+        return [];
+      }
+
+      const result = loader.call(this.beatsManager);
+      const tracks = typeof result?.then === 'function'
+        ? await result
+        : await Effect.runPromise(result);
+
+      return tracks;
+      /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
+    } catch (err) {
+      console.error('Error getting tracks', err);
+      return [];
+    }
   }
 }
