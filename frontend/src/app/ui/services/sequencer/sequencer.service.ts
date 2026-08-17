@@ -113,9 +113,20 @@ export class SequencerService {
               return null;
             }
 
-            return typeof midiNote === 'object' && 'value' in midiNote
-              ? midiNote.value
-              : midiNote;
+            if (typeof midiNote === 'number') {
+              return midiNote;
+            }
+
+            if (
+              typeof midiNote === 'object' &&
+              midiNote !== null &&
+              'value' in midiNote &&
+              typeof midiNote.value === 'number'
+            ) {
+              return midiNote.value;
+            }
+
+            return null;
           } catch {
             return null;
           }
