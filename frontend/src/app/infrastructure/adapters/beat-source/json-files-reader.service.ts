@@ -18,34 +18,6 @@ export class JsonFileReader implements JsonFilesReaderInterface {
     );
   }
 
-  loadAllJson(): Effect.Effect<Option.Option<CompactBeat>[], never> {
-    const files = ['dnb/dnb']
-      .concat('hypnotic-techno/tresillo', 'hypnotic-techno/son-clave')
-      .concat('techno/techno', 'techno/off-beat-clap')
-      .concat('hardcore-techno/gabber')
-      .concat('psytrance/psytrance', 'psytrance/psytrance-variation', 'psytrance/psytrance-ternary')
-      .concat('dub/dub')
-      .concat('dancehall/reggaeton', 'dancehall/standard', 'dancehall/modern')
-      .concat('hip-hop/trap', 'hip-hop/jul')
-      .concat('metal/metal', 'metal/metal-blastbeat', 'metal/half-time-groove')
-      .concat('rock/rock', 'rock/variation')
-      .concat('punk/punk-beat-quarter-note-groove', 'punk/punk-beat-quarter-note-groove-variation', 'punk/punk-beat-eight-note-fill')
-      .concat('ebm/ebm')
-      .concat('jersey-club/jersey-club')
-    return this.loadAllBeats(files);
-  }
-
-  loadAllBeats = (files: readonly string[]) =>
-    Effect.all(
-      files.map(file =>
-        Effect.option(
-          this.fromObservable(() =>
-            this.http.get<CompactBeat>(`/assets/beats/${file}.json`)
-          )
-        )
-      )
-    );
-
   fromObservable = <A>(obs: () => Observable<A>) =>
     Effect.tryPromise({
       try: () => firstValueFrom(obs()),

@@ -3,7 +3,5 @@ import { Effect, Option } from "effect";
 
 export interface JsonFilesReaderInterface {
   loadJsonByFileName(fileName: string): Effect.Effect<Option.Option<CompactBeat>, never>
-
-  loadAllJson(): Effect.Effect<readonly Option.Option<CompactBeat>[], never>
 }
 
