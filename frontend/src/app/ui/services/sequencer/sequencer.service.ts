@@ -70,14 +70,14 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
-      
+
       /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
       SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
       /* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
-      
+
     }).catch(err => console.error('Dispatch error:', err));
-    
+
     return this.dispatchQueue;
   }
 
@@ -102,12 +102,14 @@ export class SequencerService {
         const stepsArr = Array.isArray(t.steps)
           ? [...t.steps]
           : Array.isArray(t.steps?.steps)
-          ? [...t.steps.steps]
-          : [];
+            ? [...t.steps.steps]
+            : [];
 
+        //@typescript-eslint/no-unsafe-return
         const midiNoteVal = (() => {
           try {
             if (t.midiNote != null) {
+              //@typescript-eslint/no-unsafe-return
               return (typeof t.midiNote === 'object' && 'value' in t.midiNote) ? t.midiNote.value : t.midiNote;
             }
             return null;
@@ -139,8 +141,8 @@ export class SequencerService {
 
       // If beatData was successfully fetched and has tracks, use them. Otherwise fallback to payload or beatMeta tracks.
       const rawPayloadTracks = payload['tracks'] as any[];
-      const finalTracksSource = Array.isArray(beatData?.tracks) 
-        ? beatData.tracks 
+      const finalTracksSource = Array.isArray(beatData?.tracks)
+        ? beatData.tracks
         : (Array.isArray(rawPayloadTracks) && rawPayloadTracks.length > 0 ? rawPayloadTracks : (beatMeta as any).tracks ?? []);
 
       return {
