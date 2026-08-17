@@ -105,14 +105,17 @@ export class SequencerService {
             ? [...t.steps.steps]
             : [];
 
-        //@typescript-eslint/no-unsafe-return
-        const midiNoteVal = (() => {
+        const midiNoteVal: number | null = (() => {
           try {
-            if (t.midiNote != null) {
-              //@typescript-eslint/no-unsafe-return
-              return (typeof t.midiNote === 'object' && 'value' in t.midiNote) ? t.midiNote.value : t.midiNote;
+            const midiNote = t.midiNote;
+
+            if (midiNote == null) {
+              return null;
             }
-            return null;
+
+            return typeof midiNote === 'object' && 'value' in midiNote
+              ? midiNote.value
+              : midiNote;
           } catch {
             return null;
           }
