@@ -1,6 +1,6 @@
 services:
   angular-frontend:
-    image: mcr.microsoft.com/devcontainers/typescript-node:4-24-trixie
+    image: mcr.microsoft.com/devcontainers/typescript-node:5-24-trixie
     volumes:
       # Mount the repo root (compose file is in .devcontainer/, so .. = repo root)
       - ..:/workspace
