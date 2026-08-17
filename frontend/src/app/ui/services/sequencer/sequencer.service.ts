@@ -96,51 +96,29 @@ export class SequencerService {
     }
 
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-    const normalizeTracks = (rawTracks: any[] | undefined) => {
-      if (!Array.isArray(rawTracks)) return [];
-      return rawTracks.map((t: any) => {
-        const stepsArr = Array.isArray(t.steps)
+    const normalizeTracks = (rawTracks: any[] | undefined) =>
+      rawTracks?.map((t: any) => {
+        const steps = Array.isArray(t.steps)
           ? [...t.steps]
           : Array.isArray(t.steps?.steps)
             ? [...t.steps.steps]
             : [];
 
-        const midiNoteVal: number | null = (() => {
-          try {
-            const midiNote = t.midiNote;
-
-            if (midiNote == null) {
-              return null;
-            }
-
-            if (typeof midiNote === 'number') {
-              return midiNote;
-            }
-
-            if (
-              typeof midiNote === 'object' &&
-              midiNote !== null &&
-              'value' in midiNote &&
-              typeof midiNote.value === 'number'
-            ) {
-              return midiNote.value;
-            }
-
-            return null;
-          } catch {
-            return null;
-          }
-        })();
+        const midiNote =
+          typeof t.midiNote === 'number'
+            ? t.midiNote
+            : typeof t.midiNote?.value === 'number'
+              ? t.midiNote.value
+              : null;
 
         return {
           name: t.name,
           filename: t.filename,
-          steps: stepsArr,
-          midiNote: midiNoteVal,
+          steps,
+          midiNote,
           isMuted: !!t.isMuted
         };
-      });
-    };
+      }) ?? [];
 
     try {
       const loader = (this.beatsManager as any).getBeatByFileName;
