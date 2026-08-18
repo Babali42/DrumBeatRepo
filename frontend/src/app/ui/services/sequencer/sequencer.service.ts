@@ -53,13 +53,9 @@ export class SequencerService {
     this.genres.clear();
 
     for (const beatMeta of BEATS_MANIFEST) {
-      const list = this.genres.get(beatMeta.genre);
-
-      if (list) {
-        list.push(beatMeta);
-      } else {
-        this.genres.set(beatMeta.genre, [beatMeta]);
-      }
+      const beats = this.genres.get(beatMeta.genre) ?? [];
+      beats.push(beatMeta);
+      this.genres.set(beatMeta.genre, beats);
     }
 
     this.genresLabel = [...this.genres.keys()];
@@ -70,12 +66,8 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
-
-      /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
       SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
-      /* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
-
     }).catch(err => console.error('Dispatch error:', err));
 
     return this.dispatchQueue;
