@@ -161,13 +161,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
     if (!beatToSelect)
       return;
 
-    const currentTempo = this.sequencerService.vm$.getValue().tempo || beatToSelect.bpm || 120;
     void this.sequencerService.dispatch({ 
       type: 'SELECT_BEAT', 
       payload: { 
         genre: beatToSelect.genre, 
-        beat: beatToSelect.label, 
-        tempo: currentTempo 
+        beat: beatToSelect.label
       } 
     });
   }
