@@ -9,10 +9,6 @@ import {
   AudioEngineAdapterFake
 } from "../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake";
 import IManageBeats from "../../../domain/ports/i-manage-beats";
-import { Steps } from "../../../domain/steps";
-import { NumberOfSteps } from "../../../domain/number-of-steps";
-import { BPM } from "../../../domain/bpm";
-import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { provideTranslateService } from "@ngx-translate/core";
 import { Effect, Option } from "effect";
 import { IMIDI } from "../../../infrastructure/injection-tokens/i-midi.token";

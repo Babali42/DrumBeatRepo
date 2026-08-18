@@ -3,11 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
 import { BPM } from '../../../domain/bpm';
 import { IManageBeatsToken } from '../../../infrastructure/injection-tokens/i-manage-beat.token';
-import { Steps } from '../../../domain/steps';
-import { NumberOfSteps } from '../../../domain/number-of-steps';
-import { MidiDrumType } from '../../../domain/midi-drum-type';
-import { Option } from "effect";
+
 declare let SequencerEngine: any;
+
 describe('SequencerService undo', () => {
   let service: SequencerService;
 
@@ -15,40 +13,16 @@ describe('SequencerService undo', () => {
     SequencerEngine.reset();
 
     const beatsMock = {
-      getAllBeats: () => Promise.resolve([
+      getBeatsManifest: () => Promise.resolve([
         {
           label: "Techno1",
           genre: "Techno",
-          bpm: BPM(128),
-          beatsPerBar: 4,
-          subdivisionsPerBeat: 4,
-          numberOfBar: 1,
-          tracks: [
-            {
-              name: "Snare",
-              filename: "metal/snare.mp3",
-              steps: new Steps([false, false, false, false]),
-              numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
-            }
-          ]
+          filename: "123.mp3"
         },
         {
           label: "Techno2",
           genre: "Techno",
-          bpm: BPM(128),
-          beatsPerBar: 4,
-          subdivisionsPerBeat: 4,
-          numberOfBar: 1,
-          tracks: [
-            {
-              name: "Snare",
-              filename: "metal/snare.mp3",
-              steps: new Steps([true, true, true, true]),
-              numberOfSteps: NumberOfSteps.sixteen,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
-            }
-          ]
+          filename: "123.mp3"
         }
       ])
     };
