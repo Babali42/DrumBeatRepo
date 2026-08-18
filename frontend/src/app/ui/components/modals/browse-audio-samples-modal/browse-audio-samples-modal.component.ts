@@ -34,9 +34,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     }
 
     ngOnInit(): void {
-        void this.sequencerService.getTracks().then(x => {
-            this.tracks = x;
-        });
+
     }
 
     ngOnChanges(): void {

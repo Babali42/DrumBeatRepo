@@ -59,12 +59,12 @@ describe("Beat adapter service", () => {
     }).compileComponents();
   });
 
-  it("should return beats", async () => {
+  it("should return beats manifest", async () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
     //Act
-    const beats = await Effect.runPromise(systemUnderTest.getAllBeats());
+    const beats = await Effect.runPromise(systemUnderTest.getBeatsManifest());
 
     //Assert
     expect(beats.length).toBeGreaterThan(0);

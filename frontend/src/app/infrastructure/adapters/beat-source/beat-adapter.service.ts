@@ -6,14 +6,14 @@ import { CompactBeatMapper } from "./compact-beat.mapper";
 import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.token";
 import { Array, Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { BEATS_MANIFEST } from "../../../ui/services/sequencer/beats-manifest";
+import {BeatMetadata, BEATS_MANIFEST} from "../../../ui/services/sequencer/beats-manifest";
 
 @Injectable({ providedIn: 'root' })
 export class BeatAdapter implements IManageBeats {
   constructor(@Inject(jsonFileReaderToken) private readonly jsonFileReader: JsonFilesReaderInterface) {
 
   }
-  
+
   getBeatByFileName(name: string): Effect.Effect<Beat, Error> {
     return Effect.flatMap(
       this.jsonFileReader.loadJsonByFileName(name),
@@ -21,22 +21,26 @@ export class BeatAdapter implements IManageBeats {
     )
   }
 
-  getAllBeats(): Effect.Effect<Beat[], Error> {
+  getBeatsManifest(): Effect.Effect<BeatMetadata[], Error> {
     // Dynamically fetch all beats using our lightweight manifest
-    return Effect.all(
-      BEATS_MANIFEST.map(meta => this.getBeatByFileName(meta.filename))
-    );
+    return Effect.succeed(BEATS_MANIFEST)
   }
 
   getAllDrumsTracks(): Effect.Effect<Track[], Error> {
-    const distinctByFileName = (tracks: Track[]) =>
-      Array.dedupeWith(tracks, (a, b) => a.filename === b.filename);
-
-    return this.getAllBeats().pipe(
-      Effect.map(beats => beats
-        .flatMap(beat => beat.tracks)
-        .filter(x => Option.isSome(x.midiNote))),
-      Effect.map(distinctByFileName)
+    return this.getBeatsManifest().pipe(
+      Effect.flatMap(beats =>
+        Effect.all(
+          beats.map(beat => this.getBeatByFileName(beat.filename))
+        )
+      ),
+      Effect.map(beats =>
+        beats.flatMap(beat =>
+          beat.tracks.filter(track => Option.isSome(track.midiNote))
+        )
+      ),
+      Effect.map(tracks =>
+        Array.dedupeWith(tracks, (a, b) => a.filename === b.filename)
+      )
     );
   }
 }

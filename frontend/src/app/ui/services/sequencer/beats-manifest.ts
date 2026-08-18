@@ -6,7 +6,7 @@ export type BeatMetadata = {
 };
 
 
-export const BEATS_MANIFEST = [
+export const BEATS_MANIFEST : BeatMetadata[] = [
   {
     "filename": "dnb/dnb",
     "genre": "(new) Drum and Bass",

@@ -121,66 +121,46 @@ export class SequencerService {
       }) ?? [];
 
     try {
-      const loader = (this.beatsManager as any).getBeatByFileName;
-      let beatData: any = null;
+      const beatData = await Effect.runPromise(
+        this.beatsManager.getBeatByFileName(beatMeta.filename)
+      );
 
-      if (typeof loader === 'function') {
-        const result = loader.call(this.beatsManager, beatMeta.filename);
-        beatData = typeof result?.then === 'function'
-          ? await result
-          : await Effect.runPromise(result);
-      }
-
-      // If beatData was successfully fetched and has tracks, use them. Otherwise fallback to payload or beatMeta tracks.
-      const rawPayloadTracks = payload['tracks'] as any[];
-      const finalTracksSource = Array.isArray(beatData?.tracks)
+      const rawPayloadTracks = payload["tracks"] as any[];
+      const tracks = beatData.tracks.length > 0
         ? beatData.tracks
-        : (Array.isArray(rawPayloadTracks) && rawPayloadTracks.length > 0 ? rawPayloadTracks : (beatMeta as any).tracks ?? []);
+        : rawPayloadTracks?.length
+          ? rawPayloadTracks
+          : (beatMeta as any).tracks ?? [];
 
       return {
         ...cmd,
         payload: {
           genre,
           beat: beatLabel,
-          tempo: tempo ?? (beatData?.tempo ?? beatMeta.bpm ?? 120),
-          tracks: normalizeTracks(finalTracksSource)
+          tempo: tempo ?? beatData.bpm ?? beatMeta.bpm ?? 120,
+          tracks: normalizeTracks(tracks)
         }
       };
     } catch (err) {
-      console.error('Error loading beat data for', beatMeta.filename, err);
-      const fallbackTracks = (payload['tracks'] as any[]) ?? (beatMeta as any).tracks ?? [];
+      console.error(
+        "Error loading beat data for",
+        beatMeta.filename,
+        err
+      );
+
       return {
         ...cmd,
         payload: {
           genre,
           beat: beatLabel,
-          tempo: tempo ?? (beatMeta.bpm ?? 120),
-          tracks: normalizeTracks(fallbackTracks)
+          tempo: tempo ?? beatMeta.bpm ?? 120,
+          tracks: normalizeTracks(
+            (payload["tracks"] as any[]) ??
+            (beatMeta as any).tracks ??
+            []
+          )
         }
       };
-    }
-    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-  }
-
-  async getTracks(): Promise<readonly Track[]> {
-    try {
-      /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
-      const loader = (this.beatsManager as any)?.getAllDrumsTracks;
-      if (typeof loader !== 'function') {
-        console.warn('beatsManager.getAllDrumsTracks not available');
-        return [];
-      }
-
-      const result = loader.call(this.beatsManager);
-      const tracks = typeof result?.then === 'function'
-        ? await result
-        : await Effect.runPromise(result);
-
-      return tracks;
-      /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
-    } catch (err) {
-      console.error('Error getting tracks', err);
-      return [];
     }
   }
 }
