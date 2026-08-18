@@ -79,7 +79,6 @@ export class SequencerService {
     const payload = cmd.payload as Record<string, unknown>;
     const genre = payload['genre'] as string;
     const beatLabel = payload['beat'] as string;
-    const tempo = (payload['tempo'] as number) ?? undefined;
 
     const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
 
@@ -129,7 +128,7 @@ export class SequencerService {
         payload: {
           genre,
           beat: beatLabel,
-          tempo: tempo ?? beatData.bpm ?? beatMeta.bpm ?? 120,
+          tempo: beatData.bpm,
           tracks: normalizeTracks(tracks)
         }
       };
@@ -145,7 +144,7 @@ export class SequencerService {
         payload: {
           genre,
           beat: beatLabel,
-          tempo: tempo ?? beatMeta.bpm ?? 120,
+          tempo: 120,
           tracks: normalizeTracks(
             (payload["tracks"] as any[]) ??
             (beatMeta as any).tracks ??
