@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { Beat } from "../beat";
 import { Track } from "../track";
-import {BeatMetadata} from "../../ui/services/sequencer/beats-manifest";
+import {BeatMetadata} from "../../../assets/beats/beats-manifest";
 
 export default interface IManageBeats {
   readonly getBeatByFileName: (filename: string) => Effect.Effect<Beat, Error>
