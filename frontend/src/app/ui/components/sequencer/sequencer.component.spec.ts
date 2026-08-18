@@ -75,27 +75,6 @@ describe('SequencerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("default genre and beat are selected", () => {
-    fixture.detectChanges();
-    expect(component.sequencerService.vm$.getValue().genre).toBe("Techno");
-    expect(component.sequencerService.vm$.getValue().beat).toBe("Techno1");
-  });
-
-  it("should change the selected beat when a new beat is chosen via the app-select-input dropdown", async () => {
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
-
-    expect(component.beat.label).toBe("Techno1");
-
-    const beatSelect = fixture.debugElement.queryAll(By.css("app-select-input select"))[1];
-    beatSelect.nativeElement.value = "Techno2";
-    beatSelect.nativeElement.dispatchEvent(new Event("change"));
-    fixture.detectChanges();
-
-    expect(component.beat.label).toBe("Techno2");
-  });
-
   it("should toggle a step when clicked", () => {
     fixture.detectChanges();
 

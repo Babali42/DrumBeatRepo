@@ -3,6 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { SequencerService } from './sequencer.service';
 import { BPM } from '../../../domain/bpm';
 import { IManageBeatsToken } from '../../../infrastructure/injection-tokens/i-manage-beat.token';
+import {Effect, Option} from "effect";
+import {Steps} from "../../../domain/steps";
+import {NumberOfSteps} from "../../../domain/number-of-steps";
+import {MidiDrumType} from "../../../domain/midi-drum-type";
+import {Beat} from "../../../domain/beat";
 
 declare let SequencerEngine: any;
 
@@ -13,6 +18,23 @@ describe('SequencerService undo', () => {
     SequencerEngine.reset();
 
     const beatsMock = {
+      getBeatByFileName: () => Effect.succeed({
+        label: "Techno1",
+        genre: "Techno",
+        bpm: BPM(128),
+        beatsPerBar: 4,
+        subdivisionsPerBeat: 4,
+        numberOfBar: 1,
+        tracks: [
+          {
+            name: "Snare",
+            filename: "metal/snare.mp3",
+            steps: new Steps([true, true, true, true]),
+            isMuted: false,
+            midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
+          }
+        ]
+      } as Beat),
       getBeatsManifest: () => Promise.resolve([
         {
           label: "Techno1",
