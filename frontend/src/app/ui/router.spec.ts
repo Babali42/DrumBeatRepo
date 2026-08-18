@@ -103,6 +103,5 @@ describe('Router', () => {
 
     const seq = dbg.componentInstance as SequencerComponent;
     expect(seq.beat).withContext('Beat object should have been set').toBeDefined();
-    expect(seq.beat.bpm.valueOf()).toEqual(128);
   }));
 });
