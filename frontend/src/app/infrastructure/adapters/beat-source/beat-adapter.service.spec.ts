@@ -40,6 +40,13 @@ describe("Beat adapter service", () => {
             "isMuted": false
           },
           {
+            "name": "Kick",
+            "midiNote": 38,
+            "filename": toMp3FilePath("metal/kick.mp3"),
+            "steps": "XXXXXXXXXXXXXXXX",
+            "isMuted": false
+          },
+          {
             "name": "Bass",
             "midiNote": undefined,
             "filename": toMp3FilePath("metal/bass.mp3"),
@@ -59,12 +66,12 @@ describe("Beat adapter service", () => {
     }).compileComponents();
   });
 
-  it("should return beats", async () => {
+  it("should return beats manifest", async () => {
     //Arrange
     const systemUnderTest = TestBed.inject(BeatAdapter);
 
     //Act
-    const beats = await Effect.runPromise(systemUnderTest.getAllBeats());
+    const beats = await Effect.runPromise(systemUnderTest.getBeatsManifest());
 
     //Assert
     expect(beats.length).toBeGreaterThan(0);
@@ -78,6 +85,6 @@ describe("Beat adapter service", () => {
     const tracks = await Effect.runPromise(systemUnderTest.getAllDrumsTracks());
 
     //Assert
-    expect(tracks.map(x => x.name)).toEqual(['Snare', 'Hats', 'Kick', 'Snare2']);
+    expect(tracks.map(x => x.name)).toEqual(['Snare', 'Hats', 'Kick']);
   })
 })

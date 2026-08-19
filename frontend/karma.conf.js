@@ -4,6 +4,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
+      require('karma-spec-reporter'),
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
@@ -44,7 +45,10 @@ module.exports = function (config) {
         ]
       }
     },
-    reporters: ['progress', 'kjhtml', 'coverage'],
+    reporters: ['spec', 
+      
+      
+      'progress', 'kjhtml', 'coverage'],
     browsers: ['ChromeHeadlessNoSandbox'],
     restartOnFileChange: true,
     autoWatch: true,

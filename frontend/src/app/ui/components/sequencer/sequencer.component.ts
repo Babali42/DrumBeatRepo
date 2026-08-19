@@ -32,7 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import { BeatMetadata } from '../../services/sequencer/beats-manifest';
+import {BeatMetadata} from "../../../domain/ports/beat-metadata";
 
 @Component({
   selector: 'sequencer',
@@ -161,14 +161,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
     if (!beatToSelect)
       return;
 
-    const currentTempo = this.sequencerService.vm$.getValue().tempo || beatToSelect.bpm || 120;
-    void this.sequencerService.dispatch({ 
-      type: 'SELECT_BEAT', 
-      payload: { 
-        genre: beatToSelect.genre, 
-        beat: beatToSelect.label, 
-        tempo: currentTempo 
-      } 
+    void this.sequencerService.dispatch({
+      type: 'SELECT_BEAT',
+      payload: {
+        genre: beatToSelect.genre,
+        beat: beatToSelect.label
+      }
     });
   }
 

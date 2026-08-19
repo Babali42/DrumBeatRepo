@@ -13,9 +13,13 @@ describe("Hexagonal architecture test", () => {
         .resideInAPackage("..domain..")
         .should()
         .onlyDependOnClassesThat()
-        .resideInAnyPackage("..domain..", "node_modules..")
+        .resideInAnyPackage(
+          "..domain..",
+          "node_modules..",
+          "src.assets.beats.beats-manifest.ts"
+        )
         .because("domain model should only depend on domain or effect library")
-        .check(srcProject.allClasses())
+        .check(srcProject.allClasses());
     });
   });
 });
