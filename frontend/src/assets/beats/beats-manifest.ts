@@ -1,9 +1,4 @@
-export type BeatMetadata = {
-  readonly genre: string;
-  readonly label: string;
-  readonly filename: string;
-  readonly bpm?: number;
-};
+import {BeatMetadata} from "../../app/domain/ports/beat-metadata";
 
 
 export const BEATS_MANIFEST : BeatMetadata[] = [
