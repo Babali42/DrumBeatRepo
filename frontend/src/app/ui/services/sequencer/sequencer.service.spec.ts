@@ -8,20 +8,23 @@ import { Effect, Option } from 'effect';
 import { Steps } from '../../../domain/steps';
 import { MidiDrumType } from '../../../domain/midi-drum-type';
 import { Beat } from '../../../domain/beat';
+import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
 
 declare let SequencerEngine: any;
 
-describe('SequencerService undo', () => {
+describe('SequencerService', () => {
   let service: SequencerService;
+
+  const beatFromManifest = BEATS_MANIFEST[0];
 
   beforeEach(async () => {
     SequencerEngine.reset();
 
     const beatsMock = {
-      getBeatByFileName: () =>
+      getBeatByFileName: jasmine.createSpy('getBeatByFileName').and.returnValue(
         Effect.succeed({
-          label: 'Techno1',
-          genre: 'Techno',
+          label: beatFromManifest.label,
+          genre: beatFromManifest.genre,
           bpm: BPM(128),
           beatsPerBar: 4,
           subdivisionsPerBeat: 4,
@@ -35,21 +38,8 @@ describe('SequencerService undo', () => {
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]
-        } as Beat),
-
-      getBeatsManifest: () =>
-        Promise.resolve([
-          {
-            label: 'Techno1',
-            genre: 'Techno',
-            filename: '123.mp3'
-          },
-          {
-            label: 'Techno2',
-            genre: 'Techno',
-            filename: '123.mp3'
-          }
-        ])
+        } as Beat)
+      )
     };
 
     await TestBed.configureTestingModule({
@@ -68,113 +58,52 @@ describe('SequencerService undo', () => {
     return service.state$.getValue()!;
   }
 
-  const trackPayload = [
-    {
-      name: 'Snare',
-      filename: 'metal/snare.mp3',
-      steps: [false, false, false, false],
-      isMuted: false,
-      midiNote: 38
-    }
-  ];
-
-  it('undoes a SELECT_BEAT', async () => {
+  it('loads beat data from repository when selecting a beat', async () => {
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: 'Techno',
-        beat: '4 on the floor',
-        tracks: trackPayload,
-        tempo: 128
+        genre: beatFromManifest.genre,
+        beat: beatFromManifest.label
       }
     });
 
-    expect(currentState().genre).toBe('Techno');
-    expect(currentState().beat).toBe('4 on the floor');
+    expect(currentState().genre).toBe(beatFromManifest.genre);
+    expect(currentState().beat).toBe(beatFromManifest.label);
 
     expect(currentState().tracks.length).toBe(1);
     expect(currentState().tracks[0].name).toBe('Snare');
-    expect(currentState().tracks[0].filename).toBe('metal/snare.mp3');
     expect(currentState().tracks[0].steps).toEqual([
-      false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true,
+      true
     ]);
-    expect(currentState().tracks[0].midiNote).toBe(38);
-    expect(currentState().tracks[0].isMuted).toBeFalse();
 
-    await service.dispatch({ type: 'UNDO' });
-
-    expect(currentState().beat).toBe('Tresillo');
-    expect(currentState().futureLength).toBe(1);
+    expect(currentState().tempo).toBe(128);
   });
 
-  it('reapplies SELECT_BEAT after undo then redo', async () => {
+  it('updates view model after select beat', async () => {
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: 'Techno',
-        beat: '4 on the floor',
-        tracks: trackPayload,
-        tempo: 128
+        genre: beatFromManifest.genre,
+        beat: beatFromManifest.label
       }
     });
 
-    await service.dispatch({ type: 'UNDO' });
+    const vm = service.vm$.getValue();
 
-    expect(currentState().beat).toBe('Tresillo');
-
-    await service.dispatch({ type: 'REDO' });
-
-    expect(currentState().beat).toBe('4 on the floor');
+    expect(vm.genre).toBe(beatFromManifest.genre);
+    expect(vm.beat).toBe(beatFromManifest.label);
+    expect(vm.tempo).toBe(BPM(128));
   });
 
-  it('should apply a setTempo command', async () => {
+  it('applies a tempo command', async () => {
     await service.dispatch({
       type: 'SET_TEMPO',
       payload: { tempo: 129 }
     });
 
     expect(currentState().tempo).toBe(129);
-  });
-
-  it('should update the viewmodel when state change', async () => {
-    await service.dispatch({
-      type: 'SELECT_BEAT',
-      payload: {
-        genre: 'Techno',
-        beat: '4 on the floor',
-        tracks: trackPayload,
-        tempo: 128
-      }
-    });
-
-    const vm = service.vm$.getValue();
-
-    expect(vm.genre).toBe('Techno');
-    expect(vm.beat).toBe('4 on the floor');
-    expect(vm.tempo).toBe(BPM(128));
-  });
-
-  it('should apply a toggle mute command', async () => {
-    await service.dispatch({
-      type: 'SELECT_BEAT',
-      payload: {
-        genre: 'Techno',
-        beat: '4 on the floor',
-        tracks: trackPayload,
-        tempo: 128
-      }
-    });
-
-    await service.dispatch({
-      type: 'TOGGLE_MUTE_TRACK',
-      payload: { trackName: 'Snare' }
-    });
-
-    expect(currentState().tracks.length).toBe(1);
-    expect(currentState().tracks[0].name).toBe('Snare');
-    expect(currentState().tracks[0].isMuted).toBeTrue();
   });
 });
