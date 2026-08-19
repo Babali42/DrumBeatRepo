@@ -93,8 +93,8 @@ describe('SequencerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should toggle a step when clicked', () => {
-    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
+  it('should toggle a step when clicked', async () => {
+    let stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
     const firstStepButton = stepButtons[0];
 
     expect(
@@ -104,14 +104,18 @@ describe('SequencerComponent', () => {
     firstStepButton.nativeElement.dispatchEvent(
       new MouseEvent('mousedown')
     );
+
     firstStepButton.nativeElement.dispatchEvent(
       new MouseEvent('mouseup')
     );
 
     fixture.detectChanges();
+    await fixture.whenStable();
+
+    stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
 
     expect(
-      firstStepButton.nativeElement.classList.contains('active')
+      stepButtons[0].nativeElement.classList.contains('active')
     ).toBeTrue();
   });
 
@@ -152,26 +156,39 @@ describe('SequencerComponent', () => {
     expect(resetActiveCount).not.toEqual(modifiedActiveCount);
   });
 
-  it('should apply the step change when mouseup happens outside the grid', () => {
-    const stepButtons = fixture.debugElement.queryAll(By.css('button.step'));
-    const firstStepButton = stepButtons[0];
+  it('should apply the range change when mouseup happens outside the grid', async () => {
+    const track = component.beat.tracks[0];
 
-    expect(
-      firstStepButton.nativeElement.classList.contains('active')
-    ).toBeFalse();
-
-    firstStepButton.nativeElement.dispatchEvent(
-      new MouseEvent('mousedown')
-    );
+    component.onStepMouseDown(track, 0);
+    component.onStepMouseEnter(track.name, 1);
+    component.onStepMouseEnter(track.name, 2);
+    component.onStepMouseEnter(track.name, 3);
 
     document.dispatchEvent(new MouseEvent('mouseup'));
 
     fixture.detectChanges();
+    await fixture.whenStable();
+
+    const stepButtons =
+      fixture.debugElement.queryAll(By.css('button.step'));
 
     expect(
-      firstStepButton.nativeElement.classList.contains('active')
+      stepButtons[0].nativeElement.classList.contains('active')
+    ).toBeTrue();
+
+    expect(
+      stepButtons[1].nativeElement.classList.contains('active')
+    ).toBeTrue();
+
+    expect(
+      stepButtons[2].nativeElement.classList.contains('active')
+    ).toBeTrue();
+
+    expect(
+      stepButtons[3].nativeElement.classList.contains('active')
     ).toBeTrue();
   });
+
 
   it('should apply the range change when mouseup happens outside the grid', () => {
     const track = component.beat.tracks[0];
