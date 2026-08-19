@@ -8,7 +8,8 @@ import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { BEATS_MANIFEST, BeatMetadata } from '../../../../assets/beats/beats-manifest';
+import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
+import {BeatMetadata} from "../../../domain/ports/beat-metadata";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
