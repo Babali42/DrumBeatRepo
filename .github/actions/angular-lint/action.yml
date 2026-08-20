@@ -1,9 +1,5 @@
-name: AngularTest
-description: Validate Angular project — Karma, Vitest, coverage, and i18n
-inputs:
-  codecov_token:
-    description: 'Codecov upload token'
-    required: true
+name: AngularLint
+description: Download Scala.js artifact and run ESLint on the Angular project
 runs:
   using: composite
   steps:
@@ -30,19 +26,7 @@ runs:
       shell: bash
       working-directory: ./frontend
 
-    - name: Run angular/karma tests
-      run: npm run test-ci
+    - name: Run ESLint
+      run: npm run lint
       shell: bash
       working-directory: ./frontend
-
-    - name: Run vitest
-      run: npm run test-vitest-coverage
-      shell: bash
-      working-directory: ./frontend
-
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v7
-      with:
-        token: ${{ inputs.codecov_token }}
-        files: frontend/coverage/ng17-lib-test/lcov.info,frontend/coverage/vitest/lcov.info
-        fail_ci_if_error: true

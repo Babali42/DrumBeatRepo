@@ -1,34 +1,44 @@
 name: Tests
-
 on:
   pull_request:
     branches: [ "main" ]
     paths: [ 'frontend/**', 'engine/**', '.github/**' ]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
-  test:
+  scala:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
       - name: Validate Scala
         uses: ./.github/actions/scala-test/
 
-      - name: Validate Angular
+  lint:
+    needs: scala
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Validate Angular (lint)
+        uses: ./.github/actions/angular-lint/
+
+  tests:
+    needs: scala
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Validate Angular (tests)
         uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
-  
+
   check-i18n-consistency:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-
       - name: Verify i18n translations consistency
         run: bash ./verify_i18n_json.sh
         shell: bash
