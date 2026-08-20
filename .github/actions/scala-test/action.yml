@@ -6,6 +6,8 @@ runs:
   steps:
     - name: Checkout repository
       uses: actions/checkout@v7
+      with:
+        persist-credentials: false
 
     - name: Setup Java 25 (Temurin)
       uses: actions/setup-java@v5

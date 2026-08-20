@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Validate Scala
         uses: ./.github/actions/scala-test/
 
@@ -21,6 +23,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Validate Angular (lint)
         uses: ./.github/actions/angular-lint/
 
@@ -30,6 +34,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Validate Angular (tests)
         uses: ./.github/actions/angular-test/
         with:
@@ -39,6 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Verify i18n translations consistency
         run: bash ./verify_i18n_json.sh
         shell: bash
