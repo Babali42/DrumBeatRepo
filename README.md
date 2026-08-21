@@ -126,6 +126,7 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><img src="?s=100" width="100px;" alt="Slaiker"/><br /><sub><b>Slaiker</b></sub><br /><a href="#ideas-Slaiker" title="Ideas, Planning, & Feedback">🤔</a> <a href="#audio-Slaiker" title="Audio">🔊</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/thomasbarbier1"><img src="https://avatars.githubusercontent.com/u/119683525?v=4?s=100" width="100px;" alt="Thomas Barbier"/><br /><sub><b>Thomas Barbier</b></sub></a><br /><a href="#example-thomasbarbier1" title="Examples">💡</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ambitiouss22"><img src="https://avatars.githubusercontent.com/u/172111320?v=4?s=100" width="100px;" alt="Avnee Dadhich"/><br /><sub><b>Avnee Dadhich</b></sub></a><br /><a href="#code-ambitiouss22" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://portfolio-omega-beige-50.vercel.app/"><img src="https://avatars.githubusercontent.com/u/266044395?v=4?s=100" width="100px;" alt="Draoui Haroun"/><br /><sub><b>Draoui Haroun</b></sub></a><br /><a href="#code-Draoui-Haroun" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
