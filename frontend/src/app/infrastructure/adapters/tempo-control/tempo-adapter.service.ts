@@ -3,9 +3,9 @@ import {NumberOfSteps} from "../../../domain/number-of-steps";
 import {BPM} from "../../../domain/bpm";
 import {Seconds} from "../../../domain/seconds";
 import {StepIndex} from "../../../domain/step-index";
-import { BeatsPerBar } from "src/app/domain/beatsPerBar";
-import { SubdivisionsPerBeat } from "src/app/domain/subdivisionsPerBeat";
-import { NumberOfBar } from "src/app/domain/numberOfBar";
+import { BeatsPerBar } from "src/app/domain/beats-per-bar";
+import { SubdivisionsPerBeat } from "src/app/domain/subdivisions-per-beat";
+import { NumberOfBar } from "src/app/domain/number-of-bar";
 
 const numberOfSecondsInOneMinute = 60;
 

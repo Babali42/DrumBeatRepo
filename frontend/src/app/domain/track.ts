@@ -4,7 +4,6 @@ import { Option } from "effect";
 import { Mp3FilePath, toMp3FilePath } from "./filenames/mp3.filepath";
 import { toWavFilePath, WavFilePath } from "./filenames/wav.filepath";
 
-
 export class Track {
   readonly name: string;
   readonly filename: Mp3FilePath | WavFilePath;

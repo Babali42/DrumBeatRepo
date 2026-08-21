@@ -1,4 +1,4 @@
-import {CompactTrack} from "./compact-track";
+import { CompactTrack } from "./compact-track";
 
 export type CompactBeat = {
   readonly label: string;

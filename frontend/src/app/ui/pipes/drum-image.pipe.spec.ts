@@ -1,6 +1,6 @@
 import { DrumImagePipe } from './drum-image.pipe';
-import {MidiDrumType} from "../../domain/midi-drum-type";
-import {Option} from "effect";
+import { MidiDrumType } from "../../domain/midi-drum-type";
+import { Option } from "effect";
 
 describe('DrumImagePipe', () => {
   it('should transform none to default image', () => {

@@ -2,9 +2,9 @@ import { Beat } from "../../../domain/beat";
 import { CompactBeat } from "./compact-beat";
 import { Track } from "../../../domain/track";
 import { BPM } from "../../../domain/bpm";
-import { BeatsPerBar } from "../../../domain/beatsPerBar";
-import { SubdivisionsPerBeat } from "../../../domain/subdivisionsPerBeat";
-import { NumberOfBar } from "../../../domain/numberOfBar";
+import { BeatsPerBar } from "../../../domain/beats-per-bar";
+import { SubdivisionsPerBeat } from "../../../domain/subdivisions-per-beat";
+import { NumberOfBar } from "../../../domain/number-of-bar";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { Effect, Option } from "effect";
 

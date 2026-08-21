@@ -7,7 +7,7 @@ import { jsonFileReaderToken } from "../../injection-tokens/json-file-reader.tok
 import { Array, Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
 import { BEATS_MANIFEST} from "../../../../assets/beats/beats-manifest";
-import { BeatMetadata } from "../../../domain/ports/beat-metadata";
+import { BeatMetadata } from "../../../domain/beat-metadata";
 
 @Injectable({ providedIn: 'root' })
 export class BeatAdapter implements IManageBeats {

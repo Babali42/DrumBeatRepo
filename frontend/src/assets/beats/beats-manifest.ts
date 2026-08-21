@@ -1,4 +1,4 @@
-import {BeatMetadata} from "../../app/domain/ports/beat-metadata";
+import {BeatMetadata} from "../../app/domain/beat-metadata";
 
 
 export const BEATS_MANIFEST : BeatMetadata[] = [

@@ -1,9 +1,9 @@
 import {TempoAdapterService} from "./tempo-adapter.service";
 import {BPM} from "../../../domain/bpm";
 import {Seconds} from "../../../domain/seconds";
-import {BeatsPerBar} from "../../../domain/beatsPerBar";
+import {BeatsPerBar} from "../../../domain/beats-per-bar";
 import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {SubdivisionsPerBeat} from "../../../domain/subdivisionsPerBeat";
+import {SubdivisionsPerBeat} from "../../../domain/subdivisions-per-beat";
 
 describe('Tempo service', () => {
   type TempoDataSet = {

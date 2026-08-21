@@ -32,7 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import {BeatMetadata} from "../../../domain/ports/beat-metadata";
+import {BeatMetadata} from "../../../domain/beat-metadata";
 
 @Component({
   selector: 'sequencer',

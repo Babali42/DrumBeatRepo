@@ -9,7 +9,7 @@ import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmod
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
 import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
-import {BeatMetadata} from "../../../domain/ports/beat-metadata";
+import {BeatMetadata} from "../../../domain/beat-metadata";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {

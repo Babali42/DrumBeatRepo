@@ -1,7 +1,7 @@
 import { IconDarkModePipe } from './icon-dark-mode.pipe';
-import {of} from "rxjs";
-import {Mode} from "../services/light-dark-mode/mode-toggle.model";
-import {ModeToggleService} from "../services/light-dark-mode/mode-toggle.service";
+import { of } from "rxjs";
+import { Mode } from "../services/light-dark-mode/mode-toggle.model";
+import { ModeToggleService } from "../services/light-dark-mode/mode-toggle.service";
 
 describe('IconDarkModePipe', () => {
   it('should transform snare drum to snare image with dark theme', () => {

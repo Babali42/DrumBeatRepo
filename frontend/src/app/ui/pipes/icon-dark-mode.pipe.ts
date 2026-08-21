@@ -1,7 +1,7 @@
-import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import {ModeToggleService} from "../services/light-dark-mode/mode-toggle.service";
-import {Subscription} from "rxjs";
-import {Mode} from "../services/light-dark-mode/mode-toggle.model";
+import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { ModeToggleService } from "../services/light-dark-mode/mode-toggle.service";
+import { Subscription } from "rxjs";
+import { Mode } from "../services/light-dark-mode/mode-toggle.model";
 
 @Pipe({
   name: 'iconDarkMode',
