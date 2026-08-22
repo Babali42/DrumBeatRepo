@@ -68,7 +68,7 @@ Open a terminal in folder : `cd engine/`
 #### How to link it to Angular
 
 - Build a js file in the frontend project directory :
-`sbt fastLinkJS`
+`sbt fastLinkJS` or `sbt fullLinkJS` 
 
 ### 2. Frontend (Angular)
 
