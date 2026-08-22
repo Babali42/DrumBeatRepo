@@ -9,20 +9,34 @@ on:
       - main
 
 jobs:
-  validate-scala:
+  scala:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate Scala
+        uses: ./.github/actions/scala-test/
 
-      - uses: ./.github/actions/scala-test/
-
-  validate-angular:
-    needs: [validate-scala]
+  angular-lint:
+    needs: scala
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate Angular (lint)
+        uses: ./.github/actions/angular-lint/
 
-      - uses: ./.github/actions/angular-test/
+  angular-test:
+    needs: scala
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate Angular (tests)
+        uses: ./.github/actions/angular-test/
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
     
@@ -37,7 +51,7 @@ jobs:
         working-directory: ./frontend
 
   build:
-    needs: [validate-angular, check-i18n-consistency]
+    needs: [angular-test, angular-lint, check-i18n-consistency]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -68,7 +82,7 @@ jobs:
           path: dist/browser/
 
   deploy:
-    needs: [validate-angular, build]
+    needs: [angular-test, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v8
