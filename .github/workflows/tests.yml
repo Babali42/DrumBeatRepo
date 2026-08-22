@@ -10,8 +10,7 @@ jobs:
   scala:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Validate Scala
@@ -21,8 +20,7 @@ jobs:
     needs: scala
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Validate Angular (lint)
@@ -32,8 +30,7 @@ jobs:
     needs: scala
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Validate Angular (tests)
