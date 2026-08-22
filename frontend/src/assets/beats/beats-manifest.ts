@@ -1,11 +1,10 @@
-import {BeatMetadata} from "../../app/domain/beat-metadata";
+import { BeatMetadata } from "../../app/domain/beat-metadata";
 
-
-export const BEATS_MANIFEST : BeatMetadata[] = [
+export const BEATS_MANIFEST: BeatMetadata[] = [
   {
     "filename": "dnb/dnb",
     "genre": "(new) Drum and Bass",
-    "label": "(new) Basic Dnb"
+    "label": "(new) Basic DnB"
   },
   {
     "filename": "hypnotic-techno/tresillo",

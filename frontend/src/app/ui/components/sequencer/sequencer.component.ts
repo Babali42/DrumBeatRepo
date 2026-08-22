@@ -32,7 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import {BeatMetadata} from "../../../domain/beat-metadata";
+import { BeatMetadata } from "../../../domain/beat-metadata";
 
 @Component({
   selector: 'sequencer',
@@ -114,18 +114,16 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.beat = {
       genre: stateGenre,
       label: beatMeta.label,
-      bpm: BPM(beatMeta.bpm ?? stateTempo),
+      bpm: BPM(stateTempo),
       tracks: vmTracks,
       beatsPerBar: 4,
       subdivisionsPerBeat: 4,
       numberOfBar: 1
     };
 
-    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
     const firstTrack = vmTracks[0] as any; // use vmTracks not this.beat.tracks
     const steps = firstTrack?.steps?.length ?? firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
     this.tempoService.numberOfSteps = steps;
-    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
     this.soundService.setTracks(this.beat.tracks);
   }
