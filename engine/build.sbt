@@ -8,6 +8,9 @@ scalaJSUseMainModuleInitializer := false
 Compile / fastLinkJS / scalaJSLinkerOutputDirectory := baseDirectory.value /
   ".." / "frontend" / "engine"
 
+Compile / fullLinkJS / scalaJSLinkerOutputDirectory := baseDirectory.value /
+  ".." / "frontend" / "engine"
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.20" % Test,
   "org.scalatestplus" %% "scalacheck-1-18" % "3.2.19.0" % Test,

@@ -24,7 +24,7 @@ runs:
       shell: bash
 
     - name: Build Scala.js
-      run: sbt fastLinkJS
+      run: sbt fullLinkJS
       working-directory: engine
       shell: bash
 
