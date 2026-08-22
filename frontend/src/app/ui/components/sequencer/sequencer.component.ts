@@ -121,6 +121,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       numberOfBar: 1
     };
 
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
     const firstTrack = vmTracks[0] as any; // use vmTracks not this.beat.tracks
     const steps = firstTrack?.steps?.length ?? firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
     this.tempoService.numberOfSteps = steps;
