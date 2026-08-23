@@ -8,14 +8,13 @@ import { Effect, Option } from 'effect';
 import { Steps } from '../../../domain/steps';
 import { MidiDrumType } from '../../../domain/midi-drum-type';
 import { Beat } from '../../../domain/beat';
-import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
 
 declare let SequencerEngine: any;
 
 describe('SequencerService', () => {
   let service: SequencerService;
 
-  const beatFromManifest = BEATS_MANIFEST[0];
+  const beatFromManifest = { label: "techno", genre: "techno", filename: "techno" }
 
   beforeEach(async () => {
     SequencerEngine.reset();

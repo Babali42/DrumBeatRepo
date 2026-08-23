@@ -32,7 +32,7 @@ import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-mid
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import { BeatMetadata } from "../../../domain/beat-metadata";
+import { BeatMetadata } from 'src/types/engine';
 
 @Component({
   selector: 'sequencer',
@@ -70,7 +70,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.sequencerService.state$
       .pipe(
         tap(state => {
@@ -100,7 +100,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    void this.sequencerService.initialize();
+    await this.sequencerService.initialize();
     const firstGenre = this.sequencerService.genresLabel[0];
     if (firstGenre) {
       this.genreChange(firstGenre);

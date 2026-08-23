@@ -15,7 +15,7 @@ export interface SequencerState {
   readonly futureLength: number;
 }
 
-export interface BeatManifest {
+export interface BeatMetadata {
   genre: string;
   label: string;
   filename: string;
@@ -29,6 +29,6 @@ declare global {
   };
 
   var BeatLibrary: {
-    loadBeatsManifest(): Promise<BeatManifest[]>
+    loadBeatsManifest(): Promise<BeatMetadata[]>
   }
 }

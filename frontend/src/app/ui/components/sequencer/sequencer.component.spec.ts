@@ -22,7 +22,6 @@ import { Beat } from '../../../domain/beat';
 import { BPM } from '../../../domain/bpm';
 import { Steps } from '../../../domain/steps';
 import { MidiDrumType } from '../../../domain/midi-drum-type';
-import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
 
 declare let SequencerEngine: any;
 
@@ -32,16 +31,13 @@ describe('SequencerComponent', () => {
   let beatsMock: IManageBeats;
   let service: SequencerService;
 
-  const beatMeta = BEATS_MANIFEST[0];
-  const secondBeatMeta =
-    BEATS_MANIFEST.length > 1 ? BEATS_MANIFEST[1] : BEATS_MANIFEST[0];
+  const beatMeta = { label: "techno", genre: "techno", filename: "techno" }
+  const secondBeatMeta = { label: "techno", genre: "techno", filename: "techno" }
 
   beforeEach(async () => {
     SequencerEngine.reset();
 
     beatsMock = {
-      getBeatsManifest: () => Effect.succeed(BEATS_MANIFEST),
-
       getBeatByFileName: () =>
         Effect.succeed({
           label: beatMeta.label,
@@ -59,9 +55,7 @@ describe('SequencerComponent', () => {
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]
-        } as Beat),
-
-      getAllDrumsTracks: () => Effect.succeed([])
+        } as Beat)
     };
 
     await TestBed.configureTestingModule({
