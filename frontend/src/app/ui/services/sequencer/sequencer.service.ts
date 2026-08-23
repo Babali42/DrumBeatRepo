@@ -8,8 +8,8 @@ import { SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
-import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
-import { BeatMetadata } from "../../../domain/beat-metadata";
+
+import { BeatMetadata } from "src/types/engine";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -49,16 +49,23 @@ export class SequencerService {
     });
   }
 
-  initialize(): void {
-    this.genres.clear();
+  async initialize(): Promise<void> {
+    try {
+      this.genres.clear();
 
-    for (const beatMeta of BEATS_MANIFEST) {
-      const beats = this.genres.get(beatMeta.genre) ?? [];
-      beats.push(beatMeta);
-      this.genres.set(beatMeta.genre, beats);
+      const x = await BeatLibrary.loadBeatsManifest();
+
+      for (const beatMeta of x) {
+        const beats = this.genres.get(beatMeta.genre) ?? [];
+        beats.push(beatMeta);
+        this.genres.set(beatMeta.genre, beats);
+      }
+
+      this.genresLabel = [...this.genres.keys()];
+    } catch (error) {
+      console.error("Failed to load beat manifest :(", error);
+      throw error;
     }
-
-    this.genresLabel = [...this.genres.keys()];
   }
 
   private dispatchQueue: Promise<void> = Promise.resolve();
