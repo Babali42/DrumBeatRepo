@@ -59,6 +59,7 @@ describe('SequencerService', () => {
   }
 
   it('loads beat data from repository when selecting a beat', async () => {
+    service.initialize();
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
@@ -83,6 +84,7 @@ describe('SequencerService', () => {
   });
 
   it('updates view model after select beat', async () => {
+    service.initialize();
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {

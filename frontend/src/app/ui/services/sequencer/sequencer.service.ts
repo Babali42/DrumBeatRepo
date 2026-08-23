@@ -9,7 +9,7 @@ import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmod
 import { Effect, Option } from "effect";
 import { Track } from "src/app/domain/track";
 import { BEATS_MANIFEST } from '../../../../assets/beats/beats-manifest';
-import {BeatMetadata} from "../../../domain/beat-metadata";
+import { BeatMetadata } from "../../../domain/beat-metadata";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -27,7 +27,6 @@ export class SequencerService {
     @Inject(IManageBeatsToken)
     private readonly beatsManager: IManageBeats
   ) {
-    this.initialize();
     this.state$.subscribe(state => {
       if (!state) {
         return;
