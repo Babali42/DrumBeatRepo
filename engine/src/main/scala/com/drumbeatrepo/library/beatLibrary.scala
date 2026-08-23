@@ -6,8 +6,8 @@ import scala.scalajs.js.annotation.*
 import cats.effect.IO
 import org.scalajs.dom.Fetch
 import io.circe.parser.decode
-import io.circe.{Encoder, Decoder}
-import io.circe.generic.semiauto.{deriveEncoder, deriveDecoder}
+import io.circe.Decoder
+import io.circe.generic.semiauto.deriveDecoder
 import io.circe.syntax._
 import cats.effect.unsafe.implicits.global
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -41,7 +41,6 @@ final case class BeatMetadata(
 object BeatMetadata:
   // semi-auto derivation keeps things explicit and avoids
   // pulling in generic.auto (which derives everywhere implicitly)
-  given Encoder[BeatMetadata] = deriveEncoder[BeatMetadata]
   given Decoder[BeatMetadata] = deriveDecoder[BeatMetadata]
 
   def toJS(beatMetadata: BeatMetadata): js.Object =
