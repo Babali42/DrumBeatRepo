@@ -15,10 +15,20 @@ export interface SequencerState {
   readonly futureLength: number;
 }
 
+export interface BeatManifest {
+  genre: string;
+  label: string;
+  filename: string;
+}
+
 declare global {
   var SequencerEngine: {
     dispatch(cmd: unknown): void;
     getState(): SequencerState;
     reset(): void;
   };
+
+  var BeatLibrary: {
+    loadBeatsManifest(): Promise<BeatManifest[]>
+  }
 }

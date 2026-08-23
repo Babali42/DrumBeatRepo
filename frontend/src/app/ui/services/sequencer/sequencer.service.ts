@@ -50,6 +50,8 @@ export class SequencerService {
   }
 
   initialize(): void {
+    BeatLibrary.loadBeatsManifest().then(x => x.map(y => console.log(y)));
+
     this.genres.clear();
 
     for (const beatMeta of BEATS_MANIFEST) {
