@@ -70,7 +70,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  //eslint-disable @typescript-eslint/no-misused-promises
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   async ngOnInit(): Promise<void> {
     this.sequencerService.state$
       .pipe(
