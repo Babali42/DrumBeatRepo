@@ -101,6 +101,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe();
 
     await this.sequencerService.initialize();
+
     const firstGenre = this.sequencerService.genresLabel[0];
     if (firstGenre) {
       this.genreChange(firstGenre);
