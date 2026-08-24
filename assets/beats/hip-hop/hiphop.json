@@ -1,0 +1,28 @@
+{
+    "label": "(new) Hip-Hop: double kick offset",
+    "genre": "Hip-Hop",
+    "bpm": 98,
+    "beatsPerBar": 4,
+    "subdivisionsPerBeat": 4,
+    "source": "https://midimighty.com/blogs/resources/hip-hop-drum-patterns-essential-hiphop",
+    "tracks": [
+        {
+            "name": "Hats",
+            "filename": "techno/hat.wav",
+            "steps": "X X X X X X X X ",
+            "midiNote": 42
+        },
+        {
+            "name": "Snare",
+            "filename": "techno/snare.wav",
+            "steps": "    X       X   ",
+            "midiNote": 38
+        },
+        {
+            "name": "Kick",
+            "filename": "techno/kick.wav",
+            "steps": "X      XX X     ",
+            "midiNote": 36
+        }
+    ]
+}
