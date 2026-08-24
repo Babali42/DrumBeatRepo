@@ -129,6 +129,7 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><a href="https://portfolio-omega-beige-50.vercel.app/"><img src="https://avatars.githubusercontent.com/u/266044395?v=4?s=100" width="100px;" alt="Draoui Haroun"/><br /><sub><b>Draoui Haroun</b></sub></a><br /><a href="#code-Draoui-Haroun" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/proindra"><img src="https://avatars.githubusercontent.com/u/197482947?v=4?s=100" width="100px;" alt="Prajwal"/><br /><sub><b>Prajwal</b></sub></a><br /><a href="#code-proindra" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/harshvardhan-kurade"><img src="https://avatars.githubusercontent.com/u/223208897?v=4?s=100" width="100px;" alt="Harshvardhan Kurade"/><br /><sub><b>Harshvardhan Kurade</b></sub></a><br /><a href="#code-harshvardhan-kurade" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/luisaromero"><img src="https://avatars.githubusercontent.com/u/48934446?v=4?s=100" width="100px;" alt="luisaromero"/><br /><sub><b>luisaromero</b></sub></a><br /><a href="#code-luisaromero" title="Code">💻</a> <a href="#design-luisaromero" title="Design">🎨</a></td>
     </tr>
   </tbody>
 </table>
