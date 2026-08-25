@@ -8,17 +8,19 @@
     {
       "name": "Bed squeak (low)",
       "filename": "jersey-club/squeak_low.mp3",
+      "isMuted": true,
       "steps": "X   X   X   X   "
     },
     {
       "name": "Bed squeak (high)",
       "filename": "jersey-club/squeak_high.mp3",
+      "isMuted": true,
       "steps": "  X   X   X   X "
     },
     {
       "name": "Kick",
       "filename": "jersey-club/kick.mp3",
-      "steps": "X   X   X  X  XX",
+      "steps": "X   X   X  X  X ",
       "midiNote": 36
     }
   ]
