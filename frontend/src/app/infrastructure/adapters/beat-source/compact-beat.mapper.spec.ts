@@ -45,6 +45,7 @@ describe('Compact beat mapper tests', () => {
       "tracks": [
         {
           "name": "Snare",
+          "isMuted": true,
           "filename": "metal/snare.mp3",
           "steps": "____X_______X___"
         },
@@ -74,7 +75,7 @@ describe('Compact beat mapper tests', () => {
     expect(beat.numberOfBar).toEqual(compactBeat.numberOfBar);
     expect(beat.tracks.length).toEqual(compactBeat.tracks.length);
     expect(beat.tracks[0].name).toEqual(compactBeat.tracks[0].name);
-    expect(beat.tracks[0].isMuted).toBe(false);
+    expect(beat.tracks[0].isMuted).toBe(true);
   });
 
   it("Should return Left when track format is incorrect", async () => {
