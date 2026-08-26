@@ -31,3 +31,5 @@ bin/
 # misc
 project/.bloop
 project/project
+.bsp/
+*.semanticdb

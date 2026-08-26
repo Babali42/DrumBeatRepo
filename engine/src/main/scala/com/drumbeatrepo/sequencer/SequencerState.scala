@@ -1,7 +1,5 @@
 package com.drumbeatrepo.sequencer
 
-import java.{util => ju}
-
 case class SequencerState(
     genre: String,
     beat: String,
@@ -46,7 +44,7 @@ case class SequencerState(
             else
               t.copy(
                 steps = t.steps.zipWithIndex.map {
-                  case (step, i) if i >= fromStepIndex && i <= toStepIndex =>
+                  case (_, i) if i >= fromStepIndex && i <= toStepIndex =>
                     velocity
                   case (step, _) => step
                 }
