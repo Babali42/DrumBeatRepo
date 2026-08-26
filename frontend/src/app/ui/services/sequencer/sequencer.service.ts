@@ -43,6 +43,9 @@ export class SequencerService {
           return new Track(x.name, x.filename, [...x.steps], x.isMuted, midiNote);
         }),
         tempo: BPM(state.tempo),
+        beatsPerBar: state.beatsPerBar,
+        subdivisionsPerBeat: state.subdivisionsPerBeat,
+        numberOfBars: state.numberOfBars,
         historyLength: state.historyLength,
         futureLength: state.futureLength
       });
@@ -136,6 +139,9 @@ export class SequencerService {
           genre,
           beat: beatLabel,
           tempo: beatData.bpm,
+          beatsPerBar: beatData.beatsPerBar,
+          subdivisionsPerBeat: beatData.subdivisionsPerBeat,
+          numberOfBars: beatData.numberOfBar,
           tracks: normalizeTracks(tracks)
         }
       };
@@ -151,7 +157,12 @@ export class SequencerService {
         payload: {
           genre,
           beat: beatLabel,
-          tempo: 120,
+          tempo: typeof payload["tempo"] === "number" ? payload["tempo"] : 120,
+          beatsPerBar: typeof payload["beatsPerBar"] === "number" ? payload["beatsPerBar"] : 4,
+          subdivisionsPerBeat: typeof payload["subdivisionsPerBeat"] === "number"
+            ? payload["subdivisionsPerBeat"]
+            : 4,
+          numberOfBars: typeof payload["numberOfBars"] === "number" ? payload["numberOfBars"] : 1,
           tracks: normalizeTracks(
             (payload["tracks"] as any[]) ??
             (beatMeta as any).tracks ??

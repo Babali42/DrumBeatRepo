@@ -29,6 +29,9 @@ object SequencerEngine:
       beat = state.beat,
       tracks = state.tracks.sorted.reverse.map(Track.toJS).toJSArray,
       tempo = state.tempo,
+      beatsPerBar = state.beatsPerBar,
+      subdivisionsPerBeat = state.subdivisionsPerBeat,
+      numberOfBars = state.numberOfBars,
       historyLength = state.history.length,
       futureLength = state.future.length
     )

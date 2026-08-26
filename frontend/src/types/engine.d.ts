@@ -11,6 +11,9 @@ export interface SequencerState {
   readonly genre: string;
   readonly tracks: readonly EngineTrack[];
   readonly tempo: number;
+  readonly beatsPerBar: number;
+  readonly subdivisionsPerBeat: number;
+  readonly numberOfBars: number;
   readonly historyLength: number;
   readonly futureLength: number;
 }

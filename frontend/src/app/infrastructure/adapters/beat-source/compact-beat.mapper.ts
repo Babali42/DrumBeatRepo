@@ -2,9 +2,6 @@ import { Beat } from "../../../domain/beat";
 import { CompactBeat } from "./compact-beat";
 import { Track } from "../../../domain/track";
 import { BPM } from "../../../domain/bpm";
-import { BeatsPerBar } from "../../../domain/beats-per-bar";
-import { SubdivisionsPerBeat } from "../../../domain/subdivisions-per-beat";
-import { NumberOfBar } from "../../../domain/number-of-bar";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { Effect, Option } from "effect";
 
@@ -21,9 +18,9 @@ export class CompactBeatMapper {
         label: compact.label,
         genre: compact.genre,
         bpm: parseBPM(compact.bpm),
-        beatsPerBar: (compact.beatsPerBar ?? 4) as BeatsPerBar,
-        subdivisionsPerBeat: (compact.subdivisionsPerBeat ?? 4) as SubdivisionsPerBeat,
-        numberOfBar: (compact.numberOfBar ?? 1) as NumberOfBar,
+        beatsPerBar: compact.beatsPerBar ?? 4,
+        subdivisionsPerBeat: compact.subdivisionsPerBeat ?? 4,
+        numberOfBar: compact.numberOfBar ?? 1,
         tracks: compact.tracks.map(track => new Track(
           track.name,
           track.filename,

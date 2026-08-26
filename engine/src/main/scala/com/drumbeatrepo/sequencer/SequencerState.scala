@@ -5,16 +5,30 @@ case class SequencerState(
     beat: String,
     tracks: List[Track],
     tempo: Int,
+    beatsPerBar: Int,
+    subdivisionsPerBeat: Int,
+    numberOfBars: Int,
     history: List[SequencerState],
     future: List[SequencerState]
 ):
   def dispatch(command: Command): SequencerState = command match
-    case Command.SelectBeat(newGenre, newBeat, newTracks, newTempo) =>
+    case Command.SelectBeat(
+          newGenre,
+          newBeat,
+          newTracks,
+          newTempo,
+          newBeatsPerBar,
+          newSubdivisionsPerBeat,
+          newNumberOfBars
+        ) =>
       SequencerState(
         newGenre,
         newBeat,
         newTracks,
         newTempo,
+        newBeatsPerBar,
+        newSubdivisionsPerBeat,
+        newNumberOfBars,
         history :+ this,
         future = Nil
       )
@@ -57,13 +71,26 @@ case class SequencerState(
     case Command.SetTempo(newTempo) =>
       history match
         case _ :+ last if last.genre == genre && last.beat == beat =>
-          SequencerState(genre, beat, tracks, newTempo, history, future = Nil)
+          SequencerState(
+            genre,
+            beat,
+            tracks,
+            newTempo,
+            beatsPerBar,
+            subdivisionsPerBeat,
+            numberOfBars,
+            history,
+            future = Nil
+          )
         case _ =>
           SequencerState(
             genre,
             beat,
             tracks,
             newTempo,
+            beatsPerBar,
+            subdivisionsPerBeat,
+            numberOfBars,
             history :+ this,
             future = Nil
           )
@@ -92,4 +119,14 @@ case class SequencerState(
 end SequencerState
 object SequencerState:
   val initial: SequencerState =
-    SequencerState("Hypnotic Techno", "Tresillo", List.empty, 128, Nil, Nil)
+    SequencerState(
+      "Hypnotic Techno",
+      "Tresillo",
+      List.empty,
+      128,
+      4,
+      4,
+      1,
+      Nil,
+      Nil
+    )

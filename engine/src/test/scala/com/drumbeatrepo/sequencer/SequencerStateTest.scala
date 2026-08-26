@@ -6,11 +6,16 @@ import org.scalatest.matchers.should.Matchers.shouldBe
 class SequencerStateTest extends AnyFunSuite {
   test("dispatch SelectBeat sets the beat") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", Nil, 128));
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", Nil, 128, 4, 4, 1)
+      );
 
     state.genre shouldBe "Techno";
     state.beat shouldBe "4 on the floor";
     state.tempo shouldBe 128;
+    state.beatsPerBar shouldBe 4;
+    state.subdivisionsPerBeat shouldBe 4;
+    state.numberOfBars shouldBe 1;
   }
 
   test("dispatch SetTempo sets the tempo") {
@@ -23,10 +28,15 @@ class SequencerStateTest extends AnyFunSuite {
       "Tresillo",
       List.empty,
       128,
+      4,
+      1,
+      1,
       Nil,
       Nil
     )
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", List.empty, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+      )
       .dispatch(Command.Undo)
     state.genre shouldBe "Hypnotic Techno";
     state.beat shouldBe "Tresillo";
@@ -35,7 +45,9 @@ class SequencerStateTest extends AnyFunSuite {
 
   test("undo then redo restores the beat") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", List.empty, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+      )
       .dispatch(Command.Undo)
       .dispatch(Command.Redo)
     state.beat shouldBe "4 on the floor";
@@ -85,21 +97,27 @@ class SequencerStateTest extends AnyFunSuite {
 
   test("ToggleStep toggles a step from true to false") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      )
       .dispatch(Command.ToggleStep("Snare", 0))
     state.tracks.head.steps(0) shouldBe Velocity.None
   }
 
   test("ToggleStep toggles a step from false to true") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      )
       .dispatch(Command.ToggleStep("Snare", 1))
     state.tracks.head.steps(1) shouldBe Velocity.Normal
   }
 
   test("ToggleStep adds to history") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      )
     val toggled = state.dispatch(Command.ToggleStep("Snare", 0))
     toggled.history.length shouldBe 2
     toggled.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
@@ -107,7 +125,9 @@ class SequencerStateTest extends AnyFunSuite {
 
   test("ToggleStep clears future") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      )
       .dispatch(Command.ToggleStep("Snare", 0))
       .dispatch(Command.Undo)
       .dispatch(Command.ToggleStep("Snare", 1))
@@ -116,7 +136,9 @@ class SequencerStateTest extends AnyFunSuite {
 
   test("ToggleStep can be undone") {
     val state = SequencerState.initial
-      .dispatch(Command.SelectBeat("Techno", "4 on the floor", someTracks, 128))
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      )
       .dispatch(Command.ToggleStep("Snare", 0))
       .dispatch(Command.Undo)
     state.tracks.head.steps(0) shouldBe Velocity.Normal
@@ -165,7 +187,10 @@ class SequencerStateTest extends AnyFunSuite {
               false
             )
           ),
-          128
+          128,
+          4,
+          1,
+          1
         )
       )
       .dispatch(Command.SetSteps("kick", 1, 3, Velocity.Normal));

@@ -10,6 +10,7 @@ import { MidiDrumType } from '../../../domain/midi-drum-type';
 import { Beat } from '../../../domain/beat';
 
 declare let SequencerEngine: any;
+declare let BeatLibrary: any;
 
 describe('SequencerService', () => {
   let service: SequencerService;
