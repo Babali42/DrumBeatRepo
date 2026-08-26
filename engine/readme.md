@@ -15,7 +15,7 @@ _Mandatory ones_
 
 _Optional ones_
 - clean dependencies `sbt clean`
-- compile after clean`sbt compile`
+- compile after clean: `sbt compile`
 
 ## Debug Scala IDE integration in VSCode
 
