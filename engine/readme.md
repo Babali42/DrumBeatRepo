@@ -19,7 +19,7 @@ _Optional ones_
 
 ## Debug Scala IDE integration in VSCode
 
-Ctrl maj P -> patette command
+Open the Command Palette (`Ctrl+Shift+P` on Windows/Linux, `⇧⌘P` on macOS):
 - Metals: Import Build
 - Metals: Run doctor
 
