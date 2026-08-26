@@ -13,7 +13,7 @@ import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
 
 @JSExportTopLevel("BeatLibrary")
-object beatLibrary:
+object BeatLibrary:
 
   @JSExport
   def loadBeatsManifest(): js.Promise[js.Array[js.Object]] =
