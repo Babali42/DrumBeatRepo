@@ -31,3 +31,12 @@ libraryDependencies ++= Seq(
   "org.scalatestplus" %% "scalacheck-1-18" % "3.2.19.0" % Test,
   "org.scalacheck" %% "scalacheck" % "1.19.0" % Test
 )
+
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-unchecked",
+  "-Wunused:all",
+  "-Wvalue-discard",
+  "-explain"
+)

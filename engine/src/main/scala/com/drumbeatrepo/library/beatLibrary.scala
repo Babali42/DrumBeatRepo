@@ -1,17 +1,16 @@
 package com.drumbeatrepo.library
 
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
+import io.circe.Decoder
+import io.circe.generic.semiauto.deriveDecoder
+import io.circe.parser.decode
+import org.scalajs.dom.Fetch
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
-import cats.effect.IO
-import org.scalajs.dom.Fetch
-import io.circe.parser.decode
-import io.circe.Decoder
-import io.circe.generic.semiauto.deriveDecoder
-import io.circe.syntax._
-import cats.effect.unsafe.implicits.global
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs.js.JSConverters._
 
 @JSExportTopLevel("BeatLibrary")
 object beatLibrary:

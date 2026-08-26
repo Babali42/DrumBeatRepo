@@ -16,3 +16,11 @@ _Mandatory ones_
 _Optional ones_
 - clean dependencies `sbt clean`
 - compile after clean`sbt compile`
+
+## Debug Scala IDE integration in VSCode
+
+Ctrl maj P -> patette command
+- Metals: Import Build
+- Metals: Run doctor
+
+![alt text](image.png)

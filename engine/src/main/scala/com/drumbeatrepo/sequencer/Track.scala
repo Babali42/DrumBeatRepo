@@ -1,7 +1,6 @@
 package com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
 
 case class Track(
     name: String,
