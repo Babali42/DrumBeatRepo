@@ -3,7 +3,15 @@ package com.drumbeatrepo.sequencer
 import scala.scalajs.js
 
 enum Command:
-  case SelectBeat(genre: String, beat: String, tracks: List[Track], tempo: Int)
+  case SelectBeat(
+      genre: String,
+      beat: String,
+      tracks: List[Track],
+      tempo: Int,
+      beatsPerBar: Int,
+      subdivisionsPerBeat: Int,
+      numberOfBars: Int
+  )
   case SetTempo(tempo: Int)
   case ToggleStep(trackName: String, stepIndex: Int)
   case SetSteps(
@@ -32,7 +40,10 @@ object Command:
           payload.selectDynamic("genre").asInstanceOf[String],
           payload.selectDynamic("beat").asInstanceOf[String],
           tracks,
-          payload.selectDynamic("tempo").asInstanceOf[Int]
+          payload.selectDynamic("tempo").asInstanceOf[Int],
+          payload.selectDynamic("beatsPerBar").asInstanceOf[Int],
+          payload.selectDynamic("subdivisionsPerBeat").asInstanceOf[Int],
+          payload.selectDynamic("numberOfBars").asInstanceOf[Int]
         )
       case "SET_TEMPO" =>
         SetTempo(

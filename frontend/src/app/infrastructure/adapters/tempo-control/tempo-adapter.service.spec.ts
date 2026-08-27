@@ -1,15 +1,12 @@
-import {TempoAdapterService} from "./tempo-adapter.service";
-import {BPM} from "../../../domain/bpm";
-import {Seconds} from "../../../domain/seconds";
-import {BeatsPerBar} from "../../../domain/beats-per-bar";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {SubdivisionsPerBeat} from "../../../domain/subdivisions-per-beat";
+import { TempoAdapterService } from "./tempo-adapter.service";
+import { BPM } from "../../../domain/bpm";
+import { Seconds } from "../../../domain/seconds";
 
 describe('Tempo service', () => {
   type TempoDataSet = {
     tempo: BPM;
-    beatsPerBar: BeatsPerBar;
-    subdivisionsPerBeat: SubdivisionsPerBeat;
+    beatsPerBar: number;
+    subdivisionsPerBeat: number;
     expectedStepDuration: Seconds;
   };
 
@@ -33,14 +30,14 @@ describe('Tempo service', () => {
     const service = new TempoAdapterService();
     service.setSubdivisionsPerBeat(3);
     service.setBeatsPerBar(4);
-    expect(service.numberOfSteps).toBe(NumberOfSteps.twelve);
+    expect(service.numberOfSteps).toBe(12);
   });
 
   it('recalculates numberOfSteps and supports 64-step tracks', () => {
     const service = new TempoAdapterService();
     service.setBeatsPerBar(16);
     service.setSubdivisionsPerBeat(4);
-    expect(service.numberOfSteps).toBe(NumberOfSteps.sixty_four);
+    expect(service.numberOfSteps).toBe(64);
   });
 
   it('supports 32-step patterns with two bars', () => {
@@ -48,7 +45,7 @@ describe('Tempo service', () => {
     service.setBeatsPerBar(4);
     service.setSubdivisionsPerBeat(4);
     service.setNumberOfBar(2);
-    expect(service.numberOfSteps).toBe(NumberOfSteps.thirty_two);
+    expect(service.numberOfSteps).toBe(32);
   });
 
   it('supports 64-step patterns with four bars', () => {
@@ -56,7 +53,7 @@ describe('Tempo service', () => {
     service.setBeatsPerBar(4);
     service.setSubdivisionsPerBeat(4);
     service.setNumberOfBar(4);
-    expect(service.numberOfSteps).toBe(NumberOfSteps.sixty_four);
+    expect(service.numberOfSteps).toBe(64);
   });
 
   it('keeps a single bar as 16 steps by default', () => {
@@ -64,6 +61,6 @@ describe('Tempo service', () => {
     service.setBeatsPerBar(4);
     service.setSubdivisionsPerBeat(4);
     service.setNumberOfBar(1);
-    expect(service.numberOfSteps).toBe(NumberOfSteps.sixteen);
+    expect(service.numberOfSteps).toBe(16);
   });
 });

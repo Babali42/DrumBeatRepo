@@ -1,11 +1,8 @@
-import {Injectable} from "@angular/core";
-import {NumberOfSteps} from "../../../domain/number-of-steps";
-import {BPM} from "../../../domain/bpm";
-import {Seconds} from "../../../domain/seconds";
-import {StepIndex} from "../../../domain/step-index";
-import { BeatsPerBar } from "src/app/domain/beats-per-bar";
-import { SubdivisionsPerBeat } from "src/app/domain/subdivisions-per-beat";
-import { NumberOfBar } from "src/app/domain/number-of-bar";
+import { Injectable } from "@angular/core";
+import { NumberOfSteps } from "../../../domain/number-of-steps";
+import { BPM } from "../../../domain/bpm";
+import { Seconds } from "../../../domain/seconds";
+import { StepIndex } from "../../../domain/step-index";
 
 const numberOfSecondsInOneMinute = 60;
 
@@ -14,31 +11,34 @@ const numberOfSecondsInOneMinute = 60;
 })
 export class TempoAdapterService {
   public bpm = BPM(128);
-  public numberOfSteps: NumberOfSteps = NumberOfSteps.sixteen;
-  public beatsPerBar:BeatsPerBar = 4;
-  public subdivisionsPerBeat: SubdivisionsPerBeat = 4;
-  public numberOfBar: NumberOfBar = 1;
+  public numberOfSteps = 16;
+  public beatsPerBar = 4;
+  public subdivisionsPerBeat = 4;
+  public numberOfBar = 1;
 
   setBpm(bpm: BPM) {
     this.bpm = bpm;
   }
 
-  setBeatsPerBar(beatsPerBar: BeatsPerBar) {
+  setBeatsPerBar(beatsPerBar: number) {
     this.beatsPerBar = beatsPerBar;
     this.recalculateNumberOfSteps();
   }
 
-  setSubdivisionsPerBeat(subdivisionsPerBeat: SubdivisionsPerBeat) {
+  setSubdivisionsPerBeat(subdivisionsPerBeat: number) {
     this.subdivisionsPerBeat = subdivisionsPerBeat;
     this.recalculateNumberOfSteps();
   }
 
-  setNumberOfBar(numberOfBar: NumberOfBar) {
+  setNumberOfBar(numberOfBar: number) {
     this.numberOfBar = numberOfBar;
     this.recalculateNumberOfSteps();
   }
 
   private recalculateNumberOfSteps() {
+    if (Number.isNaN(this.subdivisionsPerBeat))
+      throw new Error(`subdivisionsPerBeat is NaN`);
+
     this.numberOfSteps = this.mapNumberOfSteps(this.beatsPerBar * this.subdivisionsPerBeat * this.numberOfBar);
   }
 

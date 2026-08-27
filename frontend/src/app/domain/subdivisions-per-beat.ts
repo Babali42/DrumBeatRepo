@@ -1,1 +1,0 @@
-export type SubdivisionsPerBeat = 3 | 4;

@@ -33,6 +33,8 @@ import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { BeatMetadata } from 'src/types/engine';
+import IManageBeats from "../../../domain/ports/i-manage-beats";
+import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 
 @Component({
   selector: 'sequencer',
@@ -60,6 +62,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
+    @Inject(IManageBeatsToken) private readonly beatsManager: IManageBeats,
     protected readonly tempoService: TempoAdapterService,
     private readonly playerEvents: PlayerEventsService,
     public readonly sequencerService: SequencerService,
@@ -78,9 +81,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
           if (!state)
             return;
 
-          if (state.tempo) {
-            this.tempoService.setBpm(BPM(state.tempo));
-          }
+          this.tempoService.setBpm(BPM(state.tempo));
 
           const beatMeta =
             this.sequencerService.genres
@@ -91,7 +92,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
             if (this.beat.genre === state.genre && this.beat.label === state.beat) {
               this._applySteps();
             } else {
-              this._applyBeat(beatMeta, state.genre, state.tempo);
+              this._applyBeat(beatMeta, state.genre, state.tempo, state.beatsPerBar, state.subdivisionsPerBeat, state.numberOfBars);
+
+              this.tempoService.setBeatsPerBar(state.beatsPerBar ?? 4);
+              this.tempoService.setSubdivisionsPerBeat(state.subdivisionsPerBeat);
+              this.tempoService.setNumberOfBar(state.numberOfBars ?? 1);
             }
           }
 
@@ -109,7 +114,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number): void {
+  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number, beatsPerBar: number, subdivisionsPerBeat: number, numberOfBars: number): void {
     // guard if vm$.getValue().tracks is not yet set
     const vmTracks = this.sequencerService.vm$.getValue().tracks ?? [];
 
@@ -118,15 +123,10 @@ export class SequencerComponent implements OnInit, OnDestroy {
       label: beatMeta.label,
       bpm: BPM(stateTempo),
       tracks: vmTracks,
-      beatsPerBar: 4,
-      subdivisionsPerBeat: 4,
-      numberOfBar: 1
+      beatsPerBar: beatsPerBar,
+      subdivisionsPerBeat: subdivisionsPerBeat,
+      numberOfBar: numberOfBars
     };
-
-    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-    const firstTrack = vmTracks[0] as any; // use vmTracks not this.beat.tracks
-    const steps = firstTrack?.steps?.length ?? firstTrack?.steps?.steps?.length ?? NumberOfSteps.sixteen;
-    this.tempoService.numberOfSteps = steps;
 
     this.soundService.setTracks(this.beat.tracks);
   }
