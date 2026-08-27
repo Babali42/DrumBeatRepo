@@ -5,6 +5,11 @@
         "label": "(new) Hip-Hop: double kick offset"
     },
     {
+        "filename": "hip-hop/boom-bap",
+        "genre": "Hip-Hop",
+        "label": "Boom Bap"
+    },
+    {
         "filename": "hip-hop/trap",
         "genre": "Hip-Hop",
         "label": "Trap"
