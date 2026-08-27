@@ -131,6 +131,9 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/harshvardhan-kurade"><img src="https://avatars.githubusercontent.com/u/223208897?v=4?s=100" width="100px;" alt="Harshvardhan Kurade"/><br /><sub><b>Harshvardhan Kurade</b></sub></a><br /><a href="#code-harshvardhan-kurade" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/luisaromero"><img src="https://avatars.githubusercontent.com/u/48934446?v=4?s=100" width="100px;" alt="luisaromero"/><br /><sub><b>luisaromero</b></sub></a><br /><a href="#code-luisaromero" title="Code">💻</a> <a href="#design-luisaromero" title="Design">🎨</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/DivyaMhatre6"><img src="https://avatars.githubusercontent.com/u/222040082?v=4?s=100" width="100px;" alt="Divya Dattaram Mhatre"/><br /><sub><b>Divya Dattaram Mhatre</b></sub></a><br /><a href="#code-DivyaMhatre6" title="Code">💻</a> <a href="#design-DivyaMhatre6" title="Design">🎨</a></td>
+    </tr>
   </tbody>
 </table>
 
