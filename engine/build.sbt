@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "org.scala-js" %% "scalajs-dom" % "2.8.1",
 
   // cats effect
-  "org.typelevel" %% "cats-effect" % "3.7.0", // in sbt2 %%% aren't yet necessary
+  "org.typelevel" %% "cats-effect" % "3.7.1", // in sbt2 %%% aren't yet necessary
 
   // circe
   "io.circe" %% "circe-core" % "0.14.16",
