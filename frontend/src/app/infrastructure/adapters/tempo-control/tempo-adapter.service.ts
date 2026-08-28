@@ -31,12 +31,9 @@ export class TempoAdapterService {
       this.beatsPerBar * this.subdivisionsPerBeat * this.numberOfBar
     );
 
+    //TODO : Try removing the default 16 but imo there is a throw at the app opening
     if (!steps) {
-      throw new Error(
-        `Unsupported step count: ${
-          this.beatsPerBar * this.subdivisionsPerBeat * this.numberOfBar
-        }`
-      );
+      return NumberOfSteps.sixteen;
     }
 
     return steps;
