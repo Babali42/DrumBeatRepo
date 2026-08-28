@@ -81,7 +81,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
           if (!state)
             return;
 
-          this.tempoService.setBpm(BPM(state.tempo));
+          this.tempoService.bpm = BPM(state.tempo);
 
           const beatMeta =
             this.sequencerService.genres
@@ -94,9 +94,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
             } else {
               this._applyBeat(beatMeta, state.genre, state.tempo, state.beatsPerBar, state.subdivisionsPerBeat, state.numberOfBars);
 
-              this.tempoService.setBeatsPerBar(state.beatsPerBar ?? 4);
-              this.tempoService.setSubdivisionsPerBeat(state.subdivisionsPerBeat);
-              this.tempoService.setNumberOfBar(state.numberOfBars ?? 1);
+              this.tempoService.beatsPerBar = state.beatsPerBar ?? 4;
+              this.tempoService.subdivisionsPerBeat = state.subdivisionsPerBeat;
+              this.tempoService.numberOfBar = state.numberOfBars ?? 1;
             }
           }
 
