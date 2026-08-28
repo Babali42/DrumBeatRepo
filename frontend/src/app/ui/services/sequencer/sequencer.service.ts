@@ -76,7 +76,7 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
-      SequencerEngine.dispatch(enriched);
+      await SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 

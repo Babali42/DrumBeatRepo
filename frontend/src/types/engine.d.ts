@@ -26,7 +26,7 @@ export interface BeatMetadata {
 
 declare global {
   var SequencerEngine: {
-    dispatch(cmd: unknown): void;
+    dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
   };
