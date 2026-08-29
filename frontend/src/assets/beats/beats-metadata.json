@@ -50,6 +50,11 @@
         "label": "Psytrance"
     },
     {
+      "filename": "psytrance/psytrance-gallop",
+      "genre": "Psytrance",
+      "label": "Psytrance Gallop"
+    },
+    {
         "filename": "psytrance/psytrance-variation",
         "genre": "Psytrance",
         "label": "Psytrance variation"
