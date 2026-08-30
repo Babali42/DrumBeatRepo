@@ -109,7 +109,7 @@ $gap: 4px;
 }
 
 @mixin step-grid($columns) {
-  grid-template-columns: repeat($columns, 1fr);
+  grid-template-columns: repeat($columns, $step-size);
 }
 
 .eight-steps {
@@ -137,9 +137,10 @@ $gap: 4px;
   grid-row-start: 2;
 
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: max-content;
   gap: $gap;
   overflow-x: auto;
+  min-width: 0;
 }
 
 .tracks-name-container {
@@ -204,4 +205,21 @@ $gap: 4px;
   background-color: var(--disabledColor);
   color: linen;
   opacity: 1;
+}
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: max-content minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  .tracks-container {
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tracks-name-container {
+    min-width: max-content;
+  }
 }
