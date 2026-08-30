@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "sequencer-engine"
-scalaVersion := "3.8.4"
+scalaVersion := "3.9.0"
 
 scalaJSUseMainModuleInitializer := false
 
@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "org.scala-js" %% "scalajs-dom" % "2.8.1",
 
   // cats effect
-  "org.typelevel" %% "cats-effect" % "3.7.0", // in sbt2 %%% aren't yet necessary
+  "org.typelevel" %% "cats-effect" % "3.7.1", // in sbt2 %%% aren't yet necessary
 
   // circe
   "io.circe" %% "circe-core" % "0.14.16",
@@ -29,7 +29,7 @@ libraryDependencies ++= Seq(
   // test dependencies
   "org.scalatest" %% "scalatest" % "3.2.20" % Test,
   "org.scalatestplus" %% "scalacheck-1-18" % "3.2.19.0" % Test,
-  "org.scalacheck" %% "scalacheck" % "1.19.0" % Test
+  "org.scalacheck" %% "scalacheck" % "1.20.0" % Test
 )
 
 scalacOptions ++= Seq(

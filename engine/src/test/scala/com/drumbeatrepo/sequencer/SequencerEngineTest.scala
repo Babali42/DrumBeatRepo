@@ -35,11 +35,19 @@ class SequencerEngineTest extends AnyFunSuite {
           "",
           "",
           List(trackBass, trackHat, trackKick, trackSnare),
-          128
+          128,
+          4,
+          1,
+          1
         )
     );
 
     val state = SequencerEngine.getState().asInstanceOf[js.Dynamic]
+    state.beatsPerBar.asInstanceOf[js.Dynamic].asInstanceOf[Int] shouldBe 4
+    state.subdivisionsPerBeat
+      .asInstanceOf[js.Dynamic]
+      .asInstanceOf[Int] shouldBe 1
+    state.numberOfBars.asInstanceOf[js.Dynamic].asInstanceOf[Int] shouldBe 1
 
     val tracks = state.tracks.asInstanceOf[js.Array[js.Dynamic]]
 

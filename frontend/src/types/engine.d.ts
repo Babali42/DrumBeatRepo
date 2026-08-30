@@ -11,6 +11,9 @@ export interface SequencerState {
   readonly genre: string;
   readonly tracks: readonly EngineTrack[];
   readonly tempo: number;
+  readonly beatsPerBar: number;
+  readonly subdivisionsPerBeat: number;
+  readonly numberOfBars: number;
   readonly historyLength: number;
   readonly futureLength: number;
 }
@@ -23,7 +26,7 @@ export interface BeatMetadata {
 
 declare global {
   var SequencerEngine: {
-    dispatch(cmd: unknown): void;
+    dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
   };

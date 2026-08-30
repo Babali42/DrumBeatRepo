@@ -3,8 +3,8 @@
   "dockerComposeFile": "../docker-compose.yml",
   "service": "scala-backend",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "22"
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": "24"
     }
   },
   "workspaceFolder": "/workspace/"

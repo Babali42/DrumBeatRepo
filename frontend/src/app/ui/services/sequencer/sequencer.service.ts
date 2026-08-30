@@ -43,6 +43,9 @@ export class SequencerService {
           return new Track(x.name, x.filename, [...x.steps], x.isMuted, midiNote);
         }),
         tempo: BPM(state.tempo),
+        beatsPerBar: state.beatsPerBar,
+        subdivisionsPerBeat: state.subdivisionsPerBeat,
+        numberOfBars: state.numberOfBars,
         historyLength: state.historyLength,
         futureLength: state.futureLength
       });
@@ -73,7 +76,7 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
-      SequencerEngine.dispatch(enriched);
+      await SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 
@@ -94,7 +97,7 @@ export class SequencerService {
     }
 
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-    const normalizeTracks = (rawTracks: any[] | undefined) =>
+    const normalizeTracks = (rawTracks: any[] | readonly Track[] ) =>
       rawTracks?.map((t: any) => {
         const steps = Array.isArray(t.steps)
           ? [...t.steps]
@@ -123,20 +126,16 @@ export class SequencerService {
         this.beatsManager.getBeatByFileName(beatMeta.filename)
       );
 
-      const rawPayloadTracks = payload["tracks"] as any[];
-      const tracks = beatData.tracks.length > 0
-        ? beatData.tracks
-        : rawPayloadTracks?.length
-          ? rawPayloadTracks
-          : (beatMeta as any).tracks ?? [];
-
       return {
         ...cmd,
         payload: {
           genre,
           beat: beatLabel,
           tempo: beatData.bpm,
-          tracks: normalizeTracks(tracks)
+          beatsPerBar: beatData.beatsPerBar,
+          subdivisionsPerBeat: beatData.subdivisionsPerBeat,
+          numberOfBars: beatData.numberOfBar,
+          tracks: normalizeTracks(beatData.tracks)
         }
       };
     } catch (err) {
@@ -151,7 +150,12 @@ export class SequencerService {
         payload: {
           genre,
           beat: beatLabel,
-          tempo: 120,
+          tempo: typeof payload["tempo"] === "number" ? payload["tempo"] : 120,
+          beatsPerBar: typeof payload["beatsPerBar"] === "number" ? payload["beatsPerBar"] : 4,
+          subdivisionsPerBeat: typeof payload["subdivisionsPerBeat"] === "number"
+            ? payload["subdivisionsPerBeat"]
+            : 4,
+          numberOfBars: typeof payload["numberOfBars"] === "number" ? payload["numberOfBars"] : 1,
           tracks: normalizeTracks(
             (payload["tracks"] as any[]) ??
             (beatMeta as any).tracks ??

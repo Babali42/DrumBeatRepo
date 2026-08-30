@@ -1,1 +1,0 @@
-export type BeatsPerBar = 4 | 8 | 16;

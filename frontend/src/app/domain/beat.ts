@@ -1,15 +1,12 @@
 import { Track } from "./track";
-import {BPM} from "./bpm";
-import { BeatsPerBar } from "./beats-per-bar";
-import { SubdivisionsPerBeat } from "./subdivisions-per-beat";
-import { NumberOfBar } from "./number-of-bar";
+import { BPM } from "./bpm";
 
 export type Beat = {
   readonly label: string;
   readonly genre: string;
   readonly bpm: BPM;
-  readonly beatsPerBar: BeatsPerBar;
-  readonly subdivisionsPerBeat: SubdivisionsPerBeat;
-  readonly numberOfBar: NumberOfBar;
+  readonly beatsPerBar: number;
+  readonly subdivisionsPerBeat: number;
+  readonly numberOfBar: number;
   readonly tracks: ReadonlyArray<Track>;
 }
