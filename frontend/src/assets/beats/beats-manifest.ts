@@ -67,6 +67,11 @@ export const BEATS_MANIFEST: BeatMetadata[] = [
     "label": "Modern Dancehall"
   },
   {
+    "filename": "hip-hop/boom-bap",
+    "genre": "Hip-Hop",
+    "label": "Boom Bap"
+  },
+  {
     "filename": "hip-hop/trap",
     "genre": "Hip-Hop",
     "label": "Trap"
@@ -125,5 +130,11 @@ export const BEATS_MANIFEST: BeatMetadata[] = [
     "filename": "jersey-club/jersey-club",
     "genre": "Club",
     "label": "Jersey club"
-  }
+  },
+{
+  "filename": "hip-hop/boom-bap",
+  "genre": "Hip-Hop",
+  "label": "Boom Bap"
+}
+
 ];
