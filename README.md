@@ -133,6 +133,7 @@ Everyone is welcome — devs, musicians, designers.
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/DivyaMhatre6"><img src="https://avatars.githubusercontent.com/u/222040082?v=4?s=100" width="100px;" alt="Divya Dattaram Mhatre"/><br /><sub><b>Divya Dattaram Mhatre</b></sub></a><br /><a href="#code-DivyaMhatre6" title="Code">💻</a> <a href="#design-DivyaMhatre6" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirti7617"><img src="https://avatars.githubusercontent.com/u/220924927?v=4?s=100" width="100px;" alt="kirti7617"/><br /><sub><b>kirti7617</b></sub></a><br /><a href="#code-kirti7617" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
