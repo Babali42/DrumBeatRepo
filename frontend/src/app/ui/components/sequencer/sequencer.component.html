@@ -90,6 +90,30 @@
     <button class="button ml-8" (click)="isMidiExportModalOpen = true">{{ 'exportMidi.button' | translate
       }}</button>
   </section>
+
+  <button
+    class="mobile-play-button"
+    type="button"
+    (click)="this.soundService.playPause()"
+    [attr.aria-label]="this.soundService.isPlaying ? 'Pause' : 'Play'">
+
+    @if (!this.soundService.isPlaying) {
+      <img
+        alt=""
+        aria-hidden="true"
+        [ngSrc]="'assets/images/icons/play.svg' | iconDarkMode"
+        height="28"
+        width="28">
+    } @else {
+      <img
+        alt=""
+        aria-hidden="true"
+        [ngSrc]="'assets/images/icons/pause.svg' | iconDarkMode"
+        height="28"
+        width="28">
+    }
+
+  </button>
 </div>
 
 <app-export-modal [isOpen]="isAudioExportModalOpen" [beatName]="beat.label" (close)="isAudioExportModalOpen = false"
