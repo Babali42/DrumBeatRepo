@@ -4,7 +4,7 @@
   <img src="../../assets/images/title.svg" id="title-image" alt="Website Title" class="top-left-corner cursor-pointer"
     (click)="goToMainPage()" />
   <section class="flex content">
-    <router-outlet></router-outlet>
+    <sequencer></sequencer>
   </section>
 </main>
 <footer class="flex justify-center">
@@ -14,7 +14,7 @@
 } @else if (isMobile() && isLandscape) {
 <main class="app-container">
   <section class="flex content">
-    <router-outlet></router-outlet>
+    <sequencer></sequencer>
   </section>
 </main>
 } @else if (isMobile() && isPortrait) {

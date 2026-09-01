@@ -33,8 +33,6 @@ import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { BeatMetadata } from 'src/types/engine';
-import IManageBeats from "../../../domain/ports/i-manage-beats";
-import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 
 @Component({
   selector: 'sequencer',
@@ -62,7 +60,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
-    @Inject(IManageBeatsToken) private readonly beatsManager: IManageBeats,
     protected readonly tempoService: TempoAdapterService,
     private readonly playerEvents: PlayerEventsService,
     public readonly sequencerService: SequencerService,
