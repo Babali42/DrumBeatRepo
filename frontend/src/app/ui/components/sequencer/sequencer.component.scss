@@ -212,7 +212,8 @@ $gap: 4px;
   display: none;
 }
 
-@media (max-width: 768px) {
+//in Breakpoints.Web and in landscape 1280px is the limit
+@media (max-width: 1280px) {
   .play-pause-button {
     display: none;
   }

@@ -20,6 +20,7 @@ export class AppComponent {
   isLandscape: boolean = false;
   mode: Mode = Mode.LIGHT;
 
+  //in Breakpoints.Web and in landscape 1280px is the limit
   readonly isMobile = toSignal(
     this.responsive.observe([Breakpoints.Web]).pipe(
       map(result => !result.matches)
