@@ -1,12 +1,14 @@
 <div class="main-container">
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
-      <button class="play-pause-button cursor-pointer app-button" (click)="this.soundService.playPause()">
-        @if (!this.soundService.isPlaying) {
-        <img alt="play" aria-label="Play" [ngSrc]="'assets/images/icons/play.svg' | iconDarkMode" height="28" width="28">
-        } @else {
-        <img alt="pause" aria-label="Pause" [ngSrc]="'assets/images/icons/pause.svg' | iconDarkMode" height="28" width="28">
-        }
+      <button class="play-pause-button cursor-pointer app-button"
+              [attr.aria-label]="this.soundService.isPlaying ? 'Pause' : 'Play'"
+              (click)="this.soundService.playPause()">
+        <img [alt]="this.soundService.isPlaying ? 'Pause' : 'Play'"
+             aria-hidden="true"
+             [ngSrc]="(this.soundService.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+             height="28"
+             width="28">
       </button>
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
@@ -96,23 +98,12 @@
     type="button"
     (click)="this.soundService.playPause()"
     [attr.aria-label]="this.soundService.isPlaying ? 'Pause' : 'Play'">
-
-    @if (!this.soundService.isPlaying) {
-      <img
-        alt=""
-        aria-hidden="true"
-        [ngSrc]="'assets/images/icons/play.svg' | iconDarkMode"
-        height="28"
-        width="28">
-    } @else {
-      <img
-        alt=""
-        aria-hidden="true"
-        [ngSrc]="'assets/images/icons/pause.svg' | iconDarkMode"
-        height="28"
-        width="28">
-    }
-
+    <img
+      [alt]="this.soundService.isPlaying ? 'Pause' : 'Play'"
+      aria-hidden="true"
+      [ngSrc]="(this.soundService.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+      height="28"
+      width="28">
   </button>
 </div>
 
