@@ -35,7 +35,8 @@
       </app-select-input>
     </div>
   </div>
-  <div class="tracks-name-container">
+  <div #sequencerScrollContainer class="sequencer-scroll-container">
+    <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
     <div class="tracks-name">
       <button class="button square-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
@@ -57,8 +58,8 @@
       </div>
     </div>
     }
-  </div>
-  <section class="tracks-container">
+    </div>
+    <section class="tracks-container">
     @for (track of beat.tracks; track $index) {
     <article>
       <div id="track" [class.eight-steps]="track.steps.steps.length == NumberOfSteps.eight"
@@ -83,7 +84,8 @@
       </div>
     </article>
     }
-  </section>
+    </section>
+  </div>
   <section class="export-button-container flex">
     <button class="button" (click)="isAudioExportModalOpen = true">{{ 'export.wavButton' | translate
       }}</button>

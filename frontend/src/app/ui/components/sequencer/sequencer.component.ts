@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -44,8 +44,10 @@ import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-ma
   imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SequencerComponent implements OnInit, OnDestroy {
+export class SequencerComponent implements AfterViewInit, OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
+  private readonly mobileTrackNamesWidth = 120;
+  @ViewChild('sequencerScrollContainer') private sequencerScrollContainer?: ElementRef<HTMLElement>;
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
   protected readonly AddTrackFeatureToggle = false;
@@ -71,6 +73,17 @@ export class SequencerComponent implements OnInit, OnDestroy {
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.soundService.playPause());
+  }
+
+  ngAfterViewInit(): void {
+    this.scrollGridIntoView();
+  }
+
+  private scrollGridIntoView(): void {
+    const container = this.sequencerScrollContainer?.nativeElement;
+    if (!container) return;
+
+    requestAnimationFrame(() => container.scrollLeft = this.mobileTrackNamesWidth);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -129,6 +142,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
     };
 
     this.soundService.setTracks(this.beat.tracks);
+    this.scrollGridIntoView();
   }
 
   private _applySteps(): void {
