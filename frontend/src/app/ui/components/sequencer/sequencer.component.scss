@@ -143,6 +143,10 @@ $gap: 4px;
   overflow-x: auto;
 }
 
+.sequencer-scroll-container {
+  display: contents;
+}
+
 .tracks-name-container {
   grid-column-start: 1;
   grid-row-start: 2;
@@ -162,6 +166,52 @@ $gap: 4px;
     .track-name {
       white-space: nowrap;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  .sequencer-header,
+  .sequencer-scroll-container,
+  .export-button-container {
+    width: 100%;
+  }
+
+  .sequencer-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .tracks-name-container {
+    flex: 0 0 120px;
+    width: 120px;
+  }
+
+  .tracks-container {
+    flex: 0 0 max-content;
+    overflow: visible;
+    width: max-content;
+
+    article {
+      width: max-content;
+    }
+  }
+
+  .export-button-container {
+    margin-top: utils.$main-app-margin-size;
   }
 }
 
