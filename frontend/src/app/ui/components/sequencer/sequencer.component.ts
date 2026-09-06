@@ -26,7 +26,6 @@ import { DrumImagePipe } from '../../pipes/drum-image.pipe';
 import { IconDarkModePipe } from '../../pipes/icon-dark-mode.pipe';
 
 import { BpmInputComponent } from '../bpm-input/bpm-input.component';
-import { SelectInputComponent } from '../select-input/select-input.component';
 import { ExportAudioModalComponent } from '../modals/export-audio-modal/export-audio-modal.component';
 import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-midi-modal.component';
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
@@ -39,7 +38,7 @@ import { BeatMetadata } from 'src/types/engine';
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
+  imports: [BpmInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -70,8 +69,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.sequencerService.state$
       .pipe(
         tap(state => {
@@ -102,13 +100,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe();
-
-    await this.sequencerService.initialize();
-
-    const firstGenre = this.sequencerService.genresLabel[0];
-    if (firstGenre) {
-      this.genreChange(firstGenre);
-    }
   }
 
   private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number, beatsPerBar: number, subdivisionsPerBeat: number, numberOfBars: number): void {
@@ -132,40 +123,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
     this.soundService.syncTracks(vmTracks);
     this.beat = { ...this.beat, tracks: vmTracks };
-  }
-
-  genreChange(genre: string): void {
-    const beatsFromGenre = this.sequencerService.genres.get(genre);
-
-    if (!beatsFromGenre || beatsFromGenre.length === 0)
-      return;
-
-    this.selectBeat(beatsFromGenre[0]);
-  }
-
-  beatChange(beat: string): void {
-    const currentGenre = this.sequencerService.vm$.getValue().genre;
-    const beatsFromGenre = this.sequencerService.genres.get(currentGenre);
-
-    if (!beatsFromGenre)
-      return;
-
-    const beatToSelect = beatsFromGenre.find(x => x.label === beat);
-
-    this.selectBeat(beatToSelect);
-  }
-
-  selectBeat(beatToSelect: BeatMetadata | undefined): void {
-    if (!beatToSelect)
-      return;
-
-    void this.sequencerService.dispatch({
-      type: 'SELECT_BEAT',
-      payload: {
-        genre: beatToSelect.genre,
-        beat: beatToSelect.label
-      }
-    });
   }
 
   dragState: { readonly trackName: string; readonly from: number; readonly to: number; readonly value: boolean } | null = null;

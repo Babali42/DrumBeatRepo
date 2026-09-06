@@ -1,9 +1,24 @@
 <ngx-loading-bar></ngx-loading-bar>
+
+<ng-template #libraryControls>
+  <div class="library-controls">
+    <app-select-input [elements]="sequencerService.genresLabel"
+      [selectedElement]="sequencerService.vm$.getValue().genre" (selectChange)="genreChange($event)"
+      placeHolder="{{ 'chooseGenre' | translate }}">
+    </app-select-input>
+    <app-select-input [elements]="sequencerService.vm$.getValue().beats"
+      [selectedElement]="sequencerService.vm$.getValue().beat" (selectChange)="beatChange($event)"
+      placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
+    </app-select-input>
+  </div>
+</ng-template>
+
 @if (!isMobile()) {
 <main class="flex app-container">
   <img src="../../assets/images/title.svg" id="title-image" alt="Website Title" class="top-left-corner cursor-pointer"
     (click)="goToMainPage()" />
-  <section class="flex content">
+  <section class="flex content column">
+    <ng-container [ngTemplateOutlet]="libraryControls"></ng-container>
     <sequencer></sequencer>
   </section>
 </main>
@@ -13,7 +28,8 @@
 </footer>
 } @else if (isMobile() && isLandscape) {
 <main class="app-container">
-  <section class="flex content">
+  <section class="flex content column">
+    <ng-container [ngTemplateOutlet]="libraryControls"></ng-container>
     <sequencer></sequencer>
   </section>
 </main>

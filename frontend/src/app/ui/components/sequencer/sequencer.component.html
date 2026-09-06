@@ -24,18 +24,6 @@
         </button>
       </div>
     </div>
-    <div class="label">
-      <app-select-input [elements]="sequencerService.genresLabel"
-        [selectedElement]="sequencerService.vm$.getValue().genre" (selectChange)="this.genreChange($event)"
-        placeHolder="{{ 'chooseGenre' | translate }}">
-      </app-select-input>
-    </div>
-    <div class="label">
-      <app-select-input [elements]="sequencerService.vm$.getValue().beats"
-        [selectedElement]="sequencerService.vm$.getValue().beat" (selectChange)="beatChange($event)"
-        placeHolder="{{ 'chooseBeat' | translate : { genre : sequencerService.vm$.getValue().genre } }}">
-      </app-select-input>
-    </div>
   </div>
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
