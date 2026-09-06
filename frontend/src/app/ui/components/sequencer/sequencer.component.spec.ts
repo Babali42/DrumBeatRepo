@@ -83,6 +83,13 @@ describe('SequencerComponent', () => {
     component = fixture.componentInstance;
     service = TestBed.inject(SequencerService);
 
+    // AppComponent owns the library bootstrap now, so the test has to arrange it
+    await service.initialize();
+    await service.dispatch({
+      type: 'SELECT_BEAT',
+      payload: { genre: beatMetaData.genre, beat: beatMetaData.label }
+    });
+
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -138,11 +145,11 @@ describe('SequencerComponent', () => {
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    component.beatChange(secondBeatMetaData.label);
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: secondBeatMetaData.genre, beat: secondBeatMetaData.label } });
     await fixture.whenStable();
     fixture.detectChanges();
 
-    component.beatChange(beatMetaData.label);
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatMetaData.genre, beat: beatMetaData.label } });
     await fixture.whenStable();
     fixture.detectChanges();
 
