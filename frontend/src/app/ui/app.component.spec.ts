@@ -126,7 +126,9 @@ describe('AppComponent', () => {
     expect(vm.genre).toEqual(technoBeat.genre);
   });
 
-  it('should keep the current beat when an unknown beat is given', () => {
+  it('should keep the current beat when an unknown beat is given', async () => {
+    await waitForVm(x => x.beat === technoBeat.label);
+
     component.beatChange('does not exist');
 
     expect(service.vm$.getValue().beat).toEqual(technoBeat.label);
