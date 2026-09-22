@@ -35,6 +35,8 @@
         {{ track.name }}
       </div>
       <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
+      <!-- TODO - SOLO -->
+      <button class="button" [ngClass]="track.isSolo ? 'solo' : ''" (click)="toggleSoloTrack(track.name)">S</button>
     </div>
     }
     @if(AddTrackFeatureToggle) {

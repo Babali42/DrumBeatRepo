@@ -203,6 +203,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
   toggleMuteTrack = (trackName: string) => void this.sequencerService.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName } });
 
+  //TODO - SOLO
+  toggleSoloTrack = (trackName: string) => void this.sequencerService.dispatch({ type: 'TOGGLE_SOLO_TRACK', payload: { trackName } });
+
   async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;
 
