@@ -18,4 +18,12 @@ class BeatMetadataCirceSpec extends AnyFlatSpec with Matchers {
 
     decode[BeatMetadata](json).isLeft shouldBe true
   }
+
+  it should "decode Bossa Nova metadata correctly" in {
+    val json =
+      """{"genre":"Bossa Nova","label":"Bossa Nova","filename":"bossa-nova/bossa-nova"}"""
+
+    decode[BeatMetadata](json) shouldEqual
+      Right(BeatMetadata("Bossa Nova", "Bossa Nova", "bossa-nova/bossa-nova"))
+  }
 }
