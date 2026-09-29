@@ -133,5 +133,10 @@
         "filename": "jersey-club/jersey-club",
         "genre": "Club",
         "label": "Jersey club"
+    },    
+    {
+	"filename": "bossa-nova/bossa-nova",
+	"genre": "Bossa Nova",
+	"label": "Bossa Nova"
     }
 ]
