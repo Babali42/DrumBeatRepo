@@ -1,0 +1,27 @@
+{
+  "label": "Bossa Nova",
+  "genre": "Bossa Nova",
+  "bpm": 120,
+  "beatsPerBar": 4,
+  "subdivisionsPerBeat": 4,
+  "tracks": [
+    {
+      "name": "Ride",
+      "filename": "techno/hat.wav",
+      "steps": "X X X X X X X X ",
+      "midiNote": 42
+    },
+    {
+      "name": "Kick",
+      "filename": "techno/kick.wav",
+      "steps": "X     X     X   ",
+      "midiNote": 36
+    },
+    {
+      "name": "Rim",
+      "filename": "techno/snare.wav",
+      "steps": "X   X     X   X ",
+      "midiNote": 38
+    }
+  ]
+}
