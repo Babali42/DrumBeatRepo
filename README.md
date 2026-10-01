@@ -136,6 +136,7 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirti7617"><img src="https://avatars.githubusercontent.com/u/220924927?v=4?s=100" width="100px;" alt="kirti7617"/><br /><sub><b>kirti7617</b></sub></a><br /><a href="#code-kirti7617" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/fraydo23"><img src="https://avatars.githubusercontent.com/u/107651442?v=4?s=100" width="100px;" alt="fraydo23"/><br /><sub><b>fraydo23</b></sub></a><br /><a href="#code-fraydo23" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/devwez"><img src="https://avatars.githubusercontent.com/u/108820288?v=4?s=100" width="100px;" alt="Weza Mwiwa"/><br /><sub><b>Weza Mwiwa</b></sub></a><br /><a href="#code-devwez" title="Code">💻</a> <a href="#design-devwez" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/maevainnocent"><img src="https://avatars.githubusercontent.com/u/115999764?v=4?s=100" width="100px;" alt="Maeva Innocent"/><br /><sub><b>Maeva Innocent</b></sub></a><br /><a href="#code-maevainnocent" title="Code">💻</a> <a href="#audio-maevainnocent" title="Audio">🔊</a></td>
     </tr>
   </tbody>
 </table>
