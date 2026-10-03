@@ -32,6 +32,7 @@ describe('Compact beat mapper tests', () => {
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(0)).toEqual(beat.tracks[0].steps.getStepAtIndex(0));
     expect(mappedBeat.tracks[0].steps.getStepAtIndex(3)).toEqual(beat.tracks[0].steps.getStepAtIndex(3));
     expect(mappedBeat.tracks[0].isMuted).toEqual(beat.tracks[0].isMuted);
+    expect(mappedBeat.tracks[0].isSolo).toEqual(beat.tracks[0].isSolo);
   });
 
   it("Should map compact beat to beat", async () => {
@@ -46,6 +47,7 @@ describe('Compact beat mapper tests', () => {
         {
           "name": "Snare",
           "isMuted": true,
+          "isSolo": true,
           "filename": "metal/snare.mp3",
           "steps": "____X_______X___"
         },
@@ -76,6 +78,7 @@ describe('Compact beat mapper tests', () => {
     expect(beat.tracks.length).toEqual(compactBeat.tracks.length);
     expect(beat.tracks[0].name).toEqual(compactBeat.tracks[0].name);
     expect(beat.tracks[0].isMuted).toBe(true);
+    expect(beat.tracks[0].isSolo).toBe(true);
   });
 
   it("Should return Left when track format is incorrect", async () => {
@@ -100,3 +103,5 @@ describe('Compact beat mapper tests', () => {
     expect(result._tag).toBe('Left');
   });
 });
+
+

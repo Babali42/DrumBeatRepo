@@ -117,7 +117,8 @@ export class SequencerService {
           filename: t.filename,
           steps,
           midiNote,
-          isMuted: !!t.isMuted
+          isMuted: !!t.isMuted,
+          isSolo: !!t.isSolo
         };
       }) ?? [];
 

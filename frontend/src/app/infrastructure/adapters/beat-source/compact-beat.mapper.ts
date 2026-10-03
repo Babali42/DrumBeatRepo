@@ -36,6 +36,7 @@ export class CompactBeatMapper {
     });
   }
 
+  //only used in test : todo move in test file
   static toCompactBeat(beat: Beat): CompactBeat {
     return {
       label: beat.label,
@@ -49,6 +50,7 @@ export class CompactBeatMapper {
         filename: track.filename,
         steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
         isMuted: track.isMuted,
+        isSolo: track.isSolo,
         midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
       }))
     }

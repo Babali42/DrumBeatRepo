@@ -31,8 +31,5 @@ export class Track {
     this.midiNote = midiNote;
     this.isMuted = isMuted;
     this.isSolo = isSolo;
-
-    //TODO - SOLO
-    this.isSolo = false;
   }
 }
