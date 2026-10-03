@@ -1,7 +1,6 @@
 import { AudioEngineAdapter } from "./audio-engine.adapter";
 import { Track } from "../../../domain/track";
 import { Steps } from "../../../domain/steps";
-import { NumberOfSteps } from "../../../domain/number-of-steps";
 import { BPM } from "../../../domain/bpm";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { StepIndex } from "../../../domain/step-index";
