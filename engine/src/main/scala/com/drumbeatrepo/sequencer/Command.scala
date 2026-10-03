@@ -22,6 +22,7 @@ enum Command:
   )
   case AddTrack(track: Track)
   case ToggleMuteTrack(trackName: String)
+  case ToggleSoloTrack(trackName: String)
   case Undo
   case Redo
 
@@ -78,6 +79,11 @@ object Command:
       case "TOGGLE_MUTE_TRACK" =>
         val payload = cmd.selectDynamic("payload")
         ToggleMuteTrack(
+          payload.selectDynamic("trackName").asInstanceOf[String]
+        )
+      case "TOGGLE_SOLO_TRACK" =>
+        val payload = cmd.selectDynamic("payload")
+        ToggleSoloTrack(
           payload.selectDynamic("trackName").asInstanceOf[String]
         )
       case "UNDO" => Undo

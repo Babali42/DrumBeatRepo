@@ -110,11 +110,16 @@ case class SequencerState(
         case next :: rest => next.copy(future = rest)
     case Command.ToggleMuteTrack(trackName: String) =>
       val newTracks = tracks.map { t =>
-        if t.name == trackName then t.copy(isMuted = !t.isMuted) else t
+        if t.name == trackName then t.copy(isMuted = !t.isMuted, isSolo = false)
+        else t.copy(isSolo = false)
       }
-
-      if newTracks == tracks then this
-      else copy(tracks = newTracks, history = history :+ this, future = Nil)
+      copy(tracks = newTracks, history = history :+ this, future = Nil)
+    case Command.ToggleSoloTrack(trackName: String) =>
+      val newTracks = tracks.map { t =>
+        if t.name == trackName then t.copy(isSolo = !t.isSolo, isMuted = false)
+        else t.copy(isSolo = false, isMuted = false)
+      }
+      copy(tracks = newTracks, history = history :+ this, future = Nil)
 
 end SequencerState
 object SequencerState:

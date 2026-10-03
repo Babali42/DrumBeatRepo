@@ -15,7 +15,8 @@ class SequencerParseCommandTest extends AnyFunSuite {
           "midiNote" -> 35,
           "steps" -> scala.scalajs.js
             .Array[Boolean](true, false, false, false),
-          "isMuted" -> true
+          "isMuted" -> false,
+          "isSolo" -> false
         )
       )
     )
@@ -35,7 +36,8 @@ class SequencerParseCommandTest extends AnyFunSuite {
           Velocity.None,
           Velocity.None
         ),
-        true
+        false,
+        false
       )
     )
   }
@@ -82,6 +84,7 @@ class SequencerParseCommandTest extends AnyFunSuite {
       "kick.mp3",
       Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
       List(Velocity.Normal, Velocity.None),
+      true,
       true
     )
 
@@ -90,5 +93,21 @@ class SequencerParseCommandTest extends AnyFunSuite {
 
     roundTripped.isMuted shouldBe true
     roundTripped.steps.head shouldBe Velocity.Normal
+  }
+
+  test("SOLO_TRACK command should be parsed from JS") {
+    // arrange
+    val cmd = scala.scalajs.js.Dynamic.literal(
+      `type` = "TOGGLE_SOLO_TRACK",
+      payload = scala.scalajs.js.Dynamic.literal(
+        trackName = "Snare"
+      )
+    )
+
+    // act
+    val result = Command.fromJS(cmd)
+
+    // assert
+    result shouldBe Command.ToggleSoloTrack("Snare")
   }
 }
