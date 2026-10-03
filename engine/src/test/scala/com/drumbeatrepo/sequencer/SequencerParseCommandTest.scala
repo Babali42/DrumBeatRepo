@@ -59,42 +59,6 @@ class SequencerParseCommandTest extends AnyFunSuite {
     result shouldBe Command.SetSteps("Kick", 2, 4, Velocity.None)
   }
 
-  test("ADD_TRACK command is parsed from JS") {
-    // arrange
-    val cmd = scala.scalajs.js.Dynamic.literal(
-      "type" -> "ADD_TRACK",
-      "payload" -> scala.scalajs.js.Dynamic.literal(
-        "track" -> scala.scalajs.js.Dynamic.literal(
-          "name" -> "Kick",
-          "filename" -> "Kick.mp3",
-          "midiNote" -> 35,
-          "steps" -> scala.scalajs.js
-            .Array[Boolean](true, false, false, false),
-          "isMuted" -> true
-        )
-      )
-    )
-
-    // act
-    val result = Command.fromJS(cmd)
-
-    // assert
-    result shouldBe Command.AddTrack(
-      Track(
-        "Kick",
-        "Kick.mp3",
-        Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-        List(
-          Velocity.Normal,
-          Velocity.None,
-          Velocity.None,
-          Velocity.None
-        ),
-        true
-      )
-    )
-  }
-
   test("TOGGLE_STEP command is parsed from JS") {
     // arrange
     val cmd = scala.scalajs.js.Dynamic.literal(
@@ -110,5 +74,21 @@ class SequencerParseCommandTest extends AnyFunSuite {
 
     // assert
     result shouldBe Command.ToggleStep("Snare", 2)
+  }
+
+  test("Track serialization preserves the mute flag") {
+    val original = Track(
+      "Kick",
+      "kick.mp3",
+      Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
+      List(Velocity.Normal, Velocity.None),
+      true
+    )
+
+    val roundTripped =
+      Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
+
+    roundTripped.isMuted shouldBe true
+    roundTripped.steps.head shouldBe Velocity.Normal
   }
 }

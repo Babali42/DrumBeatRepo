@@ -23,8 +23,12 @@ class SequencerafterTest extends AnyFunSuite {
       false
     )
   )
+  private val initialWithTracks = initial
+    .dispatch(
+      Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+    )
 
-  test("dispatch SelectBeat sets the beat") {
+  test("dispatch SelectBeat should sets the beat") {
     // act
     val after = initial
       .dispatch(
@@ -40,7 +44,7 @@ class SequencerafterTest extends AnyFunSuite {
     after.numberOfBars shouldBe 1;
   }
 
-  test("dispatch SetTempo sets the tempo") {
+  test("dispatch SetTempo should sets the tempo") {
     // act
     val after = initial.dispatch(Command.SetTempo(126));
 
@@ -48,7 +52,7 @@ class SequencerafterTest extends AnyFunSuite {
     after.tempo shouldBe 126;
   }
 
-  test("undo restores initial beat") {
+  test("undo should restores initial beat") {
     // act
     val after = initial
       .dispatch(
@@ -60,7 +64,7 @@ class SequencerafterTest extends AnyFunSuite {
     after.beat shouldBe initial.beat;
   }
 
-  test("undo then redo restores the beat") {
+  test("undo then redo should restores the beat") {
     // act
     val after = initial
       .dispatch(
@@ -75,7 +79,7 @@ class SequencerafterTest extends AnyFunSuite {
     after.tempo shouldBe 128;
   }
 
-  test("redo should do nothing with empty future") {
+  test("redo should should do nothing with empty future") {
     // act
     val after = initial.dispatch(Command.Redo);
 
@@ -91,7 +95,7 @@ class SequencerafterTest extends AnyFunSuite {
     after shouldBe initial;
   }
 
-  test("multiple changes in tempo shoud be undone once") {
+  test("multiple changes in tempo should be undone once") {
     // act
     val after = initial
       .dispatch(Command.SetTempo(123))
@@ -104,49 +108,34 @@ class SequencerafterTest extends AnyFunSuite {
     after shouldBe initial.tempo
   }
 
-  test("ToggleStep toggles a step from true to false") {
+  test("ToggleStep should toggles a step from true to false") {
     // act
-    val after = initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 0))
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 0))
 
     // assert
     after.tracks.head.steps(0) shouldBe Velocity.None
   }
 
-  test("ToggleStep toggles a step from false to true") {
+  test("ToggleStep should toggles a step from false to true") {
     // act
-    val after = initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 1))
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 1))
 
     // assert
     after.tracks.head.steps(1) shouldBe Velocity.Normal
   }
 
-  test("ToggleStep adds to history") {
+  test("ToggleStep should adds to history") {
     // act
-    val after = initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-    val toggled = after.dispatch(Command.ToggleStep("Snare", 0))
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 0))
 
     // assert
-    toggled.history.length shouldBe 2
-    toggled.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
+    after.history.length shouldBe 2
+    after.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
   }
 
-  test("ToggleStep clears future") {
+  test("ToggleStep should clears future") {
     // act
-    val after = initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
+    val after = initialWithTracks
       .dispatch(Command.ToggleStep("Snare", 0))
       .dispatch(Command.Undo)
       .dispatch(Command.ToggleStep("Snare", 1))
@@ -157,44 +146,9 @@ class SequencerafterTest extends AnyFunSuite {
 
   test("dispatch SetSteps sets multiples steps in a row") {
     // act
-    val after = initial
-      .dispatch(
-        Command.SelectBeat(
-          "Techno",
-          "4 on the floor",
-          List(
-            Track(
-              "kick",
-              "kick.mp3",
-              Some(MidiDrumType.BASS_DRUM_1),
-              List(
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None
-              ),
-              false
-            )
-          ),
-          128,
-          4,
-          1,
-          1
-        )
-      )
-      .dispatch(Command.SetSteps("kick", 1, 3, Velocity.Normal));
+    val after = initialWithTracks.dispatch(
+      Command.SetSteps("Snare", 1, 3, Velocity.Normal)
+    );
 
     // assert
     after.tracks.head.steps(0) shouldBe Velocity.Normal
@@ -203,51 +157,12 @@ class SequencerafterTest extends AnyFunSuite {
     after.tracks.head.steps(3) shouldBe Velocity.Normal
   }
 
-  test("Track serialization preserves the mute flag") {
-    val original = Track(
-      "Kick",
-      "kick.mp3",
-      Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      List(Velocity.Normal, Velocity.None),
-      true
-    )
-
-    val roundTripped =
-      Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
-
-    roundTripped.isMuted shouldBe true
-    roundTripped.steps.head shouldBe Velocity.Normal
-  }
-
-  test("dispatch AddTrack add a track to a beat") {
+  test("dispatch AddTrack should add a track to a beat") {
     // act
     val after = initial
       .dispatch(
         Command.AddTrack(
-          Track(
-            "kick",
-            "kick.mp3",
-            Some(MidiDrumType.BASS_DRUM_1),
-            List(
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None
-            ),
-            false
-          )
+          someTracks.head.copy(name = "kick")
         )
       );
 
@@ -255,40 +170,10 @@ class SequencerafterTest extends AnyFunSuite {
     after.tracks.length shouldBe 1
   }
 
-  test("dispatch ToggleMuteTrack mute a track") {
-    // arrange
-    val after = initial
-      .dispatch(
-        Command.AddTrack(
-          Track(
-            "kick",
-            "kick.mp3",
-            Some(MidiDrumType.BASS_DRUM_1),
-            List(
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None
-            ),
-            false
-          )
-        )
-      );
-
+  test("dispatch ToggleMuteTrack should mute a track") {
     // act
-    val afterWithMutedTrack = after.dispatch(Command.ToggleMuteTrack("kick"))
+    val afterWithMutedTrack =
+      initialWithTracks.dispatch(Command.ToggleMuteTrack("Snare"))
 
     // assert
     afterWithMutedTrack.tracks.head.isMuted shouldBe true
