@@ -91,4 +91,20 @@ class SequencerParseCommandTest extends AnyFunSuite {
     roundTripped.isMuted shouldBe true
     roundTripped.steps.head shouldBe Velocity.Normal
   }
+
+  test("SOLO_TRACK command should be parsed from JS") {
+    // arrange
+    val cmd = scala.scalajs.js.Dynamic.literal(
+      `type` = "TOGGLE_SOLO_TRACK",
+      payload = scala.scalajs.js.Dynamic.literal(
+        trackName = "Snare"
+      )
+    )
+
+    // act
+    val result = Command.fromJS(cmd)
+
+    // assert
+    result shouldBe Command.ToggleSoloTrack("Snare")
+  }
 }
