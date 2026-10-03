@@ -46,6 +46,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true]),
       isMuted: false,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
 
@@ -221,6 +222,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true, true, false]),
       isMuted: false,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([playingTrack]);
@@ -255,6 +257,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true, false, true]),
       isMuted: true,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([mutedTrack]);

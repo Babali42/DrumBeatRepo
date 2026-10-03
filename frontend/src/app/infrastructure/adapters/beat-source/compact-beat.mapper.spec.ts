@@ -10,8 +10,8 @@ describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
     const beat: Beat = {
       genre: "test", label: "", bpm: BPM(150), beatsPerBar: 8, subdivisionsPerBeat: 3, numberOfBar: 2, tracks: [
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
-        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
+        new Track("", toMp3FilePath("test.mp3"), [true, false, false, true, true, false, false, true, true, false, false, true, true, false, false, true], false, false, Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)),
       ]
     };
 

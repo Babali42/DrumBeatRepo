@@ -26,6 +26,7 @@ export class CompactBeatMapper {
           track.filename,
           [...track.steps].map(char => char === 'X'),
           track.isMuted ?? false,
+          track.isSolo ?? false,
           isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none()
         ))
       }),

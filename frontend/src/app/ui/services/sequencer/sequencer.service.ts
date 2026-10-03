@@ -40,7 +40,7 @@ export class SequencerService {
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.filename, [...x.steps], x.isMuted, midiNote);
+          return new Track(x.name, x.filename, [...x.steps], x.isMuted, x.isSolo, midiNote);
         }),
         tempo: BPM(state.tempo),
         beatsPerBar: state.beatsPerBar,
@@ -97,7 +97,7 @@ export class SequencerService {
     }
 
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-    const normalizeTracks = (rawTracks: any[] | readonly Track[] ) =>
+    const normalizeTracks = (rawTracks: any[] | readonly Track[]) =>
       rawTracks?.map((t: any) => {
         const steps = Array.isArray(t.steps)
           ? [...t.steps]

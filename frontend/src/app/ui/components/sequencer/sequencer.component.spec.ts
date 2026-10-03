@@ -57,6 +57,7 @@ describe('SequencerComponent', () => {
               filename: 'metal/snare.mp3',
               steps: new Steps([true, true, true, true]),
               isMuted: false,
+              isSolo: false,
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]

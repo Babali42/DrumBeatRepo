@@ -4,6 +4,7 @@ export interface EngineTrack {
   readonly steps: readonly boolean[];
   readonly midiNote: number | null;
   readonly isMuted: boolean;
+  readonly isSolo: boolean;
 }
 
 export interface SequencerState {
