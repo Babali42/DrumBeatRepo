@@ -20,6 +20,7 @@ class SequencerafterTest extends AnyFunSuite {
         Velocity.Normal,
         Velocity.None
       ),
+      false,
       false
     )
   )
@@ -177,5 +178,72 @@ class SequencerafterTest extends AnyFunSuite {
 
     // assert
     afterWithMutedTrack.tracks.head.isMuted shouldBe true
+  }
+
+  test("ToggleSoloTrack should solo a track") {
+    // arrange
+    val threeTrackBeat = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick")
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat")
+        )
+      );
+
+    // act
+    val result = threeTrackBeat.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks.find(_.name == "kick").head.isSolo shouldBe true
+  }
+
+  test("ToggleSoloTrack should unsolo other solo track") {
+    // arrange
+    val threeTrackBeatWithSoloHat = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick")
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat", isSolo = true)
+        )
+      );
+
+    // act
+    val result =
+      threeTrackBeatWithSoloHat.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks
+      .filter(_.name != "kick")
+      .forall(_.isSolo == false) shouldBe true
+  }
+
+  test("ToggleSoloTrack should unmute all tracks") {
+    // arrange
+    val threeTrackBeatAllMuted = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick", isMuted = true)
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat", isSolo = true, isMuted = true)
+        )
+      );
+
+    // act
+    val result =
+      threeTrackBeatAllMuted.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks.forall(_.isMuted == false) shouldBe true
   }
 }

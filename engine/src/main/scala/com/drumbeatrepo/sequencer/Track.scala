@@ -7,7 +7,8 @@ case class Track(
     filename: String,
     midiNote: Option[MidiDrumType],
     steps: List[Velocity],
-    isMuted: Boolean
+    isMuted: Boolean,
+    isSolo: Boolean
 ) extends Ordered[Track] {
   override def compare(that: Track): Int =
     java.lang.Integer
@@ -33,7 +34,8 @@ object Track:
         .asInstanceOf[js.Array[Boolean]]
         .map(Velocity.fromBoolean)
         .toList,
-      track.selectDynamic("isMuted").asInstanceOf[Boolean]
+      track.selectDynamic("isMuted").asInstanceOf[Boolean],
+      track.selectDynamic("isSolo").asInstanceOf[Boolean]
     )
 
   def toJS(track: Track): js.Object =
@@ -47,5 +49,6 @@ object Track:
       filename = track.filename,
       steps = stepsArr,
       midiNote = midiNoteVal,
-      isMuted = track.isMuted
+      isMuted = track.isMuted,
+      isSolo = track.isSolo
     )

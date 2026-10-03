@@ -15,7 +15,8 @@ class SequencerParseCommandTest extends AnyFunSuite {
           "midiNote" -> 35,
           "steps" -> scala.scalajs.js
             .Array[Boolean](true, false, false, false),
-          "isMuted" -> true
+          "isMuted" -> false,
+          "isSolo" -> false
         )
       )
     )
@@ -35,7 +36,8 @@ class SequencerParseCommandTest extends AnyFunSuite {
           Velocity.None,
           Velocity.None
         ),
-        true
+        false,
+        false
       )
     )
   }
@@ -82,6 +84,7 @@ class SequencerParseCommandTest extends AnyFunSuite {
       "kick.mp3",
       Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
       List(Velocity.Normal, Velocity.None),
+      true,
       true
     )
 
