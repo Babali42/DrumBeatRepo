@@ -106,6 +106,30 @@ Everyone is welcome — devs, musicians, designers.
 3. ✅ Pass all tests
 4. Open a Pull Request
 
+## Phase II — Issue #511
+
+### Reproduction Process
+
+#### Steps to Reproduce
+
+1. From the repository root, install the frontend dependencies with `cd frontend && npm ci`.
+2. Run the frontend test suite with `npm run test-ci`.
+3. Inspect the final test in `src/app/ui/pipes/drum-image.pipe.spec.ts`: `CRASH_CYMBAL_1` (MIDI note 49) is expected to resolve to `assets/images/drums/default.svg`.
+4. Inspect `src/assets/beats/rock/variation.json`: the `Crash` track uses `"midiNote": 49`, so the Rock variation renders the default drum image instead of a crash-cymbal icon.
+
+#### Reproduction Evidence
+
+The issue is reproduced from the current `main` baseline: MIDI note 49 is configured in the Rock variation but is absent from `DrumImagePipe.drumImages`, causing the fallback to `default.svg`.
+
+Branch: [phase-ii-issue-511](https://github.com/corr18/DrumBeatRepo/tree/phase-ii-issue-511)
+
+### Implementation Plan
+
+- Add a crash-cymbal SVG asset in both light and dark variants under `frontend/src/assets/images/drums`, using a compatible open-source SVG.
+- Map MIDI note 49 (`CRASH_CYMBAL_1`) to the new `crash` image in `DrumImagePipe`.
+- Update the pipe unit test so a crash cymbal resolves to `assets/images/drums/crash.svg` rather than the default icon.
+- Run the focused pipe test and the frontend test suite to confirm that the Rock variation now selects the crash-cymbal asset without changing existing drum mappings.
+
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
