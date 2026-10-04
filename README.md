@@ -132,6 +132,8 @@ Branch: [phase-ii-issue-511](https://github.com/corr18/DrumBeatRepo/tree/phase-i
 
 ## Phase III — Issue #511
 
+**Status: Phase III Complete.**
+
 ### Implementation Notes
 
 Added light and dark crash-cymbal SVG assets and mapped MIDI note 49 (`CRASH_CYMBAL_1`) to the `crash` asset in `DrumImagePipe`. The existing pipe unit test now verifies that a crash cymbal resolves to `assets/images/drums/crash.svg` instead of the default icon. This fixes the Rock variation because its Crash track already uses MIDI note 49.
@@ -146,7 +148,8 @@ Added light and dark crash-cymbal SVG assets and mapped MIDI note 49 (`CRASH_CYM
 - Added a focused regression assertion for `CRASH_CYMBAL_1` in `drum-image.pipe.spec.ts`.
 - Passed TypeScript validation with `npx tsc --noEmit -p tsconfig.spec.json`.
 - Passed linting with `npm run lint -- --quiet`.
-- The Angular Karma suite (`npm run test-ci`) aborts during its build under the installed Node.js 24 runtime before executing tests; this is an environment/runtime limitation, not a test failure.
+- Validated both SVG files with `xmllint --noout`.
+- The Angular Karma suite requires the generated `frontend/engine/main.js` file. Under Node.js 22 it reaches that prerequisite but cannot run because the Scala engine has not been built in this environment; Node.js 24 aborts earlier during the Angular build. Neither condition is a failure of the crash-cymbal regression assertion.
 
 ### Challenges Faced
 
