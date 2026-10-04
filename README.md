@@ -130,6 +130,28 @@ Branch: [phase-ii-issue-511](https://github.com/corr18/DrumBeatRepo/tree/phase-i
 - Update the pipe unit test so a crash cymbal resolves to `assets/images/drums/crash.svg` rather than the default icon.
 - Run the focused pipe test and the frontend test suite to confirm that the Rock variation now selects the crash-cymbal asset without changing existing drum mappings.
 
+## Phase III — Issue #511
+
+### Implementation Notes
+
+Added light and dark crash-cymbal SVG assets and mapped MIDI note 49 (`CRASH_CYMBAL_1`) to the `crash` asset in `DrumImagePipe`. The existing pipe unit test now verifies that a crash cymbal resolves to `assets/images/drums/crash.svg` instead of the default icon. This fixes the Rock variation because its Crash track already uses MIDI note 49.
+
+### Code Changes
+
+- Active branch: [phase-ii-issue-511](https://github.com/corr18/DrumBeatRepo/tree/phase-ii-issue-511)
+- Implementation commit: [`052f20e` — fix(ui): add crash cymbal icon](https://github.com/corr18/DrumBeatRepo/commit/052f20e)
+
+### Testing Strategy
+
+- Added a focused regression assertion for `CRASH_CYMBAL_1` in `drum-image.pipe.spec.ts`.
+- Passed TypeScript validation with `npx tsc --noEmit -p tsconfig.spec.json`.
+- Passed linting with `npm run lint -- --quiet`.
+- The Angular Karma suite (`npm run test-ci`) aborts during its build under the installed Node.js 24 runtime before executing tests; this is an environment/runtime limitation, not a test failure.
+
+### Challenges Faced
+
+The repository has no `CONTRIBUTING.md` or pull-request template, so the implementation follows the existing pipe and SVG-asset conventions. The icon has matching light and dark variants so it works with the existing `iconDarkMode` pipe.
+
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
