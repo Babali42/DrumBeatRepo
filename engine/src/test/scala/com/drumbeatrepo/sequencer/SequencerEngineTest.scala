@@ -13,6 +13,7 @@ class SequencerEngineTest extends AnyFunSuite {
         "Kick.wav",
         Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
         Nil,
+        false,
         false
       );
     val trackSnare =
@@ -21,11 +22,19 @@ class SequencerEngineTest extends AnyFunSuite {
         "Snare.wav",
         Some(MidiDrumType.ACOUSTIC_SNARE),
         Nil,
+        false,
         false
       );
     val trackHat =
-      Track("Hat", "Hat.wav", Some(MidiDrumType.OPEN_HI_HAT), Nil, false);
-    val trackBass = Track("Bass", "Bass.wav", None, Nil, false);
+      Track(
+        "Hat",
+        "Hat.wav",
+        Some(MidiDrumType.OPEN_HI_HAT),
+        Nil,
+        false,
+        false
+      );
+    val trackBass = Track("Bass", "Bass.wav", None, Nil, false, false);
 
     SequencerEngine.reset()
 

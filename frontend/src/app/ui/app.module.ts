@@ -1,12 +1,10 @@
 import {NgModule, provideZoneChangeDetection} from '@angular/core';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideRouter, RouterOutlet, Routes, withHashLocation, withRouterConfig} from "@angular/router";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AppComponent} from './app.component';
-import {SequencerComponent} from "./components/sequencer/sequencer.component";
 import {LoadingInterceptor} from './interceptors/loading.interceptor';
 import {BeatAdapter} from "../infrastructure/adapters/beat-source/beat-adapter.service";
 import {FormsModule} from "@angular/forms";
@@ -23,17 +21,11 @@ import {AudioExportAdapter} from "../infrastructure/adapters/audio-export/audio-
 import {IMIDI} from "../infrastructure/injection-tokens/i-midi.token";
 import {MidiExportService} from "../infrastructure/adapters/midi-export/midi-exporter.service";
 
-
-export const routes: Routes = [
-  {path: '', component: SequencerComponent}
-];
-
 @NgModule({
   bootstrap: [AppComponent],
   imports: [BrowserModule,
     LoadingBarModule,
-    FormsModule,
-    RouterOutlet
+    FormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
@@ -42,7 +34,6 @@ export const routes: Routes = [
     {provide: AUDIO_EXPORT, useClass: AudioExportAdapter},
     {provide: IManageBeatsToken, useClass: BeatAdapter},
     {provide: IMIDI, useClass: MidiExportService},
-    provideRouter(routes, withHashLocation(), withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptorsFromDi()),
     provideZoneChangeDetection(),
     provideTranslateService({

@@ -37,18 +37,38 @@
 
 .close-btn {
   cursor: pointer;
-  background: transparent;
-  border: none;
-  color: inherit;
+  background: color-mix(in srgb, var(--textColor) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--textColor) 14%, transparent);
+  color: var(--textColor);
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
-  padding: 0.25rem 0.5rem;
-  margin-left: 0.5rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-left: 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 100ms ease;
 }
 
 .close-btn:hover {
-  opacity: 0.7;
+  background: color-mix(in srgb, var(--textColor) 14%, transparent);
+  border-color: color-mix(in srgb, var(--textColor) 24%, transparent);
+}
+
+.close-btn:active {
+  transform: scale(0.96);
+}
+
+.close-btn:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
 }
 
 .modal-body {

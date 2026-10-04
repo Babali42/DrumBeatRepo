@@ -1,6 +1,5 @@
 import { SequencerComponent } from './sequencer.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { IManageBeatsToken } from '../../../infrastructure/injection-tokens/i-manage-beat.token';
@@ -58,6 +57,7 @@ describe('SequencerComponent', () => {
               filename: 'metal/snare.mp3',
               steps: new Steps([true, true, true, true]),
               isMuted: false,
+              isSolo: false,
               midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
             }
           ]
@@ -76,14 +76,20 @@ describe('SequencerComponent', () => {
           lang: 'en',
           fallbackLang: 'en'
         }),
-        provideHttpClient(),
-        provideRouter([])
+        provideHttpClient()
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SequencerComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(SequencerService);
+
+    // AppComponent owns the library bootstrap now, so the test has to arrange it
+    await service.initialize();
+    await service.dispatch({
+      type: 'SELECT_BEAT',
+      payload: { genre: beatMetaData.genre, beat: beatMetaData.label }
+    });
 
     fixture.detectChanges();
     await fixture.whenStable();
@@ -140,11 +146,11 @@ describe('SequencerComponent', () => {
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    component.beatChange(secondBeatMetaData.label);
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: secondBeatMetaData.genre, beat: secondBeatMetaData.label } });
     await fixture.whenStable();
     fixture.detectChanges();
 
-    component.beatChange(beatMetaData.label);
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatMetaData.genre, beat: beatMetaData.label } });
     await fixture.whenStable();
     fixture.detectChanges();
 

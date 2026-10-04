@@ -4,6 +4,7 @@ export interface EngineTrack {
   readonly steps: readonly boolean[];
   readonly midiNote: number | null;
   readonly isMuted: boolean;
+  readonly isSolo: boolean;
 }
 
 export interface SequencerState {
@@ -26,7 +27,7 @@ export interface BeatMetadata {
 
 declare global {
   var SequencerEngine: {
-    dispatch(cmd: unknown): void;
+    dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
   };

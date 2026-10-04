@@ -1,7 +1,6 @@
 import { AudioEngineAdapter } from "./audio-engine.adapter";
 import { Track } from "../../../domain/track";
 import { Steps } from "../../../domain/steps";
-import { NumberOfSteps } from "../../../domain/number-of-steps";
 import { BPM } from "../../../domain/bpm";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
 import { StepIndex } from "../../../domain/step-index";
@@ -46,6 +45,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true]),
       isMuted: false,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
 
@@ -221,6 +221,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true, true, false]),
       isMuted: false,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([playingTrack]);
@@ -255,6 +256,7 @@ describe('AudioEngineAdapter', () => {
       filename: 'techno/kick.wav',
       steps: new Steps([true, false, true]),
       isMuted: true,
+      isSolo: false,
       midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
     };
     adapter.setTracks([mutedTrack]);

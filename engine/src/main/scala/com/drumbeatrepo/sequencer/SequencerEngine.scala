@@ -1,4 +1,5 @@
 package com.drumbeatrepo.sequencer
+import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
@@ -15,8 +16,8 @@ object SequencerEngine:
         state = state.dispatch(command).copy(future = Nil)
 
   @JSExport
-  def dispatch(cmd: js.Dynamic): Unit =
-    dispatch(Command.fromJS(cmd))
+  def dispatch(cmd: js.Dynamic): Future[Unit] =
+    Future.successful(dispatch(Command.fromJS(cmd)))
 
   @JSExport
   def reset(): Unit =

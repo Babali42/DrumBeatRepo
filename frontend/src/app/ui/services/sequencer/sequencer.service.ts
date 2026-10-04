@@ -40,7 +40,7 @@ export class SequencerService {
           const midiNote = x.midiNote !== null
             ? Option.some(x.midiNote)
             : Option.none();
-          return new Track(x.name, x.filename, [...x.steps], x.isMuted, midiNote);
+          return new Track(x.name, x.filename, [...x.steps], x.isMuted, x.isSolo, midiNote);
         }),
         tempo: BPM(state.tempo),
         beatsPerBar: state.beatsPerBar,
@@ -76,7 +76,7 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
-      SequencerEngine.dispatch(enriched);
+      await SequencerEngine.dispatch(enriched);
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 
@@ -97,7 +97,7 @@ export class SequencerService {
     }
 
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-    const normalizeTracks = (rawTracks: any[] | undefined) =>
+    const normalizeTracks = (rawTracks: any[] | readonly Track[]) =>
       rawTracks?.map((t: any) => {
         const steps = Array.isArray(t.steps)
           ? [...t.steps]
@@ -117,7 +117,8 @@ export class SequencerService {
           filename: t.filename,
           steps,
           midiNote,
-          isMuted: !!t.isMuted
+          isMuted: !!t.isMuted,
+          isSolo: !!t.isSolo
         };
       }) ?? [];
 
@@ -125,13 +126,6 @@ export class SequencerService {
       const beatData = await Effect.runPromise(
         this.beatsManager.getBeatByFileName(beatMeta.filename)
       );
-
-      const rawPayloadTracks = payload["tracks"] as any[];
-      const tracks = beatData.tracks.length > 0
-        ? beatData.tracks
-        : rawPayloadTracks?.length
-          ? rawPayloadTracks
-          : (beatMeta as any).tracks ?? [];
 
       return {
         ...cmd,
@@ -142,7 +136,7 @@ export class SequencerService {
           beatsPerBar: beatData.beatsPerBar,
           subdivisionsPerBeat: beatData.subdivisionsPerBeat,
           numberOfBars: beatData.numberOfBar,
-          tracks: normalizeTracks(tracks)
+          tracks: normalizeTracks(beatData.tracks)
         }
       };
     } catch (err) {

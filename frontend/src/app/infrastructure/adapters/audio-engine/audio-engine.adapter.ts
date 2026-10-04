@@ -172,6 +172,14 @@ export class AudioEngineAdapter implements IAudioEngine {
       const oldTrack = oldTracks.find(t => t.name === newTrack.name);
       if (!oldTrack) return;
 
+      if (newTrack.isSolo) {
+        this.solo(newTrack);
+        return;
+      } else if (!newTrack.isSolo && !newTrack.isMuted && oldTrack.isSolo) {
+        this.unSolo(newTrack);
+        return;
+      }
+
       if (newTrack.isMuted && !oldTrack.isMuted) {
         this.mute(newTrack);
       } else if (!newTrack.isMuted && oldTrack.isMuted) {
@@ -183,7 +191,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   }
 
   private toggleStep(newTrack: Track, oldTrack: Track) {
-    if(newTrack.isMuted)
+    if (newTrack.isMuted)
       return;
 
     newTrack.steps.steps.forEach((enabled, stepIdx) => {
@@ -205,12 +213,41 @@ export class AudioEngineAdapter implements IAudioEngine {
     });
   }
 
-  private mute(newTrack: Track) {
-    const map = this.trackStepMap.get(newTrack.name);
-    if (!map) return;
-    for (const [, event] of map) {
+  private clearTrackEvents(events: Map<number, WAAClock.Event>): void {
+    for (const [, event] of events) {
       event.clear();
     }
-    this.trackStepMap.delete(newTrack.name);
+
+    events.clear();
+  }
+
+  private mute(track: Track): void {
+    const events = this.trackStepMap.get(track.name);
+
+    if (!events) return;
+
+    this.clearTrackEvents(events);
+    this.trackStepMap.delete(track.name);
+  }
+
+  private solo(track: Track): void {
+    for (const [name, events] of this.trackStepMap) {
+      if (name !== track.name) {
+        this.clearTrackEvents(events);
+      }
+    }
+  }
+
+  private unSolo(trackToUnSolo: Track): void {
+    this.tracks.forEach(track => {
+      if (track.name == trackToUnSolo.name) return;
+      if (track.isMuted) return;
+
+      track.steps.steps.forEach((enabled, stepIdx) => {
+        if (enabled) {
+          this.enableStep(track.name, StepIndex(stepIdx));
+        }
+      });
+    });
   }
 }

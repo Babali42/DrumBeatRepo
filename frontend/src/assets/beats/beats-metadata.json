@@ -2,7 +2,7 @@
     {
         "filename": "hip-hop/hiphop",
         "genre": "Hip-Hop",
-        "label": "(new) Hip-Hop: double kick offset"
+        "label": "Hip-Hop: double kick offset"
     },
     {
         "filename": "hip-hop/trap",
@@ -48,6 +48,11 @@
         "filename": "psytrance/psytrance",
         "genre": "Psytrance",
         "label": "Psytrance"
+    },
+    {
+        "filename": "psytrance/psytrance-gallop",
+        "genre": "Psytrance",
+        "label": "Psytrance Gallop"
     },
     {
         "filename": "psytrance/psytrance-variation",
@@ -128,5 +133,10 @@
         "filename": "jersey-club/jersey-club",
         "genre": "Club",
         "label": "Jersey club"
+    },
+    {
+        "filename": "bossa-nova/bossa-nova",
+        "genre": "(new) Bossa Nova",
+        "label": "Bossa Nova"
     }
 ]

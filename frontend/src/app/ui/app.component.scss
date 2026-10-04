@@ -29,6 +29,15 @@
   height: 100%;
 }
 
+.library-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 16px;
+}
+
 .column {
   flex-direction: column;
 }

@@ -26,22 +26,19 @@ import { DrumImagePipe } from '../../pipes/drum-image.pipe';
 import { IconDarkModePipe } from '../../pipes/icon-dark-mode.pipe';
 
 import { BpmInputComponent } from '../bpm-input/bpm-input.component';
-import { SelectInputComponent } from '../select-input/select-input.component';
 import { ExportAudioModalComponent } from '../modals/export-audio-modal/export-audio-modal.component';
 import { ExportMidiModalComponent } from '../modals/export-midi-modal/export-midi-modal.component';
 import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples-modal/browse-audio-samples-modal.component';
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { BeatMetadata } from 'src/types/engine';
-import IManageBeats from "../../../domain/ports/i-manage-beats";
-import { IManageBeatsToken } from "../../../infrastructure/injection-tokens/i-manage-beat.token";
 
 @Component({
   selector: 'sequencer',
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, SelectInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
+  imports: [BpmInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -62,7 +59,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
   constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
-    @Inject(IManageBeatsToken) private readonly beatsManager: IManageBeats,
     protected readonly tempoService: TempoAdapterService,
     private readonly playerEvents: PlayerEventsService,
     public readonly sequencerService: SequencerService,
@@ -73,15 +69,14 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe(() => this.soundService.playPause());
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.sequencerService.state$
       .pipe(
         tap(state => {
           if (!state)
             return;
 
-          this.tempoService.setBpm(BPM(state.tempo));
+          this.tempoService.bpm = BPM(state.tempo);
 
           const beatMeta =
             this.sequencerService.genres
@@ -94,9 +89,9 @@ export class SequencerComponent implements OnInit, OnDestroy {
             } else {
               this._applyBeat(beatMeta, state.genre, state.tempo, state.beatsPerBar, state.subdivisionsPerBeat, state.numberOfBars);
 
-              this.tempoService.setBeatsPerBar(state.beatsPerBar ?? 4);
-              this.tempoService.setSubdivisionsPerBeat(state.subdivisionsPerBeat);
-              this.tempoService.setNumberOfBar(state.numberOfBars ?? 1);
+              this.tempoService.beatsPerBar = state.beatsPerBar ?? 4;
+              this.tempoService.subdivisionsPerBeat = state.subdivisionsPerBeat;
+              this.tempoService.numberOfBar = state.numberOfBars ?? 1;
             }
           }
 
@@ -105,13 +100,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe();
-
-    await this.sequencerService.initialize();
-
-    const firstGenre = this.sequencerService.genresLabel[0];
-    if (firstGenre) {
-      this.genreChange(firstGenre);
-    }
   }
 
   private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number, beatsPerBar: number, subdivisionsPerBeat: number, numberOfBars: number): void {
@@ -135,40 +123,6 @@ export class SequencerComponent implements OnInit, OnDestroy {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
     this.soundService.syncTracks(vmTracks);
     this.beat = { ...this.beat, tracks: vmTracks };
-  }
-
-  genreChange(genre: string): void {
-    const beatsFromGenre = this.sequencerService.genres.get(genre);
-
-    if (!beatsFromGenre || beatsFromGenre.length === 0)
-      return;
-
-    this.selectBeat(beatsFromGenre[0]);
-  }
-
-  beatChange(beat: string): void {
-    const currentGenre = this.sequencerService.vm$.getValue().genre;
-    const beatsFromGenre = this.sequencerService.genres.get(currentGenre);
-
-    if (!beatsFromGenre)
-      return;
-
-    const beatToSelect = beatsFromGenre.find(x => x.label === beat);
-
-    this.selectBeat(beatToSelect);
-  }
-
-  selectBeat(beatToSelect: BeatMetadata | undefined): void {
-    if (!beatToSelect)
-      return;
-
-    void this.sequencerService.dispatch({
-      type: 'SELECT_BEAT',
-      payload: {
-        genre: beatToSelect.genre,
-        beat: beatToSelect.label
-      }
-    });
   }
 
   dragState: { readonly trackName: string; readonly from: number; readonly to: number; readonly value: boolean } | null = null;
@@ -248,6 +202,8 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   toggleMuteTrack = (trackName: string) => void this.sequencerService.dispatch({ type: 'TOGGLE_MUTE_TRACK', payload: { trackName } });
+
+  toggleSoloTrack = (trackName: string) => void this.sequencerService.dispatch({ type: 'TOGGLE_SOLO_TRACK', payload: { trackName } });
 
   async onAudioExport(options: AudioExportOptions): Promise<void> {
     this.isAudioExportModalOpen = false;

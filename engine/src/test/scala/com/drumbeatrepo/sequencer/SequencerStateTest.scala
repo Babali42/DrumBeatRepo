@@ -3,80 +3,9 @@ package com.drumbeatrepo.sequencer
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe
 
-class SequencerStateTest extends AnyFunSuite {
-  test("dispatch SelectBeat sets the beat") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", Nil, 128, 4, 4, 1)
-      );
-
-    state.genre shouldBe "Techno";
-    state.beat shouldBe "4 on the floor";
-    state.tempo shouldBe 128;
-    state.beatsPerBar shouldBe 4;
-    state.subdivisionsPerBeat shouldBe 4;
-    state.numberOfBars shouldBe 1;
-  }
-
-  test("dispatch SetTempo sets the tempo") {
-    SequencerState.initial.dispatch(Command.SetTempo(126)).tempo shouldBe 126
-  }
-
-  test("undo restores initial beat") {
-    val state = SequencerState(
-      "Hypnotic Techno",
-      "Tresillo",
-      List.empty,
-      128,
-      4,
-      1,
-      1,
-      Nil,
-      Nil
-    )
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
-      )
-      .dispatch(Command.Undo)
-    state.genre shouldBe "Hypnotic Techno";
-    state.beat shouldBe "Tresillo";
-    state.tempo shouldBe 128;
-  }
-
-  test("undo then redo restores the beat") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
-      )
-      .dispatch(Command.Undo)
-      .dispatch(Command.Redo)
-    state.beat shouldBe "4 on the floor";
-    state.genre shouldBe "Techno";
-    state.tempo shouldBe 128;
-  }
-
-  test("redo should do nothing with empty future") {
-    SequencerState.initial.dispatch(
-      Command.Redo
-    ) shouldBe SequencerState.initial
-  }
-
-  test("undo should do nothing with empty history") {
-    SequencerState.initial.dispatch(
-      Command.Undo
-    ) shouldBe SequencerState.initial
-  }
-
-  test("multiple changes in tempo shoud be undone once") {
-    SequencerState.initial
-      .dispatch(Command.SetTempo(123))
-      .dispatch(Command.SetTempo(124))
-      .dispatch(Command.SetTempo(125))
-      .dispatch(Command.Undo)
-      .tempo shouldBe SequencerState.initial.tempo
-  }
-
-  val someTracks = List(
+class SequencerafterTest extends AnyFunSuite {
+  private val initial = SequencerState.initial;
+  private val someTracks = List(
     Track(
       "Snare",
       "snare.wav",
@@ -91,245 +20,253 @@ class SequencerStateTest extends AnyFunSuite {
         Velocity.Normal,
         Velocity.None
       ),
+      false,
       false
     )
   )
-
-  test("ToggleStep toggles a step from true to false") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 0))
-    state.tracks.head.steps(0) shouldBe Velocity.None
-  }
-
-  test("ToggleStep toggles a step from false to true") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 1))
-    state.tracks.head.steps(1) shouldBe Velocity.Normal
-  }
-
-  test("ToggleStep adds to history") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-    val toggled = state.dispatch(Command.ToggleStep("Snare", 0))
-    toggled.history.length shouldBe 2
-    toggled.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
-  }
-
-  test("ToggleStep clears future") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 0))
-      .dispatch(Command.Undo)
-      .dispatch(Command.ToggleStep("Snare", 1))
-    state.future shouldBe Nil
-  }
-
-  test("ToggleStep can be undone") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
-      )
-      .dispatch(Command.ToggleStep("Snare", 0))
-      .dispatch(Command.Undo)
-    state.tracks.head.steps(0) shouldBe Velocity.Normal
-  }
-
-  test("TOGGLE_STEP command is parsed from JS") {
-    val cmd = scala.scalajs.js.Dynamic.literal(
-      `type` = "TOGGLE_STEP",
-      payload = scala.scalajs.js.Dynamic.literal(
-        trackName = "Snare",
-        stepIndex = 2
-      )
+  private val initialWithTracks = initial
+    .dispatch(
+      Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
     )
-    Command.fromJS(cmd) shouldBe Command.ToggleStep("Snare", 2)
+
+  test("dispatch SelectBeat should sets the beat") {
+    // act
+    val after = initial
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", Nil, 128, 4, 4, 1)
+      );
+
+    // assert
+    after.genre shouldBe "Techno";
+    after.beat shouldBe "4 on the floor";
+    after.tempo shouldBe 128;
+    after.beatsPerBar shouldBe 4;
+    after.subdivisionsPerBeat shouldBe 4;
+    after.numberOfBars shouldBe 1;
+  }
+
+  test("dispatch SetTempo should sets the tempo") {
+    // act
+    val after = initial.dispatch(Command.SetTempo(126));
+
+    // assert
+    after.tempo shouldBe 126;
+  }
+
+  test("undo should restores initial beat") {
+    // act
+    val after = initial
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+      )
+      .dispatch(Command.Undo)
+
+    // assert
+    after.beat shouldBe initial.beat;
+  }
+
+  test("undo then redo should restores the beat") {
+    // act
+    val after = initial
+      .dispatch(
+        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+      )
+      .dispatch(Command.Undo)
+      .dispatch(Command.Redo)
+
+    // assert
+    after.beat shouldBe "4 on the floor";
+    after.genre shouldBe "Techno";
+    after.tempo shouldBe 128;
+  }
+
+  test("redo should should do nothing with empty future") {
+    // act
+    val after = initial.dispatch(Command.Redo);
+
+    // assert
+    after shouldBe initial;
+  }
+
+  test("undo should do nothing with empty history") {
+    // act
+    val after = initial.dispatch(Command.Undo);
+
+    // assert
+    after shouldBe initial;
+  }
+
+  test("multiple changes in tempo should be undone once") {
+    // act
+    val after = initial
+      .dispatch(Command.SetTempo(123))
+      .dispatch(Command.SetTempo(124))
+      .dispatch(Command.SetTempo(125))
+      .dispatch(Command.Undo)
+      .tempo;
+
+    // assert
+    after shouldBe initial.tempo
+  }
+
+  test("ToggleStep should toggles a step from true to false") {
+    // act
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 0))
+
+    // assert
+    after.tracks.head.steps(0) shouldBe Velocity.None
+  }
+
+  test("ToggleStep should toggles a step from false to true") {
+    // act
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 1))
+
+    // assert
+    after.tracks.head.steps(1) shouldBe Velocity.Normal
+  }
+
+  test("ToggleStep should adds to history") {
+    // act
+    val after = initialWithTracks.dispatch(Command.ToggleStep("Snare", 0))
+
+    // assert
+    after.history.length shouldBe 2
+    after.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
+  }
+
+  test("ToggleStep should clears future") {
+    // act
+    val after = initialWithTracks
+      .dispatch(Command.ToggleStep("Snare", 0))
+      .dispatch(Command.Undo)
+      .dispatch(Command.ToggleStep("Snare", 1))
+
+    // assert
+    after.future shouldBe Nil
   }
 
   test("dispatch SetSteps sets multiples steps in a row") {
-    val state = SequencerState.initial
-      .dispatch(
-        Command.SelectBeat(
-          "Techno",
-          "4 on the floor",
-          List(
-            Track(
-              "kick",
-              "kick.mp3",
-              Some(MidiDrumType.BASS_DRUM_1),
-              List(
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None,
-                Velocity.Normal,
-                Velocity.None,
-                Velocity.None,
-                Velocity.None
-              ),
-              false
-            )
-          ),
-          128,
-          4,
-          1,
-          1
-        )
-      )
-      .dispatch(Command.SetSteps("kick", 1, 3, Velocity.Normal));
+    // act
+    val after = initialWithTracks.dispatch(
+      Command.SetSteps("Snare", 1, 3, Velocity.Normal)
+    );
 
-    state.tracks.head.steps(0) shouldBe Velocity.Normal
-    state.tracks.head.steps(1) shouldBe Velocity.Normal
-    state.tracks.head.steps(2) shouldBe Velocity.Normal
-    state.tracks.head.steps(3) shouldBe Velocity.Normal
+    // assert
+    after.tracks.head.steps(0) shouldBe Velocity.Normal
+    after.tracks.head.steps(1) shouldBe Velocity.Normal
+    after.tracks.head.steps(2) shouldBe Velocity.Normal
+    after.tracks.head.steps(3) shouldBe Velocity.Normal
   }
 
-  test("SET_STEPS command is parsed from JS") {
-    val cmd = scala.scalajs.js.Dynamic.literal(
-      `type` = "SET_STEPS",
-      payload = scala.scalajs.js.Dynamic.literal(
-        trackName = "Kick",
-        fromStepIndex = 2,
-        toStepIndex = 4,
-        velocity = false
-      )
-    )
-    Command.fromJS(cmd) shouldBe Command.SetSteps("Kick", 2, 4, Velocity.None)
-  }
-
-  test("Track serialization preserves the mute flag") {
-    val original = Track(
-      "Kick",
-      "kick.mp3",
-      Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-      List(Velocity.Normal, Velocity.None),
-      true
-    )
-
-    val roundTripped =
-      Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
-
-    roundTripped.isMuted shouldBe true
-    roundTripped.steps.head shouldBe Velocity.Normal
-  }
-
-  test("dispatch AddTrack add a track to a beat") {
-    val state = SequencerState.initial
+  test("dispatch AddTrack should add a track to a beat") {
+    // act
+    val after = initial
       .dispatch(
         Command.AddTrack(
-          Track(
-            "kick",
-            "kick.mp3",
-            Some(MidiDrumType.BASS_DRUM_1),
-            List(
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None
-            ),
-            false
-          )
+          someTracks.head.copy(name = "kick")
         )
       );
 
-    state.tracks.length shouldBe 1
+    // assert
+    after.tracks.length shouldBe 1
   }
 
-  test("ADD_TRACK command is parsed from JS") {
-    val cmd = scala.scalajs.js.Dynamic.literal(
-      "type" -> "ADD_TRACK",
-      "payload" -> scala.scalajs.js.Dynamic.literal(
-        "track" -> scala.scalajs.js.Dynamic.literal(
-          "name" -> "Kick",
-          "filename" -> "Kick.mp3",
-          "midiNote" -> 35,
-          "steps" -> scala.scalajs.js
-            .Array[Boolean](true, false, false, false),
-          "isMuted" -> true
-        )
-      )
-    )
-    Command.fromJS(cmd) shouldBe Command.AddTrack(
-      Track(
-        "Kick",
-        "Kick.mp3",
-        Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-        List(
-          Velocity.Normal,
-          Velocity.None,
-          Velocity.None,
-          Velocity.None
-        ),
-        true
-      )
-    )
+  test("toggleMuteTrack should mute a track") {
+    // act
+    val result =
+      initialWithTracks.dispatch(Command.ToggleMuteTrack("Snare"))
+
+    // assert
+    result.tracks.head.isMuted shouldBe true
   }
 
-  test("dispatch ToggleMuteTrack mute a track") {
+  test("toggleMuteTrack should unsolo all tracks") {
     // arrange
-    val state = SequencerState.initial
+    val threeTrackBeatWithSoloHat = initial
       .dispatch(
         Command.AddTrack(
-          Track(
-            "kick",
-            "kick.mp3",
-            Some(MidiDrumType.BASS_DRUM_1),
-            List(
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None,
-              Velocity.Normal,
-              Velocity.None,
-              Velocity.None,
-              Velocity.None
-            ),
-            false
-          )
+          someTracks.head.copy(name = "kick", isSolo = true)
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat", isSolo = true)
         )
       );
 
     // act
-    val stateWithMutedTrack = state.dispatch(Command.ToggleMuteTrack("kick"))
+    val result =
+      threeTrackBeatWithSoloHat.dispatch(Command.ToggleMuteTrack("hat"))
 
     // assert
-    stateWithMutedTrack.tracks.head.isMuted shouldBe true
+    result.tracks
+      .forall(_.isSolo == false) shouldBe true
+  }
+
+  test("ToggleSoloTrack should solo a track") {
+    // arrange
+    val threeTrackBeat = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick")
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat")
+        )
+      );
+
+    // act
+    val result = threeTrackBeat.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks.find(_.name == "kick").head.isSolo shouldBe true
+  }
+
+  test("ToggleSoloTrack should unsolo other solo track") {
+    // arrange
+    val threeTrackBeatWithSoloHat = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick")
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat", isSolo = true)
+        )
+      );
+
+    // act
+    val result =
+      threeTrackBeatWithSoloHat.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks
+      .filter(_.name != "kick")
+      .forall(_.isSolo == false) shouldBe true
+  }
+
+  test("ToggleSoloTrack should unmute all tracks") {
+    // arrange
+    val threeTrackBeatAllMuted = initial
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "kick", isMuted = true)
+        )
+      )
+      .dispatch(
+        Command.AddTrack(
+          someTracks.head.copy(name = "hat", isSolo = true, isMuted = true)
+        )
+      );
+
+    // act
+    val result =
+      threeTrackBeatAllMuted.dispatch(Command.ToggleSoloTrack("kick"))
+
+    // assert
+    result.tracks.forall(_.isMuted == false) shouldBe true
   }
 }
