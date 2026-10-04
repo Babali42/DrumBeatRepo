@@ -155,6 +155,22 @@ Added light and dark crash-cymbal SVG assets and mapped MIDI note 49 (`CRASH_CYM
 
 The repository has no `CONTRIBUTING.md` or pull-request template, so the implementation follows the existing pipe and SVG-asset conventions. The icon has matching light and dark variants so it works with the existing `iconDarkMode` pipe.
 
+## Phase IV — Issue #511
+
+**Status: Awaiting review. Phase IV Complete.**
+
+### Pull Request
+
+[PR #604: fix(ui): add crash cymbal icon](https://github.com/Babali42/DrumBeatRepo/pull/604)
+
+### Contribution Summary
+
+The contribution adds a dedicated crash-cymbal icon for MIDI note 49, including light and dark SVG variants, updates the drum-image mapping, and adds a regression test for the previously missing icon.
+
+### Maintainer Feedback / Next Steps
+
+No maintainer feedback has been received yet. The PR is open and awaiting review; any requested updates will be implemented on the same branch and documented here.
+
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
