@@ -11,7 +11,8 @@ export class DrumImagePipe implements PipeTransform {
     36: 'kick',
     38: 'snare',
     42: 'hihats',
-    46: 'hihats'
+    46: 'hihats',
+    49: 'crash'
   };
 
   readonly getDrumPath = (midi: number): string =>

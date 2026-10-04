@@ -33,9 +33,9 @@ describe('DrumImagePipe', () => {
       .toEqual("assets/images/drums/hihats.svg");
   });
 
-  it('should transform crash drum to default image', () => {
+  it('should transform crash cymbal to crash image', () => {
     const pipe = new DrumImagePipe();
     expect(pipe.transform(Option.some<MidiDrumType>(MidiDrumType.CRASH_CYMBAL_1)))
-      .toEqual("assets/images/drums/default.svg");
+      .toEqual("assets/images/drums/crash.svg");
   });
 });
