@@ -25,14 +25,18 @@
   <div class="tracks-name-container">
     @for (track of beat.tracks; track track){
     <div class="tracks-name">
-      <button class="button square-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
-        <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
-      </button>
-      <div class="track-name user-select-none medium">
-        {{ track.name }}
+      <div class="flex image-and-label">
+        <button class="button square-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
+          <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
+        </button>
+        <div class="track-name user-select-none medium">
+          {{ track.name }}
+        </div>
       </div>
-      <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
-      <button class="button" [ngClass]="track.isSolo ? 'solo' : ''" (click)="toggleSoloTrack(track.name)">S</button>
+      <div class="flex mute-solo">
+        <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
+        <button class="button" [ngClass]="track.isSolo ? 'solo' : ''" (click)="toggleSoloTrack(track.name)">S</button>
+      </div>
     </div>
     }
     @if(AddTrackFeatureToggle) {
