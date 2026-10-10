@@ -26,7 +26,7 @@
     "@ngx-loading-bar/core": "^7.0.0",
     "@ngx-translate/core": "^18.0.0",
     "@ngx-translate/http-loader": "^18.0.0",
-    "effect": "^3.19.9",
+    "effect": "^4.0.0",
     "midi-writer-js": "3.2.1",
     "rxjs": "~7.8.0",
     "waaclock": "^0.5.5",
