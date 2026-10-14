@@ -16,10 +16,7 @@ describe('Compact beat mapper tests', () => {
     };
 
     const compactBeat = CompactBeatMapper.toCompactBeat(beat);
-    const result = Effect.runSync(Effect.either(CompactBeatMapper.toBeatEffect(compactBeat)));
-
-    expect(result._tag).toBe('Right');
-    const mappedBeat = (result as any).right;
+    const mappedBeat = Effect.runSync(CompactBeatMapper.toBeatEffect(compactBeat));
 
     expect(mappedBeat.label).toEqual(beat.label);
     expect(mappedBeat.genre).toEqual(beat.genre);
@@ -64,10 +61,7 @@ describe('Compact beat mapper tests', () => {
       ]
     };
 
-    const result = await Effect.runPromise(Effect.either(CompactBeatMapper.toBeatEffect(compactBeat)));
-
-    expect(result._tag).toBe('Right');
-    const beat = (result as any).right as Beat;
+    const beat = Effect.runSync(CompactBeatMapper.toBeatEffect(compactBeat));
 
     expect(beat.label).toEqual(compactBeat.label);
     expect(beat.genre).toEqual(compactBeat.genre);
@@ -99,8 +93,7 @@ describe('Compact beat mapper tests', () => {
       ]
     };
 
-    const result = await Effect.runPromise(Effect.either(CompactBeatMapper.toBeatEffect(invalidTrackResponse)));
-    expect(result._tag).toBe('Left');
+    expect(() => Effect.runSync(CompactBeatMapper.toBeatEffect(invalidTrackResponse))).toThrowError();
   });
 });
 
