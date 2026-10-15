@@ -10,7 +10,7 @@
             <ul>
                 @for(track of this.tracks; track track){
                 <li>
-                    {{track.name}} | {{midiDrumTypeToTextService.getMidiDrumTypeText(track.midiNote)}}
+                    {{track.name}} | {{getDrumsCategory(track.midiNote)}}
                 </li>
                 }
             </ul>
