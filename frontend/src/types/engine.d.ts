@@ -20,19 +20,19 @@ export interface SequencerState {
 }
 
 export interface BeatMetadata {
-  genre: string;
-  label: string;
-  filename: string;
+  readonly genre: string;
+  readonly label: string;
+  readonly filename: string;
 }
 
 declare global {
-  var SequencerEngine: {
+  const SequencerEngine: {
     dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
   };
 
-  var BeatLibrary: {
-    loadBeatsManifest(): Promise<BeatMetadata[]>
+  const BeatLibrary: {
+    loadBeatsManifest(): Promise<readonly BeatMetadata[]>
   }
 }
