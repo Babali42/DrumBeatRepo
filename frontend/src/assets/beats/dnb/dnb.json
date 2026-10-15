@@ -20,15 +20,9 @@
       "midiNote": 38
     },
     {
-      "name": "Open hats",
-      "filename": "psytrance/open-hat.wav",
-      "steps": "                          X   X ",
-      "midiNote": 42
-    },
-    {
       "name": "Closed hats",
       "filename": "techno/hat.wav",
-      "steps": "X X X X X X X X X X X X X   X   ",
+      "steps": "X X X X X X X X X X X X X X X X ",
       "midiNote": 42
     },
     {
