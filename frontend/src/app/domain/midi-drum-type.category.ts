@@ -1,7 +1,7 @@
 export enum MidiDrumTypeCategory {
-  Kick = "Kicks",
-  Snare = "Snares",
+  Kick = "Kick",
+  Snare = "Snare",
   Hats = "High-Hats",
-  Cymbal = "Cymbals",
-  Tom = "Toms",
+  Cymbal = "Cymbal",
+  Tom = "Tom",
 }

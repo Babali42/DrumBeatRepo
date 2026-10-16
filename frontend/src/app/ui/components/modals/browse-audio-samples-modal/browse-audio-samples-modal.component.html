@@ -7,13 +7,25 @@
         </div>
 
         <div class="modal-body">
-            <ul>
-                @for(track of this.tracks; track track){
-                <li>
-                    {{track.name}} | {{getDrumsCategory(track.midiNote)}}
-                </li>
-                }
-            </ul>
+            <form [formGroup]="form">
+                <div>
+                    @for(group of samplesByDrumsCategory; track group.category){
+                <section>
+                    <h3>{{group.category}}</h3>
+                    <div>
+                        @for(sample of group.samples; track sample){
+                        <div>
+                            <label>
+                                <input type="radio" formControlName="selectedSample" [value]="sample">
+                                {{sample.name}}
+                            </label>
+                        </div>
+                        }
+                    </div>
+                </section>
+                    }
+                </div>
+            </form>
         </div>
 
         <div class="modal-footer">
