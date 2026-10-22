@@ -11,7 +11,8 @@
     "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
     "test-vitest": "vitest",
     "test-vitest-coverage": "vitest run --coverage",
-    "lint": "eslint . --max-warnings=30"
+    "lint": "eslint src --max-warnings=30",
+    "lint-quiet": "eslint src --quiet"
   },
   "private": true,
   "dependencies": {

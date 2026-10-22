@@ -83,6 +83,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     ];
 
     form = this.fb.group({
+      // eslint-disable-next-line @typescript-eslint/unbound-method
         selectedSample: new FormControl<AudioSample | null>(null, Validators.required)
     });
 

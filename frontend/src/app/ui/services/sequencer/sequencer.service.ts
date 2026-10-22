@@ -96,7 +96,7 @@ export class SequencerService {
       return cmd; // unknown beat
     }
 
-    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access*/
     const normalizeTracks = (rawTracks: any[] | readonly Track[]) =>
       rawTracks?.map((t: any) => {
         const steps = Array.isArray(t.steps)
