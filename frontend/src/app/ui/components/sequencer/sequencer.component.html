@@ -41,7 +41,7 @@
     }
     @if(AddTrackFeatureToggle) {
     <div class="tracks-name">
-      <button class="button square-button" title="Play sample" (mousedown)="this.addTrack()">
+      <button class="button square-button" title="Play sample" (click)="this.addTrack()">
         <img alt="drum" [ngSrc]="`assets/images/icons/add.svg` | iconDarkMode" height="28" width="28">
       </button>
       <div class="track-name user-select-none medium">
