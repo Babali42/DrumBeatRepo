@@ -32,6 +32,7 @@ import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { BeatMetadata } from 'src/types/engine';
+import {isEnabled} from "../../../../../dev-features";
 
 @Component({
   selector: 'sequencer',
@@ -45,7 +46,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   protected readonly Math = Math;
   protected readonly NumberOfSteps = NumberOfSteps;
-  protected readonly AddTrackFeatureToggle = false;
+  protected readonly AddTrackFeatureToggle = isEnabled('showAddTrackButton');
 
   //do not undo the state inits
   readonly minHistoryLength = 1;
