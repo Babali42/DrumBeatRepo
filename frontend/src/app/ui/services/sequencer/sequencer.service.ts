@@ -1,13 +1,13 @@
-import {Inject, Injectable} from "@angular/core";
-import {Command} from "./sequencer.command";
-import {BPM} from "src/app/domain/bpm";
+import { Inject, Injectable } from "@angular/core";
+import { Command } from "./sequencer.command";
+import { BPM } from "src/app/domain/bpm";
 import IManageBeats from "src/app/domain/ports/i-manage-beats";
-import {IManageBeatsToken} from "src/app/infrastructure/injection-tokens/i-manage-beat.token";
-import {BehaviorSubject} from "rxjs";
-import {BeatMetadata, SequencerState} from "src/types/engine";
-import {SequencerViewModel} from "../../components/sequencer/sequencer.viewmodel";
-import {Effect, Option} from "effect";
-import {Track} from "src/app/domain/track";
+import { IManageBeatsToken } from "src/app/infrastructure/injection-tokens/i-manage-beat.token";
+import { BehaviorSubject } from "rxjs";
+import { BeatMetadata, SequencerState } from "src/types/engine";
+import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
+import { Effect, Option } from "effect";
+import { Track } from "src/app/domain/track";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
@@ -56,7 +56,7 @@ export class SequencerService {
 
       this.genresLabel = [...this.genres.keys()];
     } catch (error) {
-      console.error("Failed to load beat manifest :(", error);
+      console.error("Failed to load beat manifest : ", error);
       throw error;
     }
   }
@@ -75,6 +75,29 @@ export class SequencerService {
     return this.dispatchQueue;
   }
 
+  /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access*/
+  normalizeTracks = (rawTracks: readonly Track[]) =>
+    rawTracks?.map((t: any) => {
+      const steps = [...t.steps.steps];
+
+      //todo delete the unnecessary branch
+      const midiNote = typeof t.midiNote === 'number'
+        ? t.midiNote
+        : typeof t.midiNote?.value === 'number'
+          ? t.midiNote.value
+          : null;
+
+      return {
+        name: t.name,
+        filename: t.filename,
+        steps,
+        midiNote,
+        isMuted: !!t.isMuted,
+        isSolo: !!t.isSolo
+      };
+    }) ?? [];
+
+
   private async enrichSelectBeat(cmd: Command): Promise<Command> {
     if (cmd.type !== 'SELECT_BEAT') return cmd;
 
@@ -83,69 +106,19 @@ export class SequencerService {
     const beatLabel = payload['beat'] as string;
 
     const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
+    const beatData = await Effect.runPromise(this.beatsManager.getBeatByFileName(beatMeta!.filename));
 
-    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access*/
-    const normalizeTracks = (rawTracks: readonly Track[]) =>
-      rawTracks?.map((t: any) => {
-        const steps = [...t.steps.steps];
-
-        //todo simplify this
-        const midiNote = typeof t.midiNote === 'number'
-            ? t.midiNote
-            : typeof t.midiNote?.value === 'number'
-              ? t.midiNote.value
-              : null;
-
-        return {
-          name: t.name,
-          filename: t.filename,
-          steps,
-          midiNote,
-          isMuted: !!t.isMuted,
-          isSolo: !!t.isSolo
-        };
-      }) ?? [];
-
-    try {
-      const beatData = await Effect.runPromise(
-        this.beatsManager.getBeatByFileName(beatMeta!.filename)
-      );
-
-      return {
-        ...cmd,
-        payload: {
-          genre,
-          beat: beatLabel,
-          tempo: beatData.bpm,
-          beatsPerBar: beatData.beatsPerBar,
-          subdivisionsPerBeat: beatData.subdivisionsPerBeat,
-          numberOfBars: beatData.numberOfBar,
-          tracks: normalizeTracks(beatData.tracks)
-        }
-      };
-    } catch (err) {
-      console.error(
-        "Error loading beat data for",
-        beatMeta!.filename,
-        err
-      );
-
-      return {
-        ...cmd,
-        payload: {
-          genre,
-          beat: beatLabel,
-          tempo: typeof payload["tempo"] === "number" ? payload["tempo"] : 120,
-          beatsPerBar: typeof payload["beatsPerBar"] === "number" ? payload["beatsPerBar"] : 4,
-          subdivisionsPerBeat: typeof payload["subdivisionsPerBeat"] === "number" ? payload["subdivisionsPerBeat"] : 4,
-          numberOfBars: typeof payload["numberOfBars"] === "number" ? payload["numberOfBars"] : 1,
-          tracks: normalizeTracks(
-            (payload["tracks"] as any[]) ??
-            (beatMeta as any).tracks ??
-            []
-          )
-        }
-      };
-    }
+    return {
+      ...cmd,
+      payload: {
+        genre,
+        beat: beatLabel,
+        tempo: beatData.bpm,
+        beatsPerBar: beatData.beatsPerBar,
+        subdivisionsPerBeat: beatData.subdivisionsPerBeat,
+        numberOfBars: beatData.numberOfBar,
+        tracks: this.normalizeTracks(beatData.tracks)
+      }
+    };
   }
 }
