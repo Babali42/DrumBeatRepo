@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-effect" % "3.7.1", // in sbt2 %%% aren't yet necessary
 
   // circe
-  "io.circe" %% "circe-core" % "0.14.16",
+  "io.circe" %% "circe-core" % "0.14.17",
   "io.circe" %% "circe-generic" % "0.14.17",
   "io.circe" %% "circe-parser" % "0.14.17",
 
