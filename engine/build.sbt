@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "sequencer-engine"
-scalaVersion := "3.9.0"
+scalaVersion := "3.10.0"
 
 scalaJSUseMainModuleInitializer := false
 
