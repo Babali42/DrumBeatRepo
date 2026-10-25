@@ -1,6 +1,6 @@
-import {Option} from "effect";
-import {MidiDrumType} from "../../domain/midi-drum-type";
-import {MidiDrumTypeCategory} from "../../domain/midi-drum-type.category";
+import { Option } from "effect";
+import { MidiDrumType } from "../../domain/midi-drum-type";
+import { MidiDrumTypeCategory } from "../../domain/midi-drum-type.category";
 
 export class MidiDrumTypeToTextService {
   private static readonly drumTypeToCategory = new Map<MidiDrumType, MidiDrumTypeCategory>([
@@ -36,6 +36,6 @@ export class MidiDrumTypeToTextService {
 
     const category = MidiDrumTypeToTextService.drumTypeToCategory.get(value.value);
 
-    return category === undefined ? Option.none() : Option.some(category);
+    return Option.fromUndefinedOr(category);
   }
 }

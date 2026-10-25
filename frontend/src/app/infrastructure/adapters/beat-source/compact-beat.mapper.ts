@@ -27,7 +27,7 @@ export class CompactBeatMapper {
           [...track.steps].map(char => char === 'X'),
           track.isMuted ?? false,
           track.isSolo ?? false,
-          isValidMidiDrumType(track.midiNote) ? Option.some(track.midiNote) : Option.none()
+          Option.liftPredicate(track.midiNote, isValidMidiDrumType)
         ))
       }),
       catch: (e) => {
@@ -58,10 +58,6 @@ export class CompactBeatMapper {
 }
 
 export function parseBPM(value: unknown): BPM {
-  const n =
-    typeof value === "number" ? value :
-      typeof value === "string" ? Number(value) :
-        NaN;
-
+  const n = typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
   return BPM(n);
 }
