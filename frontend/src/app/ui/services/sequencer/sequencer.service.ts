@@ -1,23 +1,18 @@
-import { Inject, Injectable } from "@angular/core";
-import { Command } from "./sequencer.command";
-import { BPM } from "src/app/domain/bpm";
+import {Inject, Injectable} from "@angular/core";
+import {Command} from "./sequencer.command";
+import {BPM} from "src/app/domain/bpm";
 import IManageBeats from "src/app/domain/ports/i-manage-beats";
-import { IManageBeatsToken } from "src/app/infrastructure/injection-tokens/i-manage-beat.token";
-import { BehaviorSubject } from "rxjs";
-import { SequencerState } from "src/types/engine";
-import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";
-import { Effect, Option } from "effect";
-import { Track } from "src/app/domain/track";
-
-import { BeatMetadata } from "src/types/engine";
+import {IManageBeatsToken} from "src/app/infrastructure/injection-tokens/i-manage-beat.token";
+import {BehaviorSubject} from "rxjs";
+import {BeatMetadata, SequencerState} from "src/types/engine";
+import {SequencerViewModel} from "../../components/sequencer/sequencer.viewmodel";
+import {Effect, Option} from "effect";
+import {Track} from "src/app/domain/track";
 
 @Injectable({ providedIn: 'root' })
 export class SequencerService {
   readonly state$ = new BehaviorSubject<SequencerState | null>(null);
-
-  readonly vm$ = new BehaviorSubject<SequencerViewModel>(
-    {} as SequencerViewModel
-  );
+  readonly vm$ = new BehaviorSubject<SequencerViewModel>({} as SequencerViewModel);
 
   // eslint-disable-next-line functional/prefer-readonly-type
   genres = new Map<string, BeatMetadata[]>();
@@ -36,12 +31,7 @@ export class SequencerService {
         genre: state.genre,
         beats: this.genres.get(state.genre)?.map(x => x.label) ?? [],
         beat: state.beat,
-        tracks: state.tracks.map(x => {
-          const midiNote = x.midiNote !== null
-            ? Option.some(x.midiNote)
-            : Option.none();
-          return new Track(x.name, x.filename, [...x.steps], x.isMuted, x.isSolo, midiNote);
-        }),
+        tracks: state.tracks.map(x => new Track(x.name, x.filename, [...x.steps], x.isMuted, x.isSolo, Option.fromNullOr(x.midiNote))),
         tempo: BPM(state.tempo),
         beatsPerBar: state.beatsPerBar,
         subdivisionsPerBeat: state.subdivisionsPerBeat,
@@ -56,9 +46,9 @@ export class SequencerService {
     try {
       this.genres.clear();
 
-      const x = await BeatLibrary.loadBeatsManifest();
+      const beatManifests = await BeatLibrary.loadBeatsManifest();
 
-      for (const beatMeta of x) {
+      for (const beatMeta of beatManifests) {
         const beats = this.genres.get(beatMeta.genre) ?? [];
         beats.push(beatMeta);
         this.genres.set(beatMeta.genre, beats);
@@ -76,7 +66,9 @@ export class SequencerService {
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
       const enriched = await this.enrichSelectBeat(cmd);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       await SequencerEngine.dispatch(enriched);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 
@@ -92,21 +84,13 @@ export class SequencerService {
 
     const beatMeta = this.genres.get(genre)?.find(b => b.label === beatLabel);
 
-    if (!beatMeta) {
-      return cmd; // unknown beat
-    }
-
     /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access*/
-    const normalizeTracks = (rawTracks: any[] | readonly Track[]) =>
+    const normalizeTracks = (rawTracks: readonly Track[]) =>
       rawTracks?.map((t: any) => {
-        const steps = Array.isArray(t.steps)
-          ? [...t.steps]
-          : Array.isArray(t.steps?.steps)
-            ? [...t.steps.steps]
-            : [];
+        const steps = [...t.steps.steps];
 
-        const midiNote =
-          typeof t.midiNote === 'number'
+        //todo simplify this
+        const midiNote = typeof t.midiNote === 'number'
             ? t.midiNote
             : typeof t.midiNote?.value === 'number'
               ? t.midiNote.value
@@ -124,7 +108,7 @@ export class SequencerService {
 
     try {
       const beatData = await Effect.runPromise(
-        this.beatsManager.getBeatByFileName(beatMeta.filename)
+        this.beatsManager.getBeatByFileName(beatMeta!.filename)
       );
 
       return {
@@ -142,7 +126,7 @@ export class SequencerService {
     } catch (err) {
       console.error(
         "Error loading beat data for",
-        beatMeta.filename,
+        beatMeta!.filename,
         err
       );
 
@@ -153,9 +137,7 @@ export class SequencerService {
           beat: beatLabel,
           tempo: typeof payload["tempo"] === "number" ? payload["tempo"] : 120,
           beatsPerBar: typeof payload["beatsPerBar"] === "number" ? payload["beatsPerBar"] : 4,
-          subdivisionsPerBeat: typeof payload["subdivisionsPerBeat"] === "number"
-            ? payload["subdivisionsPerBeat"]
-            : 4,
+          subdivisionsPerBeat: typeof payload["subdivisionsPerBeat"] === "number" ? payload["subdivisionsPerBeat"] : 4,
           numberOfBars: typeof payload["numberOfBars"] === "number" ? payload["numberOfBars"] : 1,
           tracks: normalizeTracks(
             (payload["tracks"] as any[]) ??
