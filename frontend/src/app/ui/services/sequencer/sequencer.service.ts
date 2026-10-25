@@ -78,20 +78,11 @@ export class SequencerService {
   /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access*/
   normalizeTracks = (rawTracks: readonly Track[]) =>
     rawTracks?.map((t: any) => {
-      const steps = [...t.steps.steps];
-
-      //todo delete the unnecessary branch
-      const midiNote = typeof t.midiNote === 'number'
-        ? t.midiNote
-        : typeof t.midiNote?.value === 'number'
-          ? t.midiNote.value
-          : null;
-
       return {
         name: t.name,
         filename: t.filename,
-        steps,
-        midiNote,
+        steps: [...t.steps.steps],
+        midiNote: typeof t.midiNote?.value === 'number' ? t.midiNote.value : null,
         isMuted: !!t.isMuted,
         isSolo: !!t.isSolo
       };
