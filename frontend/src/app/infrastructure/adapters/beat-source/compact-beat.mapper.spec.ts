@@ -98,9 +98,6 @@ describe('Compact beat mapper tests', () => {
   });
 });
 
-
-
-//only used in test : todo move in test file
 function toCompactBeat(beat: Beat): CompactBeat {
   return {
     label: beat.label,
