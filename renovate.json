@@ -1,5 +1,7 @@
 {
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "rangeStrategy": "replace",
   "dependencyDashboard": true,
   "lockFileMaintenance": {
@@ -10,7 +12,10 @@
       "description": "Group Angular core and platform packages",
       "groupName": "Angular Framework",
       "groupSlug": "angular",
-      "matchUpdateTypes": ["major", "minor"],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
       "matchPackageNames": [
         "/^@angular/"
       ]
@@ -18,18 +23,19 @@
     {
       "description": "Group Angular CLI and Devkit",
       "groupName": "Angular CLI",
-      "matchUpdateTypes": ["major", "minor"],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
       "matchPackageNames": [
         "@angular/cli",
         "@angular-devkit/build-angular"
       ]
     },
     {
-      "matchUpdateTypes": ["lockfile-only"],
-      "enabled": false
-    },
-    {
-      "matchPackageNames": ["eslint"],
+      "matchPackageNames": [
+        "eslint"
+      ],
       "allowedVersions": "<10"
     }
   ]
