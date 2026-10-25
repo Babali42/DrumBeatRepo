@@ -35,26 +35,6 @@ export class CompactBeatMapper {
       }
     });
   }
-
-  //only used in test : todo move in test file
-  static toCompactBeat(beat: Beat): CompactBeat {
-    return {
-      label: beat.label,
-      genre: beat.genre,
-      bpm: beat.bpm,
-      beatsPerBar: beat.beatsPerBar,
-      subdivisionsPerBeat: beat.subdivisionsPerBeat,
-      numberOfBar: beat.numberOfBar,
-      tracks: beat.tracks.map(track => ({
-        name: track.name,
-        filename: track.filename,
-        steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
-        isMuted: track.isMuted,
-        isSolo: track.isSolo,
-        midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
-      }))
-    }
-  }
 }
 
 export function parseBPM(value: unknown): BPM {

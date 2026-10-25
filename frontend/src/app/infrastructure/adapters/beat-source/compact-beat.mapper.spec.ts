@@ -5,6 +5,7 @@ import { BPM } from "../../../domain/bpm";
 import { Effect, Option } from "effect";
 import { toMp3FilePath } from "../../../domain/filenames/mp3.filepath";
 import { MidiDrumType } from "../../../domain/midi-drum-type";
+import { CompactBeat } from "./compact-beat";
 
 describe('Compact beat mapper tests', () => {
   it("Should map beat to compact beat to beat again", () => {
@@ -15,7 +16,7 @@ describe('Compact beat mapper tests', () => {
       ]
     };
 
-    const compactBeat = CompactBeatMapper.toCompactBeat(beat);
+    const compactBeat = toCompactBeat(beat);
     const mappedBeat = Effect.runSync(CompactBeatMapper.toBeatEffect(compactBeat));
 
     expect(mappedBeat.label).toEqual(beat.label);
@@ -98,3 +99,23 @@ describe('Compact beat mapper tests', () => {
 });
 
 
+
+//only used in test : todo move in test file
+function toCompactBeat(beat: Beat): CompactBeat {
+  return {
+    label: beat.label,
+    genre: beat.genre,
+    bpm: beat.bpm,
+    beatsPerBar: beat.beatsPerBar,
+    subdivisionsPerBeat: beat.subdivisionsPerBeat,
+    numberOfBar: beat.numberOfBar,
+    tracks: beat.tracks.map(track => ({
+      name: track.name,
+      filename: track.filename,
+      steps: track.steps.steps.map(x => x ? "X" : " ").join(''),
+      isMuted: track.isMuted,
+      isSolo: track.isSolo,
+      midiNote: Option.isNone(track.midiNote) ? undefined : track.midiNote.value
+    }))
+  }
+}
