@@ -34,10 +34,10 @@ describe('Compact beat mapper tests', () => {
   });
 
   it("Should map compact beat to beat", async () => {
-    const compactBeat: any = {
+    const compactBeat: CompactBeat = {
       "label": "Metal",
       "genre": "Metal",
-      "bpm": "180",
+      "bpm": 180,
       "beatsPerBar": 4,
       "subdivisionsPerBeat": 4,
       "numberOfBar": 2,

@@ -6,38 +6,48 @@ import org.scalatest.matchers.should.Matchers
 
 class BeatMetadataCirceSpec extends AnyFlatSpec with Matchers {
   it should "decode valid JSON back into a BeatMetadata" in {
-    // arrange
+    // Arrange
     val json =
-      """{"genre":"Techno","label":"Tresor","filename":"kick.wav","bpm":140.5}"""
+      """|{
+         |  "genre": "Techno",
+         |  "label": "Tresor",
+         |  "filename": "kick.wav"
+         |}""".stripMargin
 
-    // act
+    // Act
     val result = decode[BeatMetadata](json)
 
-    // assert
-    result shouldEqual
-      Right(BeatMetadata("Techno", "Tresor", "kick.wav"))
+    // Assert
+    result shouldEqual Right(BeatMetadata("Techno", "Tresor", "kick.wav"))
   }
 
-  it should "fail to decode JSON missing a required field" in {
-    // arrange
-    val json = """{"genre":"Techno","filename":"kick.wav"}""" // missing "label"
+  it should "fail to decode JSON when a required field is missing" in {
+    // Arrange
+    val json = """|{
+                  |  "genre": "Techno",
+                  |  "filename":"kick.wav"
+                  |}""".stripMargin // missing "label"
 
-    // act
+    // Act
     val result = decode[BeatMetadata](json);
 
-    // assert
+    // Assert
     result.isLeft shouldBe true
   }
 
-  it should "decode Bossa Nova metadata correctly" in {
-    // arrange
+  it should "decode Bossa Nova metadata" in {
+    // Arrange
     val json =
-      """{"genre":"Bossa Nova","label":"Bossa Nova","filename":"bossa-nova/bossa-nova"}"""
+      """|{
+         |  "genre": "Bossa Nova",
+         |  "label":"Bossa Nova",
+         |  "filename":"bossa-nova/bossa-nova"
+         |}""".stripMargin
 
-    // act
+    // Act
     val result = decode[BeatMetadata](json)
 
-    // assert
+    // Assert
     result shouldEqual Right(
       BeatMetadata("Bossa Nova", "Bossa Nova", "bossa-nova/bossa-nova")
     )

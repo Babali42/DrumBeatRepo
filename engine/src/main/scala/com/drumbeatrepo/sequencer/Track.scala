@@ -2,7 +2,7 @@ package com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
 
-case class Track(
+final case class Track(
     name: String,
     filename: String,
     midiNote: Option[MidiDrumType],

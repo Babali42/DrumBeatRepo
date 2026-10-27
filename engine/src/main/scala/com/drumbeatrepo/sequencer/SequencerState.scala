@@ -1,6 +1,6 @@
 package com.drumbeatrepo.sequencer
 
-case class SequencerState(
+final case class SequencerState(
     genre: String,
     beat: String,
     tracks: List[Track],
