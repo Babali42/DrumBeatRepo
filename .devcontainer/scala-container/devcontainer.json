@@ -7,5 +7,10 @@
       "version": "24"
     }
   },
-  "workspaceFolder": "/workspace/"
+  "workspaceFolder": "/workspace/",
+  "customizations": {
+    "vscode": {
+      "extensions": ["scalameta.metals"]
+    }
+  }
 }
