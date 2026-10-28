@@ -4,6 +4,8 @@ import io.circe.parser.decode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+//TODO : add integration tests but it seems complicated
+
 class BeatMetadataCirceSpec extends AnyFlatSpec with Matchers {
   it should "decode valid JSON back into a BeatMetadata" in {
     // Arrange
