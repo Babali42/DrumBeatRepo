@@ -8,49 +8,9 @@ import com.drumbeatrepo.domain.MidiDrumType
 
 class SequencerEngineTest extends AnyFunSuite {
   test("getState should return tracks sorted by midi.track") {
-    val trackKick =
-      Track(
-        "Kick",
-        "Kick.wav",
-        Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
-        Nil,
-        false,
-        false
-      );
-    val trackSnare =
-      Track(
-        "Snare",
-        "Snare.wav",
-        Some(MidiDrumType.ACOUSTIC_SNARE),
-        Nil,
-        false,
-        false
-      );
-    val trackHat =
-      Track(
-        "Hat",
-        "Hat.wav",
-        Some(MidiDrumType.OPEN_HI_HAT),
-        Nil,
-        false,
-        false
-      );
-    val trackBass = Track("Bass", "Bass.wav", None, Nil, false, false);
-
     SequencerEngine.reset()
 
-    SequencerEngine.dispatch(
-      Command
-        .SelectBeat(
-          "",
-          "",
-          List(trackBass, trackHat, trackKick, trackSnare),
-          128,
-          4,
-          1,
-          1
-        )
-    );
+    SequencerEngine.dispatch(Command.SelectBeat("", ""));
 
     val state = SequencerEngine.getState().asInstanceOf[js.Dynamic]
     state.beatsPerBar.asInstanceOf[js.Dynamic].asInstanceOf[Int] shouldBe 4

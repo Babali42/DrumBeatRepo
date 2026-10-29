@@ -27,14 +27,14 @@ class SequencerafterTest extends AnyFunSuite {
   )
   private val initialWithTracks = initial
     .dispatch(
-      Command.SelectBeat("Techno", "4 on the floor", someTracks, 128, 4, 1, 1)
+      Command.SelectBeat("Techno", "4 on the floor")
     )
 
   test("dispatch SelectBeat should sets the beat") {
     // act
     val after = initial
       .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", Nil, 128, 4, 4, 1)
+        Command.SelectBeat("Techno", "4 on the floor")
       );
 
     // assert
@@ -58,7 +58,7 @@ class SequencerafterTest extends AnyFunSuite {
     // act
     val after = initial
       .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+        Command.SelectBeat("Techno", "4 on the floor")
       )
       .dispatch(Command.Undo)
 
@@ -70,7 +70,7 @@ class SequencerafterTest extends AnyFunSuite {
     // act
     val after = initial
       .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor", List.empty, 128, 4, 4, 1)
+        Command.SelectBeat("Techno", "4 on the floor")
       )
       .dispatch(Command.Undo)
       .dispatch(Command.Redo)
