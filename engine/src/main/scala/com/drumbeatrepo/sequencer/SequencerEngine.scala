@@ -1,23 +1,34 @@
 package com.drumbeatrepo.sequencer
-import scala.concurrent.Future
+
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
+
+implicit val ec: scala.concurrent.ExecutionContext =
+  scala.concurrent.ExecutionContext.global
 
 @JSExportTopLevel("SequencerEngine")
 object SequencerEngine:
   private var state: SequencerState = SequencerState.initial
 
-  def dispatch(command: Command): Unit =
-    command match
-      case Command.Undo | Command.Redo =>
-        state = state.dispatch(command)
-      case _ =>
-        state = state.dispatch(command).copy(future = Nil)
+  private def dispatchIO(command: Command): IO[Unit] =
+    state.dispatch(command).map { newState =>
+      command match
+        case Command.Undo | Command.Redo =>
+          state = newState
+        case _ =>
+          state = newState.copy(future = Nil)
+    }
+
+  def dispatch(command: Command): js.Promise[Unit] =
+    dispatchIO(command).unsafeToFuture().toJSPromise
 
   @JSExport
-  def dispatch(cmd: js.Dynamic): Future[Unit] =
-    Future.successful(dispatch(Command.fromJS(cmd)))
+  def dispatch(cmd: js.Dynamic): js.Promise[Unit] =
+    dispatch(Command.fromJS(cmd))
 
   @JSExport
   def reset(): Unit =
