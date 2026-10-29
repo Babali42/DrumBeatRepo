@@ -25,6 +25,7 @@ export class AudioEngineAdapterFake implements IAudioEngine {
   }
 
   playPause(): void {
+    this.hasPlayed = true;
     this.isPlaying = !this.isPlaying;
   }
 
