@@ -3,11 +3,12 @@ package com.drumbeatrepo.library
 import io.circe.parser.decode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import com.drumbeatrepo.domain.MidiDrumType
 
 //WIP
 //see frontend/src/app/infrastructure/adapters/beat-source/compact-beat.mapper.spec.ts for the remaining tests to add
 class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
-  it should "decode valid JSON back into a Beat" in {
+  it should "decode valid JSON into a Beat" in {
     // Arrange
     val json =
       """ |{
@@ -23,16 +24,18 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
           |      "isMuted": true,
           |      "isSolo": true,
           |      "filename": "metal/snare.mp3",
-          |      "steps": "____X_______X___"
-          |    },
-          |    {
-          |      "name": "Hats",
-          |      "filename": "metal/crash.mp3",
-          |      "steps": "X___X___X___X___"
+          |      "steps": "____X_______X___",
+          |      "midiNote": 38
           |    },
           |    {
           |      "name": "Kick",
           |      "filename": "metal/kick.mp3",
+          |      "steps": "XXXXXXXXXXXXXXXX",
+          |      "midiNote": 36
+          |    },
+          |    {
+          |      "name": "Bass",
+          |      "filename": "metal/bass.mp3",
           |      "steps": "XXXXXXXXXXXXXXXX"
           |    }
           |  ]
@@ -56,17 +59,20 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
             isMuted = Some(true),
             isSolo = Some(true),
             filename = "metal/snare.mp3",
-            steps = "____X_______X___"
-          ),
-          Track(
-            name = "Hats",
-            filename = "metal/crash.mp3",
-            steps = "X___X___X___X___"
+            steps = "____X_______X___",
+            midiNote = Some(MidiDrumType.ACOUSTIC_SNARE)
           ),
           Track(
             name = "Kick",
             filename = "metal/kick.mp3",
-            steps = "XXXXXXXXXXXXXXXX"
+            steps = "XXXXXXXXXXXXXXXX",
+            midiNote = Some(MidiDrumType.BASS_DRUM_1)
+          ),
+          Track(
+            name = "Bass",
+            filename = "metal/bass.mp3",
+            steps = "XXXXXXXXXXXXXXXX",
+            midiNote = None
           )
         )
       )

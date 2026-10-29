@@ -14,4 +14,3 @@ final case class Track(
 )
 
 given Decoder[Track] = deriveDecoder[Track]
-given Decoder[MidiDrumType] = deriveDecoder[MidiDrumType]

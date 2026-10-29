@@ -1,5 +1,9 @@
 package com.drumbeatrepo.domain
 
+import io.circe.Decoder
+import io.circe.HCursor
+import io.circe.DecodingFailure
+
 enum MidiDrumType(val midiNote: Int):
   case ACOUSTIC_BASS_DRUM extends MidiDrumType(35)
   case BASS_DRUM_1 extends MidiDrumType(36)
@@ -57,3 +61,14 @@ object MidiDrumType:
 
   def toInt(midi: MidiDrumType): Int =
     midi.midiNote
+
+  implicit val midiDrumTypeDecode: Decoder[MidiDrumType] = Decoder.instance {
+    cursor =>
+      cursor.as[Int].flatMap { value =>
+        if (MidiDrumType.fromInt(value).isDefined) {
+          Right(MidiDrumType.fromInt(value).get)
+        } else {
+          Left(DecodingFailure(s"Invalid midi note: $value", cursor.history))
+        }
+      }
+  }
