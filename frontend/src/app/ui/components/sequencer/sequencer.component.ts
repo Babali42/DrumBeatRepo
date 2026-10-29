@@ -32,14 +32,23 @@ import { BrowseAudioSamplesModalComponent } from '../modals/browse-audio-samples
 
 import { SequencerService } from '../../services/sequencer/sequencer.service';
 import { BeatMetadata } from 'src/types/engine';
-import {isEnabled} from "../../../../../dev-features";
+import { isEnabled } from "../../../../../dev-features";
 
 @Component({
   selector: 'sequencer',
   standalone: true,
   templateUrl: './sequencer.component.html',
   styleUrls: ['./sequencer.component.scss'],
-  imports: [BpmInputComponent, FormsModule, TranslatePipe, ExportAudioModalComponent, ExportMidiModalComponent, BrowseAudioSamplesModalComponent, NgOptimizedImage, DrumImagePipe, IconDarkModePipe, NgClass],
+  imports: [BpmInputComponent,
+    FormsModule,
+    TranslatePipe,
+    ExportAudioModalComponent,
+    ExportMidiModalComponent,
+    BrowseAudioSamplesModalComponent,
+    NgOptimizedImage,
+    DrumImagePipe,
+    IconDarkModePipe,
+    NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SequencerComponent implements OnInit, OnDestroy {
@@ -57,12 +66,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
   isMidiExportModalOpen = false;
   isBrowseAudioSamplesModalOpen = false;
 
-  constructor(@Inject(AUDIO_ENGINE) public readonly soundService: IAudioEngine,
+  constructor(@Inject(AUDIO_ENGINE) protected readonly soundService: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
+    protected readonly sequencerService: SequencerService,
     protected readonly tempoService: TempoAdapterService,
     private readonly playerEvents: PlayerEventsService,
-    public readonly sequencerService: SequencerService,
     private readonly cdr: ChangeDetectorRef) {
 
     this.playerEvents.playPause$
@@ -79,10 +88,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
           this.tempoService.bpm = BPM(state.tempo);
 
-          const beatMeta =
-            this.sequencerService.genres
-              .get(state.genre)
-              ?.find(x => x.label === state.beat);
+          const beatMeta = this.sequencerService.genres.get(state.genre)?.find(x => x.label === state.beat);
 
           if (beatMeta) {
             if (this.beat.genre === state.genre && this.beat.label === state.beat) {
