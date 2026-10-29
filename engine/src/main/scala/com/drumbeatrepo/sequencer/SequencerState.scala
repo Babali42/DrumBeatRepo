@@ -1,5 +1,7 @@
 package com.drumbeatrepo.sequencer
 
+import com.drumbeatrepo.domain.MidiDrumType
+
 final case class SequencerState(
     genre: String,
     beat: String,
@@ -14,21 +16,42 @@ final case class SequencerState(
   def dispatch(command: Command): SequencerState = command match
     case Command.SelectBeat(
           newGenre,
-          newBeat,
-          newTracks,
-          newTempo,
-          newBeatsPerBar,
-          newSubdivisionsPerBeat,
-          newNumberOfBars
+          newBeat
         ) =>
       SequencerState(
         newGenre,
         newBeat,
-        newTracks,
-        newTempo,
-        newBeatsPerBar,
-        newSubdivisionsPerBeat,
-        newNumberOfBars,
+        List(
+          Track(
+            "kick",
+            "metal/kick.mp3",
+            Some(MidiDrumType.BASS_DRUM_1),
+            List(
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None,
+              Velocity.Normal,
+              Velocity.None,
+              Velocity.None,
+              Velocity.None
+            ),
+            false,
+            false
+          )
+        ),
+        128,
+        4,
+        4,
+        1,
         history :+ this,
         future = Nil
       )

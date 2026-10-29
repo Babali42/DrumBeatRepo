@@ -2,7 +2,6 @@ import { SequencerComponent } from './sequencer.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
-import { IManageBeatsToken } from '../../../infrastructure/injection-tokens/i-manage-beat.token';
 import { AUDIO_ENGINE } from '../../../infrastructure/injection-tokens/audio-engine.token';
 import {
   AudioEngineAdapterFake
@@ -68,7 +67,6 @@ describe('SequencerComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
       providers: [
-        { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
         { provide: AUDIO_EXPORT, useClass: AudioExportAdapter },
         { provide: IMIDI, useClass: MidiExportService },

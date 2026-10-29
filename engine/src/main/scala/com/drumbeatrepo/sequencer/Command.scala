@@ -5,12 +5,7 @@ import scala.scalajs.js
 enum Command:
   case SelectBeat(
       genre: String,
-      beat: String,
-      tracks: List[Track],
-      tempo: Int,
-      beatsPerBar: Int,
-      subdivisionsPerBeat: Int,
-      numberOfBars: Int
+      beat: String
   )
   case SetTempo(tempo: Int)
   case ToggleStep(trackName: String, stepIndex: Int)
@@ -31,20 +26,9 @@ object Command:
     cmd.selectDynamic("type").asInstanceOf[String] match
       case "SELECT_BEAT" =>
         val payload = cmd.selectDynamic("payload")
-        val tracksJS = payload.selectDynamic("tracks")
-        val tracks =
-          if js.isUndefined(tracksJS) || tracksJS == null then List.empty[Track]
-          else
-            val arr = tracksJS.asInstanceOf[js.Array[js.Dynamic]]
-            (0 until arr.length).map(i => Track.fromJS(arr(i))).toList
         SelectBeat(
           payload.selectDynamic("genre").asInstanceOf[String],
-          payload.selectDynamic("beat").asInstanceOf[String],
-          tracks,
-          payload.selectDynamic("tempo").asInstanceOf[Int],
-          payload.selectDynamic("beatsPerBar").asInstanceOf[Int],
-          payload.selectDynamic("subdivisionsPerBeat").asInstanceOf[Int],
-          payload.selectDynamic("numberOfBars").asInstanceOf[Int]
+          payload.selectDynamic("beat").asInstanceOf[String]
         )
       case "SET_TEMPO" =>
         SetTempo(

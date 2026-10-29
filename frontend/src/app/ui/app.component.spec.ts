@@ -6,7 +6,6 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { filter, firstValueFrom, of } from 'rxjs';
 import { Effect, Option } from 'effect';
 import { provideTranslateService } from '@ngx-translate/core';
-import { IManageBeatsToken } from '../infrastructure/injection-tokens/i-manage-beat.token';
 import { AUDIO_ENGINE } from '../infrastructure/injection-tokens/audio-engine.token';
 import { AUDIO_EXPORT } from '../infrastructure/injection-tokens/audio-export.token';
 import { IMIDI } from '../infrastructure/injection-tokens/i-midi.token';
@@ -72,7 +71,6 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        { provide: IManageBeatsToken, useValue: beatsMock },
         { provide: AUDIO_ENGINE, useClass: AudioEngineAdapterFake },
         { provide: AUDIO_EXPORT, useClass: AudioExportAdapter },
         { provide: IMIDI, useClass: MidiExportService },
