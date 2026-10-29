@@ -30,6 +30,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   set index(v: StepIndex) { this._index.set(v); }
 
   isPlaying = false;
+  hasPlayed = false;
 
   // eslint-disable-next-line functional/prefer-readonly-type
   private readonly trackStepMap: Map<string, Map<number, WAAClock.Event>> = new Map();
@@ -63,6 +64,7 @@ export class AudioEngineAdapter implements IAudioEngine {
   }
 
   play() {
+    this.hasPlayed = true;
     this.isPlaying = true;
     this.playStartTime = Seconds(this.context.currentTime);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call

@@ -19,6 +19,7 @@ export class AudioEngineAdapterFake implements IAudioEngine {
 
   index: StepIndex = StepIndex(0);
   isPlaying: boolean = false;
+  hasPlayed: boolean = false;
 
   pause(): void {
   }

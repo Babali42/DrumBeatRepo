@@ -2,10 +2,10 @@
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
       <button class="play-pause-button cursor-pointer app-button"
-              [attr.aria-label]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" (click)="this.audioEngine.playPause()">
+        [attr.aria-label]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" (click)="this.audioEngine.playPause()">
         <img [alt]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
-             [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
-             height="28" width="28">
+          [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+          height="28" width="28">
       </button>
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
@@ -34,8 +34,8 @@
         </div>
       </div>
       <div class="flex mute-solo">
-        <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)">M</button>
-        <button class="button" [ngClass]="track.isSolo ? 'solo' : ''" (click)="toggleSoloTrack(track.name)">S</button>
+        <button class="button" [ngClass]="track.isMuted ? 'mute' : ''" (click)="toggleMuteTrack(track.name)" [disabled]="!this.audioEngine.hasPlayed">M</button>
+        <button class="button" [ngClass]="track.isSolo ? 'solo' : ''" (click)="toggleSoloTrack(track.name)" [disabled]="!this.audioEngine.hasPlayed">S</button>
       </div>
     </div>
     }
@@ -87,8 +87,8 @@
   <button class="mobile-play-button" type="button" (click)="this.audioEngine.playPause()"
     [attr.aria-label]="this.audioEngine.isPlaying ? 'Pause' : 'Play'">
     <img [alt]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
-         [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
-         height="28" width="28">
+      [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+      height="28" width="28">
   </button>
 </div>
 
