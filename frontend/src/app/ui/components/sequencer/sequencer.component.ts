@@ -66,7 +66,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   isMidiExportModalOpen = false;
   isBrowseAudioSamplesModalOpen = false;
 
-  constructor(@Inject(AUDIO_ENGINE) protected readonly soundService: IAudioEngine,
+  constructor(@Inject(AUDIO_ENGINE) protected readonly audioEngine: IAudioEngine,
     @Inject(AUDIO_EXPORT) public readonly audioExportAdapter: IAudioExport,
     @Inject(IMIDI) public readonly midiExportService: IMidi,
     protected readonly sequencerService: SequencerService,
@@ -76,7 +76,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
 
     this.playerEvents.playPause$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.soundService.playPause());
+      .subscribe(() => this.audioEngine.playPause());
   }
 
   ngOnInit(): void {
@@ -123,12 +123,12 @@ export class SequencerComponent implements OnInit, OnDestroy {
       numberOfBar: numberOfBars
     };
 
-    this.soundService.setTracks(this.beat.tracks);
+    this.audioEngine.setTracks(this.beat.tracks);
   }
 
   private _applySteps(): void {
     const vmTracks = this.sequencerService.vm$.getValue().tracks;
-    this.soundService.syncTracks(vmTracks);
+    this.audioEngine.syncTracks(vmTracks);
     this.beat = { ...this.beat, tracks: vmTracks };
   }
 
@@ -200,7 +200,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
   }
 
   changeBeatBpm($event: number): void {
-    this.soundService.pause();
+    this.audioEngine.pause();
     void this.sequencerService.dispatch({ type: 'SET_TEMPO', payload: { tempo: $event } });
   }
 

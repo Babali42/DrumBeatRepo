@@ -2,10 +2,10 @@
   <div class="sequencer-header">
     <div class="flex label bpm-input-group">
       <button class="play-pause-button cursor-pointer app-button"
-        [attr.aria-label]="this.soundService.isPlaying ? 'Pause' : 'Play'" (click)="this.soundService.playPause()">
-        <img [alt]="this.soundService.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
-          [ngSrc]="(this.soundService.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
-          height="28" width="28">
+              [attr.aria-label]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" (click)="this.audioEngine.playPause()">
+        <img [alt]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
+             [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+             height="28" width="28">
       </button>
       <app-bpm-input [bpm]="this.tempoService.bpm" (bpmChange)="changeBeatBpm($event)"></app-bpm-input>
       <div class="flex">
@@ -26,7 +26,7 @@
     @for (track of beat.tracks; track track){
     <div class="tracks-name">
       <div class="flex image-and-label">
-        <button class="button square-button" title="Play sample" (mousedown)="soundService.playTrack(track.name)">
+        <button class="button square-button" title="Play sample" (mousedown)="audioEngine.playTrack(track.name)">
           <img alt="drum" [ngSrc]="track.midiNote | drumImage | iconDarkMode" height="28" width="28">
         </button>
         <div class="track-name user-select-none medium">
@@ -60,7 +60,7 @@
         [class.sixty-four-steps]="track.steps.steps.length == NumberOfSteps.sixty_four">
         @for (step of track.steps.steps; track $index){
         <button class="step cursor-pointer" [class.active]="getStepActive(track.name, $index, step)"
-          [class.current]="$index === soundService.index"
+          [class.current]="$index === audioEngine.index"
           [class.highlight]="Math.floor($index / (track.steps.steps.length == NumberOfSteps.twelve ? 3 : 4)) % 2 === 0"
           [class.drag-range]="isInDragRange(track.name, $index)" (mousedown)="onStepMouseDown(track, $index)"
           (mouseenter)="onStepMouseEnter(track.name, $index)" (mouseup)="onStepMouseUp(track.name, $index)">
@@ -84,11 +84,11 @@
       }}</button>
   </section>
 
-  <button class="mobile-play-button" type="button" (click)="this.soundService.playPause()"
-    [attr.aria-label]="this.soundService.isPlaying ? 'Pause' : 'Play'">
-    <img [alt]="this.soundService.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
-      [ngSrc]="(this.soundService.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
-      height="28" width="28">
+  <button class="mobile-play-button" type="button" (click)="this.audioEngine.playPause()"
+    [attr.aria-label]="this.audioEngine.isPlaying ? 'Pause' : 'Play'">
+    <img [alt]="this.audioEngine.isPlaying ? 'Pause' : 'Play'" aria-hidden="true"
+         [ngSrc]="(this.audioEngine.isPlaying ? 'assets/images/icons/pause.svg' : 'assets/images/icons/play.svg') | iconDarkMode"
+         height="28" width="28">
   </button>
 </div>
 
