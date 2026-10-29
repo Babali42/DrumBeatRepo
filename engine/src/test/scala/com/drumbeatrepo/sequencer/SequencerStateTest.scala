@@ -2,6 +2,7 @@ package com.drumbeatrepo.sequencer
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe
+import com.drumbeatrepo.domain.MidiDrumType
 
 class SequencerafterTest extends AnyFunSuite {
   private val initial = SequencerState.initial;

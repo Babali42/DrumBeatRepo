@@ -4,6 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe
 
 import scala.scalajs.js
+import com.drumbeatrepo.domain.MidiDrumType
 
 class SequencerEngineTest extends AnyFunSuite {
   test("getState should return tracks sorted by midi.track") {

@@ -1,6 +1,7 @@
 package com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
+import com.drumbeatrepo.domain.MidiDrumType
 
 final case class Track(
     name: String,
@@ -24,7 +25,7 @@ object Track:
     val midiNote =
       if js.isUndefined(midiNoteValue) || midiNoteValue == null then
         Option.empty[MidiDrumType]
-      else MidiDrumType.fromMidiNote(midiNoteValue.asInstanceOf[Int])
+      else MidiDrumType.fromInt(midiNoteValue.asInstanceOf[Int])
     Track(
       track.selectDynamic("name").asInstanceOf[String],
       track.selectDynamic("filename").asInstanceOf[String],
