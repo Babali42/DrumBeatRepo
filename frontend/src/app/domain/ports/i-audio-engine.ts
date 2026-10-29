@@ -17,6 +17,7 @@ export interface IAudioEngineCommands {
 export interface IAudioEngineQuery {
   readonly index: StepIndex;
   readonly isPlaying: boolean;
+  readonly hasPlayed: boolean;
 }
 
 export interface IAudioEngine extends IAudioEngineCommands, IAudioEngineQuery {

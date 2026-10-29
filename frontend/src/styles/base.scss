@@ -1,4 +1,6 @@
-﻿html,
+﻿@use "mixins";
+
+html,
 body {
   height: 100%;
   margin: 0;
@@ -19,4 +21,11 @@ body {
 a {
   color: var(--textColor);
   font-weight: bold;
+}
+
+button:disabled {
+  background-color: var(--disabledColor);
+  color: linen;
+  opacity: 1;
+  cursor: not-allowed;
 }
