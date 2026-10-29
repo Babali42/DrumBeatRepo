@@ -39,11 +39,11 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
           |}""".stripMargin
 
     // Act
-    val result = decode[CompactBeat](json)
+    val result = decode[Beat](json)
 
     // Assert
     result shouldEqual Right(
-      CompactBeat(
+      Beat(
         label = "Metal",
         genre = "Metal",
         bpm = 180,
@@ -51,19 +51,19 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
         subdivisionsPerBeat = 4,
         numberOfBar = 2,
         tracks = List(
-          CompactTrack(
+          Track(
             name = "Snare",
             isMuted = Some(true),
             isSolo = Some(true),
             filename = "metal/snare.mp3",
             steps = "____X_______X___"
           ),
-          CompactTrack(
+          Track(
             name = "Hats",
             filename = "metal/crash.mp3",
             steps = "X___X___X___X___"
           ),
-          CompactTrack(
+          Track(
             name = "Kick",
             filename = "metal/kick.mp3",
             steps = "XXXXXXXXXXXXXXXX"

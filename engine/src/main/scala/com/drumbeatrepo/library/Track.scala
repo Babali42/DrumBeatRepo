@@ -4,7 +4,7 @@ import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
 import com.drumbeatrepo.domain.MidiDrumType
 
-final case class CompactTrack(
+final case class Track(
     name: String,
     filename: String,
     steps: String,
@@ -13,5 +13,5 @@ final case class CompactTrack(
     midiNote: Option[MidiDrumType] = None
 )
 
-given Decoder[CompactTrack] = deriveDecoder[CompactTrack]
+given Decoder[Track] = deriveDecoder[Track]
 given Decoder[MidiDrumType] = deriveDecoder[MidiDrumType]
