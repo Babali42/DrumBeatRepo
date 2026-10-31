@@ -80,6 +80,7 @@ Open a terminal in folder : `cd frontend/`
 
 - Run (angular) karma tests : `npm run test`
 - Run vitest tests : `npm run test-vitest`
+- Vitest specs (*.spec.vite.ts) can use Angular TestBed; the test environment is set up in src/test-setup.vite.ts (example: src/app/ui/services/space-bar-behaviour/player.events.service.spec.vite.ts)
 
 ➡️ App runs at: `http://localhost:4200`
 
