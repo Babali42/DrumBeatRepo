@@ -202,7 +202,21 @@ object SequencerState:
     SequencerState(
       "Hypnotic Techno",
       "Tresillo",
-      List.empty,
+      List(
+        Track(
+          "Snare",
+          "snare.wav",
+          Some(MidiDrumType.ACOUSTIC_SNARE),
+          List(
+            Velocity.Normal,
+            Velocity.None,
+            Velocity.None,
+            Velocity.None
+          ),
+          false,
+          false
+        )
+      ),
       128,
       4,
       4,
