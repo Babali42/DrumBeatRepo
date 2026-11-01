@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers.shouldBe
 import scala.scalajs.js
 import com.drumbeatrepo.domain.MidiDrumType
 
-class SequencerEngineTest extends AnyFunSuite {
+class SequencerEngineGetStateSpec extends AnyFunSuite {
   // todo rewrite this test with a beat containing multiple tracks
   test("getState should return tracks sorted by midi.track") {
     SequencerEngine.reset()

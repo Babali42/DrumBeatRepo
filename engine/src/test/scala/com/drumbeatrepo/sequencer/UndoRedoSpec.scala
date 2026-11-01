@@ -1,37 +1,15 @@
 package com.drumbeatrepo.sequencer
 
-import org.scalatest.funsuite.AnyFunSuite
 import cats.effect.testing.scalatest.AsyncIOSpec
 import org.scalatest.matchers.should.Matchers.shouldBe
-import com.drumbeatrepo.domain.MidiDrumType
 import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
 given ExecutionContext = ExecutionContext.global
-import cats.effect.unsafe.implicits.global
 
-class UndoRedoTest extends AsyncFunSuite with AsyncIOSpec {
+class UndoRedoSpec extends AsyncFunSuite with AsyncIOSpec {
   private val initial = SequencerState.initial;
-  private val someTracks = List(
-    Track(
-      "Snare",
-      "snare.wav",
-      Some(MidiDrumType.ACOUSTIC_SNARE),
-      List(
-        Velocity.Normal,
-        Velocity.None,
-        Velocity.Normal,
-        Velocity.None,
-        Velocity.Normal,
-        Velocity.None,
-        Velocity.Normal,
-        Velocity.None
-      ),
-      false,
-      false
-    )
-  )
 
   test("undo should restores initial beat") {
     // act
@@ -89,7 +67,7 @@ class UndoRedoTest extends AsyncFunSuite with AsyncIOSpec {
       // act
       stepToggled <- initial.dispatch(Command.ToggleStep("Snare", 0))
       stepToggledAndUndone <- stepToggled.dispatch(Command.Undo)
-      stepToggledAndUndoneAndToggled <- stepToggled.dispatch(
+      stepToggledAndUndoneAndToggled <- stepToggledAndUndone.dispatch(
         Command.ToggleStep("Snare", 0)
       )
     yield
