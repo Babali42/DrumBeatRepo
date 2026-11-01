@@ -10,10 +10,6 @@ given ExecutionContext = ExecutionContext.global
 
 class SequencerStaterTest extends AsyncFunSuite with AsyncIOSpec {
   private val initial = SequencerState.initial;
-  private val initialWithTracks = initial
-    .dispatch(
-      Command.SelectBeat("Techno", "4 on the floor")
-    )
 
   test("dispatch SelectBeat should sets the beat") {
     initial
@@ -34,7 +30,7 @@ class SequencerStaterTest extends AsyncFunSuite with AsyncIOSpec {
 
   }
 
-  test("dispatch SetTempo should sets the tempo") {
+  test("Should sets the tempo") {
     initial
       // act
       .dispatch(Command.SetTempo(126))
@@ -67,138 +63,92 @@ class SequencerStaterTest extends AsyncFunSuite with AsyncIOSpec {
   test("ToggleStep should adds to history") {
     (for
       // act
-      after <- initialWithTracks
-      afterSnare <- after.dispatch(Command.ToggleStep("Snare", 0))
+      after <- initial.dispatch(Command.ToggleStep("Snare", 0))
     yield
       // assert
-      afterSnare.history.length shouldBe 1
-      afterSnare.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
+      after.history.length shouldBe 1
+      after.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
     )
       .unsafeToFuture()
   }
-  /*
-  test("dispatch SetSteps sets multiples steps in a row") {
-    // act
-    val after = initialWithTracks.dispatch(
-      Command.SetSteps("Snare", 1, 3, Velocity.Normal)
-    );
-
-    // assert
-    after.tracks.head.steps(0) shouldBe Velocity.Normal
-    after.tracks.head.steps(1) shouldBe Velocity.Normal
-    after.tracks.head.steps(2) shouldBe Velocity.Normal
-    after.tracks.head.steps(3) shouldBe Velocity.Normal
-  }
 
   test("dispatch AddTrack should add a track to a beat") {
-    // act
-    val after = initial
-      .dispatch(
+    (for
+      // act
+      after <- initial.dispatch(
         Command.AddTrack(
-          someTracks.head.copy(name = "kick")
+          Track("Synth", "Synth.mp3", None, List.empty, true, false)
         )
-      );
+      )
+    yield
+      // assert
+      after.tracks.length shouldBe 2)
+      .unsafeToFuture()
+  }
 
-    // assert
-    after.tracks.length shouldBe 1
+  test("ToggleSoloTrack should unsolo other solo track") {
+    (for
+      beatWithSoloHat <- initial
+        .dispatch(
+          Command.AddTrack(
+            Track("Synth", "Synth.mp3", None, List.empty, false, true)
+          )
+        )
+      after <- beatWithSoloHat.dispatch(
+        Command.AddTrack(
+          Track("Synth", "Synth.mp3", None, List.empty, false, true)
+        )
+      )
+      result <- after.dispatch(Command.ToggleSoloTrack("kick"))
+    yield result.tracks
+      .filter(_.name != "kick")
+      .forall(_.isSolo == false) shouldBe true).unsafeToFuture()
+  }
+
+  test("dispatch SetSteps sets multiples steps in a row") {
+    (for after <- initial.dispatch(
+        Command.SetSteps("Snare", 1, 3, Velocity.Normal)
+      )
+    yield
+      // assert
+      after.tracks.head.steps(0) shouldBe Velocity.Normal
+      after.tracks.head.steps(1) shouldBe Velocity.Normal
+      after.tracks.head.steps(2) shouldBe Velocity.Normal
+      after.tracks.head.steps(3) shouldBe Velocity.Normal
+    ).unsafeToFuture();
   }
 
   test("toggleMuteTrack should mute a track") {
     // act
-    val result =
-      initialWithTracks.dispatch(Command.ToggleMuteTrack("Snare"))
+    (initial
+      .dispatch(Command.ToggleMuteTrack("Snare"))
+      .map(result => result.tracks.head.isMuted shouldBe true))
+      .unsafeToFuture();
+  }
 
-    // assert
-    result.tracks.head.isMuted shouldBe true
+  test("toggleSoloTrack should mute a track") {
+    // act
+    (initial
+      .dispatch(Command.ToggleSoloTrack("Snare"))
+      .map(result => result.tracks.head.isSolo shouldBe true))
+      .unsafeToFuture();
   }
 
   test("toggleMuteTrack should unsolo all tracks") {
-    // arrange
-    val threeTrackBeatWithSoloHat = initial
-      .dispatch(
+    (for
+      beatWithOneSoloTrack <- initial
+        .dispatch(
+          Command.AddTrack(
+            Track("Synth", "Synth.mp3", None, List.empty, false, true)
+          )
+        )
+      beatWithTwoSoloTrack <- beatWithOneSoloTrack.dispatch(
         Command.AddTrack(
-          someTracks.head.copy(name = "kick", isSolo = true)
+          Track("Synth2", "Synth2.mp3", None, List.empty, false, true)
         )
       )
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "hat", isSolo = true)
-        )
-      );
 
-    // act
-    val result =
-      threeTrackBeatWithSoloHat.dispatch(Command.ToggleMuteTrack("hat"))
-
-    // assert
-    result.tracks
-      .forall(_.isSolo == false) shouldBe true
+      result <- beatWithTwoSoloTrack.dispatch(Command.ToggleMuteTrack("hat"))
+    yield result.tracks.forall(!_.isSolo) shouldBe true).unsafeToFuture();
   }
-
-  test("ToggleSoloTrack should solo a track") {
-    // arrange
-    val threeTrackBeat = initial
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "kick")
-        )
-      )
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "hat")
-        )
-      );
-
-    // act
-    val result = threeTrackBeat.dispatch(Command.ToggleSoloTrack("kick"))
-
-    // assert
-    result.tracks.find(_.name == "kick").head.isSolo shouldBe true
-  }
-
-  test("ToggleSoloTrack should unsolo other solo track") {
-    // arrange
-    val threeTrackBeatWithSoloHat = initial
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "kick")
-        )
-      )
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "hat", isSolo = true)
-        )
-      );
-
-    // act
-    val result =
-      threeTrackBeatWithSoloHat.dispatch(Command.ToggleSoloTrack("kick"))
-
-    // assert
-    result.tracks
-      .filter(_.name != "kick")
-      .forall(_.isSolo == false) shouldBe true
-  }
-
-  test("ToggleSoloTrack should unmute all tracks") {
-    // arrange
-    val threeTrackBeatAllMuted = initial
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "kick", isMuted = true)
-        )
-      )
-      .dispatch(
-        Command.AddTrack(
-          someTracks.head.copy(name = "hat", isSolo = true, isMuted = true)
-        )
-      );
-
-    // act
-    val result =
-      threeTrackBeatAllMuted.dispatch(Command.ToggleSoloTrack("kick"))
-
-    // assert
-    result.tracks.forall(_.isMuted == false) shouldBe true
-  }*/
 }

@@ -61,26 +61,14 @@ class UndoRedoTest extends AsyncFunSuite with AsyncIOSpec {
       .unsafeToFuture()
   }
 
-  test("redo should should do nothing with empty future") {
-    // act
-    initial
-      .dispatch(Command.Redo)
-      // assert
-      .map { after =>
-        after shouldBe initial;
-      }
-      .unsafeToFuture();
+  test("redo should do nothing with empty future") {
+    (for after <- initial.dispatch(Command.Redo)
+    yield after shouldBe initial).unsafeToFuture()
   }
 
   test("undo should do nothing with empty history") {
-    // act
-    initial
-      .dispatch(Command.Undo)
-      // assert
-      .map { after =>
-        after shouldBe initial;
-      }
-      .unsafeToFuture();
+    (for after <- initial.dispatch(Command.Undo)
+    yield after shouldBe initial).unsafeToFuture()
   }
 
   test("multiple changes in tempo should be undone once") {
