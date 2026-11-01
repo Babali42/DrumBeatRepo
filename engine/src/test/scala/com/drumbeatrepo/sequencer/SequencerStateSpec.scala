@@ -6,9 +6,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-given ExecutionContext = ExecutionContext.global
-
-class SequencerStaterTest extends AsyncFunSuite with AsyncIOSpec {
+class SequencerStateSpec extends AsyncFunSuite with AsyncIOSpec {
   private val initial = SequencerState.initial;
 
   test("dispatch SelectBeat should sets the beat") {
