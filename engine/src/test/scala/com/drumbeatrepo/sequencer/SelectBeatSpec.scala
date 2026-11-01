@@ -6,7 +6,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-class SequencerStateSpec extends AsyncFunSuite with AsyncIOSpec {
+class SelectBeatSpec extends AsyncFunSuite with AsyncIOSpec {
   private val initial = SequencerState.initial;
 
   // todo : add the fileName parameter in the SelectBeat command
