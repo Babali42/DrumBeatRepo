@@ -27,6 +27,7 @@ object Command:
       case "SELECT_BEAT" =>
         val payload = cmd.selectDynamic("payload")
         SelectBeat(
+          // todo : add a beat filename here
           payload.selectDynamic("genre").asInstanceOf[String],
           payload.selectDynamic("beat").asInstanceOf[String]
         )

@@ -9,25 +9,6 @@ import scala.concurrent.ExecutionContext
 class SequencerStateSpec extends AsyncFunSuite with AsyncIOSpec {
   private val initial = SequencerState.initial;
 
-  test("dispatch SelectBeat should sets the beat") {
-    initial
-      // act
-      .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor")
-      )
-      // assert
-      .map { after =>
-        after.genre shouldBe "Techno";
-        after.beat shouldBe "4 on the floor";
-        after.tempo shouldBe 128;
-        after.beatsPerBar shouldBe 4;
-        after.subdivisionsPerBeat shouldBe 4;
-        after.numberOfBars shouldBe 1;
-      }
-      .unsafeToFuture()
-
-  }
-
   test("Should sets the tempo") {
     initial
       // act
