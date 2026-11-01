@@ -23,9 +23,11 @@ object BeatLibrary:
 
 object Beats {
   def load: IO[List[BeatMetadata]] =
-    IO.fromFuture(IO(Fetch.fetch("/assets/beats/beats-metadata.json").toFuture))
-      .flatMap(resp => IO.fromFuture(IO(resp.text().toFuture)))
-      .flatMap { text =>
-        IO.fromEither(decode[List[BeatMetadata]](text))
-      }
+    for
+      response <- IO.fromFuture(
+        IO(Fetch.fetch("/assets/beats/beats-metadata.json").toFuture)
+      )
+      text <- IO.fromFuture(IO(response.text().toFuture))
+      beats <- IO.fromEither(decode[List[BeatMetadata]](text))
+    yield beats
 }
