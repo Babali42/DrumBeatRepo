@@ -285,4 +285,65 @@ describe('SequencerComponent', () => {
     expect(redoButton).toBeTruthy();
     expect(redoButton.nativeElement.disabled).toBeFalse();
   });
+
+  describe('play and pause buttons', () => {
+    const fullStrengthColor = 'rgb(0, 0, 0)';
+    const root = document.documentElement;
+
+    const desktopButton = (): HTMLButtonElement =>
+      fixture.debugElement.query(By.css('button.play-pause-button')).nativeElement;
+    const mobileButton = (): HTMLButtonElement =>
+      fixture.debugElement.query(By.css('button.mobile-play-button')).nativeElement;
+
+    beforeEach(() => {
+      root.style.setProperty('--textColor', fullStrengthColor);
+      root.style.setProperty('--backgroundColor', 'rgb(255, 255, 255)');
+      root.style.setProperty('--borderColor', fullStrengthColor);
+      fixture.detectChanges();
+    });
+
+    afterEach(() => {
+      root.style.removeProperty('--textColor');
+      root.style.removeProperty('--backgroundColor');
+      root.style.removeProperty('--borderColor');
+    });
+
+    it('Should give the desktop play button a soft border like the close button', () => {
+      expect(getComputedStyle(desktopButton()).borderTopColor).not.toBe(fullStrengthColor);
+    });
+
+    it('Should give the mobile play button a soft border like the close button', () => {
+      expect(getComputedStyle(mobileButton()).borderTopColor).not.toBe(fullStrengthColor);
+    });
+
+    it('Should show a solid focus outline on the mobile play button like the close button', () => {
+      const button = mobileButton();
+
+      // The mobile button is hidden above 1280px, and a hidden button can't take focus.
+      button.style.display = 'flex';
+      button.focus();
+      fixture.detectChanges();
+
+      const style = getComputedStyle(button);
+      expect(style.outlineStyle).toBe('solid');
+      expect(style.outlineWidth).toBe('2px');
+    });
+
+    it('Should switch both buttons between Play and Pause when one is clicked', () => {
+      expect(desktopButton().getAttribute('aria-label')).toBe('Play');
+      expect(mobileButton().getAttribute('aria-label')).toBe('Play');
+
+      desktopButton().click();
+      fixture.detectChanges();
+
+      expect(desktopButton().getAttribute('aria-label')).toBe('Pause');
+      expect(mobileButton().getAttribute('aria-label')).toBe('Pause');
+
+      mobileButton().click();
+      fixture.detectChanges();
+
+      expect(desktopButton().getAttribute('aria-label')).toBe('Play');
+      expect(mobileButton().getAttribute('aria-label')).toBe('Play');
+    });
+  });
 });

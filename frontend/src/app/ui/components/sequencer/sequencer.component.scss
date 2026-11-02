@@ -19,24 +19,11 @@ $gap: 4px;
   grid-row-start: 1;
 
   .play-pause-button {
+    @include utils.soft-button;
     height: 64px;
     width: 64px;
     min-width: 64px;
     font-size: 20px;
-    border-radius: utils.$big-radius;
-    border-color: var(--textColor);
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, border-color 0.3s, border-radius 0.3s, color 0.3s, background-color 0.3s;
-  }
-
-  .play-pause-button:active {
-    transform: scale(0.9);
-  }
-
-  .play-pause-button:hover {
-    background-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
-    color: var(--backgroundColor);
-    border-radius: 10px;
-    border-color: color-mix(in srgb, var(--textColor) 80%, var(--backgroundColor));
   }
 
   .label {
@@ -211,6 +198,7 @@ $gap: 4px;
 
 // MOBILE PLAY BUTTON
 .mobile-play-button {
+  @include utils.soft-button($backing: true);
   display: none;
 }
 
@@ -233,21 +221,9 @@ $gap: 4px;
     height: 64px;
 
     border-radius: 50%;
-    border: 1px solid var(--textColor);
-
-    background-color: var(--backgroundColor);
-    color: var(--textColor);
-
-    cursor: pointer;
 
     z-index: 10;
 
     box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
-
-    transition: transform 0.15s ease;
-  }
-
-  .mobile-play-button:active {
-    transform: scale(0.92);
   }
 }
