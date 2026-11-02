@@ -66,3 +66,43 @@ $main-app-margin-size-medium: 16px;
 
 $little-radius: 4px;
 $big-radius: $little-radius + $little-radius;
+
+// The look of the close button, shared with the play and pause buttons.
+// Size and margin stay with each button. With $backing: true the page color
+// sits under the tint, for buttons that float over the grid.
+@mixin soft-fill($percent, $backing) {
+  @if $backing {
+    background:
+      linear-gradient(color-mix(in srgb, var(--textColor) $percent, transparent),
+        color-mix(in srgb, var(--textColor) $percent, transparent)),
+      var(--backgroundColor);
+  } @else {
+    background: color-mix(in srgb, var(--textColor) $percent, transparent);
+  }
+}
+
+@mixin soft-button($backing: false) {
+  cursor: pointer;
+  @include soft-fill(8%, $backing);
+  border: 1px solid color-mix(in srgb, var(--textColor) 14%, transparent);
+  color: var(--textColor);
+  border-radius: $big-radius;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 100ms ease;
+
+  &:hover {
+    @include soft-fill(14%, $backing);
+    border-color: color-mix(in srgb, var(--textColor) 24%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+}
