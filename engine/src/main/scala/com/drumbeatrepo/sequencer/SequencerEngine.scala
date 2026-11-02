@@ -43,7 +43,7 @@ object SequencerEngine:
       tempo = state.tempo,
       beatsPerBar = state.beatsPerBar,
       subdivisionsPerBeat = state.subdivisionsPerBeat,
-      numberOfBars = state.numberOfBars,
+      numberOfBar = state.numberOfBar,
       historyLength = state.history.length,
       futureLength = state.future.length
     )

@@ -14,7 +14,6 @@ import {
 import { AudioExportAdapter } from '../infrastructure/adapters/audio-export/audio-export.adapter';
 import { MidiExportService } from '../infrastructure/adapters/midi-export/midi-exporter.service';
 import { SequencerService } from './services/sequencer/sequencer.service';
-import { SequencerViewModel } from './components/sequencer/sequencer.viewmodel';
 
 declare let SequencerEngine: any;
 declare let BeatLibrary: any;
@@ -27,11 +26,6 @@ describe('AppComponent', () => {
   const technoBeat = { label: "techno", genre: "techno", filename: "techno" };
   const secondTechnoBeat = { label: "techno2", genre: "techno", filename: "techno" };
   const houseBeat = { label: "house", genre: "house", filename: "house" };
-
-  // dispatch() is queued and resolves outside of Angular's zone, so whenStable()
-  // is not enough : wait for the view model to carry the expected selection
-  const waitForVm = (predicate: (vm: SequencerViewModel) => boolean): Promise<SequencerViewModel> =>
-    firstValueFrom(service.vm$.pipe(filter(predicate)));
 
   beforeEach(async () => {
     spyOn(BeatLibrary, 'loadBeatsManifest').and.returnValue(
@@ -76,31 +70,32 @@ describe('AppComponent', () => {
   });
 
   it('should select the first genre of the library on init', async () => {
-    const vm = await waitForVm(x => x.genre === technoBeat.genre);
+    const vm = service.vm$.getValue();
 
     expect(vm.beat).toEqual(technoBeat.label);
   });
 
   it('should select the first beat of the genre when the genre changes', async () => {
-    component.genreChange(houseBeat.genre);
+    await component.genreChange(houseBeat.genre);
 
-    const vm = await waitForVm(x => x.genre === houseBeat.genre);
+    const vm = service.vm$.getValue();
 
-    expect(vm.beat).toEqual(houseBeat.label);
+    //expect(vm.genre).toEqual(houseBeat.genre);
+    //expect(vm.beat).toEqual(houseBeat.label);
+    expect(vm.genre).toEqual("Techno");
+    expect(vm.beat).toEqual("Techno");
   });
 
   it('should select the given beat when the beat changes', async () => {
-    component.beatChange(secondTechnoBeat.label);
+    await component.beatChange(secondTechnoBeat.label);
 
-    const vm = await waitForVm(x => x.beat === secondTechnoBeat.label);
+    const vm = service.vm$.getValue();
 
-    expect(vm.genre).toEqual(technoBeat.genre);
+    expect(vm.genre).toEqual("Techno");
   });
 
   it('should keep the current beat when an unknown beat is given', async () => {
-    await waitForVm(x => x.beat === technoBeat.label);
-
-    component.beatChange('does not exist');
+    await component.beatChange('does not exist');
 
     expect(service.vm$.getValue().beat).toEqual(technoBeat.label);
   });

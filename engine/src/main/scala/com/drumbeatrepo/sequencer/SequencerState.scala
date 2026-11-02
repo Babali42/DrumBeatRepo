@@ -2,6 +2,14 @@ package com.drumbeatrepo.sequencer
 
 import cats.effect.IO
 import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.library.Beat
+import org.scalajs.dom.Fetch
+import io.circe.Decoder
+import io.circe.parser.decode
+import io.circe.generic.semiauto.deriveDecoder
+import io.circe.generic.auto.deriveDecoder
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 final case class SequencerState(
     genre: String,
@@ -10,52 +18,31 @@ final case class SequencerState(
     tempo: Int,
     beatsPerBar: Int,
     subdivisionsPerBeat: Int,
-    numberOfBars: Int,
+    numberOfBar: Int,
     history: List[SequencerState],
     future: List[SequencerState]
 ):
   def dispatch(command: Command): IO[SequencerState] =
     command match
-      case Command.SelectBeat(newFilename) =>
-        IO.pure(
-          SequencerState(
-            "Techno",
-            "Techno",
-            List(
-              Track(
-                "kick",
-                "metal/kick.mp3",
-                Some(MidiDrumType.BASS_DRUM_1),
-                List(
-                  Velocity.Normal,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.Normal,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.Normal,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.Normal,
-                  Velocity.None,
-                  Velocity.None,
-                  Velocity.None
-                ),
-                false,
-                false
-              )
-            ),
-            128,
-            4,
-            4,
-            1,
-            history :+ this,
-            future = Nil
+      case Command.SelectBeat(newFilename) => {
+        for
+          response <- IO.fromFuture(
+            IO(Fetch.fetch(s"/assets/beats/${newFilename}.json").toFuture)
           )
+          text <- IO.fromFuture(IO(response.text().toFuture))
+          beat <- IO.fromEither(decode[Beat](text))
+        yield SequencerState(
+          beat.genre,
+          beat.label,
+          List(),
+          beat.bpm,
+          beat.beatsPerBar,
+          beat.subdivisionsPerBeat,
+          beat.numberOfBar,
+          history :+ this,
+          Nil
         )
+      }
 
       case Command.ToggleStep(trackName, stepIndex) =>
         tracks.find(_.name == trackName) match
@@ -123,7 +110,7 @@ final case class SequencerState(
                 newTempo,
                 beatsPerBar,
                 subdivisionsPerBeat,
-                numberOfBars,
+                numberOfBar,
                 history,
                 future = Nil
               )
@@ -138,7 +125,7 @@ final case class SequencerState(
                 newTempo,
                 beatsPerBar,
                 subdivisionsPerBeat,
-                numberOfBars,
+                numberOfBar,
                 history :+ this,
                 future = Nil
               )

@@ -23,7 +23,7 @@ class SelectBeatSpec extends AsyncFunSuite with AsyncIOSpec {
         after.tempo shouldBe 128;
         after.beatsPerBar shouldBe 4;
         after.subdivisionsPerBeat shouldBe 4;
-        after.numberOfBars shouldBe 1;
+        after.numberOfBar shouldBe 1;
       }
       .unsafeToFuture()
   }

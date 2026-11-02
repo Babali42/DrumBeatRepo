@@ -9,7 +9,7 @@ export class SequencerViewModel {
   tempo: BPM = BPM(129);
   beatsPerBar: number = 4;
   subdivisionsPerBeat: number | undefined;
-  numberOfBars: number = 1;
+  numberOfBar: number = 1;
   historyLength: number = 0;
   futureLength: number = 0;
 }

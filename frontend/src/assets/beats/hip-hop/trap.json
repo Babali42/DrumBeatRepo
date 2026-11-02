@@ -3,8 +3,8 @@
   "genre": "Hip-Hop",
   "bpm": 140,
   "beatsPerBar": 4,
+  "numberOfBar": 1,
   "subdivisionsPerBeat": 4,
-  "numberOfBar": 2,
   "tracks": [
     {
       "name": "Hats",

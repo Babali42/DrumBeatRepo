@@ -30,7 +30,7 @@ export class SequencerService {
         tempo: BPM(state.tempo),
         beatsPerBar: state.beatsPerBar,
         subdivisionsPerBeat: state.subdivisionsPerBeat,
-        numberOfBars: state.numberOfBars,
+        numberOfBar: state.numberOfBar,
         historyLength: state.historyLength,
         futureLength: state.futureLength
       });
@@ -60,9 +60,14 @@ export class SequencerService {
 
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       await SequencerEngine.dispatch(cmd);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+
+      const state = SequencerEngine.getState();
+
+      console.log('Selected beat:', state.beat);
+      console.log('Selected genre:', state.genre);
+      console.log('Tracks:', state.tracks);
+
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 

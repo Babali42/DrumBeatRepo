@@ -94,11 +94,11 @@ export class SequencerComponent implements OnInit, OnDestroy {
             if (this.beat.genre === state.genre && this.beat.label === state.beat) {
               this._applySteps();
             } else {
-              this._applyBeat(beatMeta, state.genre, state.tempo, state.beatsPerBar, state.subdivisionsPerBeat, state.numberOfBars);
+              this._applyBeat(beatMeta, state.genre, state.tempo, state.beatsPerBar, state.subdivisionsPerBeat, state.numberOfBar);
 
               this.tempoService.beatsPerBar = state.beatsPerBar ?? 4;
               this.tempoService.subdivisionsPerBeat = state.subdivisionsPerBeat;
-              this.tempoService.numberOfBar = state.numberOfBars ?? 1;
+              this.tempoService.numberOfBar = state.numberOfBar ?? 1;
             }
           }
 
@@ -109,7 +109,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number, beatsPerBar: number, subdivisionsPerBeat: number, numberOfBars: number): void {
+  private _applyBeat(beatMeta: BeatMetadata, stateGenre: string, stateTempo: number, beatsPerBar: number, subdivisionsPerBeat: number, numberOfBar: number): void {
     // guard if vm$.getValue().tracks is not yet set
     const vmTracks = this.sequencerService.vm$.getValue().tracks ?? [];
 
@@ -120,7 +120,7 @@ export class SequencerComponent implements OnInit, OnDestroy {
       tracks: vmTracks,
       beatsPerBar: beatsPerBar,
       subdivisionsPerBeat: subdivisionsPerBeat,
-      numberOfBar: numberOfBars
+      numberOfBar: numberOfBar
     };
 
     this.audioEngine.setTracks(this.beat.tracks);
