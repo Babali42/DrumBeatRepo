@@ -11,7 +11,7 @@ class SequencerEngineGetStateSpec extends AnyFunSuite {
   test("getState should return tracks sorted by midi.track") {
     SequencerEngine.reset()
 
-    SequencerEngine.dispatch(Command.SelectBeat("", ""));
+    SequencerEngine.dispatch(Command.SelectBeat(""));
 
     val state = SequencerEngine.getState().asInstanceOf[js.Dynamic]
     state.beatsPerBar.asInstanceOf[js.Dynamic].asInstanceOf[Int] shouldBe 4

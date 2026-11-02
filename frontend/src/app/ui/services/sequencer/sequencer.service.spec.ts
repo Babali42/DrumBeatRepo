@@ -9,7 +9,7 @@ declare let BeatLibrary: any;
 describe('SequencerService', () => {
   let service: SequencerService;
 
-  const beatFromManifest = { label: "techno", genre: "techno", filename: "techno" }
+  const beatFromManifest = { label: "Techno", genre: "Techno", filename: "techno.wav" }
 
   beforeEach(async () => {
     spyOn(BeatLibrary, 'loadBeatsManifest').and.returnValue(
@@ -31,8 +31,7 @@ describe('SequencerService', () => {
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: beatFromManifest.genre,
-        beat: beatFromManifest.label
+        filename: beatFromManifest.filename,
       }
     });
 
@@ -68,8 +67,7 @@ describe('SequencerService', () => {
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: beatFromManifest.genre,
-        beat: beatFromManifest.label
+        filename: beatFromManifest.filename
       }
     });
 

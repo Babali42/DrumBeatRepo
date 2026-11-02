@@ -4,8 +4,7 @@ import scala.scalajs.js
 
 enum Command:
   case SelectBeat(
-      genre: String,
-      beat: String
+      filename: String
   )
   case SetTempo(tempo: Int)
   case ToggleStep(trackName: String, stepIndex: Int)
@@ -27,9 +26,7 @@ object Command:
       case "SELECT_BEAT" =>
         val payload = cmd.selectDynamic("payload")
         SelectBeat(
-          // todo : add a beat filename here
-          payload.selectDynamic("genre").asInstanceOf[String],
-          payload.selectDynamic("beat").asInstanceOf[String]
+          payload.selectDynamic("filename").asInstanceOf[String]
         )
       case "SET_TEMPO" =>
         SetTempo(

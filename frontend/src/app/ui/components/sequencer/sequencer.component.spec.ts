@@ -7,7 +7,6 @@ import {
   AudioEngineAdapterFake
 } from '../../../infrastructure/adapters/audio-engine/audio-engine.adapter.fake';
 import { provideTranslateService } from '@ngx-translate/core';
-import { Effect, Option } from 'effect';
 import { IMIDI } from '../../../infrastructure/injection-tokens/i-midi.token';
 import { MidiExportService } from '../../../infrastructure/adapters/midi-export/midi-exporter.service';
 import { AUDIO_EXPORT } from '../../../infrastructure/injection-tokens/audio-export.token';
@@ -15,10 +14,6 @@ import { AudioExportAdapter } from '../../../infrastructure/adapters/audio-expor
 import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';
 import { AudioExportOptions } from '../../../domain/export-options/audio-export-options';
 import { SequencerService } from '../../services/sequencer/sequencer.service';
-import { Beat } from '../../../domain/beat';
-import { BPM } from '../../../domain/bpm';
-import { Steps } from '../../../domain/steps';
-import { MidiDrumType } from '../../../domain/midi-drum-type';
 
 declare let SequencerEngine: any;
 declare let BeatLibrary: any;
@@ -28,8 +23,8 @@ describe('SequencerComponent', () => {
   let component: SequencerComponent;
   let service: SequencerService;
 
-  const beatMetaData = { label: "techno", genre: "techno", filename: "techno" }
-  const secondBeatMetaData = { label: "techno2", genre: "techno", filename: "techno" }
+  const beatMetaData = { label: "techno", genre: "techno", filename: "techno.wav" }
+  const secondBeatMetaData = { label: "techno2", genre: "techno", filename: "techno.wav" }
 
   beforeEach(async () => {
     spyOn(BeatLibrary, 'loadBeatsManifest').and.returnValue(
@@ -40,29 +35,6 @@ describe('SequencerComponent', () => {
     );
 
     SequencerEngine.reset();
-
-    const beatsMock = {
-      getBeatByFileName: jasmine.createSpy('getBeatByFileName').and.returnValue(
-        Effect.succeed({
-          label: beatMetaData.label,
-          genre: beatMetaData.genre,
-          bpm: BPM(128),
-          beatsPerBar: 4,
-          subdivisionsPerBeat: 4,
-          numberOfBar: 1,
-          tracks: [
-            {
-              name: 'Snare',
-              filename: 'metal/snare.mp3',
-              steps: new Steps([true, true, true, true]),
-              isMuted: false,
-              isSolo: false,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
-            }
-          ]
-        } as Beat)
-      )
-    };
 
     await TestBed.configureTestingModule({
       imports: [SequencerComponent],
@@ -86,7 +58,7 @@ describe('SequencerComponent', () => {
     await service.initialize();
     await service.dispatch({
       type: 'SELECT_BEAT',
-      payload: { genre: beatMetaData.genre, beat: beatMetaData.label }
+      payload: { filename: beatMetaData.filename }
     });
 
     fixture.detectChanges();
@@ -144,11 +116,11 @@ describe('SequencerComponent', () => {
       btn.nativeElement.classList.contains('active')
     ).length;
 
-    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: secondBeatMetaData.genre, beat: secondBeatMetaData.label } });
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { filename: secondBeatMetaData.filename } });
     await fixture.whenStable();
     fixture.detectChanges();
 
-    await service.dispatch({ type: 'SELECT_BEAT', payload: { genre: beatMetaData.genre, beat: beatMetaData.label } });
+    await service.dispatch({ type: 'SELECT_BEAT', payload: { filename: beatMetaData.filename } });
     await fixture.whenStable();
     fixture.detectChanges();
 
@@ -265,8 +237,7 @@ describe('SequencerComponent', () => {
     await service.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: beatMetaData.genre,
-        beat: beatMetaData.label
+        filename: beatMetaData.filename,
       }
     });
 

@@ -4,7 +4,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { filter, firstValueFrom, of } from 'rxjs';
-import { Effect, Option } from 'effect';
 import { provideTranslateService } from '@ngx-translate/core';
 import { AUDIO_ENGINE } from '../infrastructure/injection-tokens/audio-engine.token';
 import { AUDIO_EXPORT } from '../infrastructure/injection-tokens/audio-export.token';
@@ -16,10 +15,6 @@ import { AudioExportAdapter } from '../infrastructure/adapters/audio-export/audi
 import { MidiExportService } from '../infrastructure/adapters/midi-export/midi-exporter.service';
 import { SequencerService } from './services/sequencer/sequencer.service';
 import { SequencerViewModel } from './components/sequencer/sequencer.viewmodel';
-import { Beat } from '../domain/beat';
-import { BPM } from '../domain/bpm';
-import { Steps } from '../domain/steps';
-import { MidiDrumType } from '../domain/midi-drum-type';
 
 declare let SequencerEngine: any;
 declare let BeatLibrary: any;
@@ -44,29 +39,6 @@ describe('AppComponent', () => {
     );
 
     SequencerEngine.reset();
-
-    const beatsMock = {
-      getBeatByFileName: jasmine.createSpy('getBeatByFileName').and.returnValue(
-        Effect.succeed({
-          label: "techno",
-          genre: "techno",
-          bpm: BPM(128),
-          beatsPerBar: 4,
-          subdivisionsPerBeat: 4,
-          numberOfBar: 1,
-          tracks: [
-            {
-              name: 'Snare',
-              filename: 'metal/snare.mp3',
-              steps: new Steps([true, true, true, true]),
-              isMuted: false,
-              isSolo: false,
-              midiNote: Option.some(MidiDrumType.ACOUSTIC_SNARE)
-            }
-          ]
-        } as Beat)
-      )
-    };
 
     await TestBed.configureTestingModule({
       imports: [AppComponent],

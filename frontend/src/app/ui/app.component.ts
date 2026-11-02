@@ -6,7 +6,7 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
 import {TranslatePipe} from "@ngx-translate/core";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
-import {NgTemplateOutlet} from '@angular/common';
+import {NgOptimizedImage, NgTemplateOutlet} from '@angular/common';
 import {SequencerComponent} from './components/sequencer/sequencer.component';
 import {SelectInputComponent} from './components/select-input/select-input.component';
 import {SequencerService} from './services/sequencer/sequencer.service';
@@ -17,7 +17,7 @@ import {BeatMetadata} from 'src/types/engine';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: true,
-    imports: [SequencerComponent, SelectInputComponent, NgTemplateOutlet, TranslatePipe, LoadingBarModule]
+  imports: [SequencerComponent, SelectInputComponent, NgTemplateOutlet, TranslatePipe, LoadingBarModule, NgOptimizedImage]
 })
 export class AppComponent implements OnInit {
   isPortrait: boolean = false;
@@ -77,8 +77,7 @@ export class AppComponent implements OnInit {
     void this.sequencerService.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: beatToSelect.genre,
-        beat: beatToSelect.label
+        filename: beatToSelect.filename
       }
     });
   }

@@ -16,11 +16,11 @@ final case class SequencerState(
 ):
   def dispatch(command: Command): IO[SequencerState] =
     command match
-      case Command.SelectBeat(newGenre, newBeat) =>
+      case Command.SelectBeat(newFilename) =>
         IO.pure(
           SequencerState(
-            newGenre,
-            newBeat,
+            "Techno",
+            "Techno",
             List(
               Track(
                 "kick",

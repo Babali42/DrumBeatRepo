@@ -14,12 +14,12 @@ class SelectBeatSpec extends AsyncFunSuite with AsyncIOSpec {
     initial
       // act
       .dispatch(
-        Command.SelectBeat("Techno", "4 on the floor")
+        Command.SelectBeat("Techno/techno.wav")
       )
       // assert
       .map { after =>
         after.genre shouldBe "Techno";
-        after.beat shouldBe "4 on the floor";
+        after.beat shouldBe "Techno";
         after.tempo shouldBe 128;
         after.beatsPerBar shouldBe 4;
         after.subdivisionsPerBeat shouldBe 4;

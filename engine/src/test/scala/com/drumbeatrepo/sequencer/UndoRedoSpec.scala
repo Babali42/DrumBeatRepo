@@ -15,7 +15,7 @@ class UndoRedoSpec extends AsyncFunSuite with AsyncIOSpec {
     // act
     (for
       after <- initial.dispatch(
-        Command.SelectBeat("Techno", "4 on the floor")
+        Command.SelectBeat("Techno/techno.wav")
       )
       afterUndo <- after.dispatch(Command.Undo)
     yield
@@ -27,12 +27,12 @@ class UndoRedoSpec extends AsyncFunSuite with AsyncIOSpec {
   test("undo then redo should restore the beat") {
     (for
       after <- initial.dispatch(
-        Command.SelectBeat("Techno", "4 on the floor")
+        Command.SelectBeat("Techno/techno.wav")
       )
       afterUndo <- after.dispatch(Command.Undo)
       afterRedo <- afterUndo.dispatch(Command.Redo)
     yield
-      afterRedo.beat shouldBe "4 on the floor"
+      afterRedo.beat shouldBe "Techno"
       afterRedo.genre shouldBe "Techno"
       afterRedo.tempo shouldBe 128
     )
