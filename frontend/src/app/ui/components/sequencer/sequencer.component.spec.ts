@@ -319,6 +319,8 @@ describe('SequencerComponent', () => {
     it('Should show a solid focus outline on the mobile play button like the close button', () => {
       const button = mobileButton();
 
+      // The mobile button is hidden above 1280px, and a hidden button can't take focus.
+      button.style.display = 'flex';
       button.focus();
       fixture.detectChanges();
 
