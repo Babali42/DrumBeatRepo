@@ -139,6 +139,7 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/devwez"><img src="https://avatars.githubusercontent.com/u/108820288?v=4?s=100" width="100px;" alt="Weza Mwiwa"/><br /><sub><b>Weza Mwiwa</b></sub></a><br /><a href="#code-devwez" title="Code">💻</a> <a href="#design-devwez" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/maevainnocent"><img src="https://avatars.githubusercontent.com/u/115999764?v=4?s=100" width="100px;" alt="Maeva Innocent"/><br /><sub><b>Maeva Innocent</b></sub></a><br /><a href="#code-maevainnocent" title="Code">💻</a> <a href="#audio-maevainnocent" title="Audio">🔊</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/akshay-sarkar"><img src="https://avatars.githubusercontent.com/u/4909128?v=4?s=100" width="100px;" alt="Akshay Sarkar"/><br /><sub><b>Akshay Sarkar</b></sub></a><br /><a href="#code-akshay-sarkar" title="Code">💻</a> <a href="#test-akshay-sarkar" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://vzan2012.github.io/"><img src="https://avatars.githubusercontent.com/u/13725828?v=4?s=100" width="100px;" alt="Deepak Guptha"/><br /><sub><b>Deepak Guptha</b></sub></a><br /><a href="#code-vzan2012" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
