@@ -4,7 +4,6 @@ import cats.effect.IO
 import com.drumbeatrepo.library.Beat
 import org.scalajs.dom.Fetch
 import io.circe.parser.decode
-import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.auto.deriveDecoder
 
 final class HttpBeatLoader extends BeatLoader:
