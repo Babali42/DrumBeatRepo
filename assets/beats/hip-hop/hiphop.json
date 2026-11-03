@@ -3,6 +3,7 @@
     "genre": "Hip-Hop",
     "bpm": 98,
     "beatsPerBar": 4,
+    "numberOfBar": 1,
     "subdivisionsPerBeat": 4,
     "source": "https://midimighty.com/blogs/resources/hip-hop-drum-patterns-essential-hiphop",
     "tracks": [

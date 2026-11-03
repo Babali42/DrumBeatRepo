@@ -3,6 +3,7 @@
   "genre": "Hypnotic Techno",
   "bpm": 128,
   "beatsPerBar": 4,
+  "numberOfBar": 1,
   "subdivisionsPerBeat": 4,
   "source": "https://www.youtube.com/watch?v=uvK_bIZ8igo",
   "tracks": [
