@@ -22,15 +22,12 @@ final case class SequencerState(
     history: List[SequencerState],
     future: List[SequencerState]
 ):
-  def dispatch(command: Command): IO[SequencerState] =
+  def execute(state: SequencerState, command: Command): IO[SequencerState] =
     command match
-      case Command.SelectBeat(newFilename) => {
-        for
-          response <- IO.fromFuture(
-            IO(Fetch.fetch(s"/assets/beats/${newFilename}.json").toFuture)
-          )
-          text <- IO.fromFuture(IO(response.text().toFuture))
-          beat <- IO.fromEither(decode[Beat](text))
+      case Command.SelectBeat(filename) =>
+        val beatLoader = new HttpBeatLoader();
+
+        for beat <- beatLoader.load(filename)
         yield SequencerState(
           beat.genre,
           beat.label,
@@ -39,8 +36,7 @@ final case class SequencerState(
               x.name,
               x.filename,
               x.midiNote,
-              x.steps
-                .toCharArray()
+              x.steps.toCharArray
                 .map(c => if c == 'X' then Velocity.Normal else Velocity.None)
                 .toList,
               x.isMuted.getOrElse(false),
@@ -54,16 +50,19 @@ final case class SequencerState(
           history :+ this,
           Nil
         )
-      }
 
+      case other =>
+        IO.pure(state.dispatchPure(other))
+
+  def dispatchPure(command: Command): SequencerState =
+    command match
       case Command.ToggleStep(trackName, stepIndex) =>
         tracks.find(_.name == trackName) match
           case None =>
-            IO.pure(this)
+            this
 
           case Some(track) =>
-            if stepIndex < 0 || stepIndex >= track.steps.length then
-              IO.pure(this)
+            if stepIndex < 0 || stepIndex >= track.steps.length then this
             else
               val newTracks = tracks.map { t =>
                 if t.name == trackName then
@@ -76,16 +75,14 @@ final case class SequencerState(
                 else t
               }
 
-              IO.pure(
-                copy(
-                  tracks = newTracks,
-                  history = history :+ this,
-                  future = Nil
-                )
+              copy(
+                tracks = newTracks,
+                history = history :+ this,
+                future = Nil
               )
 
       case Command.SetSteps(trackName, fromStepIndex, toStepIndex, velocity) =>
-        if fromStepIndex < 0 || toStepIndex < fromStepIndex then IO.pure(this)
+        if fromStepIndex < 0 || toStepIndex < fromStepIndex then this
         else
           val newTracks = tracks.map { t =>
             if t.name == trackName then
@@ -101,70 +98,61 @@ final case class SequencerState(
             else t
           }
 
-          if newTracks == tracks then IO.pure(this)
+          if newTracks == tracks then this
           else
-            IO.pure(
-              copy(
-                tracks = newTracks,
-                history = history :+ this,
-                future = Nil
-              )
+            copy(
+              tracks = newTracks,
+              history = history :+ this,
+              future = Nil
             )
 
       case Command.SetTempo(newTempo) =>
         history match
           case _ :+ last if last.genre == genre && last.beat == beat =>
-            IO.pure(
-              SequencerState(
-                genre,
-                beat,
-                tracks,
-                newTempo,
-                beatsPerBar,
-                subdivisionsPerBeat,
-                numberOfBar,
-                history,
-                future = Nil
-              )
+            SequencerState(
+              genre,
+              beat,
+              tracks,
+              newTempo,
+              beatsPerBar,
+              subdivisionsPerBeat,
+              numberOfBar,
+              history,
+              future = Nil
             )
 
           case _ =>
-            IO.pure(
-              SequencerState(
-                genre,
-                beat,
-                tracks,
-                newTempo,
-                beatsPerBar,
-                subdivisionsPerBeat,
-                numberOfBar,
-                history :+ this,
-                future = Nil
-              )
+            SequencerState(
+              genre,
+              beat,
+              tracks,
+              newTempo,
+              beatsPerBar,
+              subdivisionsPerBeat,
+              numberOfBar,
+              history :+ this,
+              future = Nil
             )
 
       case Command.AddTrack(track) =>
-        IO.pure(
-          copy(
-            tracks = tracks :+ track,
-            history = history :+ this,
-            future = Nil
-          )
+        copy(
+          tracks = tracks :+ track,
+          history = history :+ this,
+          future = Nil
         )
 
       case Command.Undo =>
         history match
           case init :+ last =>
-            IO.pure(last.copy(history = init, future = this :: future))
+            last.copy(history = init, future = this :: future)
           case _ =>
-            IO.pure(this)
+            this
 
       case Command.Redo =>
         future match
-          case Nil =>
-            IO.pure(this)
+          case Nil          => this
           case next :: rest =>
-            IO.pure(next.copy(future = rest))
+            next.copy(future = rest)
 
       case Command.ToggleMuteTrack(trackName) =>
         val newTracks = tracks.map { t =>
@@ -173,12 +161,10 @@ final case class SequencerState(
           else t.copy(isSolo = false)
         }
 
-        IO.pure(
-          copy(
-            tracks = newTracks,
-            history = history :+ this,
-            future = Nil
-          )
+        copy(
+          tracks = newTracks,
+          history = history :+ this,
+          future = Nil
         )
 
       case Command.ToggleSoloTrack(trackName) =>
@@ -188,12 +174,10 @@ final case class SequencerState(
           else t.copy(isSolo = false, isMuted = false)
         }
 
-        IO.pure(
-          copy(
-            tracks = newTracks,
-            history = history :+ this,
-            future = Nil
-          )
+        copy(
+          tracks = newTracks,
+          history = history :+ this,
+          future = Nil
         )
 
 object SequencerState:

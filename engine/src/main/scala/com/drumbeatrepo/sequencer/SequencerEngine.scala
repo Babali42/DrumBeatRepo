@@ -15,7 +15,7 @@ object SequencerEngine:
   private var state: SequencerState = SequencerState.initial
 
   private def dispatchIO(command: Command): IO[Unit] =
-    state.dispatch(command).map { newState =>
+    state.execute(state, command).map { newState =>
       command match
         case Command.Undo | Command.Redo =>
           state = newState

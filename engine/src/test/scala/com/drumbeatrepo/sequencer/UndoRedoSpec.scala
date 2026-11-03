@@ -63,15 +63,14 @@ class UndoRedoSpec extends AsyncFunSuite with AsyncIOSpec {
   }
 
   test("ToggleStep should clears future") {
-    (for
-      // act
-      stepToggled <- initial.dispatch(Command.ToggleStep("Snare", 0))
-      stepToggledAndUndone <- stepToggled.dispatch(Command.Undo)
-      stepToggledAndUndoneAndToggled <- stepToggledAndUndone.dispatch(
-        Command.ToggleStep("Snare", 0)
-      )
-    yield
-      // assert
-      stepToggledAndUndoneAndToggled.future shouldBe Nil).unsafeToFuture();
+    // act
+    val stepToggled = initial.dispatchPure(Command.ToggleStep("Snare", 0))
+    val stepToggledAndUndone = stepToggled.dispatchPure(Command.Undo)
+    val stepToggledAndUndoneAndToggled = stepToggledAndUndone.dispatchPure(
+      Command.ToggleStep("Snare", 0)
+    )
+
+    // assert
+    stepToggledAndUndoneAndToggled.future shouldBe Nil;
   }
 }
