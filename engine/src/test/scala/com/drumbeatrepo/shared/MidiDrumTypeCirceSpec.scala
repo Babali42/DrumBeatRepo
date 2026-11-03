@@ -1,6 +1,4 @@
-package com.drumbeatrepo.domain
-
-package com.drumbeatrepo.domain
+package com.drumbeatrepo.shared
 
 import io.circe.parser.decode
 import org.scalatest.funsuite.AnyFunSuite

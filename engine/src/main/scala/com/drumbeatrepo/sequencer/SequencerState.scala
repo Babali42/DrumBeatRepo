@@ -2,14 +2,6 @@ package com.drumbeatrepo.sequencer
 
 import cats.effect.IO
 import com.drumbeatrepo.shared.MidiDrumType
-import com.drumbeatrepo.library.Beat
-import org.scalajs.dom.Fetch
-import io.circe.Decoder
-import io.circe.parser.decode
-import io.circe.generic.semiauto.deriveDecoder
-import io.circe.generic.auto.deriveDecoder
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 final case class SequencerState(
     genre: String,
@@ -177,6 +169,7 @@ final case class SequencerState(
           history = history :+ this,
           future = Nil
         )
+      case com.drumbeatrepo.sequencer.Command.SelectBeat(_) => ??? //this non pure command is handled in the parent
 
 object SequencerState:
   val initial: SequencerState =
