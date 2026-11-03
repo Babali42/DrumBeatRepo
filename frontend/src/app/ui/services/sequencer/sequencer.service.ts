@@ -60,14 +60,9 @@ export class SequencerService {
 
   dispatch(cmd: Command): Promise<void> {
     this.dispatchQueue = this.dispatchQueue.then(async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       await SequencerEngine.dispatch(cmd);
-
-      const state = SequencerEngine.getState();
-
-      console.log('Selected beat:', state.beat);
-      console.log('Selected genre:', state.genre);
-      console.log('Tracks:', state.tracks);
-
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       this.state$.next(SequencerEngine.getState());
     }).catch(err => console.error('Dispatch error:', err));
 
