@@ -34,7 +34,19 @@ final case class SequencerState(
         yield SequencerState(
           beat.genre,
           beat.label,
-          List(),
+          beat.tracks.map(x =>
+            Track(
+              x.name,
+              x.filename,
+              x.midiNote,
+              x.steps
+                .toCharArray()
+                .map(c => if c == 'X' then Velocity.Normal else Velocity.None)
+                .toList,
+              x.isMuted.getOrElse(false),
+              x.isSolo.getOrElse(false)
+            )
+          ),
           beat.bpm,
           beat.beatsPerBar,
           beat.subdivisionsPerBeat,
