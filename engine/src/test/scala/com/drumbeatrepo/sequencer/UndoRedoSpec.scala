@@ -1,76 +1,63 @@
 package com.drumbeatrepo.sequencer
 
-import cats.effect.testing.scalatest.AsyncIOSpec
-import org.scalatest.matchers.should.Matchers.shouldBe
-import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers.*
 
-import scala.concurrent.ExecutionContext
+class UndoRedoSpec extends AnyFunSuite {
 
-given ExecutionContext = ExecutionContext.global
-
-class UndoRedoSpec extends AsyncFunSuite with AsyncIOSpec {
-  private val initial = SequencerState.initial;
+  private val initial = SequencerState.initial
 
   test("undo should restores initial beat") {
-    // act
-    (for
-      after <- initial.dispatch(
-        Command.SelectBeat("Techno/techno.wav")
-      )
-      afterUndo <- after.dispatch(Command.Undo)
-    yield
-      // assert
-      afterUndo.beat shouldBe initial.beat)
-      .unsafeToFuture()
+    val afterUndo =
+      initial
+        .dispatchPure(Command.SelectBeat("Techno/techno.wav"))
+        .dispatchPure(Command.Undo)
+
+    afterUndo.beat shouldBe initial.beat
   }
 
   test("undo then redo should restore the beat") {
-    (for
-      after <- initial.dispatch(
-        Command.SelectBeat("Techno/techno.wav")
-      )
-      afterUndo <- after.dispatch(Command.Undo)
-      afterRedo <- afterUndo.dispatch(Command.Redo)
-    yield
-      afterRedo.beat shouldBe "Techno"
-      afterRedo.genre shouldBe "Techno"
-      afterRedo.tempo shouldBe 128
-    )
-      .unsafeToFuture()
+    val afterRedo =
+      initial
+        .dispatchPure(Command.SelectBeat("Techno/techno.wav"))
+        .dispatchPure(Command.Undo)
+        .dispatchPure(Command.Redo)
+
+    afterRedo.beat shouldBe "Techno"
+    afterRedo.genre shouldBe "Techno"
+    afterRedo.tempo shouldBe 128
   }
 
   test("redo should do nothing with empty future") {
-    (for after <- initial.dispatch(Command.Redo)
-    yield after shouldBe initial).unsafeToFuture()
+    val after = initial.dispatchPure(Command.Redo)
+
+    after shouldBe initial
   }
 
   test("undo should do nothing with empty history") {
-    (for after <- initial.dispatch(Command.Undo)
-    yield after shouldBe initial).unsafeToFuture()
+    val after = initial.dispatchPure(Command.Undo)
+
+    after shouldBe initial
   }
 
   test("multiple changes in tempo should be undone once") {
-    (for
-      // act
-      after <- initial.dispatch(Command.SetTempo(123))
-      afterSetTempo124 <- after.dispatch(Command.SetTempo(124))
-      afterSetTempo125 <- afterSetTempo124.dispatch(Command.SetTempo(125))
-      afterUndo <- afterSetTempo125.dispatch(Command.Undo)
-    yield
-      // assert
-      afterUndo.tempo shouldBe initial.tempo)
-      .unsafeToFuture();
+    val afterUndo =
+      initial
+        .dispatchPure(Command.SetTempo(123))
+        .dispatchPure(Command.SetTempo(124))
+        .dispatchPure(Command.SetTempo(125))
+        .dispatchPure(Command.Undo)
+
+    afterUndo.tempo shouldBe initial.tempo
   }
 
   test("ToggleStep should clears future") {
-    // act
-    val stepToggled = initial.dispatchPure(Command.ToggleStep("Snare", 0))
-    val stepToggledAndUndone = stepToggled.dispatchPure(Command.Undo)
-    val stepToggledAndUndoneAndToggled = stepToggledAndUndone.dispatchPure(
-      Command.ToggleStep("Snare", 0)
-    )
+    val stateResult =
+      initial
+        .dispatchPure(Command.ToggleStep("Snare", 0))
+        .dispatchPure(Command.Undo)
+        .dispatchPure(Command.ToggleStep("Snare", 0))
 
-    // assert
-    stepToggledAndUndoneAndToggled.future shouldBe Nil;
+    stateResult.future shouldBe Nil
   }
 }
