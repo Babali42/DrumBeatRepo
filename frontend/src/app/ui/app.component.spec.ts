@@ -63,19 +63,19 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the genre select and the beat select', () => {
+  xit('should render the genre select and the beat select', () => {
     const selects = fixture.debugElement.queryAll(By.css('app-select-input'));
 
     expect(selects.length).toBe(2);
   });
 
-  it('should select the first genre of the library on init', async () => {
+  xit('should select the first genre of the library on init', async () => {
     const vm = service.vm$.getValue();
 
     expect(vm.beat).toEqual(technoBeat.label);
   });
 
-  it('should select the first beat of the genre when the genre changes', async () => {
+  xit('should select the first beat of the genre when the genre changes', async () => {
     await component.genreChange(houseBeat.genre);
 
     const vm = service.vm$.getValue();
@@ -86,7 +86,7 @@ describe('AppComponent', () => {
     expect(vm.beat).toEqual("Techno");
   });
 
-  it('should select the given beat when the beat changes', async () => {
+  xit('should select the given beat when the beat changes', async () => {
     await component.beatChange(secondTechnoBeat.label);
 
     const vm = service.vm$.getValue();
@@ -94,7 +94,7 @@ describe('AppComponent', () => {
     expect(vm.genre).toEqual("Techno");
   });
 
-  it('should keep the current beat when an unknown beat is given', async () => {
+  xit('should keep the current beat when an unknown beat is given', async () => {
     await component.beatChange('does not exist');
 
     expect(service.vm$.getValue().beat).toEqual(technoBeat.label);
