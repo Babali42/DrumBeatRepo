@@ -3,6 +3,7 @@
   "genre": "Club",
   "bpm": 150,
   "beatsPerBar": 4,
+  "numberOfBar": 1,
   "subdivisionsPerBeat": 4,
   "tracks": [
     {

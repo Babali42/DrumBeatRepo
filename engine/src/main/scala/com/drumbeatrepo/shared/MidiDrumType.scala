@@ -1,7 +1,6 @@
-package com.drumbeatrepo.domain
+package com.drumbeatrepo.shared
 
 import io.circe.Decoder
-import io.circe.HCursor
 import io.circe.DecodingFailure
 
 enum MidiDrumType(val midiNote: Int):

@@ -14,7 +14,7 @@ export interface SequencerState {
   readonly tempo: number;
   readonly beatsPerBar: number;
   readonly subdivisionsPerBeat: number;
-  readonly numberOfBars: number;
+  readonly numberOfBar: number;
   readonly historyLength: number;
   readonly futureLength: number;
 }

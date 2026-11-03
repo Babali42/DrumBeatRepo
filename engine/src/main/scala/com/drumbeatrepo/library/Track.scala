@@ -2,7 +2,7 @@ package com.drumbeatrepo.library
 
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
-import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.shared.MidiDrumType
 
 final case class Track(
     name: String,

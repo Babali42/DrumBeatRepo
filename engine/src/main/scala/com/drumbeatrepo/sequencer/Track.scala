@@ -1,7 +1,7 @@
 package com.drumbeatrepo.sequencer
 
 import scala.scalajs.js
-import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.shared.MidiDrumType
 
 final case class Track(
     name: String,

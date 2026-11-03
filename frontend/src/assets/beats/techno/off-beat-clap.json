@@ -3,6 +3,7 @@
   "genre": "Techno",
   "bpm": 128,
   "beatsPerBar": 4,
+  "numberOfBar": 1,
   "subdivisionsPerBeat": 4,
   "tracks": [
     {

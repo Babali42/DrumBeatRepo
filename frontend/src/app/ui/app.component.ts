@@ -6,7 +6,7 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
 import {TranslatePipe} from "@ngx-translate/core";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
-import {NgTemplateOutlet} from '@angular/common';
+import {NgOptimizedImage, NgTemplateOutlet} from '@angular/common';
 import {SequencerComponent} from './components/sequencer/sequencer.component';
 import {SelectInputComponent} from './components/select-input/select-input.component';
 import {SequencerService} from './services/sequencer/sequencer.service';
@@ -17,7 +17,7 @@ import {BeatMetadata} from 'src/types/engine';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: true,
-    imports: [SequencerComponent, SelectInputComponent, NgTemplateOutlet, TranslatePipe, LoadingBarModule]
+  imports: [SequencerComponent, SelectInputComponent, NgTemplateOutlet, TranslatePipe, LoadingBarModule, NgOptimizedImage]
 })
 export class AppComponent implements OnInit {
   isPortrait: boolean = false;
@@ -45,40 +45,42 @@ export class AppComponent implements OnInit {
 
     const firstGenre = this.sequencerService.genresLabel[0];
     if (firstGenre) {
-      this.genreChange(firstGenre);
+      await this.genreChange(firstGenre);
     }
   }
 
-  genreChange(genre: string): void {
+  genreChange(genre: string): Promise<void> {
     const beatsFromGenre = this.sequencerService.genres.get(genre);
 
-    if (!beatsFromGenre || beatsFromGenre.length === 0)
-      return;
+    if (!beatsFromGenre?.length) {
+      return Promise.resolve();
+    }
 
-    this.selectBeat(beatsFromGenre[0]);
+    return this.selectBeat(beatsFromGenre[0]);
   }
 
-  beatChange(beat: string): void {
+  beatChange(beat: string): Promise<void> {
     const currentGenre = this.sequencerService.vm$.getValue().genre;
     const beatsFromGenre = this.sequencerService.genres.get(currentGenre);
 
-    if (!beatsFromGenre)
-      return;
+    if (!beatsFromGenre) {
+      return Promise.resolve();
+    }
 
     const beatToSelect = beatsFromGenre.find(x => x.label === beat);
 
-    this.selectBeat(beatToSelect);
+    return this.selectBeat(beatToSelect);
   }
 
-  selectBeat(beatToSelect: BeatMetadata | undefined): void {
-    if (!beatToSelect)
-      return;
+  selectBeat(beatToSelect: BeatMetadata | undefined): Promise<void> {
+    if (!beatToSelect) {
+      return Promise.resolve();
+    }
 
-    void this.sequencerService.dispatch({
+    return this.sequencerService.dispatch({
       type: 'SELECT_BEAT',
       payload: {
-        genre: beatToSelect.genre,
-        beat: beatToSelect.label
+        filename: beatToSelect.filename
       }
     });
   }

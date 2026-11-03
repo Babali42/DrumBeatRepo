@@ -1,4 +1,4 @@
-package com.drumbeatrepo.domain
+package com.drumbeatrepo.shared
 
 import org.scalacheck.*
 import org.scalacheck.Gen
