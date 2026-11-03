@@ -14,14 +14,18 @@ implicit val ec: scala.concurrent.ExecutionContext =
 object SequencerEngine:
   private var state: SequencerState = SequencerState.initial
 
-  private def dispatchIO(command: Command): IO[Unit] =
-    state.execute(state, command).map { newState =>
+  private def dispatchIO(command: Command): IO[Unit] = {
+    
+    val beatLoader = new HttpBeatLoader();
+    
+    state.execute(command, beatLoader).map { newState =>
       command match
         case Command.Undo | Command.Redo =>
           state = newState
         case _ =>
           state = newState.copy(future = Nil)
     }
+  }
 
   def dispatch(command: Command): js.Promise[Unit] =
     dispatchIO(command).unsafeToFuture().toJSPromise

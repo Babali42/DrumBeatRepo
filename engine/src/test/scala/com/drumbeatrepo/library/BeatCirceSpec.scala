@@ -3,7 +3,7 @@ package com.drumbeatrepo.library
 import io.circe.parser.decode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.shared.MidiDrumType
 
 //WIP
 //see frontend/src/app/infrastructure/adapters/beat-source/compact-beat.mapper.spec.ts for the remaining tests to add

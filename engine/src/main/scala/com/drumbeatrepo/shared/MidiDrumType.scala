@@ -1,4 +1,4 @@
-package com.drumbeatrepo.domain
+package com.drumbeatrepo.shared
 
 import io.circe.Decoder
 import io.circe.HCursor

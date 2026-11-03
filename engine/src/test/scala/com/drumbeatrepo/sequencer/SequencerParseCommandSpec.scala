@@ -2,7 +2,7 @@ package com.drumbeatrepo.sequencer
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe
-import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.shared.MidiDrumType
 
 class SequencerParseCommandSpec extends AnyFunSuite {
   test("ADD_TRACK command is parsed from JS") {

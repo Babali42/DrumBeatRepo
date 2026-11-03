@@ -1,5 +1,7 @@
 package com.drumbeatrepo.domain
 
+import com.drumbeatrepo.shared.MidiDrumType
+
 import org.scalacheck.*
 import org.scalacheck.Gen
 import org.scalatest.funsuite.AnyFunSuite

@@ -1,7 +1,7 @@
 package com.drumbeatrepo.sequencer
 
 import cats.effect.IO
-import com.drumbeatrepo.domain.MidiDrumType
+import com.drumbeatrepo.shared.MidiDrumType
 import com.drumbeatrepo.library.Beat
 import org.scalajs.dom.Fetch
 import io.circe.Decoder
@@ -22,11 +22,9 @@ final case class SequencerState(
     history: List[SequencerState],
     future: List[SequencerState]
 ):
-  def execute(state: SequencerState, command: Command): IO[SequencerState] =
+  def execute(command: Command, beatLoader: HttpBeatLoader): IO[SequencerState] =
     command match
       case Command.SelectBeat(filename) =>
-        val beatLoader = new HttpBeatLoader();
-
         for beat <- beatLoader.load(filename)
         yield SequencerState(
           beat.genre,
@@ -52,7 +50,7 @@ final case class SequencerState(
         )
 
       case other =>
-        IO.pure(state.dispatchPure(other))
+        IO.pure(this.dispatchPure(other))
 
   def dispatchPure(command: Command): SequencerState =
     command match
