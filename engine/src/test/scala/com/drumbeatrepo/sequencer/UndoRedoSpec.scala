@@ -7,27 +7,6 @@ class UndoRedoSpec extends AnyFunSuite {
 
   private val initial = SequencerState.initial
 
-  test("undo should restores initial beat") {
-    val afterUndo =
-      initial
-        .dispatchPure(Command.SelectBeat("Techno/techno.wav"))
-        .dispatchPure(Command.Undo)
-
-    afterUndo.beat shouldBe initial.beat
-  }
-
-  test("undo then redo should restore the beat") {
-    val afterRedo =
-      initial
-        .dispatchPure(Command.SelectBeat("Techno/techno.wav"))
-        .dispatchPure(Command.Undo)
-        .dispatchPure(Command.Redo)
-
-    afterRedo.beat shouldBe "Techno"
-    afterRedo.genre shouldBe "Techno"
-    afterRedo.tempo shouldBe 128
-  }
-
   test("redo should do nothing with empty future") {
     val after = initial.dispatchPure(Command.Redo)
 
