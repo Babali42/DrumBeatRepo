@@ -34,6 +34,9 @@ export class ExportAudioModalComponent extends BaseModalComponent<AudioExportOpt
   })
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.isOpen)
+      return;
+
     if (changes['beatName']) {
       this.form.controls.filename.setValue(toWavFilename(this.beatName + ".wav"));
     }

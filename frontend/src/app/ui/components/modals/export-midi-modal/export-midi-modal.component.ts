@@ -44,6 +44,9 @@ export class ExportMidiModalComponent extends BaseModalComponent<MidiExportOptio
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.isOpen)
+      return;
+
     if (changes['beatName']) {
       this.form.controls.filename.setValue(toMidiFilename(this.beatName + ".mid"));
     }
