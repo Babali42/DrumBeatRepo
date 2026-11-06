@@ -1,6 +1,6 @@
 import { TempoAdapterService } from "./tempo-adapter.service";
-import { BPM } from "../../../domain/bpm";
-import { Seconds } from "../../../domain/seconds";
+import { BPM } from "../../../domain/time/bpm";
+import { Seconds } from "../../../domain/time/seconds";
 
 describe('Tempo service', () => {
   type TempoDataSet = {
@@ -44,7 +44,7 @@ describe('Tempo service', () => {
     const service = new TempoAdapterService();
     service.beatsPerBar = 4;
     service.subdivisionsPerBeat = 4;
-    service.numberOfBar= 2;
+    service.numberOfBar = 2;
     expect(service.numberOfSteps).toBe(32);
   });
 
@@ -52,7 +52,7 @@ describe('Tempo service', () => {
     const service = new TempoAdapterService();
     service.beatsPerBar = 4;
     service.subdivisionsPerBeat = 4;
-    service.numberOfBar= 4;
+    service.numberOfBar = 4;
     expect(service.numberOfSteps).toBe(64);
   });
 
@@ -60,7 +60,7 @@ describe('Tempo service', () => {
     const service = new TempoAdapterService();
     service.beatsPerBar = 4;
     service.subdivisionsPerBeat = 4;
-    service.numberOfBar= 1;
+    service.numberOfBar = 1;
     expect(service.numberOfSteps).toBe(16);
   });
 });

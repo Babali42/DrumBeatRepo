@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Command } from "./sequencer.command";
-import { BPM } from "src/app/domain/bpm";
+import { BPM } from "src/app/domain/time/bpm";
 import { BehaviorSubject } from "rxjs";
 import { BeatMetadata, SequencerState } from "src/types/engine";
 import { SequencerViewModel } from "../../components/sequencer/sequencer.viewmodel";

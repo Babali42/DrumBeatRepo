@@ -1,5 +1,5 @@
 import { Track } from "./track";
-import { BPM } from "./bpm";
+import { BPM } from "./time/bpm";
 
 export type Beat = {
   readonly label: string;

@@ -1,11 +1,11 @@
 import { AudioEngineAdapter } from "./audio-engine.adapter";
 import { Track } from "../../../domain/track";
 import { Steps } from "../../../domain/steps";
-import { BPM } from "../../../domain/bpm";
-import { MidiDrumType } from "../../../domain/midi-drum-type";
+import { BPM } from "../../../domain/time/bpm";
+import { MidiDrumType } from "../../../domain/drums/midi-drum-type";
 import { StepIndex } from "../../../domain/step-index";
 import { Option } from "effect";
-import { Seconds } from "../../../domain/seconds";
+import { Seconds } from "../../../domain/time/seconds";
 
 describe('AudioEngineAdapter', () => {
   let mockContext: jasmine.SpyObj<AudioContext>;

@@ -1,4 +1,4 @@
-import {Brand} from "./brand";
+import { Brand } from "../brand";
 
 export const minBpm = 40;
 export const maxBpm = 300;

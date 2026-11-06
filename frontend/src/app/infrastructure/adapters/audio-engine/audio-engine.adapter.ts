@@ -5,7 +5,7 @@ import { Track } from "src/app/domain/track";
 import { IAudioEngine } from "../../../domain/ports/i-audio-engine";
 import { TempoAdapterService } from "../tempo-control/tempo-adapter.service";
 import { Option } from "effect";
-import { Seconds } from "../../../domain/seconds";
+import { Seconds } from "../../../domain/time/seconds";
 import { StepIndex } from "../../../domain/step-index";
 
 @Injectable({

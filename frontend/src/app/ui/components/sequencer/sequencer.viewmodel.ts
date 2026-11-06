@@ -1,5 +1,5 @@
 import { Track } from "src/app/domain/track";
-import { BPM } from "../../../domain/bpm";
+import { BPM } from "../../../domain/time/bpm";
 
 export class SequencerViewModel {
   genre: string = "Techno";

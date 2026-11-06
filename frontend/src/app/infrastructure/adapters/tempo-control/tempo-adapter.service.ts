@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { NumberOfSteps } from "../../../domain/number-of-steps";
-import { BPM } from "../../../domain/bpm";
-import { Seconds } from "../../../domain/seconds";
+import { BPM } from "../../../domain/time/bpm";
+import { Seconds } from "../../../domain/time/seconds";
 import { StepIndex } from "../../../domain/step-index";
 
 const numberOfSecondsInOneMinute = 60;

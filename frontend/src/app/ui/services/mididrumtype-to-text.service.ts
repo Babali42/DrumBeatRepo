@@ -1,6 +1,6 @@
 import { Option } from "effect";
-import { MidiDrumType } from "../../domain/midi-drum-type";
-import { MidiDrumTypeCategory } from "../../domain/midi-drum-type.category";
+import { MidiDrumType } from "../../domain/drums/midi-drum-type";
+import { MidiDrumTypeCategory } from "../../domain/drums/midi-drum-type.category";
 
 export class MidiDrumTypeToTextService {
   private static readonly drumTypeToCategory = new Map<MidiDrumType, MidiDrumTypeCategory>([

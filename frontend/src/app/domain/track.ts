@@ -1,5 +1,5 @@
 import { Steps } from "./steps";
-import { MidiDrumType } from "./midi-drum-type";
+import { MidiDrumType } from "./drums/midi-drum-type";
 import { Option } from "effect";
 import { Mp3FilePath, toMp3FilePath } from "./filenames/mp3.filepath";
 import { toWavFilePath, WavFilePath } from "./filenames/wav.filepath";

@@ -1,7 +1,7 @@
 /// <reference types="jasmine" />
 import { TestBed } from '@angular/core/testing';
 import { Option } from 'effect';
-import { BPM } from '../../../domain/bpm';
+import { BPM } from '../../../domain/time/bpm';
 import { Track } from '../../../domain/track';
 import { BeatMetadata, SequencerState } from 'src/types/engine';
 import { SequencerService } from './sequencer.service';

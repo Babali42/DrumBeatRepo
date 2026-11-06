@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Option } from "effect";
-import { MidiDrumType } from "../../domain/midi-drum-type";
+import { MidiDrumType } from "../../domain/drums/midi-drum-type";
 
 @Pipe({
   name: 'drumImage'

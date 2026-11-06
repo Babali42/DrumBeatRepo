@@ -5,9 +5,9 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
 import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
 import { SequencerService } from '../../../services/sequencer/sequencer.service';
-import {MidiDrumType} from "../../../../domain/midi-drum-type";
-import {Option} from "effect";
-import {MidiDrumTypeToTextService} from "../../../services/mididrumtype-to-text.service";
+import { MidiDrumType } from "../../../../domain/drums/midi-drum-type";
+import { Option } from "effect";
+import { MidiDrumTypeToTextService } from "../../../services/mididrumtype-to-text.service";
 import { WavFilename } from 'src/app/domain/filenames/wav.filepath';
 import { Mp3Filename } from 'src/app/domain/filenames/mp3.filepath';
 
@@ -83,7 +83,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     ];
 
     form = this.fb.group({
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         selectedSample: new FormControl<AudioSample | null>(null, Validators.required)
     });
 
@@ -126,9 +126,9 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
         return Array.from(groups, ([category, samples]) => ({ category, samples }));
     }
 
-  protected getDrumsCategory(midiDrumType: Option.Option<MidiDrumType>) : string {
-    return Option.getOrElse(this.drumTypeToTextService.getMidiDrumTypeText(midiDrumType), () => "");
-  }
+    protected getDrumsCategory(midiDrumType: Option.Option<MidiDrumType>): string {
+        return Option.getOrElse(this.drumTypeToTextService.getMidiDrumTypeText(midiDrumType), () => "");
+    }
 }
 
 interface AudioSampleGroup {

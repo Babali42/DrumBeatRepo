@@ -4,7 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 
-import { BPM } from '../../../domain/bpm';
+import { BPM } from '../../../domain/time/bpm';
 import { Beat } from '../../../domain/beat';
 import { AudioExportOptions } from '../../../domain/export-options/audio-export-options';
 import { MidiExportOptions } from '../../../domain/export-options/midi-export-options';

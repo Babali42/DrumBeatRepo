@@ -1,6 +1,6 @@
-import {MidiDrumTypeToTextService} from "./mididrumtype-to-text.service";
-import {Option} from "effect";
-import {MidiDrumType} from "../../domain/midi-drum-type";
+import { MidiDrumTypeToTextService } from "./mididrumtype-to-text.service";
+import { Option } from "effect";
+import { MidiDrumType } from "../../domain/drums/midi-drum-type";
 import { describe, expect, it } from "vitest";
 
 describe("Midi drum type to drums category text tests", () => {

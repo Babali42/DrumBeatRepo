@@ -1,6 +1,4 @@
 import { expect, test } from 'vitest'
-import { MidiDrumType } from "./midi-drum-type";
-import { Option } from "effect";
 import { Track } from "./track";
 import { toMp3FilePath } from "./filenames/mp3.filepath";
 

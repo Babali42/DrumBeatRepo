@@ -1,6 +1,6 @@
 import { Component, effect, inject, input, output } from '@angular/core';
 import { LongPressDirective } from "../../directives/long-press.directive";
-import { maxBpm, minBpm } from "../../../domain/bpm";
+import { maxBpm, minBpm } from "../../../domain/time/bpm";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { distinctUntilChanged, filter, map } from "rxjs/operators";
