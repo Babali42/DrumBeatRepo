@@ -1,9 +1,8 @@
-package com.drumbeatrepo.library
+package com.drumbeatrepo.sequencer
 
 import io.circe.parser.decode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import com.drumbeatrepo.shared.MidiDrumType
 
 class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
   it should "decode valid JSON into a Beat" in {

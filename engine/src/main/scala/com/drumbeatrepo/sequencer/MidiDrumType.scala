@@ -1,4 +1,4 @@
-package com.drumbeatrepo.shared
+package com.drumbeatrepo.sequencer
 
 import io.circe.Decoder
 import io.circe.DecodingFailure

@@ -1,4 +1,4 @@
-package com.drumbeatrepo.library
+package com.drumbeatrepo.sequencer
 
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder

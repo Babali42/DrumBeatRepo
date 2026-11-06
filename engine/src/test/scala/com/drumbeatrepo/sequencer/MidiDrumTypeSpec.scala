@@ -1,10 +1,11 @@
-package com.drumbeatrepo.shared
+package com.drumbeatrepo.sequencer
 
 import org.scalacheck.*
 import org.scalacheck.Gen
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.*
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks.*
+import com.drumbeatrepo.sequencer.MidiDrumType
 
 class MidiDrumTypeSpec extends AnyFunSuite:
 

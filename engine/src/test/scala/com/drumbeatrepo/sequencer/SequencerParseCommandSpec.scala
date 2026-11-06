@@ -2,7 +2,6 @@ package com.drumbeatrepo.sequencer
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.shouldBe
-import com.drumbeatrepo.shared.MidiDrumType
 
 class SequencerParseCommandSpec extends AnyFunSuite {
   test("ADD_TRACK command is parsed from JS") {
@@ -27,7 +26,7 @@ class SequencerParseCommandSpec extends AnyFunSuite {
 
     // assert
     result shouldBe Command.AddTrack(
-      Track(
+      TrackJS(
         "Kick",
         "Kick.mp3",
         Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
@@ -80,7 +79,7 @@ class SequencerParseCommandSpec extends AnyFunSuite {
   }
 
   test("Track serialization preserves the mute flag") {
-    val original = Track(
+    val original = TrackJS(
       "Kick",
       "kick.mp3",
       Some(MidiDrumType.ACOUSTIC_BASS_DRUM),
@@ -90,7 +89,9 @@ class SequencerParseCommandSpec extends AnyFunSuite {
     )
 
     val roundTripped =
-      Track.fromJS(Track.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic])
+      TrackJS.fromJS(
+        TrackJS.toJS(original).asInstanceOf[scala.scalajs.js.Dynamic]
+      )
 
     roundTripped.isMuted shouldBe true
     roundTripped.steps.head shouldBe Velocity.Normal

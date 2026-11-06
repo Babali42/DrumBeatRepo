@@ -1,4 +1,4 @@
-package com.drumbeatrepo.shared
+package com.drumbeatrepo.sequencer
 
 import io.circe.parser.decode
 import org.scalatest.funsuite.AnyFunSuite

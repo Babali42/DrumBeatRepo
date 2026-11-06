@@ -1,12 +1,11 @@
 package com.drumbeatrepo.sequencer
 
 import cats.effect.IO
-import com.drumbeatrepo.shared.MidiDrumType
 
 final case class SequencerState(
     genre: String,
     beat: String,
-    tracks: List[Track],
+    tracks: List[TrackJS],
     tempo: Int,
     beatsPerBar: Int,
     subdivisionsPerBeat: Int,
@@ -14,7 +13,10 @@ final case class SequencerState(
     history: List[SequencerState],
     future: List[SequencerState]
 ):
-  def execute(command: Command, beatLoader: HttpBeatLoader): IO[SequencerState] =
+  def execute(
+      command: Command,
+      beatLoader: HttpBeatLoader
+  ): IO[SequencerState] =
     command match
       case Command.SelectBeat(filename) =>
         for beat <- beatLoader.load(filename)
@@ -22,7 +24,7 @@ final case class SequencerState(
           beat.genre,
           beat.label,
           beat.tracks.map(x =>
-            Track(
+            TrackJS(
               x.name,
               x.filename,
               x.midiNote,
@@ -169,7 +171,8 @@ final case class SequencerState(
           history = history :+ this,
           future = Nil
         )
-      case com.drumbeatrepo.sequencer.Command.SelectBeat(_) => ??? //this non pure command is handled in the parent
+      case com.drumbeatrepo.sequencer.Command.SelectBeat(_) =>
+        ??? // this non pure command is handled in the parent
 
 object SequencerState:
   val initial: SequencerState =
@@ -177,7 +180,7 @@ object SequencerState:
       "Hypnotic Techno",
       "Tresillo",
       List(
-        Track(
+        TrackJS(
           "Snare",
           "snare.wav",
           Some(MidiDrumType.ACOUSTIC_SNARE),

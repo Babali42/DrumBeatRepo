@@ -15,9 +15,9 @@ object SequencerEngine:
   private var state: SequencerState = SequencerState.initial
 
   private def dispatchIO(command: Command): IO[Unit] = {
-    
+
     val beatLoader = new HttpBeatLoader();
-    
+
     state.execute(command, beatLoader).map { newState =>
       command match
         case Command.Undo | Command.Redo =>
@@ -43,7 +43,7 @@ object SequencerEngine:
     js.Dynamic.literal(
       genre = state.genre,
       beat = state.beat,
-      tracks = state.tracks.sorted.reverse.map(Track.toJS).toJSArray,
+      tracks = state.tracks.sorted.reverse.map(TrackJS.toJS).toJSArray,
       tempo = state.tempo,
       beatsPerBar = state.beatsPerBar,
       subdivisionsPerBeat = state.subdivisionsPerBeat,

@@ -40,7 +40,7 @@ class SequencerStateSpec extends AnyFunSuite {
     val after =
       initial.dispatchPure(
         Command.AddTrack(
-          Track("Synth", "Synth.mp3", None, List.empty, true, false)
+          TrackJS("Synth", "Synth.mp3", None, List.empty, true, false)
         )
       )
 
@@ -52,12 +52,12 @@ class SequencerStateSpec extends AnyFunSuite {
       initial
         .dispatchPure(
           Command.AddTrack(
-            Track("Synth", "Synth.mp3", None, List.empty, false, true)
+            TrackJS("Synth", "Synth.mp3", None, List.empty, false, true)
           )
         )
         .dispatchPure(
           Command.AddTrack(
-            Track("Synth", "Synth.mp3", None, List.empty, false, true)
+            TrackJS("Synth", "Synth.mp3", None, List.empty, false, true)
           )
         )
         .dispatchPure(Command.ToggleSoloTrack("kick"))
@@ -98,12 +98,12 @@ class SequencerStateSpec extends AnyFunSuite {
       initial
         .dispatchPure(
           Command.AddTrack(
-            Track("Synth", "Synth.mp3", None, List.empty, false, true)
+            TrackJS("Synth", "Synth.mp3", None, List.empty, false, true)
           )
         )
         .dispatchPure(
           Command.AddTrack(
-            Track("Synth2", "Synth2.mp3", None, List.empty, false, true)
+            TrackJS("Synth2", "Synth2.mp3", None, List.empty, false, true)
           )
         )
         .dispatchPure(Command.ToggleMuteTrack("hat"))
