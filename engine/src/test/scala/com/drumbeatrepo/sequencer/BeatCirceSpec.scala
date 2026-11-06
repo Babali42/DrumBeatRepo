@@ -75,4 +75,44 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
       )
     )
   }
+
+  it should "not decode JSON with invalid step number into a Beat" in {
+    // Arrange
+    val json =
+      """ |{
+          |  "label": "Metal",
+          |  "genre": "Metal",
+          |  "bpm": 180,
+          |  "beatsPerBar": 4,
+          |  "subdivisionsPerBeat": 4,
+          |  "numberOfBar": 2,
+          |  "tracks": [
+          |    {
+          |      "name": "Snare",
+          |      "isMuted": true,
+          |      "isSolo": true,
+          |      "filename": "metal/snare.mp3",
+          |      "steps": "____X_______X___",
+          |      "midiNote": 38
+          |    },
+          |    {
+          |      "name": "Kick",
+          |      "filename": "metal/kick.mp3",
+          |      "steps": "XXXXXXXXXXXXXXXXX",
+          |      "midiNote": 36
+          |    },
+          |    {
+          |      "name": "Bass",
+          |      "filename": "metal/bass.mp3",
+          |      "steps": "XXXXXXXXXXXXXXXX"
+          |    }
+          |  ]
+          |}""".stripMargin
+
+    // Act
+    val result = decode[Beat](json)
+
+    // Assert
+    result.isLeft shouldBe true
+  }
 }
