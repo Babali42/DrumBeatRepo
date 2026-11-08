@@ -215,12 +215,10 @@ export class AudioEngineAdapter implements IAudioEngine {
     });
   }
 
-  private clearTrackEvents(events: Map<number, WAAClock.Event>): void {
+  private clearTrackEvents(events: ReadonlyMap<number, WAAClock.Event>): void {
     for (const [, event] of events) {
       event.clear();
     }
-
-    events.clear();
   }
 
   private mute(track: Track): void {
@@ -236,6 +234,7 @@ export class AudioEngineAdapter implements IAudioEngine {
     for (const [name, events] of this.trackStepMap) {
       if (name !== track.name) {
         this.clearTrackEvents(events);
+        events.clear();
       }
     }
   }
