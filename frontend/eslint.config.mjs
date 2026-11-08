@@ -68,11 +68,6 @@ export default [
         'ignoreAccessorPattern': ['**.current', '**.value'], // For Angular forms
       }],
       'functional/no-mixed-types': 'warn',
-      'functional/prefer-tacit': 'off',
-      'functional/no-conditional-statements': 'off', // Too strict for Angular
-      'functional/no-expression-statements': 'off', // Angular needs side effects
-      'functional/prefer-property-signatures': 'off',
-      'functional/type-declaration-immutability': 'off',
     },
   },
 
@@ -95,8 +90,6 @@ export default [
   {
     files: ['**/*.component.ts'],
     rules: {
-      'functional/no-return-void': 'off', // Angular components need void methods
-      'functional/no-expression-statements': 'off', // Components have side effects
       'functional/immutable-data': ['warn', {
         'ignoreClasses': true,
         'ignoreImmediateMutation': true,
@@ -131,9 +124,7 @@ export default [
       'functional/no-let': 'off',
       'functional/immutable-data': 'off',
       'functional/no-mixed-types': 'off',
-      'functional/type-declaration-immutability': 'off',
       'functional/prefer-readonly-type': 'off',
-      'functional/prefer-property-signatures': 'off',
       // TypeScript strict rules that conflict with test patterns
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
