@@ -141,6 +141,9 @@ Everyone is welcome — devs, musicians, designers.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/akshay-sarkar"><img src="https://avatars.githubusercontent.com/u/4909128?v=4?s=100" width="100px;" alt="Akshay Sarkar"/><br /><sub><b>Akshay Sarkar</b></sub></a><br /><a href="#code-akshay-sarkar" title="Code">💻</a> <a href="#test-akshay-sarkar" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://vzan2012.github.io/"><img src="https://avatars.githubusercontent.com/u/13725828?v=4?s=100" width="100px;" alt="Deepak Guptha"/><br /><sub><b>Deepak Guptha</b></sub></a><br /><a href="#code-vzan2012" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CarlosSac"><img src="https://avatars.githubusercontent.com/u/98776390?v=4?s=100" width="100px;" alt="Carlos Sac"/><br /><sub><b>Carlos Sac</b></sub></a><br /><a href="#code-CarlosSac" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
