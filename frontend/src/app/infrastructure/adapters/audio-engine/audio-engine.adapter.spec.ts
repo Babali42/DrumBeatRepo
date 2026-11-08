@@ -243,6 +243,36 @@ describe('AudioEngineAdapter', () => {
     adapter.pause();
   });
 
+  it('should empty the other tracks\' scheduled events when a track is soloed', () => {
+    Object.defineProperty(mockContext, 'currentTime', {
+      get: () => 100,
+      configurable: true
+    });
+    spyOn(window, 'setInterval').and.returnValue(1);
+    spyOn(window, 'clearInterval');
+
+    const kick: Track = {
+      name: 'Kick',
+      filename: 'techno/kick.wav',
+      steps: new Steps([true, false]),
+      isMuted: false,
+      isSolo: false,
+      midiNote: Option.some(MidiDrumType.ACOUSTIC_BASS_DRUM)
+    };
+    const snare: Track = { ...kick, name: 'Snare', filename: 'techno/snare.wav', steps: new Steps([true, true]) };
+    adapter.setTracks([kick, snare]);
+    adapter.play();
+
+    expect(adapter['trackStepMap'].get('Snare')?.size).toBeGreaterThan(0);
+
+    adapter.syncTracks([{ ...kick, isSolo: true }, snare]);
+
+    expect(adapter['trackStepMap'].get('Snare')?.size).toBe(0);
+    expect(adapter['trackStepMap'].get('Kick')?.size).toBeGreaterThan(0);
+
+    adapter.pause();
+  });
+
   it('should schedule enabled steps exactly once when a track is unmuted while its steps change', () => {
     Object.defineProperty(mockContext, 'currentTime', {
       get: () => 100,
