@@ -16,7 +16,7 @@
       "name": "Hi-Hat",
       "filename": "dub/closed-hat.wav",
       "steps": "___X_____X__",
-      "midiNote": 42
+      "midiNote": 44
     },
     {
       "name": "Snare",
