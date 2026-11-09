@@ -26,7 +26,7 @@ final case class SequencerState(
           beat.tracks.map(x =>
             TrackJS(
               x.name,
-              x.filename,
+              x.filename.value,
               x.midiNote,
               x.steps.toCharArray
                 .map(c => if c == 'X' then Velocity.Normal else Velocity.None)
