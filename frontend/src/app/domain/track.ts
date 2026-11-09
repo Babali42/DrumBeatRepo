@@ -13,6 +13,7 @@ export class Track {
   readonly isSolo: boolean;
 
   constructor(name: string, filename: string, steps: readonly boolean[], isMuted: boolean, isSolo: boolean, midiNote: Option.Option<MidiDrumType> = Option.none()) {
+    //TODO : move this check to the scala engine
     if (filename.toLowerCase().endsWith('.mp3')) {
       this.filename = toMp3FilePath(filename);
     } else if (filename.toLowerCase().endsWith('.wav')) {

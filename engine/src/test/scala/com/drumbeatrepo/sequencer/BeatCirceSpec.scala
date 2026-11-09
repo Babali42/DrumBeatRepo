@@ -4,7 +4,7 @@ import io.circe.parser.decode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
+class BeatCirceSpec extends AnyFlatSpec with Matchers {
   it should "decode valid JSON into a Beat" in {
     // Arrange
     val json =
@@ -55,19 +55,19 @@ class CompactBeatCirceSpec extends AnyFlatSpec with Matchers {
             name = "Snare",
             isMuted = Some(true),
             isSolo = Some(true),
-            filename = "metal/snare.mp3",
+            filename = AudioFilename("metal/snare.mp3"),
             steps = "____X_______X___",
             midiNote = Some(MidiDrumType.ACOUSTIC_SNARE)
           ),
           Track(
             name = "Kick",
-            filename = "metal/kick.mp3",
+            filename = AudioFilename("metal/kick.mp3"),
             steps = "XXXXXXXXXXXXXXXX",
             midiNote = Some(MidiDrumType.BASS_DRUM_1)
           ),
           Track(
             name = "Bass",
-            filename = "metal/bass.mp3",
+            filename = AudioFilename("metal/bass.mp3"),
             steps = "XXXXXXXXXXXXXXXX",
             midiNote = None
           )
