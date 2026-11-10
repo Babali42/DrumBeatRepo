@@ -18,7 +18,7 @@ object AudioFilename:
 
   def apply(value: String): AudioFilename = value
 
-  extension (a: AudioFilename) def value: String = a
+  extension (filename: AudioFilename) def value: String = filename
 
   given Decoder[AudioFilename] =
     Decoder.decodeString.emap(from)

@@ -3,7 +3,6 @@ package com.drumbeatrepo.sequencer
 import cats.effect.IO
 import org.scalajs.dom.Fetch
 import io.circe.parser.decode
-import io.circe.generic.auto.deriveDecoder
 
 final class HttpBeatLoader extends BeatLoader:
 

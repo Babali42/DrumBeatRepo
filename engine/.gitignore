@@ -12,7 +12,7 @@ target/
 .classpath
 .project
 .settings/
-/.idea/*
+.idea/*
 !/.idea/modules/
 !/.idea/modules/engine/
 !/.idea/scala_compiler.xml
