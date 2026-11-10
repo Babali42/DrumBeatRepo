@@ -138,5 +138,10 @@
         "filename": "bossa-nova/bossa-nova",
         "genre": "Bossa Nova",
         "label": "Bossa Nova"
+    },
+    {
+        "filename": "jazz/jazz",
+        "genre": "Jazz",
+        "label": "Jazz"
     }
 ]

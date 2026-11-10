@@ -1,0 +1,34 @@
+{
+  "label": "Jazz",
+  "genre": "Jazz",
+  "bpm": 130,
+  "beatsPerBar": 4,
+  "numberOfBar": 1,
+  "subdivisionsPerBeat": 3,
+  "tracks": [
+    {
+      "name": "Ride",
+      "filename": "ebm/open-hihat.wav",
+      "steps": "X__X_XX__X_X",
+      "midiNote": 51
+    },
+    {
+      "name": "Hi-Hat",
+      "filename": "dub/closed-hat.wav",
+      "steps": "___X_____X__",
+      "midiNote": 44
+    },
+    {
+      "name": "Snare",
+      "filename": "trap/snare.mp3",
+      "steps": "_____X_____X",
+      "midiNote": 38
+    },
+    {
+      "name": "Kick",
+      "filename": "trap/kick.mp3",
+      "steps": "X_____X_____",
+      "midiNote": 36
+    }
+  ]
+}
