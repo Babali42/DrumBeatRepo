@@ -33,10 +33,11 @@ cd ../frontend/
 npm run start
 ```
 
-## Open in codespace
+## Open in codespace (see [wiki](https://github.com/Babali42/DrumBeatRepo/wiki/Open-repository-in-GitHub-Codespace) for more details)
 
 1. On the repo page, click the **Code** button → **Codespaces** tab → **Create codespace on main**.
 2. A Codespace starts automatically. First creation takes a few minutes.
+3. A setup exists also for the scala engine code (see [the same wiki page](https://github.com/Babali42/DrumBeatRepo/wiki/Open-repository-in-GitHub-Codespace))
 
 ## What happens on startup
 
