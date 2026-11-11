@@ -38,6 +38,7 @@ object SequencerEngine:
   def reset(): Unit =
     state = SequencerState.initial
 
+  //Accessor-like method has empty parameter clause -> ignore this warning, it breaks the contract with ts
   @JSExport
   def getState(): js.Object =
     js.Dynamic.literal(

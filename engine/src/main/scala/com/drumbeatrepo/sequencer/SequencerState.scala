@@ -171,8 +171,7 @@ final case class SequencerState(
           history = history :+ this,
           future = Nil
         )
-      case com.drumbeatrepo.sequencer.Command.SelectBeat(_) =>
-        ??? // this non pure command is handled in the parent
+      case com.drumbeatrepo.sequencer.Command.SelectBeat(_) => throw Exception("Select beat command should be handled in ")
 
 object SequencerState:
   val initial: SequencerState =

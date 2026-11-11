@@ -17,9 +17,11 @@ object Velocity:
     case value if value < 0 =>
       throw new IllegalArgumentException(s"Invalid MIDI velocity: $value")
 
-  def fromBoolean(value: Boolean): Velocity = value match
-    case false => Velocity.None
-    case true  => Velocity.Normal
+  def fromBoolean(value: Boolean): Velocity = if (value) {
+    Velocity.Normal
+  } else {
+    Velocity.None
+  }
 
   def invert(velocity: Velocity): Velocity = velocity match
     case Velocity.None => Velocity.Normal

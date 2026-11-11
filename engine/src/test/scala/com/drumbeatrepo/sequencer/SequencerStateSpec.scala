@@ -18,7 +18,7 @@ class SequencerStateSpec extends AnyFunSuite {
     val after =
       initial.dispatchPure(Command.ToggleStep("Snare", 0))
 
-    after.tracks.head.steps(0) shouldBe Velocity.None
+    after.tracks.head.steps.head shouldBe Velocity.None
   }
 
   test("ToggleStep should toggles a step from false to true") {
@@ -33,7 +33,7 @@ class SequencerStateSpec extends AnyFunSuite {
       initial.dispatchPure(Command.ToggleStep("Snare", 0))
 
     after.history.length shouldBe 1
-    after.history.last.tracks.head.steps(0) shouldBe Velocity.Normal
+    after.history.last.tracks.head.steps.head shouldBe Velocity.Normal
   }
 
   test("dispatch AddTrack should add a track to a beat") {
@@ -47,7 +47,7 @@ class SequencerStateSpec extends AnyFunSuite {
     after.tracks.length shouldBe 2
   }
 
-  test("ToggleSoloTrack should unsolo other solo track") {
+  test("ToggleSoloTrack should undo solo other solo track") {
     val result =
       initial
         .dispatchPure(
@@ -73,7 +73,7 @@ class SequencerStateSpec extends AnyFunSuite {
         Command.SetSteps("Snare", 1, 3, Velocity.Normal)
       )
 
-    after.tracks.head.steps(0) shouldBe Velocity.Normal
+    after.tracks.head.steps.head shouldBe Velocity.Normal
     after.tracks.head.steps(1) shouldBe Velocity.Normal
     after.tracks.head.steps(2) shouldBe Velocity.Normal
     after.tracks.head.steps(3) shouldBe Velocity.Normal
@@ -93,7 +93,7 @@ class SequencerStateSpec extends AnyFunSuite {
     result.tracks.head.isSolo shouldBe true
   }
 
-  test("toggleMuteTrack should unsolo all tracks") {
+  test("toggleMuteTrack should undo solo all tracks") {
     val result =
       initial
         .dispatchPure(

@@ -4,7 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-class AudioFilenameSpecs
+class AudioFilenameSpec
     extends AnyFunSuite
     with Matchers
     with TableDrivenPropertyChecks:

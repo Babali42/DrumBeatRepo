@@ -56,7 +56,7 @@ object Command:
       case "ADD_TRACK" =>
         val payload = cmd.selectDynamic("payload")
         val trackJS = payload.selectDynamic("track")
-        val track = TrackJS.fromJS(trackJS);
+        val track = TrackJS.fromJS(trackJS)
         AddTrack(track)
       case "TOGGLE_MUTE_TRACK" =>
         val payload = cmd.selectDynamic("payload")
