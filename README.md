@@ -39,14 +39,6 @@ npm run start
 2. A Codespace starts automatically. First creation takes a few minutes.
 3. A setup exists also for the scala engine code (see [the same wiki page](https://github.com/Babali42/DrumBeatRepo/wiki/Open-repository-in-GitHub-Codespace))
 
-## What happens on startup
-
-- `angular-frontend`: runs `npm install` and installs Chromium (needed for Karma tests).
-- `scala-backend`: runs `sbt fastLinkJS` and stays alive.
-- The Angular dev server is forwarded on port **4200**.
-
-> First `sbt fastLinkJS` run downloads dependencies and can take a while. The Angular app needs `frontend/engine/main.js` to exist before it runs.
-
 ## 🚀 Quick Start
 
 ### 1. Engine (Scala)
