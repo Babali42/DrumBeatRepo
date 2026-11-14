@@ -21,7 +21,7 @@
     {
       "name": "Kick",
       "filename": "techno/kick.wav",
-      "steps": "X  X  X X  X  X ",
+      "steps": "X  X    X  X    ",
       "midiNote": 36
     }
   ]
