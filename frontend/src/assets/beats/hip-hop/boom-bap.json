@@ -1,0 +1,14 @@
+{
+    "label": "Boom Bap",
+    "genre": "Hip-Hop",
+    "bpm": 88,
+    "beatsPerBar": 4,
+    "numberOfBar": 1,
+    "subdivisionsPerBeat": 4,
+    "source": "https://youtube.com/shorts/1UrhO5EYJd8",
+    "tracks": [
+        { "name": "Hats", "filename": "techno/hat.wav", "steps": "X_X_X_X_X_X_X_X_", "midiNote": 42 },
+        { "name": "Snare", "filename": "techno/snare.wav", "steps": "____X_______X___", "midiNote": 38 },
+        { "name": "Kick", "filename": "techno/kick.wav", "steps": "X______XX______X", "midiNote": 36 }
+    ]
+}
