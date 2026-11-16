@@ -1,0 +1,14 @@
+{
+    "label": "Boom Bap",
+    "genre": "Hip-Hop",
+    "bpm": 88,
+    "beatsPerBar": 4,
+    "numberOfBar": 1,
+    "subdivisionsPerBeat": 4,
+    "source": "https://youtube.com/shorts/1UrhO5EYJd8 (starting pattern, modified); inspiration: boom bap records by Nas, The Notorious B.I.G. and Mobb Deep",
+    "tracks": [
+        { "name": "Hats", "filename": "techno/hat.wav", "steps": "XXX_XXX_XXX_X_X_", "midiNote": 42 },
+        { "name": "Snare", "filename": "techno/snare.wav", "steps": "____X_______X___", "midiNote": 38 },
+        { "name": "Kick", "filename": "techno/kick.wav", "steps": "X___X__XX___X__X", "midiNote": 36 }
+    ]
+}
