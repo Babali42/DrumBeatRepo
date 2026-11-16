@@ -15,6 +15,11 @@
         "label": "Jul type beat"
     },
     {
+        "filename": "hip-hop/boom-bap",
+        "genre": "Hip-Hop",
+        "label": "Boom Bap"
+    },
+    {
         "filename": "dnb/dnb",
         "genre": "Drum and Bass",
         "label": "Basic DnB"
