@@ -137,6 +137,7 @@ Everyone is welcome — devs, musicians, designers.
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/CarlosSac"><img src="https://avatars.githubusercontent.com/u/98776390?v=4&size=100" width="100px" height="100px" alt="Carlos Sac"/><br /><sub><b>Carlos Sac</b></sub></a><br /><a href="#code-CarlosSac" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rafiatasafi"><img src="https://avatars.githubusercontent.com/u/150696765?v=4&size=100" width="100px" height="100px" alt="Rafia Tasafi"/><br /><sub><b>Rafia Tasafi</b></sub></a><br /><a href="#audio-rafiatasafi" title="Audio">🔊</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://portfolio.zamijah-shakeurtomp.workers.dev/"><img src="https://avatars.githubusercontent.com/u/73080423?v=4&size=100" width="100px" height="100px" alt="Zamijah Shakeur-Tompkins"/><br /><sub><b>Zamijah Shakeur-Tompkins</b></sub></a><br /><a href="#audio-zami116" title="Audio">🔊</a></td>
     </tr>
   </tbody>
 </table>
