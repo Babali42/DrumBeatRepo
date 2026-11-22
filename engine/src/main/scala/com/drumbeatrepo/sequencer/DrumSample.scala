@@ -73,18 +73,10 @@ private val midiDrumTypeToDrumCategoryMap: Map[MidiDrumType, DrumCategory] =
   )
 
 def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
-  beats
-    .flatMap(_.tracks)
-    .flatMap { track =>
-      track.midiNote.flatMap { midiDrumType =>
-        midiDrumTypeToDrumCategoryMap.get(midiDrumType).map { category =>
-          DrumSample(
-            track.name,
-            track.filename,
-            midiDrumType,
-            category
-          )
-        }
-      }
-    }
+  for {
+    beat <- beats
+    track <- beat.tracks
+    midiNote <- track.midiNote
+    category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
+  } yield DrumSample(track.name, track.filename, midiNote, category)
 }
