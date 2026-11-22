@@ -51,26 +51,9 @@ class BeatCirceSpec extends AnyFlatSpec with Matchers {
         subdivisionsPerBeat = 4,
         numberOfBar = 2,
         tracks = List(
-          Track(
-            name = "Snare",
-            isMuted = Some(true),
-            isSolo = Some(true),
-            filename = AudioFilename("metal/snare.mp3"),
-            steps = "____X_______X___",
-            midiNote = Some(MidiDrumType.ACOUSTIC_SNARE)
-          ),
-          Track(
-            name = "Kick",
-            filename = AudioFilename("metal/kick.mp3"),
-            steps = "XXXXXXXXXXXXXXXX",
-            midiNote = Some(MidiDrumType.BASS_DRUM_1)
-          ),
-          Track(
-            name = "Bass",
-            filename = AudioFilename("metal/bass.mp3"),
-            steps = "XXXXXXXXXXXXXXXX",
-            midiNote = None
-          )
+          Track(name = "Snare", filename = AudioFilename("metal/snare.mp3"), steps = "____X_______X___", midiNote = Some(MidiDrumType.ACOUSTIC_SNARE), isSolo = Some(true), isMuted = Some(true)),
+          Track(name = "Kick", filename = AudioFilename("metal/kick.mp3"), steps = "XXXXXXXXXXXXXXXX", midiNote = Some(MidiDrumType.BASS_DRUM_1)),
+          Track(name = "Bass", filename = AudioFilename("metal/bass.mp3"), steps = "XXXXXXXXXXXXXXXX", midiNote = None)
         )
       )
     )
