@@ -3,14 +3,7 @@ package com.drumbeatrepo.sequencer
 import io.circe.Decoder
 import io.circe.DecodingFailure
 
-final case class Track(
-    name: String,
-    filename: AudioFilename,
-    steps: String,
-    isMuted: Option[Boolean] = None,
-    isSolo: Option[Boolean] = None,
-    midiNote: Option[MidiDrumType] = None
-)
+final case class Track(name: String, filename: AudioFilename, steps: String, midiNote: Option[MidiDrumType] = None, isSolo: Option[Boolean] = None, isMuted: Option[Boolean] = None)
 
 implicit val decodeFoo: Decoder[Track] =
   Decoder.instance { c =>
@@ -27,5 +20,5 @@ implicit val decodeFoo: Decoder[Track] =
       isMuted <- c.get[Option[Boolean]]("isMuted")
       isSolo <- c.get[Option[Boolean]]("isSolo")
       midiNote <- c.get[Option[MidiDrumType]]("midiNote")
-    } yield Track(name, filename, steps, isMuted, isSolo, midiNote)
+    } yield Track(name, filename, steps, midiNote, isSolo, isMuted)
   }
