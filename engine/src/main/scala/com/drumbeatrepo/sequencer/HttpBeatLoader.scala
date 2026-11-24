@@ -4,8 +4,7 @@ import cats.effect.IO
 import org.scalajs.dom.Fetch
 import io.circe.parser.decode
 
-final class HttpBeatLoader extends BeatLoader:
-
+final class HttpBeatLoader extends BeatLoader {
   override def load(filename: String): IO[Beat] =
     for
       response <- IO.fromFuture(
@@ -14,3 +13,8 @@ final class HttpBeatLoader extends BeatLoader:
       text <- IO.fromFuture(IO(response.text().toFuture))
       beat <- IO.fromEither(decode[Beat](text))
     yield beat
+
+  def loadBeats(filenames: List[String]): IO[List[Beat]] =
+    filenames.map(x =>  load(x)).sequence
+}
+

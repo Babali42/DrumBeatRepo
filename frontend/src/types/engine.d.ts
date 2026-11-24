@@ -25,6 +25,13 @@ export interface BeatMetadata {
   readonly filename: string;
 }
 
+export interface DrumSample {
+  readonly name: string;
+  readonly filename: string;
+  readonly midiNote: number;
+  readonly category: string;
+}
+
 declare global {
   const SequencerEngine: {
     dispatch(cmd: unknown): Promise<void>;
@@ -34,5 +41,6 @@ declare global {
 
   const BeatLibrary: {
     loadBeatsManifest(): Promise<readonly BeatMetadata[]>
+    getDrumSamples(): Promise<readonly DrumSample[]>
   }
 }
