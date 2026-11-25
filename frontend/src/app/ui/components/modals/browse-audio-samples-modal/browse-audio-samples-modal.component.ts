@@ -92,8 +92,10 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     }
 
     ngOnInit(): void {
+      // Uncomment to load the drumSamples and move it only when the modal appears
+      // modal can be done using fake data first, see the drumSample type in engine.d.ts
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      SequencerEngine.getDrumSamples().then(x => console.log("DrumSamples", x));
+      // SequencerEngine.getDrumSamples().then(x => console.log("DrumSamples", x));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
