@@ -50,9 +50,6 @@ export class SequencerService {
       }
 
       this.genresLabel = [...this.genres.keys()];
-
-
-
     } catch (error) {
       console.error("Failed to load beat manifest : ", error);
       throw error;
