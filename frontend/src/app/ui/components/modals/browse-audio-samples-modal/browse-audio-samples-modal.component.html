@@ -9,9 +9,9 @@
         <div class="modal-body">
             <form [formGroup]="form">
                 <div>
-                    @for(group of samplesByDrumsCategory; track group.category){
+                    @for(group of samplesByDrumsCategory; track group.groupName){
                 <section>
-                    <h3>{{group.category}}</h3>
+                    <h3>{{group.groupName}}</h3>
                     <div>
                         @for(sample of group.samples; track sample){
                         <div>

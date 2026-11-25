@@ -27,8 +27,7 @@ describe('BrowseAudioSamplesModalComponent', () => {
   });
 
   it('should clear the selected sample when the modal is closed', () => {
-    const selectedSample = component.samples[0];
-    component.form.controls.selectedSample.setValue(selectedSample);
+    component.form.controls.selectedSample.setValue({name: "", filename: "", drumCategory: "kick", midiNote: 1});
     fixture.detectChanges();
 
     expect(component.form.valid).toBe(true);
