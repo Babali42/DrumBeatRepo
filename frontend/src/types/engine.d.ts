@@ -28,8 +28,8 @@ export interface BeatMetadata {
 export interface DrumSample {
   readonly name: string;
   readonly filename: string;
-  readonly midiNote: number;
-  readonly category: string;
+  readonly midinote: number;
+  readonly drumCategory: string;
 }
 
 declare global {
