@@ -92,7 +92,8 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     }
 
     ngOnInit(): void {
-
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+      SequencerEngine.getDrumSamples().then(x => console.log("DrumSamples", x));
     }
 
     ngOnChanges(changes: SimpleChanges): void {

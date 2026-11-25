@@ -37,10 +37,10 @@ declare global {
     dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
+    getDrumSamples(): Promise<readonly DrumSample[]>;
   };
 
   const BeatLibrary: {
     loadBeatsManifest(): Promise<readonly BeatMetadata[]>
-    getDrumSamples(): Promise<readonly DrumSample[]>
   }
 }

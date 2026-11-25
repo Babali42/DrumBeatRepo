@@ -12,6 +12,15 @@ object DrumSample {
       midinote = drumSample.midiDrumType.midiNote,
       drumCategory = drumSample.drumCategory.toString
     )
+
+  def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
+    for {
+      beat <- beats
+      track <- beat.tracks
+      midiNote <- track.midiNote
+      category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
+    } yield DrumSample(track.name, track.filename, midiNote, category)
+  }
 }
 
 enum DrumCategory:
@@ -21,15 +30,6 @@ enum DrumCategory:
   case Tom
   case Cymbal
   case Percussion
-
-def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
-  for {
-    beat <- beats
-    track <- beat.tracks
-    midiNote <- track.midiNote
-    category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
-  } yield DrumSample(track.name, track.filename, midiNote, category)
-}
 
 private val midiDrumTypeToDrumCategoryMap: Map[MidiDrumType, DrumCategory] =
   Map(

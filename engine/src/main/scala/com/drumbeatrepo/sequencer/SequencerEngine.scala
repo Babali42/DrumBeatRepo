@@ -2,6 +2,7 @@ package com.drumbeatrepo.sequencer
 
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
+import cats.implicits.toTraverseOps
 import com.drumbeatrepo.library.BeatsClient
 
 import scala.scalajs.js
@@ -56,17 +57,13 @@ object SequencerEngine:
 
   @JSExport
   def getDrumSamples(): js.Promise[js.Array[js.Object]] = {
-    val a = for
+    (for
       manifest <- BeatsClient.load
-      test <- IO.pure(manifest.map(x => x.filename))
-    yield test;
-
-    null
-
-    //BeatLoader.loadBeats
-    //def loadBeats(filenames: List[String]): IO[List[Beat]]
-
-    //DrumSample
-    //def getDrumSamples(beats: List[Beat]): List[DrumSample]
-    //def toJS : js.Object
+      filenames <- manifest.traverse(x =>
+        HttpBeatLoader().load(x.filename)
+      )
+    yield DrumSample.getDrumSamples(filenames)
+      .map(DrumSample.toJS)
+      .toJSArray
+      ).unsafeRunSyncToPromise()
   }
