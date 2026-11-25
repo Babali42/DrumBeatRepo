@@ -15,7 +15,7 @@ class DrumSampleSpec extends AnyFlatSpec with Matchers {
         Track("snare", AudioFilename(""), "", Some(ACOUSTIC_SNARE)))),
       Beat("techno", "techno", 128, 4, 4, 4, List(
         Track("kick", AudioFilename(""), "", Some(ACOUSTIC_BASS_DRUM)))))
-    val drumSamples = getDrumSamples(beats)
+    val drumSamples = DrumSample.getDrumSamples(beats)
 
     //assert
     drumSamples.count(x => x.drumCategory == Snare) shouldBe 1
@@ -29,7 +29,7 @@ class DrumSampleSpec extends AnyFlatSpec with Matchers {
       Track("snare", AudioFilename(""), "", Some(ACOUSTIC_SNARE)))),
       Beat("techno", "techno", 128, 4, 4, 4, List(
         Track("cymbal", AudioFilename(""), "", Some(CRASH_CYMBAL_1)))))
-    val drumSamples = getDrumSamples(beats)
+    val drumSamples = DrumSample.getDrumSamples(beats)
 
     //assert
     drumSamples.count(x => x.drumCategory == Snare) shouldBe 1

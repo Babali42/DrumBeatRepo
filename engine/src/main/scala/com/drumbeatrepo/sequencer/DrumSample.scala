@@ -1,5 +1,28 @@
 package com.drumbeatrepo.sequencer
 
+import scala.scalajs.js
+
+case class DrumSample(name: String, filename: AudioFilename, midiDrumType: MidiDrumType, drumCategory: DrumCategory)
+
+object DrumSample {
+  def toJS(drumSample: DrumSample): js.Object =
+    js.Dynamic.literal(
+      name = drumSample.name,
+      filename = drumSample.filename.toString,
+      midinote = drumSample.midiDrumType.midiNote,
+      drumCategory = drumSample.drumCategory.toString
+    )
+
+  def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
+    for {
+      beat <- beats
+      track <- beat.tracks
+      midiNote <- track.midiNote
+      category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
+    } yield DrumSample(track.name, track.filename, midiNote, category)
+  }
+}
+
 enum DrumCategory:
   case Kick
   case Snare
@@ -7,8 +30,6 @@ enum DrumCategory:
   case Tom
   case Cymbal
   case Percussion
-
-case class DrumSample(name: String, filename: AudioFilename, midiDrumType: MidiDrumType, drumCategory: DrumCategory)
 
 private val midiDrumTypeToDrumCategoryMap: Map[MidiDrumType, DrumCategory] =
   Map(
@@ -71,12 +92,3 @@ private val midiDrumTypeToDrumCategoryMap: Map[MidiDrumType, DrumCategory] =
     MidiDrumType.MUTE_TRIANGLE -> DrumCategory.Percussion,
     MidiDrumType.OPEN_TRIANGLE -> DrumCategory.Percussion
   )
-
-def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
-  for {
-    beat <- beats
-    track <- beat.tracks
-    midiNote <- track.midiNote
-    category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
-  } yield DrumSample(track.name, track.filename, midiNote, category)
-}
