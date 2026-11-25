@@ -63,7 +63,8 @@ object SequencerEngine:
         HttpBeatLoader().load(x.filename)
       )
     yield DrumSample.getDrumSamples(filenames)
-      .map(DrumSample.toJS)
+      .groupBy(_.drumCategory)
+      .map(DrumSample.groupToJS)
       .toJSArray
       ).unsafeRunSyncToPromise()
   }

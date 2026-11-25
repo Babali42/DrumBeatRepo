@@ -28,8 +28,13 @@ export interface BeatMetadata {
 export interface DrumSample {
   readonly name: string;
   readonly filename: string;
-  readonly midinote: number;
+  readonly midiNote: number;
   readonly drumCategory: string;
+}
+
+export interface DrumSampleGroup {
+  readonly groupName: string;
+  readonly samples: readonly DrumSample[];
 }
 
 declare global {
@@ -37,7 +42,7 @@ declare global {
     dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
-    getDrumSamples(): Promise<readonly DrumSample[]>;
+    getDrumSamples(): Promise<DrumSampleGroup[]>;
   };
 
   const BeatLibrary: {

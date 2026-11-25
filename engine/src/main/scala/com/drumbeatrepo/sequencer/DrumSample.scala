@@ -5,6 +5,16 @@ import scala.scalajs.js
 case class DrumSample(name: String, filename: AudioFilename, midiDrumType: MidiDrumType, drumCategory: DrumCategory)
 
 object DrumSample {
+  def groupToJS(category: DrumCategory, drumSamples: List[DrumSample]): js.Object = {
+    val samples = new js.Array[js.Object]()
+    drumSamples.foreach(s => samples.push(toJS(s)))
+
+    js.Dynamic.literal(
+      groupName = category.toString,
+      samples = samples
+    )
+  }
+
   def toJS(drumSample: DrumSample): js.Object =
     js.Dynamic.literal(
       name = drumSample.name,
