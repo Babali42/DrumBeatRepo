@@ -1,38 +1,46 @@
-@if(isOpen){
-<div class="modal-overlay" (click)="onOverlayClick($event)">
+@if (isOpen) {
+  <div class="modal-overlay" (click)="onOverlayClick($event)">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="browseSampleDialogTitle">
-        <div class="modal-header">
-            <h2 id="browseSampleDialogTitle">{{ 'add-track.title' | translate }}</h2>
-            <button class="close-btn" aria-label="Close browse sample dialog" (click)="onClose()">×</button>
-        </div>
+      <div class="modal-header">
+        <h2 id="browseSampleDialogTitle">{{ 'add-track.title' | translate }}</h2>
+        <button class="close-btn" aria-label="Close browse sample dialog" (click)="onClose()">×</button>
+      </div>
 
-        <div class="modal-body">
-            <form [formGroup]="form">
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div>
+            @for (group of samplesByDrumsCategory; track group.groupName) {
+              <section>
+                <h3>{{ group.groupName }}</h3>
                 <div>
-                    @for(group of samplesByDrumsCategory; track group.groupName){
-                <section>
-                    <h3>{{group.groupName}}</h3>
+                  @for (sample of group.samples; track sample) {
                     <div>
-                        @for(sample of group.samples; track sample){
-                        <div>
-                            <label>
-                                <input type="radio" formControlName="selectedSample" [value]="sample">
-                                {{sample.name}}
-                            </label>
+                      <label>
+                        <!-- TODO : remove style by creating a stylesheet for this modal-->
+                        <div class="flex" style="justify-content: space-between">
+                          <div class="flex">
+                            <input type="radio" formControlName="selectedSample" [value]="sample">
+                            <div>{{ sample.name }}</div>
+                          </div>
+                          <!-- TODO : remove style by creating a stylesheet for this modal-->
+                          <div style="margin-right: 15px">{{ sample.filename.split("/")[0] }}</div>
                         </div>
-                        }
+                      </label>
                     </div>
-                </section>
-                    }
+                  }
                 </div>
-            </form>
-        </div>
+              </section>
+            }
+          </div>
+        </form>
+      </div>
 
-        <div class="modal-footer">
-            <button class="btn btn-secondary" (click)="onClose()">{{ 'misc.cancel' | translate }}</button>
-            <button class="btn btn-primary" (click)="onValidate()" [disabled]="!this.form.valid">{{ 'misc.validate' |
-                translate }}</button>
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="onClose()">{{ 'misc.cancel' | translate }}</button>
+        <button class="btn btn-primary" (click)="onValidate()"
+                [disabled]="!this.form.valid">{{ 'misc.validate' | translate }}
+        </button>
+      </div>
     </div>
-</div>
+  </div>
 }
