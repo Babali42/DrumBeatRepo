@@ -24,12 +24,13 @@ object DrumSample {
     )
 
   def getDrumSamples(beats: List[Beat]): List[DrumSample] = {
-    for {
+    val samples = for {
       beat <- beats
       track <- beat.tracks
       midiNote <- track.midiNote
       category <- midiDrumTypeToDrumCategoryMap.get(midiNote)
     } yield DrumSample(track.name, track.filename, midiNote, category)
+    samples.distinct
   }
 }
 
