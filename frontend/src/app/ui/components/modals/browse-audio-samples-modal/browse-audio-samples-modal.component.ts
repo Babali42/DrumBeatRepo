@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BaseModalComponent } from "../base-modal.component";
 import { BrowseAudioSamplesModalResult, DefaultBrowseAudioSamplesModalResult } from 'src/app/domain/browse-audio-samples-result/browse-audio-samples-result';
-import { SequencerService } from '../../../services/sequencer/sequencer.service';
 import { MidiDrumTypeToTextService } from "../../../services/mididrumtype-to-text.service";
 import {DrumSample, DrumSampleGroup} from "../../../../../types/engine";
 
@@ -32,10 +31,6 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
         // eslint-disable-next-line @typescript-eslint/unbound-method
         selectedSample: new FormControl<DrumSample | null>(null, Validators.required)
     });
-
-    constructor(protected readonly sequencerService: SequencerService) {
-        super();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['isOpen']?.currentValue === true) {
