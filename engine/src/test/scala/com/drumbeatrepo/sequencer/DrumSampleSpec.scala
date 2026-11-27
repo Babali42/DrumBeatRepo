@@ -35,4 +35,18 @@ class DrumSampleSpec extends AnyFlatSpec with Matchers {
     drumSamples.count(x => x.drumCategory == Snare) shouldBe 1
     drumSamples.count(x => x.drumCategory == Kick) shouldBe 1
   }
+
+  it should "not allow duplicated drum samples" in {
+    //act
+    val beats = List(Beat("techno", "techno", 128, 4, 4, 4, List(
+      Track("kick", AudioFilename("techno/kick.mp3"), "", Some(BASS_DRUM_1)),
+      Track("snare", AudioFilename("techno/snare.mp3"), "", Some(ACOUSTIC_SNARE)))),
+      Beat("techno", "techno", 128, 4, 4, 4, List(
+        Track("kick", AudioFilename("techno/kick.mp3"), "", Some(BASS_DRUM_1)))))
+    val drumSamples = DrumSample.getDrumSamples(beats)
+
+    //assert
+    drumSamples.count(x => x.drumCategory == Snare) shouldBe 1
+    drumSamples.count(x => x.drumCategory == Kick) shouldBe 1
+  }
 }
