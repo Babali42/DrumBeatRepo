@@ -42,7 +42,7 @@ declare global {
     dispatch(cmd: unknown): Promise<void>;
     getState(): SequencerState;
     reset(): void;
-    getDrumSamples(): Promise<DrumSampleGroup[]>;
+    getDrumSamples(): Promise<readonly DrumSampleGroup[]>;
   };
 
   const BeatLibrary: {

@@ -21,7 +21,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
     //todo inject it in angular
     private readonly drumTypeToTextService = new MidiDrumTypeToTextService();
 
-    samplesByDrumsCategory: DrumSampleGroup[] = [];
+    samplesByDrumsCategory: readonly DrumSampleGroup[] = [];
 
     @Input() override isOpen: boolean = false;
 
@@ -39,8 +39,7 @@ export class BrowseAudioSamplesModalComponent extends BaseModalComponent<BrowseA
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['isOpen']?.currentValue === true) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-return
-        SequencerEngine.getDrumSamples().then(x => this.samplesByDrumsCategory = x);
+        SequencerEngine.getDrumSamples().then(x => this.samplesByDrumsCategory = x).catch(console.error);
       }
 
         if (changes['isOpen']?.currentValue === false) {
